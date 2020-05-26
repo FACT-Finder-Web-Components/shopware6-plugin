@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/master/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>Main Settings</title>
+        <title lang="de-DE">Grundeinstellungen</title>
+
+        <input-field>
+            <name>serverUrl</name>
+            <label>Server URL</label>
+            <label lang="de-DE">Server-URL</label>
+            <required>true</required>
+        </input-field>
+
+        <input-field>
+            <name>channel</name>
+            <label>Channel</label>
+            <required>true</required>
+        </input-field>
+
+        <input-field>
+            <name>username</name>
+            <label>Username</label>
+            <label lang="de-DE">Benutzername</label>
+            <required>true</required>
+        </input-field>
+
+        <input-field>
+            <name>password</name>
+            <label>Password</label>
+            <label lang="de-DE">Passwort</label>
+            <required>true</required>
+        </input-field>
+    </card>
+</config>

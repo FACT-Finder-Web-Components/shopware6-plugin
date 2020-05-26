@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <prototype namespace="Omikron\FactFinder\Shopware6\Resources\snippets\" resource="../snippets">
+            <tag name="shopware.snippet.file" priority="100" />
+        </prototype>
+
+        <prototype namespace="Omikron\FactFinder\Shopware6\Subscriber\" resource="../../Subscriber" autowire="true">
+            <tag name="kernel.event_subscriber" />
+        </prototype>
+    </services>
+</container>

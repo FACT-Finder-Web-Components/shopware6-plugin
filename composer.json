@@ -1,0 +1,30 @@
+{
+  "name": "omikron/shopware6-factfinder",
+  "description": "FACT-Finder® Web Components for Shopware 6",
+  "type": "shopware-platform-plugin",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Omikron Data Quality GmbH",
+      "homepage": "https://web-components.fact-finder.de"
+    }
+  ],
+  "require": {
+    "shopware/core": "6.1.*",
+    "shopware/storefront": "6.1.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Omikron\\FactFinder\\Shopware6\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "Omikron\\FactFinder\\Shopware6\\OmikronFactFinder",
+    "plugin-icon": "src/Resources/public/plugin.png",
+    "copyright": "(c) by Omikron Data Quality GmbH",
+    "label": {
+      "de-DE": "FACT-Finder® Web Components for Shopware 6",
+      "en-GB": "FACT-Finder® Web Components für Shopware 6"
+    }
+  }
+}
