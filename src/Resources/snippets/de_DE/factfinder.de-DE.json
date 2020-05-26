@@ -1,4 +1,10 @@
 {
   "ff": {
+    "suggest": {
+      "SearchTerms": "Suchbegriffe",
+      "Categories": "Kategories",
+      "Brands": "Marken",
+      "Products": "Produktempfehlungen"
+    }
   }
 }

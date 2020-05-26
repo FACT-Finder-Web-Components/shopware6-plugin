@@ -1,0 +1,10 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_body_inner %}
+  <ff-communication
+    {% for key, value in factfinder.communication %}
+      {{ key }}="{{ value|e('html_attr') }}"
+    {% endfor %}></ff-communication>
+
+  {{ parent() }}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% block layout_search_suggest %}
+  <div class="search-suggest js-search-result">
+    <ff-suggest layout="list" unresolved>
+      {% block layout_search_suggest_result_suggest_container %}
+        <section class="ff-suggest-container row pb-4">
+          <div data-container="searchTerm" class="col">
+            <h3 class="h5 container-caption">{{ "ff.suggest.SearchTerms"|trans|striptags }}</h3>
+            <ff-suggest-item class="js-result" type="searchTerm">
+              <span class="ff-search-term">{% verbatim %}{{{name}}}{% endverbatim %}</span>
+            </ff-suggest-item>
+          </div>
+
+          <div data-container="category" class="col">
+            <h3 class="h5 container-caption">{{ "ff.suggest.Categories"|trans|striptags }}</h3>
+            <ff-suggest-item class="js-result" type="category">
+              <span class="ff-category">{% verbatim %}{{{name}}}{% endverbatim %}</span>
+            </ff-suggest-item>
+          </div>
+
+          <div data-container="brand" class="col">
+            <h3 class="h5 container-caption">{{ "ff.suggest.Brands"|trans|striptags }}</h3>
+            <ff-suggest-item class="js-result" type="brand">
+              <span class="ff-brand">{% verbatim %}{{{name}}}{% endverbatim %}</span>
+            </ff-suggest-item>
+          </div>
+        </section>
+      {% endblock %}
+
+      {% block layout_search_suggest_result_product_container %}
+        <section class="ff-suggest-container ff-suggest-container--products">
+          <h3 class="h5 container-caption">{{ "ff.suggest.Products"|trans|striptags }}</h3>
+          {% block layout_search_suggest_result_product %}
+            {% verbatim %}
+              <div data-container="productName">
+                <ff-suggest-item class="search-suggest-product js-result search-suggest-product-link" type="productName">
+                  <div class="row align-items-center no-gutters">
+                    <div class="col-auto search-suggest-product-image-container">
+                      <img class="search-suggest-product-image" data-image="{{image}}" />
+                    </div>
+                    <div class="col search-suggest-product-name">{{{name}}}</div>
+                    <div class="col-auto search-suggest-product-price">{{attribute.UVP}}</div>
+                  </div>
+                </ff-suggest-item>
+              </div>
+            {% endverbatim %}
+          {% endblock %}
+        </section>
+      {% endblock %}
+    </ff-suggest>
+  </div>
+{% endblock %}

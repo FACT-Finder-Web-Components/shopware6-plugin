@@ -1,4 +1,10 @@
 {
   "ff": {
+    "suggest": {
+      "SearchTerms": "Search Suggestions",
+      "Categories": "Category Suggestions",
+      "Brands": "Brands",
+      "Products": "Recommended Products"
+    }
   }
 }

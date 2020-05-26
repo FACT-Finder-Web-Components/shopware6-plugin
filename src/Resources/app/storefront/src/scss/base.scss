@@ -1,0 +1,28 @@
+ff-searchbox {
+  .input-group > & {
+    flex: 1 1 auto;
+    width: 1%;
+  }
+
+  &:focus-within ~ .input-group-append .header-search-btn {
+    border-color: $input-focus-border-color;
+  }
+}
+
+ff-suggest {
+  > div {
+    position: static !important;
+  }
+
+  .ffw-suggestContainerWrapper {
+    @extend .search-suggest-container;
+  }
+
+  &-item:hover {
+    cursor: pointer;
+  }
+
+  .ffw-query, .container-caption {
+    color: $sw-color-brand-primary;
+  }
+}

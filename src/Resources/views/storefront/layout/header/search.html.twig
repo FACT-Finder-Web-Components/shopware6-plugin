@@ -1,0 +1,32 @@
+{% sw_extends '@Storefront/storefront/layout/header/search.html.twig' %}
+
+{% block layout_header_search %}
+  <div class="collapse" id="searchCollapse">
+    <div class="header-search">
+      <div class="header-search-form">
+        {% block layout_header_search_input_group %}
+          <div class="input-group">
+            <ff-searchbox suggest-onfocus="true" use-suggest="true" select-onclick="true">
+              {% block layout_header_search_input %}
+                <input type="search" class="form-control header-search-input"
+                       placeholder="{{ "header.searchPlaceholder"|trans|striptags }}"
+                       aria-label="{{ "header.searchPlaceholder"|trans|striptags }}" />
+              {% endblock %}
+            </ff-searchbox>
+
+            <ff-searchbutton class="input-group-append">
+              {% block layout_header_search_button %}
+                <button type="submit" class="btn header-search-btn"
+                        aria-label="{{ "header.searchButton"|trans|striptags }}">
+                  <span class="header-search-icon">{% sw_icon 'search' %}</span>
+                </button>
+              {% endblock %}
+            </ff-searchbutton>
+          </div>
+        {% endblock %}
+
+        {% sw_include '@Storefinder/storefront/layout/factfinder/suggest.html.twig' %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
