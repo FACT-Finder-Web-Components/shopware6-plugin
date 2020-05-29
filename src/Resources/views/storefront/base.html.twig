@@ -2,6 +2,10 @@
 
 {% block base_body_inner %}
   <ff-communication
+    version="ng"
+    api="v3"
+    use-url-parameter="true"
+    only-search-params="true"
     {% for key, value in factfinder.communication %}
       {{ key }}="{{ value|e('html_attr') }}"
     {% endfor %}></ff-communication>

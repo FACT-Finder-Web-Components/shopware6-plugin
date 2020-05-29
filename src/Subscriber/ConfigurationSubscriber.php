@@ -45,8 +45,6 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'currency-country-code' => $event->getRequest()->getLocale(),
                 'url'                   => $this->config('serverUrl'),
                 'channel'               => $this->config('channel'),
-                'version'               => 'ng',
-                'api'                   => 'v3',
             ],
         ]);
     }

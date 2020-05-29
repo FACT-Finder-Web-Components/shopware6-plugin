@@ -26,7 +26,7 @@
             <required>true</required>
         </input-field>
 
-        <input-field>
+        <input-field type="password">
             <name>password</name>
             <label>Password</label>
             <label lang="de-DE">Passwort</label>
