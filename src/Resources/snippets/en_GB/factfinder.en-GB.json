@@ -5,6 +5,9 @@
       "Categories": "Category Suggestions",
       "Brands": "Brands",
       "Products": "Recommended Products"
+    },
+    "search": {
+      "headline": "Your search produced {{resultCount}} results!"
     }
   }
 }

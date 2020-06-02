@@ -1,0 +1,15 @@
+{% block component_factfinder_toolbar %}
+  <div class="cms-element-product-listing-actions row justify-content-between">
+    <div class="col-md-auto">
+      {% sw_include '@Parent/storefront/components/factfinder/paging.html.twig' %}
+    </div>
+
+    <div class="col-md-auto">
+      {% block component_factfinder_sortbox %}
+        <ff-sortbox-select class="sorting" unresolved>
+          <select class="sorting custom-select" aria-label="{{ 'general.sortingLabel'|trans|striptags }}"></select>
+        </ff-sortbox-select>
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

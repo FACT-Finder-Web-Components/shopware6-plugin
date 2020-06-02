@@ -1,7 +1,23 @@
 {% sw_extends '@Parent/storefront/page/search/index.html.twig' %}
 
 {% block page_search %}
-  {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with { subscribe: true } %}
+  <ff-template class="cms-page search-page" scope="result" unresolved>
+    {% block page_search_headline %}
+      <h1 class="search-headline">
+        {% block page_search_headline_text %}
+          {{ "ff.search.headline"|trans|sw_sanitize }}
+        {% endblock %}
+      </h1>
+    {% endblock %}
+  </ff-template>
+
+  <div class="cms-element-product-listing-wrapper">
+    <div class="cms-element-product-listing">
+      {% sw_include '@Parent/storefront/components/factfinder/toolbar.html.twig' %}
+      {% sw_include '@Parent/storefront/components/factfinder/no-results.html.twig' with { subscribe: true } %}
+      {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with { subscribe: true } %}
+    </div>
+  </div>
 {% endblock %}
 
 {% block base_script_factfinder_search_redirect %}{% endblock %}
