@@ -7,6 +7,7 @@ namespace Omikron\FactFinder\Shopware6\Storefront\Controller;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
+use Shopware\Storefront\Page\GenericPageLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,11 +17,20 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ResultController extends StorefrontController
 {
+    /** @var GenericPageLoader */
+    private $pageLoader;
+
+    public function __construct(GenericPageLoader $pageLoader)
+    {
+        $this->pageLoader = $pageLoader;
+    }
+
     /**
-     * @Route(path="/result", name="result", methods={"GET"})
+     * @Route(path="/factfinder/result", name="frontend.factfinder.result", methods={"GET"})
      */
     public function result(Request $request, SalesChannelContext $context): Response
     {
-        return $this->renderStorefront('@Storefront/storefront/page/factfinder/result.html.twig');
+        $page = $this->pageLoader->load($request, $context);
+        return $this->renderStorefront('@Storefront/storefront/page/factfinder/result.html.twig', ['page' => $page]);
     }
 }

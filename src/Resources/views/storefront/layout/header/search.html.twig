@@ -1,4 +1,4 @@
-{% sw_extends '@Storefront/storefront/layout/header/search.html.twig' %}
+{% sw_extends '@Parent/storefront/layout/header/search.html.twig' %}
 
 {% block layout_header_search %}
   <div class="collapse" id="searchCollapse">
@@ -6,26 +6,21 @@
       <div class="header-search-form">
         {% block layout_header_search_input_group %}
           <div class="input-group">
-            <ff-searchbox suggest-onfocus="true" use-suggest="true" select-onclick="true">
-              {% block layout_header_search_input %}
-                <input type="search" class="form-control header-search-input"
-                       placeholder="{{ "header.searchPlaceholder"|trans|striptags }}"
-                       aria-label="{{ "header.searchPlaceholder"|trans|striptags }}" />
-              {% endblock %}
-            </ff-searchbox>
+            {% block layout_header_search_input %}
+              <ff-searchbox suggest-onfocus="true" use-suggest="true" select-onclick="true">
+                {{ parent() }}
+              </ff-searchbox>
+            {% endblock %}
 
-            <ff-searchbutton class="input-group-append">
-              {% block layout_header_search_button %}
-                <button type="submit" class="btn header-search-btn"
-                        aria-label="{{ "header.searchButton"|trans|striptags }}">
-                  <span class="header-search-icon">{% sw_icon 'search' %}</span>
-                </button>
-              {% endblock %}
-            </ff-searchbutton>
+            {% block layout_header_search_button %}
+              <ff-searchbutton class="input-group-append">
+                {{ parent() }}
+              </ff-searchbutton>
+            {% endblock %}
           </div>
         {% endblock %}
 
-        {% sw_include '@Storefinder/storefront/layout/factfinder/suggest.html.twig' %}
+        {% sw_include '@Parent/storefront/layout/factfinder/suggest.html.twig' %}
       </div>
     </div>
   </div>

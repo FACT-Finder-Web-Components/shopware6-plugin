@@ -10,6 +10,12 @@
             <tag name="shopware.snippet.file" priority="100" />
         </instanceof>
 
-        <prototype namespace="Omikron\FactFinder\Shopware6\" resource="../../{Resources,Subscriber}" />
+        <instanceof id="Symfony\Bundle\FrameworkBundle\Controller\AbstractController">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </instanceof>
+
+        <prototype namespace="Omikron\FactFinder\Shopware6\" resource="../../{Resources,Storefront,Subscriber}" />
     </services>
 </container>

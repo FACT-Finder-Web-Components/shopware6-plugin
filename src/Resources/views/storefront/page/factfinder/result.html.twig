@@ -1,1 +1,5 @@
-{% sw_extends '@Storefront/storefront/base.html.twig' %}
+{% sw_extends '@Parent/storefront/page/search/index.html.twig' %}
+
+{% block page_search %}
+  {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with { subscribe: true } %}
+{% endblock %}
