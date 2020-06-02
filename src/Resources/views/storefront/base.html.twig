@@ -12,3 +12,19 @@
 
   {{ parent() }}
 {% endblock %}
+
+{% block base_body_script %}
+  {% block base_script_factfinder_search_redirect %}
+    <script>
+      document.addEventListener('before-search', function (event) {
+        if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
+          event.preventDefault();
+          delete event.detail.type;
+          window.location = '{{ path('frontend.factfinder.result') }}' + factfinder.common.dictToParameterString(event.detail);
+        }
+      });
+    </script>
+  {% endblock %}
+
+  {{ parent() }}
+{% endblock %}
