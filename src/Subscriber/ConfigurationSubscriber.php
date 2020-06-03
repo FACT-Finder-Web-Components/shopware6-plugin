@@ -13,9 +13,13 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     /** @var SystemConfigService */
     private $systemConfig;
 
-    public function __construct(SystemConfigService $systemConfig)
+    /** @var array */
+    private $fieldRoles;
+
+    public function __construct(SystemConfigService $systemConfig, array $fieldRoles)
     {
         $this->systemConfig = $systemConfig;
+        $this->fieldRoles   = $fieldRoles;
     }
 
     public static function getSubscribedEvents()
@@ -28,17 +32,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     public function onRenderStorefront(StorefrontRenderEvent $event): void
     {
         $event->setParameter('factfinder', [
-            'field_roles' => [
-                'brand'         => 'Manufacturer',
-                'deeplink'      => 'Deeplink',
-                'description'   => 'Description',
-                'ean'           => 'EAN',
-                'imageUrl'      => 'ImageURL',
-                'masterId'      => 'MasterArticleNumber',
-                'price'         => 'Price',
-                'productName'   => 'Title',
-                'productNumber' => 'ArticleNumber',
-            ],
+            'field_roles' => $this->fieldRoles,
 
             'communication' => [
                 'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
