@@ -32,6 +32,6 @@
             </call>
         </instanceof>
 
-        <prototype namespace="Omikron\FactFinder\Shopware6\" resource="../../{Resources,Storefront,Subscriber}" />
+        <prototype namespace="Omikron\FactFinder\Shopware6\" resource="../../{Command,Resources,Storefront,Subscriber}" />
     </services>
 </container>
