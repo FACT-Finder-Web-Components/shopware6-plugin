@@ -32,13 +32,12 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     public function onRenderStorefront(StorefrontRenderEvent $event): void
     {
         $event->setParameter('factfinder', [
-            'field_roles' => $this->fieldRoles,
-
+            'field_roles'   => $this->fieldRoles,
             'communication' => [
-                'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
-                'currency-country-code' => $event->getRequest()->getLocale(),
                 'url'                   => $this->config('serverUrl'),
                 'channel'               => $this->config('channel'),
+                'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
+                'currency-country-code' => $event->getRequest()->getLocale(),
             ],
         ]);
     }
