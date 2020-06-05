@@ -38,6 +38,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'channel'               => $this->config('channel'),
                 'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
                 'currency-country-code' => $event->getRequest()->getLocale(),
+                'search-immediate'      => strpos($event->getRequest()->get('_route'), 'factfinder') ? 'true' : 'false',
             ],
         ]);
     }
