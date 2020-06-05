@@ -31,6 +31,6 @@ class ResultController extends StorefrontController
     public function result(Request $request, SalesChannelContext $context): Response
     {
         $page = $this->pageLoader->load($request, $context);
-        return $this->renderStorefront('@Storefront/storefront/page/factfinder/result.html.twig', ['page' => $page]);
+        return $this->renderStorefront('@Parent/storefront/page/factfinder/result.html.twig', ['page' => $page]);
     }
 }

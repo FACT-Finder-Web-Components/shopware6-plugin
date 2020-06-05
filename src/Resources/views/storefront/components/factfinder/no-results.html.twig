@@ -1,7 +1,7 @@
 {% block component_factfinder_record_list_no_results %}
   <ff-template class="cms-listing-col col-12" scope="result" unresolved>
     {{ '{{^resultCount}}' }}
-    {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
+    {% sw_include '@Parent/storefront/utilities/alert.html.twig' with {
       type: 'info',
       content: 'listing.emptyResultMessage'|trans|sw_sanitize
     } %}
