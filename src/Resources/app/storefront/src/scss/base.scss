@@ -1,0 +1,42 @@
+ff-searchbox {
+  .input-group > & {
+    flex: 1 1 auto;
+    width: 1%;
+  }
+
+  .header-search-input {
+    @include border-right-radius(0);
+  }
+
+  &:focus-within ~ .input-group-append .header-search-btn {
+    border-color: $input-focus-border-color;
+  }
+}
+
+ff-searchbutton {
+  &.input-group-append {
+    margin-left: 0;
+  }
+
+  .header-search-btn {
+    @include border-left-radius(0);
+  }
+}
+
+ff-suggest {
+  > div {
+    position: static !important;
+  }
+
+  .ffw-suggestContainerWrapper {
+    @extend .search-suggest-container;
+  }
+
+  &-item:hover {
+    cursor: pointer;
+  }
+
+  .ffw-query, .container-caption {
+    color: $sw-color-brand-primary;
+  }
+}

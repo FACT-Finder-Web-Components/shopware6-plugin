@@ -3,13 +3,35 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <services>
-        <prototype namespace="Omikron\FactFinder\Shopware6\Resources\snippets\" resource="../snippets">
-            <tag name="shopware.snippet.file" priority="100" />
-        </prototype>
+    <parameters>
+        <parameter key="factfinder.field_roles" type="collection">
+            <parameter key="brand">Manufacturer</parameter>
+            <parameter key="deeplink">Deeplink</parameter>
+            <parameter key="description">Description</parameter>
+            <parameter key="ean">EAN</parameter>
+            <parameter key="imageUrl">ImageUrl</parameter>
+            <parameter key="masterId">Master</parameter>
+            <parameter key="price">Price</parameter>
+            <parameter key="productName">Title</parameter>
+            <parameter key="productNumber">ProductNumber</parameter>
+        </parameter>
+    </parameters>
 
-        <prototype namespace="Omikron\FactFinder\Shopware6\Subscriber\" resource="../../Subscriber" autowire="true">
-            <tag name="kernel.event_subscriber" />
-        </prototype>
+    <services>
+        <defaults autoconfigure="true" autowire="true">
+            <bind key="$fieldRoles">%factfinder.field_roles%</bind>
+        </defaults>
+
+        <instanceof id="Shopware\Core\System\Snippet\Files\SnippetFileInterface">
+            <tag name="shopware.snippet.file" priority="100" />
+        </instanceof>
+
+        <instanceof id="Symfony\Bundle\FrameworkBundle\Controller\AbstractController">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </instanceof>
+
+        <prototype namespace="Omikron\FactFinder\Shopware6\" resource="../../{Command,Resources,Storefront,Subscriber}" />
     </services>
 </container>
