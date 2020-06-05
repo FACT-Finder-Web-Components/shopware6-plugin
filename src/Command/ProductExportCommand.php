@@ -10,10 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProductExportCommand extends Command
 {
-    public function __construct()
-    {
-        parent::__construct('factfinder:export:products');
-    }
+    protected static $defaultName = 'factfinder:export:products';
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
