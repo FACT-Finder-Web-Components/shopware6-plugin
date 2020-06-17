@@ -45,7 +45,7 @@ class ProductExportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $feed = $this->feedFactory->create($this->getSalesChannelContext($this->getSalesChannel()));
-        $feed->generate(new ConsoleOutput($output), ['ProductNumber', 'Name']);
+        $feed->generate(new ConsoleOutput($output), ['ProductNumber', 'Name', 'Deeplink']);
     }
 
     private function getSalesChannel(): SalesChannelEntity

@@ -28,6 +28,8 @@ class ExportProducts
     public function getByContext(SalesChannelContext $context, int $batchSize = 100): iterable
     {
         $criteria = (new Criteria())->setLimit($batchSize);
+        $criteria->addAssociation('seoUrls');
+
         $products = $this->productRepository->search($criteria, $context);
         while ($products->count()) {
             yield from $products;

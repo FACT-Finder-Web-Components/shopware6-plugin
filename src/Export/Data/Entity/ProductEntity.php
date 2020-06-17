@@ -28,6 +28,7 @@ class ProductEntity implements ExportEntityInterface, DataProviderInterface
         return [
             'ProductNumber' => $this->product->getProductNumber(),
             'Name'          => $this->product->getName(),
+            'Deeplink'      => $this->product->getSeoUrls()->first()->getId(),
         ];
     }
 
