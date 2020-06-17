@@ -20,6 +20,8 @@
     <services>
         <defaults autoconfigure="true" autowire="true">
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
+            <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
+            <bind key="$salesChannelRepository" type="service" id="sales_channel.repository" />
         </defaults>
 
         <instanceof id="Shopware\Core\System\Snippet\Files\SnippetFileInterface">
@@ -32,6 +34,10 @@
             </call>
         </instanceof>
 
-        <prototype namespace="Omikron\FactFinder\Shopware6\" resource="../../{Command,Resources,Storefront,Subscriber}" />
+        <prototype namespace="Omikron\FactFinder\Shopware6\"
+                   resource="../../{Command,Export,Resources,Storefront,Subscriber}" />
+
+        <service id="Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface"
+                 class="Omikron\FactFinder\Shopware6\Export\Filter\TextFilter" />
     </services>
 </container>
