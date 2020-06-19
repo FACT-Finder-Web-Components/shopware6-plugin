@@ -14,7 +14,7 @@ class ProductEntity implements ExportEntityInterface, DataProviderInterface
     /** @var SalesChannelProductEntity */
     private $product;
 
-    /** @var iterable|FieldInterface[] */
+    /** @var FieldInterface[] */
     private $productFields;
 
     public function __construct(SalesChannelProductEntity $product, iterable $productFields)
