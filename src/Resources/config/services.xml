@@ -22,6 +22,7 @@
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$salesChannelRepository" type="service" id="sales_channel.repository" />
+            <bind key="iterable $productFields" type="tagged_iterator" tag="factfinder.export.field"/>
         </defaults>
 
         <instanceof id="Shopware\Core\System\Snippet\Files\SnippetFileInterface">
@@ -32,6 +33,10 @@
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
+        </instanceof>
+
+        <instanceof id="Omikron\FactFinder\Shopware6\Export\Field\FieldInterface">
+            <tag name="factfinder.export.field" />
         </instanceof>
 
         <prototype namespace="Omikron\FactFinder\Shopware6\"
