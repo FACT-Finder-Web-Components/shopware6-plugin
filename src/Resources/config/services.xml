@@ -8,6 +8,7 @@
             <parameter key="ProductNumber">ProductNumber</parameter>
             <parameter key="Name">Name</parameter>
             <parameter key="Deeplink">Deeplink</parameter>
+            <parameter key="imageUrl">ImageUrl</parameter>
         </parameter>
 
         <parameter key="factfinder.field_roles" type="collection">
