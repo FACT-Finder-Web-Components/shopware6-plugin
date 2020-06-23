@@ -33,8 +33,8 @@ class ProductEntity implements ExportEntityInterface, DataProviderInterface
         return array_reduce($this->productFields, function (array $fields, FieldInterface $field) {
             return $fields + [$field->getName() => $field->getValue($this->product)];
         }, [
-            'ProductNumber' => $this->product->getProductNumber(),
-            'Name'          => $this->product->getName(),
+            'ProductNumber' => (string) $this->product->getProductNumber(),
+            'Name'          => (string) $this->product->getName(),
         ]);
     }
 

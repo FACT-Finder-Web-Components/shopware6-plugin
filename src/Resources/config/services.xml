@@ -9,6 +9,7 @@
             <parameter key="Name">Name</parameter>
             <parameter key="Deeplink">Deeplink</parameter>
             <parameter key="imageUrl">ImageUrl</parameter>
+            <parameter key="CategoryPath">CategoryPath</parameter>
         </parameter>
 
         <parameter key="factfinder.field_roles" type="collection">
@@ -30,6 +31,7 @@
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$salesChannelRepository" type="service" id="sales_channel.repository" />
+            <bind key="$categoryRepository" type="service" id="sales_channel.category.repository"/>
         </defaults>
 
         <instanceof id="Shopware\Core\System\Snippet\Files\SnippetFileInterface">

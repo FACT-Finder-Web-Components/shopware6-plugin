@@ -29,6 +29,8 @@ class ExportProducts
     {
         $criteria = (new Criteria())->setLimit($batchSize);
         $criteria->addAssociation('seoUrls');
+        $criteria->addAssociation('categories');
+        $criteria->addAssociation('categoriesRo');
 
         $products = $this->productRepository->search($criteria, $context);
         while ($products->count()) {
