@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
-use Omikron\FactFinder\Shopware6\Export\SalesChannelProvider;
+use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -14,8 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProductExportCommand extends Command
 {
-    /** @var SalesChannelProvider */
-    private $salesChannelProvider;
+    /** @var SalesChannelService */
+    private $channelService;
 
     /** @var FeedFactory */
     private $feedFactory;
@@ -24,19 +24,19 @@ class ProductExportCommand extends Command
     private $container;
 
     public function __construct(
-        SalesChannelProvider $salesChannelProvider,
+        SalesChannelService $channelService,
         FeedFactory $feedFactory,
         ContainerInterface $container
     ) {
         parent::__construct('factfinder:export:products');
-        $this->salesChannelProvider = $salesChannelProvider;
+        $this->channelService       = $channelService;
         $this->feedFactory          = $feedFactory;
         $this->container            = $container;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $feed = $this->feedFactory->create($this->salesChannelProvider->getSalesChannelContext());
+        $feed = $this->feedFactory->create($this->channelService->getSalesChannelContext());
         $feed->generate(new ConsoleOutput($output), $this->container->getParameter('factfinder.export.columns'));
     }
 }

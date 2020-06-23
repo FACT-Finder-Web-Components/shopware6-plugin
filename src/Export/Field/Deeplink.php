@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Omikron\FactFinder\Shopware6\Export\SalesChannelProvider;
+use Omikron\FactFinder\Shopware6\Export\DomainService;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
 class Deeplink implements FieldInterface
 {
-    /** @var SalesChannelProvider */
-    private $salesChannelProvider;
+    /** @var DomainService */
+    private $domainService;
 
-    public function __construct(SalesChannelProvider $salesChannelProvider)
+    public function __construct(DomainService $domainService)
     {
-        $this->salesChannelProvider = $salesChannelProvider;
+        $this->domainService = $domainService;
     }
 
     public function getName(): string
@@ -24,7 +24,6 @@ class Deeplink implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        $domain = $this->salesChannelProvider->getSalesChannelContext()->getSalesChannel()->getDomains()->first()->getUrl();
-        return $domain . '/' . $product->getSeoUrls()->first()->getSeoPathInfo();
+        return $this->domainService->getDomain()->getUrl() . '/' . $product->getSeoUrls()->first()->getSeoPathInfo();
     }
 }

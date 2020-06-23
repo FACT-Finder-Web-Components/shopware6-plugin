@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Omikron\FactFinder\Shopware6\Export\SalesChannelProvider;
+use Omikron\FactFinder\Shopware6\Export\DomainService;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 
 class ImageUrl implements FieldInterface
 {
-    private $salesChannelProvider;
+    /** @var DomainService */
+    private $domainService;
 
-    public function __construct(SalesChannelProvider $salesChannelProvider)
+    public function __construct(DomainService $domainService)
     {
-        $this->salesChannelProvider = $salesChannelProvider;
+        $this->domainService = $domainService;
     }
 
     public function getName(): string
@@ -23,7 +24,6 @@ class ImageUrl implements FieldInterface
 
     public function getValue(SalesChannelProductEntity $product): string
     {
-        $domain = $this->salesChannelProvider->getSalesChannelContext()->getSalesChannel()->getDomains()->first()->getUrl();
-        return $domain . '/' . $product->getCover()->getMedia()->getUrl();
+        return $this->domainService->getDomain()->getUrl() . '/' . $product->getCover()->getMedia()->getUrl();
     }
 }

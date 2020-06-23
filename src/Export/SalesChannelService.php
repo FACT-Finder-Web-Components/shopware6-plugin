@@ -16,7 +16,7 @@ use Shopware\Core\System\SalesChannel\Context\SalesChannelContextService;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 
-class SalesChannelProvider
+class SalesChannelService
 {
     /** @var EntityRepositoryInterface */
     private $salesChannelRepository;
@@ -24,8 +24,8 @@ class SalesChannelProvider
     /** @var SalesChannelContextFactory */
     private $salesChannelContextFactory;
 
-    /** @var SalesChannelContext */
-    private $cachedChannel;
+    /** @var SalesChannelContext|null */
+    private $cachedSalesChannel;
 
     public function __construct(
         EntityRepositoryInterface $salesChannelRepository,
@@ -35,19 +35,19 @@ class SalesChannelProvider
         $this->salesChannelContextFactory = $salesChannelContextFactory;
     }
 
-    public function getSalesChannelContext(): SalesChannelContext
+    public function getSalesChannelContext(SalesChannelEntity $salesChannel = null): SalesChannelContext
     {
-        if (!$this->cachedChannel) {
-            $salesChannel         = $this->getSalesChannel();
-            $this->channelInCache = $this->salesChannelContextFactory->create('', $salesChannel->getId(), [
-                SalesChannelContextService::LANGUAGE_ID => $salesChannel->getLanguageId(),
+        if (!$this->cachedSalesChannel) {
+            $usedChannel              = $salesChannel || $this->getDefaultStoreFrontSalesChannel();
+            $this->cachedSalesChannel = $this->salesChannelContextFactory->create('', $usedChannel->getId(), [
+                SalesChannelContextService::LANGUAGE_ID => $usedChannel->getLanguageId(),
             ]);
         }
 
-        return $this->cachedChannel;
+        return $this->cachedSalesChannel;
     }
 
-    private function getSalesChannel(): SalesChannelEntity
+    private function getDefaultStoreFrontSalesChannel(): SalesChannelEntity
     {
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('typeId', Defaults::SALES_CHANNEL_TYPE_STOREFRONT));
