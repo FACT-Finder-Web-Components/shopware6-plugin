@@ -31,6 +31,8 @@ class ExportProducts
         $criteria->addAssociation('seoUrls');
         $criteria->addAssociation('categories');
         $criteria->addAssociation('categoriesRo');
+        $criteria->addAssociation('properties');
+        $criteria->addAssociation('properties.group');
 
         $products = $this->productRepository->search($criteria, $context);
         while ($products->count()) {
