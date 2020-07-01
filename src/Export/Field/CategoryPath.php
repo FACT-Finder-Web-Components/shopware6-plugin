@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Content\Category\CategoryEntity as Category;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepositoryInterface;
 
 class CategoryPath implements FieldInterface
@@ -35,13 +35,23 @@ class CategoryPath implements FieldInterface
         return $this->fieldName;
     }
 
-    public function getValue(SalesChannelProductEntity $product): string
+    public function getValue(Product $product): string
     {
-        return implode('/', array_filter(array_map(function (string $categoryId) {
-            $criteria = new Criteria([$categoryId]);
-            $criteria->addAssociation('translations');
-            $category = $this->categoryRepository->search($criteria, $this->channelService->getSalesChannelContext())->first();
-            return $category ? $category->getName() : '';
-        }, $product->getCategoryTree())));
+        $categoryName = $this->categoryName($product);
+        return implode('|', $product->getCategories()->fmap(function (Category $category) use ($categoryName): string {
+            $path = explode('|', trim($category->getPath() . $category->getId(), '|'));
+            return implode('/', array_map($categoryName, array_slice($path, 1)));
+        }));
+    }
+
+    private function categoryName(Product $product): callable
+    {
+        $names = $product->getCategoriesRo()->map(function (Category $category): string {
+            return (string) $category->getName();
+        });
+
+        return function (string $id) use ($names): string {
+            return rawurlencode($names[$id] ?? '');
+        };
     }
 }
