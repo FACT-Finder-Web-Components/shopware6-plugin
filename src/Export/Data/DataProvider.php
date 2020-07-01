@@ -16,7 +16,7 @@ class DataProvider implements DataProviderInterface
     /** @var ExportProducts */
     private $products;
 
-    /** @var iterable|FieldInterface[] */
+    /** @var FieldInterface[] */
     private $productFields;
 
     public function __construct(SalesChannelContext $context, ExportProducts $products, iterable $productFields)
@@ -31,8 +31,9 @@ class DataProvider implements DataProviderInterface
      */
     public function getEntities(): iterable
     {
+        $productFields = iterator_to_array($this->productFields);
         foreach ($this->products->getByContext($this->context) as $product) {
-            yield from (new Entity\ProductEntity($product, $this->productFields))->getEntities();
+            yield from (new Entity\ProductEntity($product, $productFields))->getEntities();
         }
     }
 }

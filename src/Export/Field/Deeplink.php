@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Omikron\FactFinder\Shopware6\Export\DomainService;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface;
 
 class Deeplink implements FieldInterface
 {
-    /** @var DomainService */
-    private $domainService;
+    /** @var SeoUrlPlaceholderHandlerInterface */
+    private $urlPlaceholderHandler;
 
-    public function __construct(DomainService $domainService)
+    public function __construct(SeoUrlPlaceholderHandlerInterface $urlPlaceholderHandler)
     {
-        $this->domainService = $domainService;
+        $this->urlPlaceholderHandler = $urlPlaceholderHandler;
     }
 
     public function getName(): string
@@ -24,6 +24,6 @@ class Deeplink implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        return $this->domainService->getDomain()->getUrl() . '/' . $product->getSeoUrls()->first()->getSeoPathInfo();
+        return $this->urlPlaceholderHandler->generate('frontend.detail.page', ['productId' => $product->getId()]);
     }
 }

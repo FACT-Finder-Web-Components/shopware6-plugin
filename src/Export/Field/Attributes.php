@@ -25,11 +25,11 @@ class Attributes implements FieldInterface
 
     public function getValue(SalesChannelProductEntity $product): string
     {
-        $attributes = array_reduce($product->getProperties()->getElements(), function (array $attrs, PropertyGroupOptionEntity $property) {
+        $attributes = $product->getProperties()->reduce(function (array $attrs, PropertyGroupOptionEntity $property) {
             return $attrs + [$property->getId() => $this->formatAttribute($property->getGroup()->getName(), $property->getName())];
         }, []);
 
-        return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';;
+        return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';
     }
 
     private function formatAttribute($name, $value): string

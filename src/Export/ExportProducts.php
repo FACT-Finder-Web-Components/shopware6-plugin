@@ -27,8 +27,8 @@ class ExportProducts
      */
     public function getByContext(SalesChannelContext $context, int $batchSize = 100): iterable
     {
-        $criteria = (new Criteria())->setLimit($batchSize);
-        $criteria->addAssociation('seoUrls');
+        $criteria = new Criteria();
+        $criteria->setLimit($batchSize);
         $criteria->addAssociation('categories');
         $criteria->addAssociation('categoriesRo');
         $criteria->addAssociation('properties');

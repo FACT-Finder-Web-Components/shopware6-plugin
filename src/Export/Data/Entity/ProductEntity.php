@@ -20,7 +20,7 @@ class ProductEntity implements ExportEntityInterface, DataProviderInterface
     public function __construct(SalesChannelProductEntity $product, iterable $productFields)
     {
         $this->product       = $product;
-        $this->productFields = iterator_to_array($productFields);
+        $this->productFields = $productFields;
     }
 
     public function getId(): string

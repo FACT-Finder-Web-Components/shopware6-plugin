@@ -13,19 +13,18 @@ class FeedFactory
 {
     /** @var FilterInterface */
     private $filter;
-    /**
-     * @var ExportProducts
-     */
+
+    /** @var ExportProducts */
     private $products;
 
-    /** @var iterable|FieldInterface[] */
+    /** @var FieldInterface[] */
     private $productFields;
 
     public function __construct(ExportProducts $products, FilterInterface $filter, iterable $productFields)
     {
-        $this->products         = $products;
-        $this->filter           = $filter;
-        $this->productFields    = $productFields;
+        $this->products      = $products;
+        $this->filter        = $filter;
+        $this->productFields = $productFields;
     }
 
     public function create(SalesChannelContext $context): Feed

@@ -24,6 +24,6 @@ class ImageUrl implements FieldInterface
 
     public function getValue(SalesChannelProductEntity $product): string
     {
-        return $this->domainService->getDomain()->getUrl() . '/' . $product->getCover()->getMedia()->getUrl();
+        return $this->domainService->getDomain()->getUrl() . $product->getCover()->getMedia()->getUrl();
     }
 }
