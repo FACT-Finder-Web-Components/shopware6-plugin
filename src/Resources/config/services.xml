@@ -10,6 +10,7 @@
             <parameter key="Deeplink">Deeplink</parameter>
             <parameter key="imageUrl">ImageUrl</parameter>
             <parameter key="CategoryPath">CategoryPath</parameter>
+            <parameter key="Attributes">Attributes</parameter>
         </parameter>
 
         <parameter key="factfinder.field_roles" type="collection">
