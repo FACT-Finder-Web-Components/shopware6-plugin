@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Export\DomainService;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
 class ImageUrl implements FieldInterface
 {
@@ -22,8 +22,8 @@ class ImageUrl implements FieldInterface
         return 'ImageUrl';
     }
 
-    public function getValue(SalesChannelProductEntity $product): string
+    public function getValue(Product $product): string
     {
-        return $this->domainService->getDomain()->getUrl() . $product->getCover()->getMedia()->getUrl();
+        return $product->getCover()->getMedia()->getUrl();
     }
 }
