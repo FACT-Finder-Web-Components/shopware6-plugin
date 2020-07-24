@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data;
 
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\EntityFactory;
 use Omikron\FactFinder\Shopware6\Export\ExportProducts;
-use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class DataProvider implements DataProviderInterface
@@ -16,14 +16,14 @@ class DataProvider implements DataProviderInterface
     /** @var ExportProducts */
     private $products;
 
-    /** @var FieldInterface[] */
-    private $productFields;
+    /** @var EntityFactory */
+    private $entityFactory;
 
-    public function __construct(SalesChannelContext $context, ExportProducts $products, iterable $productFields)
+    public function __construct(SalesChannelContext $context, ExportProducts $products, EntityFactory $entityFactory)
     {
         $this->context       = $context;
         $this->products      = $products;
-        $this->productFields = $productFields;
+        $this->entityFactory = $entityFactory;
     }
 
     /**
@@ -31,9 +31,8 @@ class DataProvider implements DataProviderInterface
      */
     public function getEntities(): iterable
     {
-        $productFields = iterator_to_array($this->productFields);
         foreach ($this->products->getByContext($this->context) as $product) {
-            yield from (new Entity\ProductEntity($product, $productFields))->getEntities();
+            yield from $this->entityFactory->createEntities($product);
         }
     }
 }

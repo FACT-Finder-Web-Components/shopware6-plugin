@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
-use Omikron\FactFinder\Shopware6\Export\Data\DataProviderInterface;
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
-class ProductEntity implements ExportEntityInterface, DataProviderInterface
+class ProductEntity implements ExportEntityInterface
 {
-    /** @var SalesChannelProductEntity */
+    /** @var Product */
     private $product;
 
     /** @var FieldInterface[] */
     private $productFields;
 
-    public function __construct(SalesChannelProductEntity $product, iterable $productFields)
+    public function __construct(Product $product, iterable $productFields)
     {
         $this->product       = $product;
         $this->productFields = $productFields;
@@ -34,12 +33,8 @@ class ProductEntity implements ExportEntityInterface, DataProviderInterface
             return $fields + [$field->getName() => $field->getValue($this->product)];
         }, [
             'ProductNumber' => (string) $this->product->getProductNumber(),
+            'Master'        => (string) $this->product->getProductNumber(),
             'Name'          => (string) $this->product->getName(),
         ]);
-    }
-
-    public function getEntities(): iterable
-    {
-        return [$this];
     }
 }
