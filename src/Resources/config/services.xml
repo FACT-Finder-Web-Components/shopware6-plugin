@@ -4,6 +4,18 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="factfinder.export.columns" type="collection">
+            <parameter key="ProductNumber">ProductNumber</parameter>
+            <parameter key="Master">Master</parameter>
+            <parameter key="Name">Name</parameter>
+            <parameter key="Deeplink">Deeplink</parameter>
+            <parameter key="Description">Description</parameter>
+            <parameter key="Brand">Brand</parameter>
+            <parameter key="imageUrl">ImageUrl</parameter>
+            <parameter key="CategoryPath">CategoryPath</parameter>
+            <parameter key="FilterAttributes">FilterAttributes</parameter>
+        </parameter>
+
         <parameter key="factfinder.field_roles" type="collection">
             <parameter key="brand">Manufacturer</parameter>
             <parameter key="deeplink">Deeplink</parameter>
@@ -20,6 +32,10 @@
     <services>
         <defaults autoconfigure="true" autowire="true">
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
+            <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
+            <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
+            <bind key="$salesChannelRepository" type="service" id="sales_channel.repository" />
+            <bind key="$categoryRepository" type="service" id="sales_channel.category.repository" />
         </defaults>
 
         <instanceof id="Shopware\Core\System\Snippet\Files\SnippetFileInterface">
@@ -32,6 +48,10 @@
             </call>
         </instanceof>
 
-        <prototype namespace="Omikron\FactFinder\Shopware6\" resource="../../{Command,Resources,Storefront,Subscriber}" />
+        <prototype namespace="Omikron\FactFinder\Shopware6\"
+                   resource="../../{Command,Export,Resources,Storefront,Subscriber}" />
+
+        <service id="Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface"
+                 class="Omikron\FactFinder\Shopware6\Export\Filter\TextFilter" />
     </services>
 </container>
