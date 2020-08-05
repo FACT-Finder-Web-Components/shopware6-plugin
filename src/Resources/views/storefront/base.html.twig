@@ -6,6 +6,7 @@
     api="v3"
     use-url-parameter="true"
     only-search-params="true"
+    disable-single-hit-redirect="true"
     {% for key, value in factfinder.communication %}
       {{ key }}="{{ value|e('html_attr') }}"
     {% endfor %}></ff-communication>
