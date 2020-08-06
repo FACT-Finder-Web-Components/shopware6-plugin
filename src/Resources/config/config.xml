@@ -35,7 +35,7 @@
     </card>
 
     <card>
-        <title>FTP Settings</title>
+        <title>Upload Settings</title>
         <title lang="de-DE">FTP-Konfiguration</title>
 
         <input-field>
@@ -65,6 +65,26 @@
             <label>Password</label>
             <label lang="de-DE">Passwort</label>
             <required>true</required>
+        </input-field>
+
+        <input-field type="multi-select">
+            <name>pushImport</name>
+            <label>Enable Automatic Import for</label>
+            <label lang="de-DE">Aktivieren Sie den automatischen Import für</label>
+            <options>
+                <option>
+                    <id>search</id>
+                    <name>Search</name>
+                </option>
+                <option>
+                    <id>suggest</id>
+                    <name>Suggest</name>
+                </option>
+                <option>
+                    <id>recommendation</id>
+                    <name>Recommendation</name>
+                </option>
+            </options>
         </input-field>
     </card>
 </config>

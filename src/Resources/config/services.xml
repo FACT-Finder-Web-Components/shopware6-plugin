@@ -52,7 +52,7 @@
         </instanceof>
 
         <prototype namespace="Omikron\FactFinder\Shopware6\"
-                   resource="../../{Command,Export,Resources,Storefront,Subscriber,Upload}" />
+                   resource="../../{Command,Communication,Config,Export,Resources,Storefront,Subscriber,Upload}" />
 
         <service id="Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface"
                  class="Omikron\FactFinder\Shopware6\Export\Filter\TextFilter" />

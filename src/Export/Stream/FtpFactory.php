@@ -7,26 +7,26 @@ namespace Omikron\FactFinder\Shopware6\Export\Stream;
 use League\Flysystem\Adapter\Ftp as FtpAdapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FileExistsException;
-use Omikron\FactFinder\Shopware6\Export\Upload\Config;
+use Omikron\FactFinder\Shopware6\Config\Upload;
 
 class FtpFactory
 {
-    /** @var Config */
-    private $ftpConfig;
+    /** @var Upload */
+    private $config;
 
     /** @var bool */
     private $overrideExistingFile;
 
-    public function __construct(Config $configuration, bool $overrideExistingFile)
+    public function __construct(Upload $config, bool $overrideExistingFile)
     {
-        $this->ftpConfig             = $configuration;
-        $this->overrideExistingFile  = $overrideExistingFile;
+        $this->config               = $config;
+        $this->overrideExistingFile = $overrideExistingFile;
     }
 
     public function create(): Ftp
     {
         $filesystem = new Filesystem(new FtpAdapter($this->config()));
-        $fileName =  $this->ftpConfig->getUploadFileName();
+        $fileName =  $this->config->getUploadFileName();
         if (!$this->overrideExistingFile && $filesystem->has($fileName)) {
             throw new FileExistsException($fileName);
         }
@@ -37,10 +37,10 @@ class FtpFactory
     private function config(): array
     {
         return [
-            'host'     => $this->ftpConfig->getHost(),
-            'port'     => $this->ftpConfig->getPort(),
-            'username' => $this->ftpConfig->getUserName(),
-            'password' => $this->ftpConfig->getPassword(),
+            'host'     => $this->config->getHost(),
+            'port'     => $this->config->getPort(),
+            'username' => $this->config->getUserName(),
+            'password' => $this->config->getPassword(),
             'ssl'      => true,
         ];
     }
