@@ -38,10 +38,6 @@
             <bind key="$categoryRepository" type="service" id="sales_channel.category.repository" />
         </defaults>
 
-        <instanceof id="Shopware\Core\System\Snippet\Files\SnippetFileInterface">
-            <tag name="shopware.snippet.file" priority="100" />
-        </instanceof>
-
         <instanceof id="Symfony\Bundle\FrameworkBundle\Controller\AbstractController">
             <call method="setContainer">
                 <argument type="service" id="service_container" />
