@@ -26,6 +26,11 @@ class PushImportService
         $this->uploadConfig        = $uploadConfig;
     }
 
+    /**
+     * @return bool
+     *
+     * @throws BadResponseException
+     */
     public function execute(): bool
     {
         $types = $this->uploadConfig->getPushImportTypes();
@@ -37,13 +42,9 @@ class PushImportService
             throw new BadResponseException('Push import is currently running. Please make sure that import process is finished before starting new one.');
         }
 
-        $params = [
-            'channel' => $this->communicationConfig->getChannel(),
-            'quiet'   => 'true',
-        ];
-
+        $client = $this->client();
         foreach ($types as $type) {
-            $this->client()->post($type . '?' . http_build_query($params));
+            $client->post($type . '?' . http_build_query(['channel' => $this->communicationConfig->getChannel(), 'quiet' => 'true']));
         }
 
         return true;
@@ -66,12 +67,12 @@ class PushImportService
     {
         return new Client(
             [
-                'headers' => [
+                'headers'  => [
                     'Accept'        => 'application/json',
                     'Content-Type'  => 'application/json',
-                    'Authorization' => $this->communicationConfig->getCredentials()->toString(),
+                    'Authorization' => (string) $this->communicationConfig->getCredentials(),
                 ],
-                'base_uri'      => $this->getBaseEndpoint()
+                'base_uri' => $this->getBaseEndpoint()
             ]
         );
     }
