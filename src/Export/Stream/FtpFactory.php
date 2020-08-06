@@ -6,6 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Export\Stream;
 
 use League\Flysystem\Adapter\Ftp as FtpAdapter;
 use League\Flysystem\Filesystem;
+use League\Flysystem\FileExistsException;
 use Omikron\FactFinder\Shopware6\Export\Upload\Config;
 
 class FtpFactory
@@ -13,24 +14,27 @@ class FtpFactory
     /** @var Config */
     private $ftpConfig;
 
-    public function __construct(Config $configuration, bool $graceful = true)
+    /** @var bool */
+    private $overrideExistingFile;
+
+    public function __construct(Config $configuration, bool $overrideExistingFile)
     {
-        $this->ftpConfig = $configuration;
-        $this->graceful  = $graceful;
+        $this->ftpConfig             = $configuration;
+        $this->overrideExistingFile  = $overrideExistingFile;
     }
 
-    public function create()
+    public function create(): Ftp
     {
         $filesystem = new Filesystem(new FtpAdapter($this->config()));
         $fileName =  $this->ftpConfig->getUploadFileName();
-        if (!$this->graceful && $filesystem->has($fileName)) {
+        if (!$this->overrideExistingFile && $filesystem->has($fileName)) {
             throw new FileExistsException($fileName);
         }
 
         return new Ftp($filesystem, $fileName);
     }
 
-    private function config()
+    private function config(): array
     {
         return [
             'host'     => $this->ftpConfig->getHost(),
