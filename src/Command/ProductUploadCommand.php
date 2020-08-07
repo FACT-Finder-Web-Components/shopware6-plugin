@@ -47,8 +47,8 @@ class ProductUploadCommand extends Command implements ContainerAwareInterface
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->pushImportService->execute();
         $feed = $this->feedFactory->create($this->channelService->getSalesChannelContext());
         $feed->generate($this->ftpFactory->create(), $this->container->getParameter('factfinder.export.columns'));
+        $this->pushImportService->execute();
     }
 }
