@@ -35,8 +35,8 @@ class ProductUploadCommand extends Command implements ContainerAwareInterface
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
         FtpFactory $ftpFactory,
-        ContainerInterface $container,
-        PushImportService $pushImportService
+        PushImportService $pushImportService,
+        ContainerInterface $container
     ) {
         parent::__construct('factfinder:upload:products');
         $this->channelService       = $channelService;
