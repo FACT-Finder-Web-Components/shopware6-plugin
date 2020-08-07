@@ -18,10 +18,8 @@ class PushImportService
     /** @var Upload */
     private $uploadConfig;
 
-    public function __construct(
-        Communication $communicationConfig,
-        Upload $uploadConfig
-    ) {
+    public function __construct(Communication $communicationConfig, Upload $uploadConfig)
+    {
         $this->communicationConfig = $communicationConfig;
         $this->uploadConfig        = $uploadConfig;
     }
@@ -65,15 +63,13 @@ class PushImportService
 
     private function client(): Client
     {
-        return new Client(
-            [
-                'headers'  => [
-                    'Accept'        => 'application/json',
-                    'Content-Type'  => 'application/json',
-                    'Authorization' => (string) $this->communicationConfig->getCredentials(),
-                ],
-                'base_uri' => $this->getBaseEndpoint()
-            ]
-        );
+        return new Client([
+            'headers'  => [
+                'Accept'        => 'application/json',
+                'Content-Type'  => 'application/json',
+                'Authorization' => (string) $this->communicationConfig->getCredentials(),
+            ],
+            'base_uri' => $this->getBaseEndpoint()
+        ]);
     }
 }
