@@ -27,13 +27,11 @@
             <parameter key="productName">Title</parameter>
             <parameter key="productNumber">ProductNumber</parameter>
         </parameter>
-        <parameter key="factfinder.upload.override_existing_file" type="constant">true</parameter>
     </parameters>
 
     <services>
         <defaults autoconfigure="true" autowire="true">
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
-            <bind key="$overrideExistingFile">%factfinder.upload.override_existing_file%</bind>
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$salesChannelRepository" type="service" id="sales_channel.repository" />

@@ -14,22 +14,15 @@ class FtpFactory
     /** @var Upload */
     private $config;
 
-    /** @var bool */
-    private $overrideExistingFile;
-
-    public function __construct(Upload $config, bool $overrideExistingFile)
+    public function __construct(Upload $config)
     {
-        $this->config               = $config;
-        $this->overrideExistingFile = $overrideExistingFile;
+        $this->config = $config;
     }
 
     public function create(): Ftp
     {
         $filesystem = new Filesystem(new FtpAdapter($this->config()));
         $fileName =  $this->config->getUploadFileName();
-        if (!$this->overrideExistingFile && $filesystem->has($fileName)) {
-            throw new FileExistsException($fileName);
-        }
 
         return new Ftp($filesystem, $fileName);
     }
