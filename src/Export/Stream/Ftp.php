@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Stream;
 
-use League\Flysystem\FileExistsException;
 use League\Flysystem\FilesystemInterface;
 
 class Ftp implements StreamInterface

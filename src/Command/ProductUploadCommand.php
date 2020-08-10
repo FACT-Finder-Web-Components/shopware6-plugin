@@ -8,7 +8,6 @@ use Omikron\FactFinder\Shopware6\Communication\PushImportService;
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\FtpFactory;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -35,14 +34,13 @@ class ProductUploadCommand extends Command implements ContainerAwareInterface
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
         FtpFactory $ftpFactory,
-        PushImportService $pushImportService,
-        ContainerInterface $container
+        PushImportService $pushImportService
     ) {
         parent::__construct('factfinder:upload:products');
-        $this->channelService       = $channelService;
-        $this->feedFactory          = $feedFactory;
-        $this->ftpFactory           = $ftpFactory;
-        $this->pushImportService    = $pushImportService;
+        $this->channelService    = $channelService;
+        $this->feedFactory       = $feedFactory;
+        $this->ftpFactory        = $ftpFactory;
+        $this->pushImportService = $pushImportService;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

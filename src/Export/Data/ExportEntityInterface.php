@@ -8,14 +8,14 @@ namespace Omikron\FactFinder\Shopware6\Export\Data;
 interface ExportEntityInterface
 {
     /**
-     * Get entity ID
+     * Get entity ID.
      *
      * @return string
      */
     public function getId(): string;
 
     /**
-     * Convert entity data to associative array
+     * Convert entity data to associative array.
      *
      * @return array
      */

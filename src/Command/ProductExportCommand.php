@@ -7,7 +7,6 @@ namespace Omikron\FactFinder\Shopware6\Command;
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,8 +25,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
 
     public function __construct(
         SalesChannelService $channelService,
-        FeedFactory $feedFactory,
-        ContainerInterface $container
+        FeedFactory $feedFactory
     ) {
         parent::__construct('factfinder:export:products');
         $this->channelService = $channelService;

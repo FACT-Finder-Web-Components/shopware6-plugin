@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Shopware6\Communication;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Exception\ClientException;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\Upload;
 
@@ -69,7 +68,7 @@ class PushImportService
                 'Content-Type'  => 'application/json',
                 'Authorization' => (string) $this->communicationConfig->getCredentials(),
             ],
-            'base_uri' => $this->getBaseEndpoint()
+            'base_uri' => $this->getBaseEndpoint(),
         ]);
     }
 }

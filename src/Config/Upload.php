@@ -13,7 +13,7 @@ class Upload extends BaseConfig
 
     public function getPort(): string
     {
-        return (string)$this->config('ftpPort') ?: '21';
+        return (string) $this->config('ftpPort') ?: '21';
     }
 
     public function getUserName(): string

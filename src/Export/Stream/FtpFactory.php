@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Shopware6\Export\Stream;
 
 use League\Flysystem\Adapter\Ftp as FtpAdapter;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FileExistsException;
 use Omikron\FactFinder\Shopware6\Config\Upload;
 
 class FtpFactory
@@ -22,9 +21,7 @@ class FtpFactory
     public function create(): Ftp
     {
         $filesystem = new Filesystem(new FtpAdapter($this->config()));
-        $fileName =  $this->config->getUploadFileName();
-
-        return new Ftp($filesystem, $fileName);
+        return new Ftp($filesystem, $this->config->getUploadFileName());
     }
 
     private function config(): array
