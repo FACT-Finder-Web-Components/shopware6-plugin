@@ -38,7 +38,6 @@
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$salesChannelRepository" type="service" id="sales_channel.repository" />
             <bind key="$categoryRepository" type="service" id="sales_channel.category.repository" />
-            <bind key="$categoryRepository" type="service" id="sales_channel.category.repository" />
         </defaults>
 
         <instanceof id="Shopware\Core\System\Snippet\Files\SnippetFileInterface">
@@ -52,7 +51,7 @@
         </instanceof>
 
         <prototype namespace="Omikron\FactFinder\Shopware6\"
-                   resource="../../{Command,Communication,Config,Export,Resources,Storefront,Subscriber,Upload}" />
+                   resource="../../{Command,Communication,Config,Export,Resources,Storefront,Subscriber}" />
 
         <service id="Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface"
                  class="Omikron\FactFinder\Shopware6\Export\Filter\TextFilter" />
