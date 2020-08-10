@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Omikron\FactFinder\Shopware6\Export\Stream;
+namespace Omikron\FactFinder\Shopware6\Upload;
 
 use League\Flysystem\Adapter\Ftp as FtpAdapter;
 use League\Flysystem\Filesystem;
 use Omikron\FactFinder\Shopware6\Config\Upload;
+use Omikron\FactFinder\Shopware6\Export\Stream\TmpFile;
 
-class FtpFactory
+class UploadService
 {
     /** @var Upload */
     private $config;
@@ -18,10 +19,12 @@ class FtpFactory
         $this->config = $config;
     }
 
-    public function create(): Ftp
+    public function upload(callable $generate): void
     {
-        $filesystem = new Filesystem(new FtpAdapter($this->config()));
-        return new Ftp($filesystem, $this->config->getUploadFileName());
+        $tmpFile = new TmpFile();
+        $connection = $filesystem = new Filesystem(new FtpAdapter($this->config()));
+        $generate($tmpFile);
+        $connection->putStream($this->config->getUploadFileName(), $tmpFile());
     }
 
     private function config(): array
