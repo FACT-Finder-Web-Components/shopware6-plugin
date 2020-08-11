@@ -4,37 +4,39 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Upload;
 
-use League\Flysystem\Adapter\Ftp as FtpAdapter;
-use League\Flysystem\Filesystem;
-use Omikron\FactFinder\Shopware6\Config\Upload;
-use Omikron\FactFinder\Shopware6\Export\Stream\TmpFile;
+use Omikron\FactFinder\Shopware6\Config\FtpConfig;
+use Shopware\Core\Framework\Adapter\Filesystem\FilesystemFactory;
 
 class UploadService
 {
-    /** @var Upload */
+    /** @var FtpConfig */
     private $config;
 
-    public function __construct(Upload $config)
+    /** @var FilesystemFactory */
+    private $filesystemFactory;
+
+    public function __construct(FtpConfig $config, FilesystemFactory $filesystemFactory)
     {
-        $this->config = $config;
+        $this->config            = $config;
+        $this->filesystemFactory = $filesystemFactory;
     }
 
-    public function upload(callable $generate): void
+    public function upload($fileHandle): void
     {
-        $tmpFile = new TmpFile();
-        $connection = $filesystem = new Filesystem(new FtpAdapter($this->config()));
-        $generate($tmpFile);
-        $connection->putStream($this->config->getUploadFileName(), $tmpFile());
+        $connection = $this->filesystemFactory->factory($this->config());
+        $connection->putStream($this->config->getUploadFileName(), $fileHandle);
     }
 
     private function config(): array
     {
         return [
-            'host'     => $this->config->getHost(),
-            'port'     => $this->config->getPort(),
-            'username' => $this->config->getUserName(),
-            'password' => $this->config->getPassword(),
-            'ssl'      => true,
-        ];
+            'type'   => 'ftp',
+            'config' => [
+                'host'     => $this->config->getHost(),
+                'port'     => $this->config->getPort(),
+                'username' => $this->config->getUserName(),
+                'password' => $this->config->getPassword(),
+                'ssl'      => true,
+            ]];
     }
 }

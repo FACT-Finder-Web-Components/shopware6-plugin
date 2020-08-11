@@ -7,17 +7,17 @@ namespace Omikron\FactFinder\Shopware6\Communication;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use Omikron\FactFinder\Shopware6\Config\Communication;
-use Omikron\FactFinder\Shopware6\Config\Upload;
+use Omikron\FactFinder\Shopware6\Config\FtpConfig;
 
 class PushImportService
 {
     /** @var Communication */
     private $communicationConfig;
 
-    /** @var Upload */
+    /** @var FtpConfig */
     private $uploadConfig;
 
-    public function __construct(Communication $communicationConfig, Upload $uploadConfig)
+    public function __construct(Communication $communicationConfig, FtpConfig $uploadConfig)
     {
         $this->communicationConfig = $communicationConfig;
         $this->uploadConfig        = $uploadConfig;

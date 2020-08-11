@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Config;
 
-class Upload extends BaseConfig
+class FtpConfig extends BaseConfig
 {
     public function getHost(): string
     {

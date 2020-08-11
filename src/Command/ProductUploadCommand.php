@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
-use Omikron\FactFinder\Shopware6\Export\Feed;
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
-use Omikron\FactFinder\Shopware6\Export\Stream\StreamInterface;
+use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,16 +46,14 @@ class ProductUploadCommand extends Command implements ContainerAwareInterface
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->uploadService->upload($this->generate($this->feedFactory->create($this->channelService->getSalesChannelContext())));
+        $fileHandle  = tmpfile();
+        $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext());
+        $feedService->generate(new CsvFile($fileHandle), $this->container->getParameter('factfinder.export.columns'));
+
+        $this->uploadService->upload($fileHandle);
         $output->writeln('Feed has been succesfully uploaded');
+
         $this->pushImportService->execute();
         $output->writeln('FACT-Finder import has been start');
-    }
-
-    private function generate(Feed $feed)
-    {
-        return function (StreamInterface $file) use ($feed): void {
-            $feed->generate($file, $this->container->getParameter('factfinder.export.columns'));
-        };
     }
 }
