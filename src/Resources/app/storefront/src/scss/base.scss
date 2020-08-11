@@ -39,4 +39,14 @@ ff-suggest {
   .ffw-query, .container-caption {
     color: $sw-color-brand-primary;
   }
+
+  &-item {
+    .search-suggest-product:last-child {
+      border-bottom: 1px solid $border-color;
+    }
+
+    &:last-child .search-suggest-product {
+      border-bottom: 0;
+    }
+  }
 }
