@@ -10,7 +10,6 @@ use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\StreamInterface;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,8 +36,7 @@ class ProductUploadCommand extends Command implements ContainerAwareInterface
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
         PushImportService $pushImportService,
-        UploadService $uploadService,
-        ContainerInterface $container
+        UploadService $uploadService
     ) {
         parent::__construct('factfinder:upload:products');
         $this->channelService    = $channelService;
