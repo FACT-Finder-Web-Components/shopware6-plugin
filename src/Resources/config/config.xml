@@ -33,4 +33,58 @@
             <required>true</required>
         </input-field>
     </card>
+
+    <card>
+        <title>Upload Settings</title>
+        <title lang="de-DE">FTP-Konfiguration</title>
+
+        <input-field>
+            <name>ftpHost</name>
+            <label>Server URL</label>
+            <label lang="de-DE">Server-URL</label>
+            <required>true</required>
+        </input-field>
+
+        <input-field>
+            <name>ftpPort</name>
+            <label>Port</label>
+            <defaultValue>21</defaultValue>
+            <label lang="de-DE">Port</label>
+            <required>false</required>
+        </input-field>
+
+        <input-field>
+            <name>ftpUsername</name>
+            <label>Username</label>
+            <label lang="de-DE">Benutzername</label>
+            <required>true</required>
+        </input-field>
+
+        <input-field type="password">
+            <name>ftpPassword</name>
+            <label>Password</label>
+            <label lang="de-DE">Passwort</label>
+            <required>true</required>
+        </input-field>
+
+        <input-field type="multi-select">
+            <name>pushImport</name>
+            <label>Enable Automatic Import for</label>
+            <label lang="de-DE">Aktivieren Sie den automatischen Import für</label>
+            <options>
+                <option>
+                    <id>search</id>
+                    <name>Search</name>
+                </option>
+                <option>
+                    <id>suggest</id>
+                    <name>Suggest</name>
+                </option>
+                <option>
+                    <id>recommendation</id>
+                    <name>Recommendation</name>
+                </option>
+            </options>
+        </input-field>
+    </card>
 </config>

@@ -27,7 +27,7 @@ class DataProvider implements DataProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getEntities(): iterable
     {
