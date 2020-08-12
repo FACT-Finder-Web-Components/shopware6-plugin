@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Communication;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\BadResponseException;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\FtpConfig;
 use Omikron\FactFinder\Shopware6\Exception\ImportRunningException;
@@ -26,28 +25,22 @@ class PushImportService
 
     /**
      * @return bool
-     *
-     * @throws BadResponseException
+     * @throws ImportRunningException
      */
     public function execute(): bool
     {
-        $types = $this->uploadConfig->getPushImportTypes();
-        if (empty($types)) {
-            return false;
-        }
         $this->checkNotRunning();
 
         $client = $this->client();
-        foreach ($types as $type) {
-            $client->post($type . '?' . http_build_query(['channel' => $this->communicationConfig->getChannel(), 'quiet' => 'true']));
+        $query  = http_build_query(['channel' => $this->communicationConfig->getChannel(), 'quiet' => 'true']);
+        foreach ($this->uploadConfig->getPushImportTypes() as $type) {
+            $client->post($type . '?' . $query);
         }
 
         return true;
     }
 
     /**
-     * @return void
-     *
      * @throws ImportRunningException
      */
     private function checkNotRunning(): void
