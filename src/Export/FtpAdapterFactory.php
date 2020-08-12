@@ -10,7 +10,6 @@ use Shopware\Core\Framework\Adapter\Filesystem\Adapter\AdapterFactoryInterface;
 
 class FtpAdapterFactory implements AdapterFactoryInterface
 {
-
     public function create(array $config): AdapterInterface
     {
         return new FtpAdapter($config);

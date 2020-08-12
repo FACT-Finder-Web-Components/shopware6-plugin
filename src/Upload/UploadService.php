@@ -37,6 +37,7 @@ class UploadService
                 'username' => $this->config->getUserName(),
                 'password' => $this->config->getPassword(),
                 'ssl'      => true,
-            ]];
+            ],
+        ];
     }
 }
