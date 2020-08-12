@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\FtpConfig;
+use Omikron\FactFinder\Shopware6\Exception\ImportRunningException;
 
 class PushImportService
 {
@@ -34,10 +35,7 @@ class PushImportService
         if (empty($types)) {
             return false;
         }
-
-        if ($this->isRunning()) {
-            throw new BadResponseException('Push import is currently running. Please make sure that import process is finished before starting new one.');
-        }
+        $this->checkNotRunning();
 
         $client = $this->client();
         foreach ($types as $type) {
@@ -47,12 +45,19 @@ class PushImportService
         return true;
     }
 
-    private function isRunning(): bool
+    /**
+     * @return void
+     *
+     * @throws ImportRunningException
+     */
+    private function checkNotRunning(): void
     {
         $query    = http_build_query(['channel' => $this->communicationConfig->getChannel()]);
         $response = $this->client()->get('running?' . $query);
 
-        return filter_var($response->getBody(), FILTER_VALIDATE_BOOLEAN);
+        if (filter_var($response->getBody(), FILTER_VALIDATE_BOOLEAN)) {
+            throw new ImportRunningException();
+        }
     }
 
     private function getBaseEndpoint(): string
