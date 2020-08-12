@@ -59,10 +59,11 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext());
+        $feedColumns = $this->container->getParameter('factfinder.export.columns');
 
         if ($input->getOption(self::UPLOAD_FEED_OPTION)) {
             $fileHandle = tmpfile();
-            $feedService->generate(new CsvFile($fileHandle), $this->container->getParameter('factfinder.export.columns'));
+            $feedService->generate(new CsvFile($fileHandle), $feedColumns);
             $this->uploadService->upload($fileHandle);
             $output->writeln('Feed has been succesfully uploaded');
 
@@ -71,7 +72,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
                 $output->writeln('FACT-Finder import has been start');
             }
         } else {
-            $feedService->generate(new ConsoleOutput($output), $this->container->getParameter('factfinder.export.columns'));
+            $feedService->generate(new ConsoleOutput($output), $feedColumns);
         }
     }
 }
