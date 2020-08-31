@@ -19,7 +19,7 @@ class PropertyFormatter
 
     public function __invoke(Option $option): string
     {
-        return $this->format($option->getGroup()->getName(), $option->getName());
+        return $this->format((string) $option->getGroup()->getName(), (string) $option->getName());
     }
 
     public function format(string ...$parts): string
