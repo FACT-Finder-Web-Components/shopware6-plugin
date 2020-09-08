@@ -15,6 +15,7 @@ class ImageUrl implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        return $product->getCover()->getMedia()->getUrl();
+        $cover = $product->getCover();
+        return $cover && $cover->getMedia() ? $cover->getMedia()->getUrl() : '';
     }
 }
