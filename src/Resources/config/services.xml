@@ -4,16 +4,10 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="factfinder.export.columns" type="collection">
+        <parameter key="factfinder.export.columns.base" type="collection">
             <parameter key="ProductNumber">ProductNumber</parameter>
             <parameter key="Master">Master</parameter>
             <parameter key="Name">Name</parameter>
-            <parameter key="Deeplink">Deeplink</parameter>
-            <parameter key="Description">Description</parameter>
-            <parameter key="Brand">Brand</parameter>
-            <parameter key="imageUrl">ImageUrl</parameter>
-            <parameter key="CategoryPath">CategoryPath</parameter>
-            <parameter key="FilterAttributes">FilterAttributes</parameter>
         </parameter>
 
         <parameter key="factfinder.field_roles" type="collection">
