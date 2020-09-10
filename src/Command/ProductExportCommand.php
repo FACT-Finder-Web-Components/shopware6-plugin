@@ -61,18 +61,19 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext());
         $feedColumns = $this->container->getParameter('factfinder.export.columns');
 
-        if ($input->getOption(self::UPLOAD_FEED_OPTION)) {
-            $fileHandle = tmpfile();
-            $feedService->generate(new CsvFile($fileHandle), $feedColumns);
-            $this->uploadService->upload($fileHandle);
-            $output->writeln('Feed has been succesfully uploaded');
-
-            if ($input->getOption(self::PUSH_IMPORT_OPTION)) {
-                $this->pushImportService->execute();
-                $output->writeln('FACT-Finder import has been start');
-            }
-        } else {
+        if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
             $feedService->generate(new ConsoleOutput($output), $feedColumns);
+            return;
+        }
+
+        $fileHandle = tmpfile();
+        $feedService->generate(new CsvFile($fileHandle), $feedColumns);
+        $this->uploadService->upload($fileHandle);
+        $output->writeln('Feed has been succesfully uploaded');
+
+        if ($input->getOption(self::PUSH_IMPORT_OPTION)) {
+            $this->pushImportService->execute();
+            $output->writeln('FACT-Finder import has been start');
         }
     }
 }

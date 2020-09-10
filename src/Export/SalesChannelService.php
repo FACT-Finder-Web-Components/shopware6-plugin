@@ -18,27 +18,27 @@ use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 class SalesChannelService
 {
     /** @var EntityRepositoryInterface */
-    private $salesChannelRepository;
+    private $channelRepository;
 
     /** @var SalesChannelContextFactory */
-    private $salesChannelContextFactory;
+    private $channelContextFactory;
 
     /** @var SalesChannelContext|null */
     private $cachedSalesChannel;
 
     public function __construct(
-        EntityRepositoryInterface $salesChannelRepository,
-        SalesChannelContextFactory $salesChannelContextFactory
+        EntityRepositoryInterface $channelRepository,
+        SalesChannelContextFactory $channelContextFactory
     ) {
-        $this->salesChannelRepository     = $salesChannelRepository;
-        $this->salesChannelContextFactory = $salesChannelContextFactory;
+        $this->channelRepository     = $channelRepository;
+        $this->channelContextFactory = $channelContextFactory;
     }
 
     public function getSalesChannelContext(SalesChannelEntity $salesChannel = null): SalesChannelContext
     {
         if (!$this->cachedSalesChannel) {
             $usedChannel              = $salesChannel ?: $this->getDefaultStoreFrontSalesChannel();
-            $this->cachedSalesChannel = $this->salesChannelContextFactory->create('', $usedChannel->getId(), [
+            $this->cachedSalesChannel = $this->channelContextFactory->create('', $usedChannel->getId(), [
                 SalesChannelContextService::LANGUAGE_ID => $usedChannel->getLanguageId(),
             ]);
         }
@@ -51,6 +51,6 @@ class SalesChannelService
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('typeId', Defaults::SALES_CHANNEL_TYPE_STOREFRONT));
         $criteria->addAssociation('domains');
-        return $this->salesChannelRepository->search($criteria, new Context(new SystemSource()))->first();
+        return $this->channelRepository->search($criteria, new Context(new SystemSource()))->first();
     }
 }
