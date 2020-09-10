@@ -13,6 +13,9 @@
     "shopware/core": "^6.1",
     "shopware/storefront": "^6.1"
   },
+  "require-dev": {
+    "phpspec/phpspec": "^6.2"
+  },
   "autoload": {
     "psr-4": {
       "Omikron\\FactFinder\\Shopware6\\": "src/"
