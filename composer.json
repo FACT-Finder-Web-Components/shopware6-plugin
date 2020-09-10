@@ -10,10 +10,11 @@
     }
   ],
   "require": {
-    "shopware/core": "^6.1",
-    "shopware/storefront": "^6.1"
+    "shopware/core": "^6.2",
+    "shopware/storefront": "^6.2"
   },
   "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.16",
     "phpspec/phpspec": "^6.2"
   },
   "autoload": {
