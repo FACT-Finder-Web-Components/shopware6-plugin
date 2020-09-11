@@ -15,7 +15,6 @@ class PriceSpec extends ObjectBehavior
     function let(NumberFormatter $numberFormatter)
     {
         $this->beConstructedWith($numberFormatter);
-        $numberFormatter->format(pi())->willReturn('3.14');
     }
 
     function it_is_a_field()
@@ -28,10 +27,11 @@ class PriceSpec extends ObjectBehavior
         $this->getName()->shouldReturn('Price');
     }
 
-    function it_gets_the_product_price(Product $product, CalculatedPrice $price)
+    function it_gets_the_product_price(Product $product, CalculatedPrice $price, NumberFormatter $numberFormatter)
     {
         $product->getCalculatedPrice()->willReturn($price);
         $price->getTotalPrice()->willReturn(pi());
+        $numberFormatter->format(pi())->willReturn('3.14');
         $this->getValue($product)->shouldReturn('3.14');
     }
 }
