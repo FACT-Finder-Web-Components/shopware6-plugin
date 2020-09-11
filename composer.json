@@ -15,12 +15,20 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.16",
+    "phpmd/phpmd": "^2.9",
     "phpspec/phpspec": "^6.2"
   },
   "autoload": {
     "psr-4": {
       "Omikron\\FactFinder\\Shopware6\\": "src/"
     }
+  },
+  "scripts": {
+    "test": [
+      "php-cs-fixer fix --dry-run -v",
+      "phpspec run --format=dot",
+      "phpmd src text phpmd.xml.dist"
+    ]
   },
   "extra": {
     "shopware-plugin-class": "Omikron\\FactFinder\\Shopware6\\OmikronFactFinder",

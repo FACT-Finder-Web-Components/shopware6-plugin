@@ -3,15 +3,14 @@
 use PhpCsFixer\Config;
 
 $finder = PhpCsFixer\Finder::create()
-    ->in(__DIR__)
+    ->in(__DIR__ . '/src')
     ->name('*.php')
-    ->notPath('spec')
-    ->notPath('vendor')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
 return Config::create()
     ->setRiskyAllowed(true)
+    ->setHideProgress(true)
     ->setUsingCache(false)
     ->setRules([
         '@PSR2' => true,

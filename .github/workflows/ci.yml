@@ -24,6 +24,4 @@ jobs:
         run: composer install --no-ansi --no-interaction --no-suggest
 
       - name: Run tests
-        run: |
-          vendor/bin/php-cs-fixer fix --dry-run -v --no-ansi
-          vendor/bin/phpspec run --format=dot --no-ansi
+        run: composer test
