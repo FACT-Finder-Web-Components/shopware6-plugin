@@ -17,6 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Traversable;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
@@ -48,7 +49,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         FeedFactory $feedFactory,
         PushImportService $pushImportService,
         UploadService $uploadService,
-        \Traversable $productFields
+        Traversable $productFields
     ) {
         parent::__construct('factfinder:export:products');
         $this->channelService    = $channelService;
