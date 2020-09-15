@@ -33,7 +33,7 @@ class EntityFactory
         $entity = new ProductEntity($product, $this->productFields);
         if ($product->getChildCount()) {
             $parentData = $entity->toArray();
-            yield from $product->getChildren()->map(function (Product $child) use ($product, $parentData) {
+            yield from $product->getChildren()->map(function (Product $child) use ($parentData) {
                 return new VariantEntity($child, $parentData, $this->propertyFormatter);
             });
         }

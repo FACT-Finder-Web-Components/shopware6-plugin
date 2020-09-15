@@ -63,7 +63,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
             $feedService->generate(new ConsoleOutput($output), $feedColumns);
-            return;
+            return 0;
         }
 
         $fileHandle = tmpfile();
@@ -75,5 +75,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
             $this->pushImportService->execute();
             $output->writeln('FACT-Finder import has been start');
         }
+
+        return 0;
     }
 }
