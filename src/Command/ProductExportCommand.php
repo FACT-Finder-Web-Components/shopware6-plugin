@@ -6,6 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
+use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
@@ -16,7 +17,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Traversable;
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ */
 class ProductExportCommand extends Command implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
@@ -36,17 +41,22 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     /** @var PushImportService */
     private $pushImportService;
 
+    /** @var FieldInterface[] */
+    private $productFields;
+
     public function __construct(
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
         PushImportService $pushImportService,
-        UploadService $uploadService
+        UploadService $uploadService,
+        Traversable $productFields
     ) {
         parent::__construct('factfinder:export:products');
         $this->channelService    = $channelService;
         $this->feedFactory       = $feedFactory;
         $this->pushImportService = $pushImportService;
         $this->uploadService     = $uploadService;
+        $this->productFields     = iterator_to_array($productFields);
     }
 
     protected function configure()
@@ -59,7 +69,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext());
-        $feedColumns = $this->container->getParameter('factfinder.export.columns');
+        $feedColumns = $this->getFeedColumns();
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
             $feedService->generate(new ConsoleOutput($output), $feedColumns);
@@ -77,5 +87,16 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         }
 
         return 0;
+    }
+
+    private function getFeedColumns(): array
+    {
+        $base = (array) $this->container->getParameter('factfinder.export.columns.base');
+        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $this->productFields))));
+    }
+
+    private function getFieldName(FieldInterface $field): string
+    {
+        return $field->getName();
     }
 }
