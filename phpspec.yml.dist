@@ -1,0 +1,5 @@
+suites:
+  factfinder:
+    namespace: Omikron\FactFinder\Shopware6
+    psr4_prefix: Omikron\FactFinder\Shopware6
+    src_path: '%paths.config%/src'

@@ -25,6 +25,7 @@ class PushImportService
 
     /**
      * @return bool
+     *
      * @throws ImportRunningException
      */
     public function execute(): bool
