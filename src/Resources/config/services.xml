@@ -34,7 +34,7 @@
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
-            <bind key="$salesChannelRepository" type="service" id="sales_channel.repository" />
+            <bind key="$channelRepository" type="service" id="sales_channel.repository" />
             <bind key="$categoryRepository" type="service" id="sales_channel.category.repository" />
         </defaults>
 

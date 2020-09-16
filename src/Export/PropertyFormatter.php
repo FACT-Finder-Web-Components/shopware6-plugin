@@ -7,6 +7,9 @@ namespace Omikron\FactFinder\Shopware6\Export;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity as Option;
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class PropertyFormatter
 {
     /** @var FilterInterface */
