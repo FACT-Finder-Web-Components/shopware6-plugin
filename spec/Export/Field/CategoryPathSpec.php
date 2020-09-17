@@ -18,7 +18,6 @@ class CategoryPathSpec extends ObjectBehavior
     function let(SalesChannelRepositoryInterface $salesChannelRepository, SalesChannelService $salesChannelService)
     {
         $this->beConstructedWith($salesChannelRepository, $salesChannelService, 'CategoryPath');
-        $this->categoryCollection = new CategoryCollection($this->prepareCategoryCollection());
     }
 
     function it_is_initializable()
@@ -34,50 +33,51 @@ class CategoryPathSpec extends ObjectBehavior
         $this->getValue($product)->shouldReturn('');
     }
 
-    function it_does_not_fail_if_any_of_category_has_no_path(Product $product)
+    function it_should_create_correct_path_if_product_is_assigned_to_multiple_categories(Product $product)
     {
-        $product->getCategories()->willReturn($this->categoryCollection);
-        $product->getCategoriesRo()->willReturn($this->categoryCollection);
-        $this->getValue($product)->shouldReturn('Category1|Category2|Category3|Category2-1|Category2-2');
+        $categories = $this->prepareCategoryCollection();
+        $this->shouldNotThrow()->during('getValue', [$product]);
+        $product->getCategories()->willReturn(new CategoryCollection(array_slice($categories, 0, 2)));
+        $product->getCategoriesRo()->willReturn(new CategoryCollection($categories));
+        $this->getValue($product)->shouldReturn('Category1-1/Category1-2/Category1-3|Category2-1/Category2-2');
     }
 
     private function prepareCategoryCollection(): array
     {
-        $collection = [];
-        foreach ([
-                     [
-                         'name' => 'Category1',
-                         'id'   => 'id1',
-                         'path' => '|home|'
-                     ],
-                     [
-                         'name' => 'Category2',
-                         'id'   => 'id2',
-                         'path' => '|home/id1|'
-                     ],
-                     [
-                         'name' => 'Category3',
-                         'id'   => 'id3',
-                         'path' => '|home/id1/id2|'
-                     ],
-                     [
-                         'name' => 'Category2-1',
-                         'id'   => 'id4',
-                         'path' => '|home|'
-                     ],
-                     [
-                         'name' => 'Category2-2',
-                         'id'   => 'id5',
-                         'path' => '|home/id4|'
-                     ]
-                 ] as $categoryEntry) {
-            $categoryEntity = new CategoryEntity();
-            $categoryEntity->setName($categoryEntry['name']);
-            $categoryEntity->setId($categoryEntry['id']);
-            $categoryEntity->setPath($categoryEntry['path']);
-            $collection[] = $categoryEntity;
-        }
+        $categoriesData = [
+            [
+                'name' => 'Category1-3',
+                'id'   => 'id3',
+                'path' => 'home|id1|id2|'
+            ],
+            [
+                'name' => 'Category2-2',
+                'id'   => 'id5',
+                'path' => 'home|id4|'
+            ],
+            [
+                'name' => 'Category1-1',
+                'id'   => 'id1',
+                'path' => 'home|'
+            ],
+            [
+                'name' => 'Category1-2',
+                'id'   => 'id2',
+                'path' => 'home|id1|'
+            ],
+            [
+                'name' => 'Category2-1',
+                'id'   => 'id4',
+                'path' => 'home|'
+            ]
+        ];
 
-        return $collection;
+        return array_map(function(array $categoryData) {
+            $categoryEntity = new CategoryEntity();
+            $categoryEntity->setName($categoryData['name']);
+            $categoryEntity->setId($categoryData['id']);
+            $categoryEntity->setPath($categoryData['path']);
+            return $categoryEntity;
+        }, $categoriesData );
     }
 }
