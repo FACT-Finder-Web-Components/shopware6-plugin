@@ -41,7 +41,7 @@ class CategoryPath implements FieldInterface
         $categories   = $product->getCategories();
         if (!$categories) {
             return '';
-        };
+        }
         return implode('|', $categories->fmap(function (Category $category) use ($categoryName): string {
             $path = explode('|', trim($category->getPath() . $category->getId(), '|'));
             return implode('/', array_map($categoryName, array_slice($path, 1)));
@@ -51,7 +51,7 @@ class CategoryPath implements FieldInterface
     private function categoryName(Product $product): callable
     {
         $categories = $product->getCategoriesRo();
-        $names = $categories ? $categories->map(function (Category $category): string {
+        $names      = $categories ? $categories->map(function (Category $category): string {
             return (string) $category->getName();
         }) : [];
 
