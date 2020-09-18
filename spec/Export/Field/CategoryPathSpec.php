@@ -20,18 +20,9 @@ class CategoryPathSpec extends ObjectBehavior
         $this->getName()->shouldReturn('CategoryPath');
     }
 
-    function it_does_not_fail_if_product_is_not_assigned_to_any_category(Product $product)
-    {
-        $this->shouldNotThrow()->during('getValue', [$product]);
-        $product->getCategories()->willReturn(null);
-        $product->getCategoriesRo()->willReturn(null);
-        $this->getValue($product)->shouldReturn('');
-    }
-
     function it_should_create_correct_path_if_product_is_assigned_to_multiple_categories(Product $product)
     {
         $categories = $this->prepareCategoryCollection();
-        $this->shouldNotThrow()->during('getValue', [$product]);
         $product->getCategories()->willReturn(new CategoryCollection(array_slice($categories, 0, 2)));
         $product->getCategoriesRo()->willReturn(new CategoryCollection($categories));
         $this->getValue($product)->shouldReturn('Category1-1/Category1-2/Category1-3|Category2-1/Category2-2');

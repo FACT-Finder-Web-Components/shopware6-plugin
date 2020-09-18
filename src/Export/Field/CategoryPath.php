@@ -25,22 +25,17 @@ class CategoryPath implements FieldInterface
     public function getValue(Product $product): string
     {
         $categoryName = $this->categoryName($product);
-        $categories   = $product->getCategories();
-        if (!$categories) {
-            return '';
-        }
-        return implode('|', $categories->fmap(function (Category $category) use ($categoryName): string {
-            $path = explode('|', trim($category->getPath() . $category->getId(), '|'));
+        return implode('|', $product->getCategories()->fmap(function (Category $category) use ($categoryName): string {
+            $path = explode('|', trim(null . $category->getPath() . $category->getId(), '|'));
             return implode('/', array_map($categoryName, array_slice($path, 1)));
         }));
     }
 
     private function categoryName(Product $product): callable
     {
-        $categories = $product->getCategoriesRo();
-        $names      = $categories ? $categories->map(function (Category $category): string {
+        $names = $product->getCategoriesRo()->map(function (Category $category): string {
             return (string) $category->getName();
-        }) : [];
+        });
 
         return function (string $id) use ($names): string {
             return rawurlencode($names[$id] ?? '');
