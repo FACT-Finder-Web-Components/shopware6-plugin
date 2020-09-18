@@ -36,7 +36,7 @@ class DeeplinkSpec extends ObjectBehavior
             $seoUrl->setSeoPathInfo($url);
             $seoUrl->setId($url);
             return $seoUrl;
-        }, ['/seo-path-1','/seo-path-2']);
+        }, ['/seo-path-1', '/seo-path-2']);
         return new SeoUrlCollection($urls);
     }
 }
