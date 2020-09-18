@@ -26,7 +26,7 @@ class CategoryPath implements FieldInterface
     {
         $categoryName = $this->categoryName($product);
         return implode('|', $product->getCategories()->fmap(function (Category $category) use ($categoryName): string {
-            $path = explode('|', trim(null . $category->getPath() . $category->getId(), '|'));
+            $path = explode('|', trim($category->getPath() . $category->getId(), '|'));
             return implode('/', array_map($categoryName, array_slice($path, 1)));
         }));
     }
