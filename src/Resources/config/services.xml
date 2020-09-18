@@ -18,7 +18,7 @@
             <parameter key="imageUrl">ImageUrl</parameter>
             <parameter key="masterId">Master</parameter>
             <parameter key="price">Price</parameter>
-            <parameter key="productName">Title</parameter>
+            <parameter key="productName">Name</parameter>
             <parameter key="productNumber">ProductNumber</parameter>
         </parameter>
     </parameters>
