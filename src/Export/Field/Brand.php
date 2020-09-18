@@ -15,7 +15,6 @@ class Brand implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        $manufacturer = $product->getManufacturer();
-        return $manufacturer && $manufacturer->getName() ? $manufacturer->getName() : '';
+        return $product->getManufacturer() ? (string) $product->getManufacturer()->getName() : '';
     }
 }

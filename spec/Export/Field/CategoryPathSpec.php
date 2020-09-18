@@ -2,27 +2,22 @@
 
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
-use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
-use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
-use Shopware\Core\Content\Category\CategoryEntity;
-use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepositoryInterface;
-use Shopware\Core\Content\Category\CategoryCollection;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
-use Shopware\Core\Content\Category;
+use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use PhpSpec\ObjectBehavior;
+use Shopware\Core\Content\Category\CategoryCollection;
+use Shopware\Core\Content\Category\CategoryEntity;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
 class CategoryPathSpec extends ObjectBehavior
 {
-    private $categoryCollection;
-
-    function let(SalesChannelRepositoryInterface $salesChannelRepository, SalesChannelService $salesChannelService)
+    function it_is_a_field()
     {
-        $this->beConstructedWith($salesChannelRepository, $salesChannelService, 'CategoryPath');
+        $this->shouldHaveType(FieldInterface::class);
     }
 
-    function it_is_initializable()
+    function it_has_a_name()
     {
-        $this->shouldHaveType(CategoryPath::class);
+        $this->getName()->shouldReturn('CategoryPath');
     }
 
     function it_does_not_fail_if_product_is_not_assigned_to_any_category(Product $product)
@@ -48,36 +43,36 @@ class CategoryPathSpec extends ObjectBehavior
             [
                 'name' => 'Category1-3',
                 'id'   => 'id3',
-                'path' => 'home|id1|id2|'
+                'path' => 'home|id1|id2|',
             ],
             [
                 'name' => 'Category2-2',
                 'id'   => 'id5',
-                'path' => 'home|id4|'
+                'path' => 'home|id4|',
             ],
             [
                 'name' => 'Category1-1',
                 'id'   => 'id1',
-                'path' => 'home|'
+                'path' => 'home|',
             ],
             [
                 'name' => 'Category1-2',
                 'id'   => 'id2',
-                'path' => 'home|id1|'
+                'path' => 'home|id1|',
             ],
             [
                 'name' => 'Category2-1',
                 'id'   => 'id4',
-                'path' => 'home|'
-            ]
+                'path' => 'home|',
+            ],
         ];
 
-        return array_map(function(array $categoryData) {
+        return array_map(function (array $categoryData) {
             $categoryEntity = new CategoryEntity();
             $categoryEntity->setName($categoryData['name']);
             $categoryEntity->setId($categoryData['id']);
             $categoryEntity->setPath($categoryData['path']);
             return $categoryEntity;
-        }, $categoriesData );
+        }, $categoriesData);
     }
 }
