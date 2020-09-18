@@ -34,7 +34,7 @@ class DeeplinkSpec extends ObjectBehavior
         $urls = array_map(function (string $url): SeoUrlEntity {
             $seoUrl = new SeoUrlEntity();
             $seoUrl->setSeoPathInfo($url);
-            $seoUrl->setId((string) rand(0,10));
+            $seoUrl->setId($url);
             return $seoUrl;
         }, ['/seo-path-1','/seo-path-2']);
         return new SeoUrlCollection($urls);
