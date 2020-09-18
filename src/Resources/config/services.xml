@@ -18,7 +18,7 @@
             <parameter key="imageUrl">ImageUrl</parameter>
             <parameter key="masterId">Master</parameter>
             <parameter key="price">Price</parameter>
-            <parameter key="productName">Title</parameter>
+            <parameter key="productName">Name</parameter>
             <parameter key="productNumber">ProductNumber</parameter>
         </parameter>
     </parameters>
@@ -29,7 +29,6 @@
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$channelRepository" type="service" id="sales_channel.repository" />
-            <bind key="$categoryRepository" type="service" id="sales_channel.category.repository" />
         </defaults>
 
         <instanceof id="Shopware\Core\Framework\Adapter\Filesystem\Adapter\AdapterFactoryInterface">

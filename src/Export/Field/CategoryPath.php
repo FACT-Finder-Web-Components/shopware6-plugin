@@ -4,30 +4,17 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
-use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepositoryInterface;
 
 class CategoryPath implements FieldInterface
 {
-    /** @var SalesChannelRepositoryInterface */
-    private $categoryRepository;
-
-    /** @var SalesChannelService */
-    private $channelService;
-
     /** @var string */
     private $fieldName;
 
-    public function __construct(
-        SalesChannelRepositoryInterface $categoryRepository,
-        SalesChannelService $channelService,
-        string $fieldName = 'CategoryPath'
-    ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->channelService     = $channelService;
-        $this->fieldName          = $fieldName;
+    public function __construct(string $fieldName = 'CategoryPath')
+    {
+        $this->fieldName = $fieldName;
     }
 
     public function getName(): string
