@@ -1,0 +1,65 @@
+ff-asn {
+  position: relative;
+
+  &-group, &-group-slider {
+    transition: none;
+    min-width: auto;
+    max-width: none;
+
+    .ffw-wrapper {
+      position: absolute;
+      z-index: 2;
+      transition: none;
+
+      &[opened] {
+        overflow-y: auto;
+        min-width: 240px;
+        max-height: 200px;
+        @include font-size($dropdown-font-size);
+        color: $dropdown-color;
+        text-align: left;
+        background-color: $dropdown-bg;
+        background-clip: padding-box;
+        border: $dropdown-border-width solid $dropdown-border-color;
+        @include border-radius($dropdown-border-radius);
+        @include box-shadow($dropdown-box-shadow);
+      }
+    }
+  }
+
+  @at-root {
+    [slot="groupCaption"] {
+      cursor: pointer;
+    }
+
+    [data-container="detailedLinks"] {
+      padding: $dropdown-padding-y 0;
+
+      &:not(:only-child) {
+        padding-bottom: 0;
+      }
+    }
+
+    [data-container="showMore"], [data-container="showLess"], [data-container="removeFilter"] {
+      padding: 5px 15px;
+    }
+  }
+
+  .ffw-asn-group-container, .ffw-container {
+    top: 12px;
+  }
+
+  @for $i from 1 through 3 {
+    &-group-element.clusterLevel#{$i} {
+      padding-left: #{$i * 15}px;
+    }
+  }
+
+  @at-root ff-filter-cloud .filter-active {
+    cursor: pointer;
+  }
+
+  &-remove-all-filter {
+    cursor: pointer;
+  }
+}

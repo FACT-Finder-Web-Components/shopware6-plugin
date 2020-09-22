@@ -62,12 +62,12 @@ class PushImportService
     private function client(): Client
     {
         return new Client([
-            'headers'  => [
-                'Accept'        => 'application/json',
-                'Content-Type'  => 'application/json',
-                'Authorization' => (string) $this->communicationConfig->getCredentials(),
-            ],
+            'auth'     => $this->communicationConfig->getCredentials(),
             'base_uri' => $this->getBaseEndpoint(),
+            'headers'  => [
+                'Accept'       => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
         ]);
     }
 }

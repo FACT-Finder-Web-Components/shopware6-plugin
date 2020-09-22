@@ -31,6 +31,10 @@
             <bind key="$channelRepository" type="service" id="sales_channel.repository" />
         </defaults>
 
+        <service id="factfinder.api.client" class="GuzzleHttp\ClientInterface">
+            <factory service="Omikron\FactFinder\Shopware6\Communication\ClientFactory" method="create" />
+        </service>
+
         <instanceof id="Shopware\Core\Framework\Adapter\Filesystem\Adapter\AdapterFactoryInterface">
             <tag name="shopware.filesystem.factory" />
         </instanceof>
