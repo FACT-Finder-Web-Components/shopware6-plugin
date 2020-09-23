@@ -6,9 +6,19 @@ ff-asn {
     min-width: auto;
     max-width: none;
 
+    &[opened] .filter-panel-item-toggle {
+      border-color: $custom-select-focus-border-color;
+      outline: 0;
+      @if $enable-shadows {
+        @include box-shadow($custom-select-box-shadow, $custom-select-focus-box-shadow);
+      } @else {
+        @include box-shadow($custom-select-focus-box-shadow);
+      }
+    }
+
     .ffw-wrapper {
       position: absolute;
-      z-index: 2;
+      z-index: 5;
       transition: none;
 
       &[opened] {
