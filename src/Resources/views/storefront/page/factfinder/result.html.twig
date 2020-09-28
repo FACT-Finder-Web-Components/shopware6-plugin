@@ -1,21 +1,49 @@
 {% sw_extends '@Parent/storefront/page/search/index.html.twig' %}
 
 {% block page_search %}
-  <ff-template class="cms-page search-page" scope="result" unresolved>
-    {% block page_search_headline %}
-      <h1 class="search-headline">
-        {% block page_search_headline_text %}
-          {{ "ff.search.headline"|trans|sw_sanitize }}
-        {% endblock %}
-      </h1>
-    {% endblock %}
-  </ff-template>
+  <div class="cms-page search-page">
+    <ff-template scope="result" unresolved>
+      {% block page_search_headline %}
+        <h1 class="search-headline">
+          {% block page_search_headline_text %}
+            {{ 'ff.search.headline'|trans|sw_sanitize }}
+          {% endblock %}
+        </h1>
+      {% endblock %}
+    </ff-template>
 
-  <div class="cms-element-product-listing-wrapper">
-    <div class="cms-element-product-listing">
-      {% sw_include '@Parent/storefront/components/factfinder/toolbar.html.twig' %}
-      {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with { subscribe: true } %}
-      {% sw_include '@Parent/storefront/components/factfinder/no-results.html.twig' with { subscribe: true } %}
+    <div class="cms-block-container">
+      <div class="cms-block-container-row row cms-row">
+        <div class="col-12">
+          <div class="cms-element-sidebar-filter">
+            {% block element_product_listing_filter_button %}
+              <button class="btn header-actions-btn filter-panel-wrapper-toggle"
+                      type="button"
+                      data-offcanvas-filter="true"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      aria-label="{{ 'general.menuLink'|trans }}">
+                {% block element_product_listing_filter_button_icon %}
+                  {% sw_icon 'sliders-horizontal' %}
+                {% endblock %}
+                {{ 'listing.filterTitleText'|trans }}
+              </button>
+            {% endblock %}
+
+            <div id="filter-panel-wrapper" class="filter-panel-wrapper" data-offcanvas-filter-content="true">
+              {% sw_include '@Parent/storefront/components/factfinder/asn.html.twig' %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cms-element-product-listing-wrapper">
+      <div class="cms-element-product-listing">
+        {% sw_include '@Parent/storefront/components/factfinder/toolbar.html.twig' %}
+        {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with { subscribe: true } %}
+        {% sw_include '@Parent/storefront/components/factfinder/no-results.html.twig' with { subscribe: true } %}
+      </div>
     </div>
   </div>
 {% endblock %}

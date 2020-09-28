@@ -6,10 +6,8 @@
     api="v3"
     use-url-parameter="true"
     only-search-params="true"
-    disable-single-hit-redirect="true"
-    {% for key, value in factfinder.communication %}
-      {{ key }}="{{ value|e('html_attr') }}"
-    {% endfor %}></ff-communication>
+    {{ factfinder.communication|map((val, key) => key ~ '="' ~ (val|e('html_attr')) ~ '"')|join(' ')|raw }}
+    disable-single-hit-redirect="true"></ff-communication>
 
   {{ parent() }}
 {% endblock %}
@@ -20,7 +18,7 @@
       document.addEventListener('before-search', function (event) {
         if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
           event.preventDefault();
-          delete event.detail.type;
+          event.detail.type = '';
           window.location = '{{ path('frontend.factfinder.result') }}' + factfinder.common.dictToParameterString(event.detail);
         }
       });

@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Config;
 
-use Omikron\FactFinder\Shopware6\Communication\Credentials;
-
 class Communication extends BaseConfig
 {
     public function getServerUrl(): string
     {
-        return (string) $this->config('serverUrl');
+        return trim((string) $this->config('serverUrl'));
     }
 
     public function getChannel(): string
@@ -18,8 +16,8 @@ class Communication extends BaseConfig
         return (string) $this->config('channel');
     }
 
-    public function getCredentials(): Credentials
+    public function getCredentials(): array
     {
-        return new Credentials((string) $this->config('username'), (string) $this->config('password'));
+        return [$this->config('username'), $this->config('password')];
     }
 }

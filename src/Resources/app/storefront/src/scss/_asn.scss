@@ -1,0 +1,106 @@
+ff-asn {
+  position: relative;
+
+  &-group, &-group-slider {
+    transition: none;
+    min-width: auto;
+    max-width: none;
+
+    &[opened] .filter-panel-item-toggle {
+      border-color: $custom-select-focus-border-color;
+      outline: 0;
+      @if $enable-shadows {
+        box-shadow: $custom-select-box-shadow, $custom-select-focus-box-shadow;
+      } @else {
+        box-shadow: $custom-select-focus-box-shadow;
+      }
+    }
+
+    .ffw-wrapper {
+      position: absolute;
+      z-index: 5;
+      transition: none;
+      text-align: left;
+      min-width: 240px;
+      max-height: 200px;
+      overflow-y: auto;
+      @include font-size($dropdown-font-size);
+      color: $dropdown-color;
+
+      &[opened] {
+        background-color: $dropdown-bg;
+        background-clip: padding-box;
+        border: $dropdown-border-width solid $dropdown-border-color;
+        @include border-radius($dropdown-border-radius);
+        @include box-shadow($dropdown-box-shadow);
+      }
+    }
+  }
+
+  &-group-slider {
+    .ffw-wrapper[opened] {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  @at-root {
+    [slot="groupCaption"] {
+      cursor: pointer;
+    }
+
+    [data-container="detailedLinks"] {
+      padding: $dropdown-padding-y 0;
+
+      &:not(:only-child) {
+        padding-bottom: 0;
+      }
+    }
+
+    [data-container="showMore"], [data-container="showLess"], [data-container="removeFilter"] {
+      display: block;
+      padding: 5px 15px;
+      cursor: pointer;
+    }
+  }
+
+  .ffw-asn-group-container, .ffw-container {
+    top: 12px;
+  }
+
+  @for $i from 1 through 3 {
+    &-group-element.clusterLevel#{$i} {
+      padding-left: #{$i * 15}px;
+    }
+  }
+
+  @at-root ff-filter-cloud .filter-active {
+    cursor: pointer;
+  }
+
+  &-remove-all-filter {
+    cursor: pointer;
+  }
+}
+
+ff-slider {
+  background: $sw-color-brand-primary;
+  margin: 0 15px 24px;
+
+  .ffw-sliderBar {
+    top: -8px;
+  }
+
+  [slot^=slider] {
+    height: 20px;
+    width: 20px;
+    border: $dropdown-border-width solid $dropdown-border-color;
+    @include border-radius($dropdown-border-radius);
+    background: #fff;
+  }
+
+  &-control {
+    padding: 15px 0;
+  }
+}

@@ -4,21 +4,21 @@
       {% block layout_search_suggest_result_suggest_container %}
         <section class="ff-suggest-container row pb-4">
           <div data-container="searchTerm" class="col">
-            <h3 class="h5 container-caption">{{ "ff.suggest.SearchTerms"|trans|striptags }}</h3>
+            <h3 class="h5 container-caption">{{ 'ff.suggest.SearchTerms'|trans|striptags }}</h3>
             <ff-suggest-item type="searchTerm">
               <span class="ff-search-term">{{ '{{{name}}}' }}</span>
             </ff-suggest-item>
           </div>
 
           <div data-container="category" class="col">
-            <h3 class="h5 container-caption">{{ "ff.suggest.Categories"|trans|striptags }}</h3>
+            <h3 class="h5 container-caption">{{ 'ff.suggest.Categories'|trans|striptags }}</h3>
             <ff-suggest-item type="category">
               <span class="ff-category">{{ '{{{name}}}' }}</span>
             </ff-suggest-item>
           </div>
 
           <div data-container="brand" class="col">
-            <h3 class="h5 container-caption">{{ "ff.suggest.Brands"|trans|striptags }}</h3>
+            <h3 class="h5 container-caption">{{ 'ff.suggest.Brands'|trans|striptags }}</h3>
             <ff-suggest-item type="brand">
               <span class="ff-brand">{{ '{{{name}}}' }}</span>
             </ff-suggest-item>
@@ -28,7 +28,7 @@
 
       {% block layout_search_suggest_result_product_container %}
         <section class="ff-suggest-container ff-suggest-container--products">
-          <h3 class="h5 container-caption">{{ "ff.suggest.Products"|trans|striptags }}</h3>
+          <h3 class="h5 container-caption">{{ 'ff.suggest.Products'|trans|striptags }}</h3>
           {% block layout_search_suggest_result_product %}
             <div data-container="productName">
               <ff-suggest-item type="productName">

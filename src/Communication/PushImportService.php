@@ -17,10 +17,14 @@ class PushImportService
     /** @var FtpConfig */
     private $uploadConfig;
 
-    public function __construct(Communication $communicationConfig, FtpConfig $uploadConfig)
+    /** @var Client */
+    private $client;
+
+    public function __construct(Client $client, Communication $communicationConfig, FtpConfig $uploadConfig)
     {
         $this->communicationConfig = $communicationConfig;
         $this->uploadConfig        = $uploadConfig;
+        $this->client              = $client;
     }
 
     /**
@@ -32,10 +36,9 @@ class PushImportService
     {
         $this->checkNotRunning();
 
-        $client = $this->client();
-        $query  = http_build_query(['channel' => $this->communicationConfig->getChannel(), 'quiet' => 'true']);
+        $query = ['channel' => $this->communicationConfig->getChannel(), 'quiet' => 'true'];
         foreach ($this->uploadConfig->getPushImportTypes() as $type) {
-            $client->post($type . '?' . $query);
+            $this->client->post("import/{$type}", ['form_params' => $query]);
         }
 
         return true;
@@ -47,27 +50,10 @@ class PushImportService
     private function checkNotRunning(): void
     {
         $query    = http_build_query(['channel' => $this->communicationConfig->getChannel()]);
-        $response = $this->client()->get('running?' . $query);
+        $response = $this->client->get('import/running?' . $query);
 
-        if (filter_var($response->getBody(), FILTER_VALIDATE_BOOLEAN)) {
+        if (filter_var((string) $response->getBody(), FILTER_VALIDATE_BOOLEAN)) {
             throw new ImportRunningException();
         }
-    }
-
-    private function getBaseEndpoint(): string
-    {
-        return $this->communicationConfig->getServerUrl() . '/rest/v3/import/';
-    }
-
-    private function client(): Client
-    {
-        return new Client([
-            'headers'  => [
-                'Accept'        => 'application/json',
-                'Content-Type'  => 'application/json',
-                'Authorization' => (string) $this->communicationConfig->getCredentials(),
-            ],
-            'base_uri' => $this->getBaseEndpoint(),
-        ]);
     }
 }
