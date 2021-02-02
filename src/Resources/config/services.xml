@@ -25,15 +25,18 @@
 
     <services>
         <defaults autoconfigure="true" autowire="true">
-            <bind key="$client" type="service" id="factfinder.api.client" />
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$channelRepository" type="service" id="sales_channel.repository" />
         </defaults>
 
-        <service id="factfinder.api.client" class="GuzzleHttp\ClientInterface">
-            <factory service="Omikron\FactFinder\Shopware6\Communication\ClientFactory" method="create" />
+        <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />
+        <service id="Omikron\FactFinder\Communication\Resource\Import">
+            <factory service="Omikron\FactFinder\Communication\Resource\AdapterFactory" method="getImportAdapter" />
+        </service>
+        <service id="Omikron\FactFinder\Communication\Client\ClientBuilder">
+            <configurator service="Omikron\FactFinder\Shopware6\Communication\ClientBuilderConfigurator" method="configure" />
         </service>
 
         <instanceof id="Shopware\Core\Framework\Adapter\Filesystem\Adapter\AdapterFactoryInterface">

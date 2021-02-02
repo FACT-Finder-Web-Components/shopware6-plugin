@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Communication;
 
-use GuzzleHttp\Client;
+use Omikron\FactFinder\Communication\Resource\Import;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\FtpConfig;
 use Omikron\FactFinder\Shopware6\Exception\ImportRunningException;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class PushImportService
 {
@@ -17,42 +18,37 @@ class PushImportService
     /** @var FtpConfig */
     private $uploadConfig;
 
-    /** @var Client */
-    private $client;
+    /** @var Import */
+    private $importAdapter;
 
-    public function __construct(Client $client, Communication $communicationConfig, FtpConfig $uploadConfig)
+    public function __construct(Import $importAdapter, Communication $communicationConfig, FtpConfig $uploadConfig)
     {
         $this->communicationConfig = $communicationConfig;
         $this->uploadConfig        = $uploadConfig;
-        $this->client              = $client;
+        $this->importAdapter       = $importAdapter;
     }
 
     /**
-     * @return bool
-     *
-     * @throws ImportRunningException
+     * @throws ImportRunningException|ClientExceptionInterface
      */
-    public function execute(): bool
+    public function execute(): void
     {
-        $this->checkNotRunning();
-
-        $query = ['channel' => $this->communicationConfig->getChannel(), 'quiet' => 'true'];
+        $channel = $this->communicationConfig->getChannel();
+        $this->checkNotRunning($channel);
         foreach ($this->uploadConfig->getPushImportTypes() as $type) {
-            $this->client->post("import/{$type}", ['form_params' => $query]);
+            var_dump($this->importAdapter->import($channel, $type));
         }
-
-        return true;
     }
 
     /**
-     * @throws ImportRunningException
+     * @param string $channel
+     *
+     * @throws ImportRunningException|ClientExceptionInterface
      */
-    private function checkNotRunning(): void
+    private function checkNotRunning(string $channel): void
     {
-        $query    = http_build_query(['channel' => $this->communicationConfig->getChannel()]);
-        $response = $this->client->get('import/running?' . $query);
-
-        if (filter_var((string) $response->getBody(), FILTER_VALIDATE_BOOLEAN)) {
+        var_dump($this->importAdapter->running($channel));
+        if ($this->importAdapter->running($channel)) {
             throw new ImportRunningException();
         }
     }
