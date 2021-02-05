@@ -36,7 +36,7 @@ class PushImportService
         $channel = $this->communicationConfig->getChannel();
         $this->checkNotRunning($channel);
         foreach ($this->uploadConfig->getPushImportTypes() as $type) {
-            var_dump($this->importAdapter->import($channel, $type));
+            $this->importAdapter->import($channel, $type);
         }
     }
 
@@ -47,7 +47,6 @@ class PushImportService
      */
     private function checkNotRunning(string $channel): void
     {
-        var_dump($this->importAdapter->running($channel));
         if ($this->importAdapter->running($channel)) {
             throw new ImportRunningException();
         }
