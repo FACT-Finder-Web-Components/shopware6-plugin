@@ -32,7 +32,7 @@
         </defaults>
 
         <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />
-        <service id="Omikron\FactFinder\Communication\Resource\Import">
+        <service id="Omikron\FactFinder\Communication\Resource\Import" lazy="true">
             <factory service="Omikron\FactFinder\Communication\Resource\AdapterFactory" method="getImportAdapter" />
         </service>
         <service id="Omikron\FactFinder\Communication\Client\ClientBuilder">
