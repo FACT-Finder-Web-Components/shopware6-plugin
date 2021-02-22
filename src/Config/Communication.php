@@ -18,6 +18,9 @@ class Communication extends BaseConfig
 
     public function getCredentials(): array
     {
-        return [$this->config('username'), $this->config('password')];
+        return [
+            (string) $this->config('username'),
+            (string) $this->config('password'),
+        ];
     }
 }
