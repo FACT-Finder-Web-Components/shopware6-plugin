@@ -2,11 +2,8 @@
 
 {% block base_body_inner %}
   <ff-communication
-    version="ng"
-    api="v3"
-    use-url-parameter="true"
+    {{ page.extensions.factfinder.communication|map((val, key) => key ~ '="' ~ (val|e('html_attr')) ~ '"')|join(' ')|raw }}
     only-search-params="true"
-    {{ factfinder.communication|map((val, key) => key ~ '="' ~ (val|e('html_attr')) ~ '"')|join(' ')|raw }}
     disable-single-hit-redirect="true"></ff-communication>
 
   {{ parent() }}
@@ -18,7 +15,6 @@
       document.addEventListener('before-search', function (event) {
         if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
           event.preventDefault();
-          event.detail.type = '';
           window.location = '{{ path('frontend.factfinder.result') }}' + factfinder.common.dictToParameterString(event.detail);
         }
       });

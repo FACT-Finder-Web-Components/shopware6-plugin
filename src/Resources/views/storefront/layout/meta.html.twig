@@ -3,7 +3,7 @@
 {% block layout_head_javascript_tracking %}
   <script>
     document.addEventListener('ffReady', function (e) {
-      e.factfinder.communication.fieldRoles = {{ factfinder.field_roles|json_encode|raw }};
+      e.factfinder.communication.fieldRoles = {{ page.extensions.factfinder.field_roles|json_encode|raw }};
     });
   </script>
   <script src="{{ asset('ff-web-components/vendor/custom-elements-es5-adapter.js', '@OmikronFactFinder') }}"></script>
