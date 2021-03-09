@@ -11,7 +11,12 @@ use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
+use Shopware\Core\Framework\Api\Context\SystemSource;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,13 +26,15 @@ use Traversable;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ProductExportCommand extends Command implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    private const UPLOAD_FEED_OPTION = 'upload';
-    private const PUSH_IMPORT_OPTION = 'import';
+    private const UPLOAD_FEED_OPTION    = 'upload';
+    private const PUSH_IMPORT_OPTION    = 'import';
+    private const SALESCHANNEL_ARGUMENT = 'saleschannel';
 
     /** @var SalesChannelService */
     private $channelService;
@@ -44,19 +51,24 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     /** @var FieldInterface[] */
     private $productFields;
 
+    /** @var EntityRepositoryInterface */
+    private $channelRepository;
+
     public function __construct(
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
         PushImportService $pushImportService,
         UploadService $uploadService,
-        Traversable $productFields
+        Traversable $productFields,
+        EntityRepositoryInterface $channelRepository
     ) {
         parent::__construct('factfinder:export:products');
-        $this->channelService    = $channelService;
-        $this->feedFactory       = $feedFactory;
-        $this->pushImportService = $pushImportService;
-        $this->uploadService     = $uploadService;
-        $this->productFields     = iterator_to_array($productFields);
+        $this->channelService       = $channelService;
+        $this->feedFactory          = $feedFactory;
+        $this->pushImportService    = $pushImportService;
+        $this->uploadService        = $uploadService;
+        $this->productFields        = iterator_to_array($productFields);
+        $this->channelRepository    = $channelRepository;
     }
 
     protected function configure()
@@ -64,11 +76,20 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $this->setDescription('Export articles feed.');
         $this->addOption(self::UPLOAD_FEED_OPTION, 'u', InputOption::VALUE_NONE, 'Should upload after exporting');
         $this->addOption(self::PUSH_IMPORT_OPTION, 'i', InputOption::VALUE_NONE, 'Should import after uploading');
+        $this->addArgument(self::SALESCHANNEL_ARGUMENT, InputArgument::OPTIONAL, 'ID of the saleschannel');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext());
+        $salesChannel   = null;
+        $salesChannelId = $input->getArgument(self::SALESCHANNEL_ARGUMENT);
+        if (!empty($salesChannelId)) {
+            $salesChannel = $this->channelRepository->search(
+                new Criteria([$salesChannelId]),
+                new Context(new SystemSource())
+            )->first();
+        }
+        $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel));
         $feedColumns = $this->getFeedColumns();
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
