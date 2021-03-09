@@ -30,8 +30,8 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    private const UPLOAD_FEED_OPTION = 'upload';
-    private const PUSH_IMPORT_OPTION = 'import';
+    private const UPLOAD_FEED_OPTION  = 'upload';
+    private const PUSH_IMPORT_OPTION  = 'import';
     private const SALESCHANNEL_OPTION = 'saleschannel';
 
     /** @var SalesChannelService */
@@ -74,12 +74,13 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $this->setDescription('Export articles feed.');
         $this->addOption(self::UPLOAD_FEED_OPTION, 'u', InputOption::VALUE_NONE, 'Should upload after exporting');
         $this->addOption(self::PUSH_IMPORT_OPTION, 'i', InputOption::VALUE_NONE, 'Should import after uploading');
+        $this->addOption(self::SALESCHANNEL_OPTION, 's', InputOption::VALUE_OPTIONAL, 'ID of the saleschannel');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $salesChannel = null;
-        if($input->hasOption(self::SALESCHANNEL_OPTION)) {
+        if ($input->hasOption(self::SALESCHANNEL_OPTION)) {
             $salesChannel = $this->channelRepository->search(
                 new Criteria([$input->getOption(self::SALESCHANNEL_OPTION)]),
                 new Context(new SystemSource())
