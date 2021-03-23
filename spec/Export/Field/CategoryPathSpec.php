@@ -60,7 +60,7 @@ class CategoryPathSpec extends ObjectBehavior
 
         return array_map(function (array $categoryData) {
             $categoryEntity = new CategoryEntity();
-            $categoryEntity->setName($categoryData['name']);
+            $categoryEntity->setTranslated(['name' => $categoryData['name']]);
             $categoryEntity->setId($categoryData['id']);
             $categoryEntity->setPath($categoryData['path']);
             return $categoryEntity;

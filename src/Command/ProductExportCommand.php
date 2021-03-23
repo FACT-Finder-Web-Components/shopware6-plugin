@@ -11,10 +11,12 @@ use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
+use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\System\Language\LanguageEntity;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,9 +34,10 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    private const UPLOAD_FEED_OPTION    = 'upload';
-    private const PUSH_IMPORT_OPTION    = 'import';
-    private const SALESCHANNEL_ARGUMENT = 'saleschannel';
+    private const UPLOAD_FEED_OPTION = 'upload';
+    private const PUSH_IMPORT_OPTION = 'import';
+    private const SALES_CHANNEL_ARGUMENT = 'sales_channel';
+    private const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
 
     /** @var SalesChannelService */
     private $channelService;
@@ -52,6 +55,9 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     private $productFields;
 
     /** @var EntityRepositoryInterface */
+    private $languageRepository;
+
+    /** @var EntityRepositoryInterface */
     private $channelRepository;
 
     public function __construct(
@@ -60,15 +66,17 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         PushImportService $pushImportService,
         UploadService $uploadService,
         Traversable $productFields,
+        EntityRepositoryInterface $languageRepository,
         EntityRepositoryInterface $channelRepository
     ) {
         parent::__construct('factfinder:export:products');
-        $this->channelService       = $channelService;
-        $this->feedFactory          = $feedFactory;
-        $this->pushImportService    = $pushImportService;
-        $this->uploadService        = $uploadService;
-        $this->productFields        = iterator_to_array($productFields);
-        $this->channelRepository    = $channelRepository;
+        $this->channelService     = $channelService;
+        $this->feedFactory        = $feedFactory;
+        $this->pushImportService  = $pushImportService;
+        $this->uploadService      = $uploadService;
+        $this->languageRepository = $languageRepository;
+        $this->channelRepository  = $channelRepository;
+        $this->productFields      = iterator_to_array($productFields);
     }
 
     protected function configure()
@@ -76,20 +84,28 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $this->setDescription('Export articles feed.');
         $this->addOption(self::UPLOAD_FEED_OPTION, 'u', InputOption::VALUE_NONE, 'Should upload after exporting');
         $this->addOption(self::PUSH_IMPORT_OPTION, 'i', InputOption::VALUE_NONE, 'Should import after uploading');
-        $this->addArgument(self::SALESCHANNEL_ARGUMENT, InputArgument::OPTIONAL, 'ID of the saleschannel');
+        $this->addArgument(self::SALES_CHANNEL_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel');
+        $this->addArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel language');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $salesChannel   = null;
-        $salesChannelId = $input->getArgument(self::SALESCHANNEL_ARGUMENT);
+        $salesChannelId = $input->getArgument(self::SALES_CHANNEL_ARGUMENT);
         if (!empty($salesChannelId)) {
             $salesChannel = $this->channelRepository->search(
                 new Criteria([$salesChannelId]),
                 new Context(new SystemSource())
             )->first();
         }
-        $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel));
+
+        /** @var LanguageEntity $selectedLanguage */
+        $selectedLanguage = $this->languageRepository->search(
+            new Criteria([$input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT) ?: Defaults::LANGUAGE_SYSTEM]),
+            new Context(new SystemSource())
+        )->first();
+
+        $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()));
         $feedColumns = $this->getFeedColumns();
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {

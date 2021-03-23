@@ -34,12 +34,12 @@ class SalesChannelService
         $this->channelContextFactory = $channelContextFactory;
     }
 
-    public function getSalesChannelContext(SalesChannelEntity $salesChannel = null): SalesChannelContext
+    public function getSalesChannelContext(SalesChannelEntity $salesChannel = null, $languageId = null): SalesChannelContext
     {
         if (!$this->cachedSalesChannel) {
             $usedChannel              = $salesChannel ?: $this->getDefaultStoreFrontSalesChannel();
             $this->cachedSalesChannel = $this->channelContextFactory->create('', $usedChannel->getId(), [
-                SalesChannelContextService::LANGUAGE_ID => $usedChannel->getLanguageId(),
+                SalesChannelContextService::LANGUAGE_ID => $languageId ?: $usedChannel->getLanguageId(),
             ]);
         }
 

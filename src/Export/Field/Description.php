@@ -15,6 +15,6 @@ class Description implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        return (string) $product->getDescription();
+        return (string) $product->getTranslation('description');
     }
 }

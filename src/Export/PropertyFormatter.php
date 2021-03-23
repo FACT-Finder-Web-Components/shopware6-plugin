@@ -22,7 +22,7 @@ class PropertyFormatter
 
     public function __invoke(Option $option): string
     {
-        return $this->format((string) $option->getGroup()->getName(), (string) $option->getName());
+        return $this->format((string) $option->getGroup()->getTranslation('name'), (string) $option->getTranslation('name'));
     }
 
     public function format(string ...$parts): string
