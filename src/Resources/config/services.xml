@@ -29,6 +29,8 @@
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$channelRepository" type="service" id="sales_channel.repository" />
+            <bind key="$customFieldRepository" type="service" id="custom_field.repository" />
+            <bind key="$languageRepository" type="service" id="language.repository"/>
         </defaults>
 
         <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />

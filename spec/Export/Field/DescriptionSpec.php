@@ -15,7 +15,7 @@ class DescriptionSpec extends ObjectBehavior
 
     function it_should_return_the_description(Product $product)
     {
-        $product->getDescription()->willReturn('FACT-Finder Web Components');
+        $product->getTranslation('description')->willReturn('FACT-Finder Web Components');
         $this->getValue($product)->shouldReturn('FACT-Finder Web Components');
     }
 

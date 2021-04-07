@@ -46,6 +46,7 @@ class ExportProducts
         $criteria->addAssociation('children.options.group');
         $criteria->addAssociation('manufacturer');
         $criteria->addAssociation('properties');
+        $criteria->addAssociation('customFields');
         $criteria->addAssociation('properties.group');
         $criteria->addAssociation('seoUrls');
         $criteria->addFilter(new EqualsFilter('parentId', null));

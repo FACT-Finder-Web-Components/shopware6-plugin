@@ -16,7 +16,7 @@ class PropertyFormatterSpec extends ObjectBehavior
         $this->beConstructedWith($filter);
         $filter->filterValue('')->willReturn('');
         $option->getGroup()->willReturn($group);
-        $option->getName()->willReturn(null);
+        $option->getTranslation('name')->willReturn(null);
         $this->shouldNotThrow()->during('__invoke', [$option]);
     }
 }

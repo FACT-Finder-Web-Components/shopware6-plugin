@@ -34,7 +34,7 @@ class CategoryPath implements FieldInterface
     private function categoryName(Product $product): callable
     {
         $names = $product->getCategoriesRo()->map(function (Category $category): string {
-            return (string) $category->getName();
+            return (string) $category->getTranslation('name');
         });
 
         return function (string $id) use ($names): string {

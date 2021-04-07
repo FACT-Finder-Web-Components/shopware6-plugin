@@ -28,7 +28,7 @@ class BrandSpec extends ObjectBehavior
         $this->shouldNotThrow()->during('getValue', [$product]);
         $this->getValue($product)->shouldReturn('');
 
-        $manufacturer->getName()->willReturn('ACME Inc.');
+        $manufacturer->getTranslation('name')->willReturn('ACME Inc.');
         $this->shouldNotThrow()->during('getValue', [$product]);
         $this->getValue($product)->shouldReturn('ACME Inc.');
     }
@@ -36,7 +36,7 @@ class BrandSpec extends ObjectBehavior
     function it_gets_the_value_from_the_manufacturer(Product $product, Manufacturer $manufacturer)
     {
         $product->getManufacturer()->willReturn($manufacturer);
-        $manufacturer->getName()->willReturn('FACT-Finder');
+        $manufacturer->getTranslation('name')->willReturn('FACT-Finder');
         $this->getValue($product)->shouldReturn('FACT-Finder');
     }
 }

@@ -34,7 +34,7 @@ class ProductEntity implements ExportEntityInterface
         }, [
             'ProductNumber' => (string) $this->product->getProductNumber(),
             'Master'        => (string) $this->product->getProductNumber(),
-            'Name'          => (string) $this->product->getName(),
+            'Name'          => (string) $this->product->getTranslation('name'),
         ]);
     }
 }
