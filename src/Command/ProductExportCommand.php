@@ -34,9 +34,9 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    private const UPLOAD_FEED_OPTION = 'upload';
-    private const PUSH_IMPORT_OPTION = 'import';
-    private const SALES_CHANNEL_ARGUMENT = 'sales_channel';
+    private const UPLOAD_FEED_OPTION              = 'upload';
+    private const PUSH_IMPORT_OPTION              = 'import';
+    private const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     private const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
 
     /** @var SalesChannelService */
