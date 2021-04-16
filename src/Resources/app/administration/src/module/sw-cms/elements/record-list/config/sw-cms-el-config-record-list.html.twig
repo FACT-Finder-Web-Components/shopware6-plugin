@@ -1,0 +1,13 @@
+{% block sw_cms_element_record_list_config %}
+  <div>
+    <sw-switch-field label="subscribe" v-model="element.config.subscribe.value"></sw-switch-field>
+
+    <sw-text-field
+      label="infiniteDebounceDelay"
+      placeholder="Debounce delay"
+      v-model="element.config.infiniteDebounceDelay.value">
+    </sw-text-field>
+
+    <sw-switch-field label="infiniteScrolling" v-model="element.config.infiniteScrolling.value"></sw-switch-field>
+  </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+.flex-container {
+  display: flex;
+  flex-direction:row;
+  align-items: stretch;
+  flex-grow: 1;
+}
+
+.flex-container > div {
+  flex: 1;
+  margin: 0.7rem;
+  padding: 0.7rem;
+  background: #189eff;
+  font-size: 30px;
+  text-align: center;
+  justify-content: center;
+}

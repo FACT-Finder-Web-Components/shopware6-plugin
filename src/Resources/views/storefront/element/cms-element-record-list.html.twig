@@ -1,6 +1,6 @@
-{% block component_factfinder_record_list %}
-  <ff-record-list class="row cms-listing-row" subscribe="{{ subscribe ? 'true' : 'false' }}" {{ infiniteScrolling ? 'infinite-scrolling' : '' }} {{ infiniteScrolling ? 'infinite-debounce-delay="infiniteDebounceDelay"' : '' }} unresolved>
-    {% block component_factfinder_record %}
+{% block element_record_list %}
+  {%  set config = element.config %}
+  <ff-record-list class="row cms-listing-row" subscribe="{{ config.subscribe.value ? 'true' : 'false' }}" {{ config.infiniteScrolling.value ? 'infinite-scrolling' : '' }} {{ config.infiniteScrolling.value ? 'infinite-debounce-delay="infiniteDebounceDelay"' : '' }} unresolved>
       <ff-record class="cms-listing-col col-sm-6 col-lg-4 col-xl-3">
         <div class="card product-box box-standard">
           <div class="card-body">
@@ -31,6 +31,5 @@
           </div>
         </div>
       </ff-record>
-    {% endblock %}
   </ff-record-list>
 {% endblock %}
