@@ -17,10 +17,14 @@ class EntityFactory
     /** @var FieldInterface[] */
     private $productFields;
 
-    public function __construct(PropertyFormatter $propertyFormatter, iterable $productFields)
+    /** @var FieldInterface[] */
+    private $variantFields;
+
+    public function __construct(PropertyFormatter $propertyFormatter, iterable $productFields, iterable $variantFields)
     {
         $this->propertyFormatter = $propertyFormatter;
         $this->productFields     = iterator_to_array($productFields);
+        $this->variantFields     = iterator_to_array($variantFields);
     }
 
     /**
@@ -34,7 +38,7 @@ class EntityFactory
         if ($product->getChildCount()) {
             $parentData = $entity->toArray();
             yield from $product->getChildren()->map(function (Product $child) use ($parentData) {
-                return new VariantEntity($child, $parentData, $this->propertyFormatter);
+                return new VariantEntity($child, $parentData, $this->propertyFormatter, $this->variantFields);
             });
         }
         yield $entity;
