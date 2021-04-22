@@ -31,6 +31,7 @@
             <bind key="$channelRepository" type="service" id="sales_channel.repository" />
             <bind key="$customFieldRepository" type="service" id="custom_field.repository" />
             <bind key="$languageRepository" type="service" id="language.repository"/>
+            <bind key="$variantFields" type="tagged_iterator" tag="factfinder.export.variant_field" />
         </defaults>
 
         <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />
@@ -56,5 +57,9 @@
 
         <service id="Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface"
                  class="Omikron\FactFinder\Shopware6\Export\Filter\TextFilter" />
+
+        <service id="Omikron\FactFinder\Shopware6\Export\Field\CustomFields">
+            <tag name="factfinder.export.variant_field" />
+        </service>
     </services>
 </container>
