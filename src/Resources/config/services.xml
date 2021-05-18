@@ -61,5 +61,7 @@
         <service id="Omikron\FactFinder\Shopware6\Export\Field\CustomFields">
             <tag name="factfinder.export.variant_field" />
         </service>
+
+        <service id="tag_aware_cache" class="Symfony\Component\Cache\Adapter\TagAwareAdapter" />
     </services>
 </container>
