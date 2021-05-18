@@ -7,7 +7,6 @@ $finder = PhpCsFixer\Finder::create()
     ->name('*.php')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true)
-    ->notPath('BackwardCompatibility')
     ;
 
 return Config::create()
