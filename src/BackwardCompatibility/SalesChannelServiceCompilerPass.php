@@ -15,8 +15,7 @@ class SalesChannelServiceCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         if ($container->has('Shopware\Core\System\SalesChannel\Context\CachedSalesChannelContextFactory')) {
-            $salesChannelService  = new Definition(
-                'Omikron\FactFinder\Shopware6\BackwardCompatibility\Extension\CachedSalesChannelContextFactoryExtension', [
+            $salesChannelService  = new Definition('Omikron\FactFinder\Shopware6\BackwardCompatibility\Extension\CachedSalesChannelContextFactoryExtension', [
                 new Reference('Shopware\Core\System\SalesChannel\Context\CachedSalesChannelContextFactory'),
                 new Reference('tag_aware_cache'),
                 new Reference('Shopware\Core\Framework\Adapter\Cache\CacheTracer'),
