@@ -20,7 +20,7 @@ class SalesChannelService
     /** @var EntityRepositoryInterface */
     private $channelRepository;
 
-    /** @var SalesChannelContextFactoryInterface  */
+    /** @var SalesChannelContextFactoryInterface */
     private $channelContextFactory;
 
     /** @var SalesChannelContext|null */

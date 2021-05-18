@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\FactFinder\Shopware6\BackwardCompatibility;
 
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
@@ -12,8 +14,7 @@ class SalesChannelServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if ($container->has('Shopware\Core\System\SalesChannel\Context\CachedSalesChannelContextFactory'))
-        {
+        if ($container->has('Shopware\Core\System\SalesChannel\Context\CachedSalesChannelContextFactory')) {
             $salesChannelService  = new Definition(
                 'Omikron\FactFinder\Shopware6\BackwardCompatibility\Extension\CachedSalesChannelContextFactoryExtension', [
                 new Reference('Shopware\Core\System\SalesChannel\Context\CachedSalesChannelContextFactory'),
