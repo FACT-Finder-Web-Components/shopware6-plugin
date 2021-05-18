@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
+use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
+use Shopware\Core\Content\Category\Service\CategoryBreadcrumbBuilder;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
 class CategoryPath implements FieldInterface
@@ -12,9 +14,20 @@ class CategoryPath implements FieldInterface
     /** @var string */
     private $fieldName;
 
-    public function __construct(string $fieldName = 'CategoryPath')
-    {
-        $this->fieldName = $fieldName;
+    /** @var SalesChannelService */
+    private $channelService;
+
+    /** @var CategoryBreadcrumbBuilder */
+    private $breadcrumbBuilder;
+
+    public function __construct(
+        SalesChannelService $channelService,
+        CategoryBreadcrumbBuilder $breadcrumbBuilder,
+        string $categoryPathFieldName
+    ) {
+        $this->fieldName         = $categoryPathFieldName;
+        $this->channelService    = $channelService;
+        $this->breadcrumbBuilder = $breadcrumbBuilder;
     }
 
     public function getName(): string
@@ -24,21 +37,11 @@ class CategoryPath implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        $categoryName = $this->categoryName($product);
-        return implode('|', $product->getCategories()->fmap(function (Category $category) use ($categoryName): string {
-            $path = explode('|', trim($category->getPath() . $category->getId(), '|'));
-            return implode('/', array_map($categoryName, array_slice($path, 1)));
+        $salesChannel = $this->channelService->getSalesChannelContext()->getSalesChannel();
+
+        return implode('|', $product->getCategories()->fmap(function (Category $category) use ($salesChannel): string {
+            $breadcrumb = $this->breadcrumbBuilder->build($category, $salesChannel, $salesChannel->getNavigationCategoryId()) ?? [];
+            return in_array($salesChannel->getNavigationCategoryId(), array_keys($category->getPlainBreadcrumb())) ? implode('/', array_map('urlencode', $breadcrumb)) : '';
         }));
-    }
-
-    private function categoryName(Product $product): callable
-    {
-        $names = $product->getCategoriesRo()->map(function (Category $category): string {
-            return (string) $category->getTranslation('name');
-        });
-
-        return function (string $id) use ($names): string {
-            return rawurlencode($names[$id] ?? '');
-        };
     }
 }
