@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         php: ['7.2', '7.3', '7.4']
-        deps: ['stable']
+        deps: ['latest']
 
     steps:
       - name: Checkout code
