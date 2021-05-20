@@ -165,7 +165,7 @@ class CustomFieldsSpec extends ObjectBehavior
         $customField->setType($type);
         $customField->setId($key);
         $customField->setConfig($config);
-        return new EntitySearchResult(1, new EntityCollection([$customField]), null, new Criteria(), new Context(new SystemSource()));
+        return new EntitySearchResult('',1, new EntityCollection([$customField]), null, new Criteria(), new Context(new SystemSource()));
     }
 
     private function mockLanguageRepository(): callable
@@ -177,7 +177,7 @@ class CustomFieldsSpec extends ObjectBehavior
                 $locale = new LocaleEntity();
                 $locale->setCode($languageId === Defaults::LANGUAGE_SYSTEM ? 'en-GB' : 'de-DE');
                 $language->setLocale($locale);
-                return new EntitySearchResult(1, new EntityCollection([$language]), null, new Criteria(), new Context(new SystemSource()));
+                return new EntitySearchResult('',1, new EntityCollection([$language]), null, new Criteria(), new Context(new SystemSource()));
             };
             return $getLanguage($args[0]->getIds()[0]);
         };
