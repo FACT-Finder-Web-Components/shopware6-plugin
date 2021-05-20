@@ -13,14 +13,13 @@ class SalesChannelServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $salesChannelServiceDefinition = $container->getDefinition(SalesChannelService::class);
+        $salesChannelService   = $container->getDefinition(SalesChannelService::class);
+        $channelContextFactory = new Definition('Omikron\FactFinder\Shopware6\BackwardCompatibility\Extension\SalesChannelContextFactory', $container->getDefinition('Shopware\Core\System\SalesChannel\Context\SalesChannelContextFactory')->getArguments());
 
         if ($container->has('Shopware\Core\System\SalesChannel\Context\CachedSalesChannelContextFactory')) {
-            $salesChannelContextFactory = new Definition('Omikron\FactFinder\Shopware6\BackwardCompatibility\Extension\CachedSalesChannelContextFactory', $container->getDefinition('Shopware\Core\System\SalesChannel\Context\CachedSalesChannelContextFactory')->getArguments());
-        } else {
-            $salesChannelContextFactory = new Definition('Omikron\FactFinder\Shopware6\BackwardCompatibility\Extension\SalesChannelContextFactory', $container->getDefinition('Shopware\Core\System\SalesChannel\Context\SalesChannelContextFactory')->getArguments());
+            $channelContextFactory = new Definition('Omikron\FactFinder\Shopware6\BackwardCompatibility\Extension\CachedSalesChannelContextFactory', $container->getDefinition('Shopware\Core\System\SalesChannel\Context\CachedSalesChannelContextFactory')->getArguments());
         }
 
-        $salesChannelServiceDefinition->setArgument('$channelContextFactory', $salesChannelContextFactory);
+        $salesChannelService->setArgument('$channelContextFactory', $channelContextFactory);
     }
 }
