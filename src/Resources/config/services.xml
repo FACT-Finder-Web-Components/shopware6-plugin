@@ -32,6 +32,7 @@
             <bind key="$customFieldRepository" type="service" id="custom_field.repository" />
             <bind key="$languageRepository" type="service" id="language.repository"/>
             <bind key="$variantFields" type="tagged_iterator" tag="factfinder.export.variant_field" />
+            <bind key="$categoryPathFieldName" type="string" />
         </defaults>
 
         <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />

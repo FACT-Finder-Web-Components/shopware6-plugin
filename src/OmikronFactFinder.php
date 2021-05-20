@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6;
 
+use Omikron\FactFinder\Shopware6\BackwardCompatibility\SalesChannelServiceCompilerPass;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Framework\Plugin;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,5 +15,6 @@ class OmikronFactFinder extends Plugin
     {
         parent::build($container);
         $container->registerForAutoconfiguration(FieldInterface::class)->addTag('factfinder.export.field');
+        $container->addCompilerPass(new SalesChannelServiceCompilerPass());
     }
 }

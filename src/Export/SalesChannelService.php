@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
+use Omikron\FactFinder\Shopware6\BackwardCompatibility\Extension\SalesChannelContextFactoryInterface;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\System\SalesChannel\Context\SalesChannelContextFactory;
 use Shopware\Core\System\SalesChannel\Context\SalesChannelContextService;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
@@ -20,15 +20,15 @@ class SalesChannelService
     /** @var EntityRepositoryInterface */
     private $channelRepository;
 
-    /** @var SalesChannelContextFactory */
+    /** @var SalesChannelContextFactoryInterface */
     private $channelContextFactory;
 
     /** @var SalesChannelContext|null */
     private $cachedSalesChannel;
 
     public function __construct(
-        EntityRepositoryInterface $channelRepository,
-        SalesChannelContextFactory $channelContextFactory
+        SalesChannelContextFactoryInterface $channelContextFactory,
+        EntityRepositoryInterface $channelRepository
     ) {
         $this->channelRepository     = $channelRepository;
         $this->channelContextFactory = $channelContextFactory;
