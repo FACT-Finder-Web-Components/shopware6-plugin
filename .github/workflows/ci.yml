@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ['7.2', '7.3', '7.4']
-        deps: ['latest']
+        php: ['7.4']
+        deps: ['stable']
 
     steps:
       - name: Checkout code
