@@ -29,18 +29,16 @@ class FilterAttributes implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        $productProperties = $this->applyPropertyGroupsFilter($product);
-
         $attributes = $product->getChildren()->reduce(function (array $result, Product $child): array {
             return $result + array_map($this->propertyFormatter, $child->getOptions()->getElements());
-        }, array_map($this->propertyFormatter, $productProperties));
+        }, array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($product)));
 
         return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';
     }
 
     private function applyPropertyGroupsFilter(Product $product): array
     {
-        $disabledPropertyGroups =  $this->excludedFields->config('disabledPropertyGroups');
+        $disabledPropertyGroups =  $this->excludedFields->getDisabledPropertyGroups();
         $productProperties = $product->getProperties()->getElements();
 
         if ($disabledPropertyGroups) {
