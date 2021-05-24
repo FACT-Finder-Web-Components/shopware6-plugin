@@ -15,11 +15,12 @@
             <parameter key="deeplink">Deeplink</parameter>
             <parameter key="description">Description</parameter>
             <parameter key="ean">EAN</parameter>
+            <parameter key="displayProductNumber">ProductNumber</parameter>
             <parameter key="imageUrl">ImageUrl</parameter>
-            <parameter key="masterId">Master</parameter>
+            <parameter key="masterArticleNumber">Master</parameter>
             <parameter key="price">Price</parameter>
             <parameter key="productName">Name</parameter>
-            <parameter key="productNumber">ProductNumber</parameter>
+            <parameter key="trackingProductNumber">ProductNumber</parameter>
         </parameter>
     </parameters>
 

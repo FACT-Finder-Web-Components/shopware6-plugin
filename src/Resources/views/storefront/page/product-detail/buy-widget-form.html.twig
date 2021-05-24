@@ -1,0 +1,6 @@
+{% sw_extends '@Parent/storefront/page/product-detail/buy-widget-form.html.twig' %}
+
+{% block page_product_detail_product_buy_meta %}
+  {{ parent() }}
+  <input type="hidden" name="product-number" value="{{ product.productNumber }}">
+{% endblock %}

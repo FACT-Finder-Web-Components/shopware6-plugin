@@ -1,0 +1,13 @@
+{% sw_extends '@Storefront/storefront/page/checkout/finish/index.html.twig' %}
+{% block page_checkout_finish_product_table %}
+  {{ parent() }}
+  <ff-checkout-tracking>
+    {% for lineItem in page.order.nestedLineItems %}
+      <ff-checkout-tracking-item
+        record-id="{{ lineItem.payload.productNumber }}"
+        count="{{ lineItem.quantity }}"
+        channel="{{ page.extensions.factfinder.communication.channel }}">
+      </ff-checkout-tracking-item>
+    {% endfor %}
+  </ff-checkout-tracking>
+{% endblock %}
