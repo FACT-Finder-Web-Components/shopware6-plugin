@@ -62,5 +62,7 @@
         <service id="Omikron\FactFinder\Shopware6\Export\Field\CustomFields">
             <tag name="factfinder.export.variant_field" />
         </service>
+
+        <service id="Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData" class="Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData"/>
     </services>
 </container>
