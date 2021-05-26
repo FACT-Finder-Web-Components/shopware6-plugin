@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export;
 
 use Omikron\FactFinder\Shopware6\BackwardCompatibility\Extension\SalesChannelContextFactoryInterface;
+use Shopware\Core\Checkout\Cart\CartRuleLoader;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\Util\Random;
 use Shopware\Core\System\SalesChannel\Context\SalesChannelContextService;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
@@ -23,27 +25,32 @@ class SalesChannelService
     /** @var SalesChannelContextFactoryInterface */
     private $channelContextFactory;
 
+    /** @var CartRuleLoader */
+    private $cartRuleLoader;
+
     /** @var SalesChannelContext|null */
-    private $cachedSalesChannel;
+    private $cachedSalesChannelContext;
 
     public function __construct(
         SalesChannelContextFactoryInterface $channelContextFactory,
-        EntityRepositoryInterface $channelRepository
+        EntityRepositoryInterface $channelRepository,
+        CartRuleLoader $cartRuleLoader
     ) {
         $this->channelRepository     = $channelRepository;
         $this->channelContextFactory = $channelContextFactory;
+        $this->cartRuleLoader        = $cartRuleLoader;
     }
 
     public function getSalesChannelContext(SalesChannelEntity $salesChannel = null, $languageId = null): SalesChannelContext
     {
-        if (!$this->cachedSalesChannel) {
-            $usedChannel              = $salesChannel ?: $this->getDefaultStoreFrontSalesChannel();
-            $this->cachedSalesChannel = $this->channelContextFactory->create('', $usedChannel->getId(), [
+        if (!$this->cachedSalesChannelContext) {
+            $usedChannel                     = $salesChannel ?: $this->getDefaultStoreFrontSalesChannel();
+            $this->cachedSalesChannelContext = $this->channelContextFactory->create('', $usedChannel->getId(), [
                 SalesChannelContextService::LANGUAGE_ID => $languageId ?: $usedChannel->getLanguageId(),
             ]);
         }
-
-        return $this->cachedSalesChannel;
+        $this->cartRuleLoader->loadByToken($this->cachedSalesChannelContext, Random::getAlphanumericString(32));
+        return $this->cachedSalesChannelContext;
     }
 
     private function getDefaultStoreFrontSalesChannel(): SalesChannelEntity
