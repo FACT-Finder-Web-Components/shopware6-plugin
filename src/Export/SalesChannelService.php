@@ -17,6 +17,9 @@ use Shopware\Core\System\SalesChannel\Context\SalesChannelContextService;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class SalesChannelService
 {
     /** @var EntityRepositoryInterface */
