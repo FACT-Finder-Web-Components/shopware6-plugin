@@ -29,7 +29,7 @@ class SalesChannelService
     private $cartRuleLoader;
 
     /** @var SalesChannelContext|null */
-    private $cachedSalesChannelContext;
+    private $cachedContext;
 
     public function __construct(
         SalesChannelContextFactoryInterface $channelContextFactory,
@@ -43,14 +43,14 @@ class SalesChannelService
 
     public function getSalesChannelContext(SalesChannelEntity $salesChannel = null, $languageId = null): SalesChannelContext
     {
-        if (!$this->cachedSalesChannelContext) {
-            $usedChannel                     = $salesChannel ?: $this->getDefaultStoreFrontSalesChannel();
-            $this->cachedSalesChannelContext = $this->channelContextFactory->create('', $usedChannel->getId(), [
+        if (!$this->cachedContext) {
+            $usedChannel         = $salesChannel ?: $this->getDefaultStoreFrontSalesChannel();
+            $this->cachedContext = $this->channelContextFactory->create('', $usedChannel->getId(), [
                 SalesChannelContextService::LANGUAGE_ID => $languageId ?: $usedChannel->getLanguageId(),
             ]);
         }
-        $this->cartRuleLoader->loadByToken($this->cachedSalesChannelContext, Random::getAlphanumericString(32));
-        return $this->cachedSalesChannelContext;
+        $this->cartRuleLoader->loadByToken($this->cachedContext, Random::getAlphanumericString(32));
+        return $this->cachedContext;
     }
 
     private function getDefaultStoreFrontSalesChannel(): SalesChannelEntity
