@@ -16,17 +16,17 @@ class ExportProducts
     private $productRepository;
 
     /** @var string[] */
-    private $variantAssociations;
+    private $customAssociations;
 
-    public function __construct(SalesChannelRepositoryInterface $productRepository, array $variantAssociations)
+    public function __construct(SalesChannelRepositoryInterface $productRepository, array $customAssociations)
     {
-        $this->productRepository   = $productRepository;
-        $this->variantAssociations = $variantAssociations;
+        $this->productRepository  = $productRepository;
+        $this->customAssociations = $customAssociations;
     }
 
     /**
      * @param SalesChannelContext $context
-     * @param int $batchSize
+     * @param int                 $batchSize
      *
      * @return SalesChannelProductEntity[]
      */
@@ -53,7 +53,7 @@ class ExportProducts
         $criteria->addAssociation('customFields');
         $criteria->addAssociation('properties.group');
         $criteria->addAssociation('seoUrls');
-        foreach ($this->variantAssociations as $association) {
+        foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
         }
         $criteria->addFilter(new EqualsFilter('parentId', null));
