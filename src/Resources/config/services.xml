@@ -21,6 +21,9 @@
             <parameter key="productName">Name</parameter>
             <parameter key="productNumber">ProductNumber</parameter>
         </parameter>
+        <parameter key="factfinder.export.variant.associations" type="collection">
+            <parameter key="cover">children.cover</parameter>
+        </parameter>
     </parameters>
 
     <services>
@@ -33,6 +36,7 @@
             <bind key="$languageRepository" type="service" id="language.repository"/>
             <bind key="$variantFields" type="tagged_iterator" tag="factfinder.export.variant_field" />
             <bind key="$categoryPathFieldName">%factfinder.navigation.category_path_field_name%</bind>
+            <bind key="$variantAssociations">%factfinder.export.variant.associations%</bind>
         </defaults>
 
         <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />
@@ -60,7 +64,10 @@
                  class="Omikron\FactFinder\Shopware6\Export\Filter\TextFilter" />
 
         <service id="Omikron\FactFinder\Shopware6\Export\Field\CustomFields">
-            <tag name="factfinder.export.variant_field" />
+            <tag name="factfinder.export.variant_field"/>
+        </service>
+        <service id="Omikron\FactFinder\Shopware6\Export\Field\ImageUrl">
+            <tag name="factfinder.export.variant_field"/>
         </service>
     </services>
 </container>
