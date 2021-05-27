@@ -12,7 +12,8 @@ class Price implements FieldInterface
     /** @var NumberFormatter */
     private $numberFormatter;
 
-    public function __construct(NumberFormatter $numberFormatter) {
+    public function __construct(NumberFormatter $numberFormatter)
+    {
         $this->numberFormatter = $numberFormatter;
     }
 
