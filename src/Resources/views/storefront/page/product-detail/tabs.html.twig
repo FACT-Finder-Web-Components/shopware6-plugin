@@ -1,0 +1,26 @@
+{% sw_extends '@Parent/storefront/page/product-detail/tabs.html.twig' %}
+{% set product_number = page.product.productNumber %}
+
+{% block page_product_detail_tabs_inner %}
+  {{ parent() }}
+  <div style="margin: 20px 0">
+    <ff-recommendation record-id="{{ product_number }}" max-results="4">
+      <div class="h3 recommendationHeader" style="margin-bottom: 20px">Recommendations</div>
+      <ff-record-list subscribe="false">
+        <ff-record style="width: 25%;">
+          <img data-image="{{ '{{record.ImageURL}}' }}" style="width: 50%; display: block; margin: auto;">
+          <div style="margin-top: 25px">
+            <div style="min-height: 50px;display: flex;align-items: center;justify-content: center;text-align: center;">
+              <a href="https://www.bergfreunde.de{{ '{{record.Deeplink}}' }}" data-action="redirect">
+                {{ '{{ record.Title }}' }}
+              </a>
+            </div>
+            <div style="display: flex;align-items: center;justify-content: center;text-align: center;">
+              Price: <strong>{{ '{{record.Price}}' }} €</strong>
+            </div>
+          </div>
+        </ff-record>
+      </ff-record-list>
+    </ff-recommendation>
+  </div>
+{% endblock %}

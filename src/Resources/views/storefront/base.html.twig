@@ -1,11 +1,11 @@
 {% sw_extends '@Parent/storefront/base.html.twig' %}
 
 {% block base_body_inner %}
-  <ff-communication
-    {{ page.extensions.factfinder.communication|map((val, key) => key ~ '="' ~ (val|e('html_attr')) ~ '"')|join(' ')|raw }}
-    only-search-params="true"
-    disable-single-hit-redirect="true"></ff-communication>
-
+  {% set factfinder_config = page.extensions.factfinder.all.communication %}
+  <ff-communication url="{{ factfinder_config.url }}" version="{{ factfinder_config.version }}" api="{{ factfinder_config.api }}"
+                    channel="{{ factfinder_config.channel }}"
+                    use-url-parameters="true" default-query="shirt" search-immediate>
+  </ff-communication>
   {{ parent() }}
 {% endblock %}
 
