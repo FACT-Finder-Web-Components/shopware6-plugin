@@ -25,6 +25,10 @@
         <parameter key="factfinder.export.associations" type="collection">
             <parameter key="variant_cover">children.cover</parameter>
         </parameter>
+        <parameter key="factfinder.navigation.category_path_field_name" type="string">CategoryPath</parameter>
+        <parameter key="factfinder.navigation.initial_params" type="collection">
+            <parameter key="navigation=true">navigation=true</parameter>
+        </parameter>
     </parameters>
 
     <services>
@@ -38,6 +42,7 @@
             <bind key="$variantFields" type="tagged_iterator" tag="factfinder.export.variant_field" />
             <bind key="$categoryPathFieldName">%factfinder.navigation.category_path_field_name%</bind>
             <bind key="$customAssociations">%factfinder.export.associations%</bind>
+            <bind key="$initialNavigationParams">%factfinder.navigation.initial_params%</bind>
         </defaults>
 
         <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />
@@ -60,6 +65,10 @@
 
         <prototype namespace="Omikron\FactFinder\Shopware6\"
                    resource="../../{Command,Communication,Config,Export,Resources,Storefront,Subscriber,Upload}" />
+
+        <service id="Omikron\FactFinder\Shopware6\Subscriber\CategoryView">
+            <argument type="service" id="Shopware\Core\Content\Category\SalesChannel\CategoryRoute"/>
+        </service>
 
         <service id="Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface"
                  class="Omikron\FactFinder\Shopware6\Export\Filter\TextFilter" />

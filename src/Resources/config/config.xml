@@ -86,5 +86,14 @@
                 </option>
             </options>
         </input-field>
+
+
+        <component name="sw-entity-multi-select">
+            <name>customFieldsToExport</name>
+            <label>Exportable custom fields</label>
+            <label lang="de-DE">Exportable custom fields</label>
+            <entity>custom_field</entity>
+            <title>Choose a attribute for the plugin configuration</title>
+        </component>
     </card>
 </config>
