@@ -38,23 +38,10 @@ class FilterAttributes implements FieldInterface
 
     private function applyPropertyGroupsFilter(Product $product): array
     {
-        $disabledPropertyGroups =  $this->excludedFields->getDisabledPropertyGroups();
-        $productProperties = $product->getProperties()->getElements();
+        $disabledProperties =  $this->excludedFields->getDisabledPropertyGroups();
 
-        if ($disabledPropertyGroups) {
-            for ($i = 0; $i<count($disabledPropertyGroups); $i++) {
-                /**
-                 * @var string $key
-                 * @var PropertyGroupOptionEntity $value
-                 */
-                foreach ($productProperties as $key => $value) {
-                    if ($disabledPropertyGroups[$i] == $value->getGroupId()) {
-                        unset($productProperties[$key]);
-                    }
-                }
-            }
-        }
-
-        return $productProperties;
+        return $product->getProperties()->filter(function (PropertyGroupOptionEntity $option) use ($disabledProperties) {
+            return !in_array($option->getGroupId(), $disabledProperties);
+        })->getElements();
     }
 }
