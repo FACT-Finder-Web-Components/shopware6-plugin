@@ -13,8 +13,9 @@ use Shopware\Core\System\CustomField\CustomFieldEntity;
 
 class CustomFieldReadingData
 {
-    private EntityRepositoryInterface $customFieldRepository;
-
+    /** @var EntityRepositoryInterface  */
+    private $customFieldRepository;
+    private $cachedFields;
     /**
      * CustomFieldReadingData constructor.
      * @param EntityRepositoryInterface $customFieldRepository
@@ -26,19 +27,20 @@ class CustomFieldReadingData
 
     public function getCustomFieldNames(array $customFieldIds): array
     {
-        $result = [];
-        /** @var EntitySearchResult $data */
-        $searchResult = $this->customFieldRepository->search(
-            new Criteria($customFieldIds),
-            new Context(new SystemSource())
-        );
-        $data = $searchResult->getElements();
+        $key = implode('', $customFieldIds);
 
-        /** @var CustomFieldEntity $customField */
-        foreach ($data as $customField) {
-            $result[] = $customField->getName();
+        if (!isset($this->cachedFields[$key])) {
+            /** @var EntitySearchResult $data */
+            $searchResult = $this->customFieldRepository->search(
+                new Criteria($customFieldIds),
+                new Context(new SystemSource())
+            );
+
+            $this->cachedFields[$key] = $searchResult->map(function (CustomFieldEntity $customField) {
+                return $customField->getName();
+            });
         }
 
-        return $result;
+        return $this->cachedFields;
     }
 }
