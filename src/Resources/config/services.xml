@@ -64,7 +64,7 @@
         </instanceof>
 
         <prototype namespace="Omikron\FactFinder\Shopware6\"
-                   resource="../../{Command,Communication,Config,Export,Resources,Storefront,Subscriber,Upload}" />
+                   resource="../../{Command,Communication,Config,Export,Resources,Storefront,Subscriber,Upload,Service}" />
 
         <service id="Omikron\FactFinder\Shopware6\Subscriber\CategoryView">
             <argument type="service" id="Shopware\Core\Content\Category\SalesChannel\CategoryRoute"/>
@@ -79,7 +79,5 @@
         <service id="Omikron\FactFinder\Shopware6\Export\Field\ImageUrl">
             <tag name="factfinder.export.variant_field"/>
         </service>
-
-        <service id="Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData" class="Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData"/>
     </services>
 </container>
