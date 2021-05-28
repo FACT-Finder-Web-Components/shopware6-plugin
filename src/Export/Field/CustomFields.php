@@ -37,9 +37,11 @@ class CustomFields implements FieldInterface
     /** @var EntityRepositoryInterface */
     private $languageRepository;
 
-    private ExcludedFields $excludedFields;
+    /** @var ExcludedFields  */
+    private $excludedFields;
 
-    private CustomFieldReadingData $customFieldReadingData;
+    /** @var CustomFieldReadingData  */
+    private $customFieldReadingData;
 
     private $loadedFields = [];
 
