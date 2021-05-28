@@ -1,0 +1,25 @@
+{
+  "sw-cms": {
+    "blocks": {
+      "commerce": {
+        "factfinderWebComponentsListing": {
+          "label": "FACTFinder Web Components Listing"
+        }
+      }
+    },
+    "elements": {
+      "recordList": {
+        "label": "ff-record-list"
+      },
+      "asn": {
+        "label": "ff--asn"
+      },
+      "sortbox": {
+        "label": "ff-sortbox"
+      },
+      "paging": {
+        "label": "ff-paging"
+      }
+    }
+  }
+}

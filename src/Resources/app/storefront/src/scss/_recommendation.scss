@@ -1,0 +1,32 @@
+.recommendation-header {
+  margin-bottom: 20px;
+}
+
+.recommendation-record {
+  width: 25%;
+
+  img {
+    width: 50%;
+    display: block;
+    margin: auto;
+  }
+
+  .product-block {
+    margin-top: 25px;
+
+    .product-title {
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .product-price {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+}

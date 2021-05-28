@@ -1,0 +1,40 @@
+{% block block_factfinder_web_components_listing %}
+  {% set columns = 1 %}
+
+  {% set element = block.slots.getSlot('toolbarFilters') %}
+<div class="col-12">
+  <div id="filter-panel-wrapper" class="filter-panel-wrapper" data-offcanvas-filter-content="true">
+    {% sw_include '@Parent/storefront/components/factfinder/asn.html.twig' %}
+  </div>
+</div>
+
+<div class="col-12">
+  <div class="cms-element-product-listing-wrapper">
+    <div class="cms-element-product-listing">
+      <div class="cms-element-product-listing-actions row justify-content-between">
+        <div class="col-md-auto" data-cms-element-id="{{ element.id }}">
+          {% block block_product_three_column_toolbar_paging_inner %}
+            {% set element = block.slots.getSlot('toolbarPaging') %}
+            {% sw_include "@Parent/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+          {% endblock %}
+        </div>
+
+        {% set element = block.slots.getSlot('toolbarSorting') %}
+        <div class="col-md-auto" data-cms-element-id="{{ element.id }}">
+          {% block block_product_three_column_toolbar_sortbox_inner %}
+            {% sw_include "@Parent/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+    {% block block_factfinder_web_components_listing_center %}
+      {% set element = block.slots.getSlot('center') %}
+      {% block block_product_three_column_center_inner %}
+        {% sw_include "@Parent/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+      {% endblock %}
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}
+
+
