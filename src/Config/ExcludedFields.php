@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Config;
-
 
 class ExcludedFields extends BaseConfig
 {
