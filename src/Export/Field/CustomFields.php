@@ -37,10 +37,10 @@ class CustomFields implements FieldInterface
     /** @var EntityRepositoryInterface */
     private $languageRepository;
 
-    /** @var ExcludedFields  */
+    /** @var ExcludedFields */
     private $excludedFields;
 
-    /** @var CustomFieldReadingData  */
+    /** @var CustomFieldReadingData */
     private $customFieldReadingData;
 
     private $loadedFields = [];
@@ -53,11 +53,11 @@ class CustomFields implements FieldInterface
         ExcludedFields $excludedFields,
         CustomFieldReadingData $customFieldReadingData
     ) {
-        $this->propertyFormatter     = $propertyFormatter;
-        $this->salesChannelService   = $salesChannelService;
-        $this->customFieldRepository = $customFieldRepository;
-        $this->languageRepository    = $languageRepository;
-        $this->excludedFields = $excludedFields;
+        $this->propertyFormatter      = $propertyFormatter;
+        $this->salesChannelService    = $salesChannelService;
+        $this->customFieldRepository  = $customFieldRepository;
+        $this->languageRepository     = $languageRepository;
+        $this->excludedFields         = $excludedFields;
         $this->customFieldReadingData = $customFieldReadingData;
     }
 
@@ -68,7 +68,7 @@ class CustomFields implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        $fields = $this->getProductFields($product);
+        $fields           = $this->getProductFields($product);
         $translatedFields = array_merge([], ...array_map($this->customFieldConfig(), array_keys($fields), array_values($fields)));
         $value            = array_map([$this->propertyFormatter, 'format'], array_keys($translatedFields), array_values($translatedFields));
         return $value ? '|' . implode('|', $value) . '|' : '';

@@ -14,13 +14,13 @@ class FilterAttributes implements FieldInterface
     /** @var PropertyFormatter */
     private $propertyFormatter;
 
-    /** @var ExcludedFields  */
+    /** @var ExcludedFields */
     private $excludedFields;
 
     public function __construct(PropertyFormatter $propertyFormatter, ExcludedFields $excludedFields)
     {
         $this->propertyFormatter = $propertyFormatter;
-        $this->excludedFields = $excludedFields;
+        $this->excludedFields    = $excludedFields;
     }
 
     public function getName(): string

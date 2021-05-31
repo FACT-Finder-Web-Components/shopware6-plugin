@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
-use Omikron\FactFinder\Shopware6\Config\ExcludedFields;
 use Omikron\FactFinder\Shopware6\Export\Data\DataProvider;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\EntityFactory;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
