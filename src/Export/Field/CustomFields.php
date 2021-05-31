@@ -120,9 +120,7 @@ class CustomFields implements FieldInterface
             if (!empty($this->excludedFields->getDisabledCustomFields())) {
                 $excludedCustomFields = $this->customFieldReadingData->getCustomFieldNames($this->excludedFields->getDisabledCustomFields());
 
-                foreach ($excludedCustomFields as $excludedCustomField) {
-                    $productCustomFields = array_diff_key($productCustomFields, array_flip($excludedCustomField));
-                }
+                $productCustomFields = array_diff_key($productCustomFields, array_flip($excludedCustomFields));
             }
         }
 

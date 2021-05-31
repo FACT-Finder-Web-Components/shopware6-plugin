@@ -41,6 +41,6 @@ class CustomFieldReadingData
             });
         }
 
-        return $this->cachedFields;
+        return $this->cachedFields[$key];
     }
 }

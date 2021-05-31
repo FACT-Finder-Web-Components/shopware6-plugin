@@ -2,10 +2,12 @@
 
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
+use Omikron\FactFinder\Shopware6\Config\ExcludedFields;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Filter\TextFilter;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
+use Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
@@ -56,12 +58,21 @@ class CustomFieldsSpec extends ObjectBehavior
         SalesChannelService $salesChannelService,
         SalesChannelContext $channelContext,
         EntityRepositoryInterface $customFieldRepository,
-        EntityRepositoryInterface $languageRepository
+        EntityRepositoryInterface $languageRepository,
+        ExcludedFields $excludedFields,
+        CustomFieldReadingData $customFieldReadingData
     ) {
         $languageRepository->search(Argument::type(Criteria::class), Argument::cetera())->will($this->mockLanguageRepository());
         $channelContext->getSalesChannel()->willReturn($this->getSalesChannel('2'));
         $salesChannelService->getSalesChannelContext()->willReturn($channelContext);
-        $this->beConstructedWith(new PropertyFormatter(new TextFilter()), $salesChannelService, $customFieldRepository, $languageRepository);
+        $this->beConstructedWith(new PropertyFormatter(
+            new TextFilter()),
+            $salesChannelService,
+            $customFieldRepository,
+            $languageRepository,
+            $excludedFields,
+            $customFieldReadingData
+        );
     }
 
     function it_is_a_field()
