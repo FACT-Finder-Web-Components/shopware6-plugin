@@ -14,7 +14,8 @@ class FilterAttributes implements FieldInterface
     /** @var PropertyFormatter */
     private $propertyFormatter;
 
-    private ExcludedFields $excludedFields;
+    /** @var ExcludedFields  */
+    private $excludedFields;
 
     public function __construct(PropertyFormatter $propertyFormatter, ExcludedFields $excludedFields)
     {
@@ -38,7 +39,11 @@ class FilterAttributes implements FieldInterface
 
     private function applyPropertyGroupsFilter(Product $product): array
     {
-        $disabledProperties =  $this->excludedFields->getDisabledPropertyGroups();
+        $disabledProperties = $this->excludedFields->getDisabledPropertyGroups();
+
+        if (!$disabledProperties) {
+            return $product->getProperties()->getElements();
+        }
 
         return $product->getProperties()->filter(function (PropertyGroupOptionEntity $option) use ($disabledProperties) {
             return !in_array($option->getGroupId(), $disabledProperties);
