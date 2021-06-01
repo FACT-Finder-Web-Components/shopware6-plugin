@@ -2,6 +2,9 @@
 
 {% block page_search %}
   <div class="cms-page search-page">
+    {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig' %}
+    {% sw_include '@Parent/storefront/components/factfinder/campaign-redirect.html.twig' %}
+    {% sw_include '@Parent/storefront/components/factfinder/campaign-advisor.html.twig' %}
     <ff-template scope="result" unresolved>
       {% block page_search_headline %}
         <h1 class="search-headline">
@@ -11,7 +14,6 @@
         </h1>
       {% endblock %}
     </ff-template>
-
     <div class="cms-block-container">
       <div class="cms-block-container-row row cms-row">
         <div class="col-12">
