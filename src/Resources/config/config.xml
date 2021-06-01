@@ -35,6 +35,22 @@
     </card>
 
     <card>
+        <title>Excluded filters</title>
+
+        <component name="sw-entity-multi-id-select">
+            <name>disabledPropertyGroups</name>
+            <entity>property_group</entity>
+            <label>Select Filter attributes which should be ignored be feed exporter</label>
+        </component>
+
+        <component name="sw-entity-multi-id-select">
+            <name>disabledCustomFields</name>
+            <entity>custom_field</entity>
+            <label>Select Custom fields which should be ignored be feed exporter</label>
+        </component>
+    </card>
+
+    <card>
         <title>Upload Settings</title>
         <title lang="de-DE">FTP-Konfiguration</title>
 

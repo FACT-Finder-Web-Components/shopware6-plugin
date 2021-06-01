@@ -64,7 +64,7 @@
         </instanceof>
 
         <prototype namespace="Omikron\FactFinder\Shopware6\"
-                   resource="../../{Command,Communication,Config,Export,Resources,Storefront,Subscriber,Upload}" />
+                   resource="../../{Command,Communication,Config,Export,Resources,Storefront,Subscriber,Upload,Service}" />
 
         <service id="Omikron\FactFinder\Shopware6\Subscriber\CategoryView">
             <argument type="service" id="Shopware\Core\Content\Category\SalesChannel\CategoryRoute"/>

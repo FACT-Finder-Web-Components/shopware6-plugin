@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use InvalidArgumentException;
+use Omikron\FactFinder\Shopware6\Config\ExcludedFields;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
+use Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
@@ -35,18 +37,28 @@ class CustomFields implements FieldInterface
     /** @var EntityRepositoryInterface */
     private $languageRepository;
 
+    /** @var ExcludedFields */
+    private $excludedFields;
+
+    /** @var CustomFieldReadingData */
+    private $customFieldReadingData;
+
     private $loadedFields = [];
 
     public function __construct(
         PropertyFormatter $propertyFormatter,
         SalesChannelService $salesChannelService,
         EntityRepositoryInterface $customFieldRepository,
-        EntityRepositoryInterface $languageRepository
+        EntityRepositoryInterface $languageRepository,
+        ExcludedFields $excludedFields,
+        CustomFieldReadingData $customFieldReadingData
     ) {
-        $this->propertyFormatter     = $propertyFormatter;
-        $this->salesChannelService   = $salesChannelService;
-        $this->customFieldRepository = $customFieldRepository;
-        $this->languageRepository    = $languageRepository;
+        $this->propertyFormatter      = $propertyFormatter;
+        $this->salesChannelService    = $salesChannelService;
+        $this->customFieldRepository  = $customFieldRepository;
+        $this->languageRepository     = $languageRepository;
+        $this->excludedFields         = $excludedFields;
+        $this->customFieldReadingData = $customFieldReadingData;
     }
 
     public function getName(): string
@@ -56,7 +68,7 @@ class CustomFields implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        $fields           = $product->getTranslation('customFields') ?? [];
+        $fields           = $this->getProductFields($product);
         $translatedFields = array_merge([], ...array_map($this->customFieldConfig(), array_keys($fields), array_values($fields)));
         $value            = array_map([$this->propertyFormatter, 'format'], array_keys($translatedFields), array_values($translatedFields));
         return $value ? '|' . implode('|', $value) . '|' : '';
@@ -98,6 +110,21 @@ class CustomFields implements FieldInterface
 
             return [$label => $translatedOptionValue ?? $storedValue];
         };
+    }
+
+    private function getProductFields(Product $product): array
+    {
+        $productCustomFields = $product->getTranslation('customFields') ?? [];
+
+        if (!empty($productCustomFields)) {
+            if (!empty($this->excludedFields->getDisabledCustomFields())) {
+                $excludedCustomFields = $this->customFieldReadingData->getCustomFieldNames($this->excludedFields->getDisabledCustomFields());
+
+                $productCustomFields = array_diff_key($productCustomFields, array_flip($excludedCustomFields));
+            }
+        }
+
+        return $productCustomFields;
     }
 
     /**
