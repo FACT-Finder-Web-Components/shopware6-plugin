@@ -8,6 +8,12 @@
     },
     "search": {
       "headline": "Your search produced {{resultCount}} results!"
+    },
+    "recommendation": {
+      "label": "Recommendations"
+    },
+    "similarProducts": {
+      "label": "Similar Products"
     }
   }
 }

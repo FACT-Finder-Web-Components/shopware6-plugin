@@ -8,6 +8,12 @@
     },
     "search": {
       "headline": "Zu deiner Suche wurden {{resultCount}} Artikel gefunden!"
+    },
+    "recommendation": {
+      "label": "Kunden aufen auch"
+    },
+    "similarProducts": {
+      "label": "Ähnliche Produkte"
     }
   }
 }
