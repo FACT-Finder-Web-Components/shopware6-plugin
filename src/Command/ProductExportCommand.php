@@ -150,8 +150,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
             $feedService
                 ->setCurrencyList($this->getCurrencyList())
                 ->setDefaultCurrency($this->getDefaultCurrency())
-                ->generate(new ConsoleOutput($output), $feedColumns)
-            ;
+                ->generate(new ConsoleOutput($output), $feedColumns);
 
             return 0;
         }
@@ -173,7 +172,6 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $baseFieldNames    = (array) $this->container->getParameter('factfinder.export.columns.base');
         $productFieldNames = $this->getProductFieldNames($this->productFields);
 
-        dd($productFieldNames);
         return array_values(array_unique(array_merge($baseFieldNames, $productFieldNames)));
     }
 
@@ -202,8 +200,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $query = $this->connection->createQueryBuilder()
             ->select('iso_code, factor')
             ->from('currency')
-            ->execute()
-        ;
+            ->execute();
 
         $this->currencyList = $query->fetchAllAssociative();
 
