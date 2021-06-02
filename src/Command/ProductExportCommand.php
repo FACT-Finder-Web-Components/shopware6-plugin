@@ -38,9 +38,9 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    private const UPLOAD_FEED_OPTION = 'upload';
-    private const PUSH_IMPORT_OPTION = 'import';
-    private const SALES_CHANNEL_ARGUMENT = 'sales_channel';
+    private const UPLOAD_FEED_OPTION              = 'upload';
+    private const PUSH_IMPORT_OPTION              = 'import';
+    private const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     private const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
 
     /** @var SalesChannelService */
@@ -67,13 +67,13 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     /** @var EntityRepositoryInterface */
     private $currencyRepository;
 
-    /** @var array | null  */
+    /** @var array | null */
     private $currencyList = null;
 
-    /** @var CurrencyEntity | null  */
+    /** @var CurrencyEntity | null */
     private $defaultCurrency = null;
 
-    /** @var Connection  */
+    /** @var Connection */
     private $connection;
 
     public function __construct(
@@ -88,15 +88,25 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         Connection $connection
     ) {
         parent::__construct('factfinder:export:products');
-        $this->channelService = $channelService;
-        $this->feedFactory = $feedFactory;
-        $this->pushImportService = $pushImportService;
-        $this->uploadService = $uploadService;
+        $this->channelService     = $channelService;
+        $this->feedFactory        = $feedFactory;
+        $this->pushImportService  = $pushImportService;
+        $this->uploadService      = $uploadService;
         $this->languageRepository = $languageRepository;
-        $this->channelRepository = $channelRepository;
+        $this->channelRepository  = $channelRepository;
         $this->currencyRepository = $currencyRepository;
-        $this->productFields = iterator_to_array($productFields);
-        $this->connection = $connection;
+        $this->productFields      = iterator_to_array($productFields);
+        $this->connection         = $connection;
+    }
+
+    public function getCurrencyList(): ?array
+    {
+        return $this->currencyList;
+    }
+
+    public function getDefaultCurrency(): ?CurrencyEntity
+    {
+        return $this->defaultCurrency;
     }
 
     protected function configure()
@@ -118,7 +128,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
             $this->setDefaultCurrency();
         }
 
-        $salesChannel = null;
+        $salesChannel   = null;
         $salesChannelId = $input->getArgument(self::SALES_CHANNEL_ARGUMENT);
         if (!empty($salesChannelId)) {
             $salesChannel = $this->channelRepository->search(
@@ -160,7 +170,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
 
     private function getFeedColumns(): array
     {
-        $baseFieldNames = (array)$this->container->getParameter('factfinder.export.columns.base');
+        $baseFieldNames    = (array) $this->container->getParameter('factfinder.export.columns.base');
         $productFieldNames = $this->getProductFieldNames($this->productFields);
 
         return array_values(array_unique(array_merge($baseFieldNames, $productFieldNames)));
@@ -174,7 +184,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         foreach ($productFields as $productField) {
             if ($productField instanceof Price) {
                 foreach ($this->getCurrencyList() as $currency) {
-                    $fields[] = $currency['factor'] == $this->getDefaultCurrency()->getFactor()
+                    $fields[] = $currency['factor'] === $this->getDefaultCurrency()->getFactor()
                         ? $productField->getName()
                         : $productField->getName() . '_' . $currency['iso_code'];
                 }
@@ -210,15 +220,5 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $this->defaultCurrency = $this->defaultCurrency[array_key_first($this->defaultCurrency)];
 
         return $this;
-    }
-
-    public function getCurrencyList(): ?array
-    {
-        return $this->currencyList;
-    }
-
-    public function getDefaultCurrency(): ?CurrencyEntity
-    {
-        return $this->defaultCurrency;
     }
 }

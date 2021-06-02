@@ -67,7 +67,7 @@ class Feed
     {
         $defaultCurrencyPrice = $entityData['Price'];
         foreach ($this->getCurrencyList() as $currency) {
-            if ($currency['factor'] != $this->getDefaultCurrency()->getFactor()) {
+            if ($currency['factor'] !== $this->getDefaultCurrency()->getFactor()) {
                 $entityData['Price_' . $currency['iso_code']] = round($defaultCurrencyPrice * $currency['factor'], 2);
             }
         }
