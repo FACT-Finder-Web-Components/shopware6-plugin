@@ -188,9 +188,9 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
                         ? $productField->getName()
                         : $productField->getName() . '_' . $currency['iso_code'];
                 }
-            } else {
-                $fields[] = $productField->getName();
             }
+
+            $fields[] = $productField->getName();
         }
 
         return $fields;
