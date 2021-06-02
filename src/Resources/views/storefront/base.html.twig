@@ -1,9 +1,16 @@
 {% sw_extends '@Parent/storefront/base.html.twig' %}
+{% set current_currency_code = context.currency.isoCode %}
+
+{% if current_currency_code == 'GBP' %}
+  {% set currency_country_code = 'en-GB' %}
+{% else %}
+  {% set currency_country_code = 'de-DE' %}
+{% endif %}
 
 {% block base_body_inner %}
   <ff-communication
     {{ page.extensions.factfinder.communication|map((val, key) => key ~ '="' ~ (val|e('html_attr')) ~ '"')|join(' ')|raw }}
-    only-search-params="true"
+    only-search-params="true" currency-code="{{ current_currency_code }}" currency-country-code="{{ currency_country_code }}"
     disable-single-hit-redirect="true"></ff-communication>
 
   {{ parent() }}
