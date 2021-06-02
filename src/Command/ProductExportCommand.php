@@ -173,6 +173,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $baseFieldNames    = (array) $this->container->getParameter('factfinder.export.columns.base');
         $productFieldNames = $this->getProductFieldNames($this->productFields);
 
+        dd($productFieldNames);
         return array_values(array_unique(array_merge($baseFieldNames, $productFieldNames)));
     }
 
