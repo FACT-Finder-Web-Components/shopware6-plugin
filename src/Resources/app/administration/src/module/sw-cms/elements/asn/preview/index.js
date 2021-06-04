@@ -1,6 +1,5 @@
-import template from './sw-cms-el-asn.html.twig';
-import './sw-cms-el-preview-asn.scss';
+import template from './sw-cms-el-preview-asn.html.twig';
 
 Shopware.Component.register('sw-cms-el-preview-asn', {
-    template
+    template,
 });

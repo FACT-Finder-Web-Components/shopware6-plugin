@@ -1,7 +1,6 @@
-import template from './sw-cms-el-record-list.html.twig';
+import template from './sw-cms-el-campaigns.html.twig';
 
-Shopware.Component.register('sw-cms-el-record-list', {
-
+Shopware.Component.register('sw-cms-el-campaigns', {
     template,
     mixins: [
         'cms-element',
@@ -12,7 +11,7 @@ Shopware.Component.register('sw-cms-el-record-list', {
 
     methods: {
         createdComponent() {
-            this.initElementConfig('record-list');
+            this.initElementConfig('campaigns');
         },
     },
 });

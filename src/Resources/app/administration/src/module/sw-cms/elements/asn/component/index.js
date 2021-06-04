@@ -1,4 +1,4 @@
-import template from './sw-cms-el-preview-asn.html.twig';
+import template from './sw-cms-el-asn.html.twig';
 
 Shopware.Component.register('sw-cms-el-asn', {
     template,
