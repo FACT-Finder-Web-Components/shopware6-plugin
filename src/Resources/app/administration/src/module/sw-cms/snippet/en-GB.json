@@ -4,6 +4,9 @@
       "commerce": {
         "factfinderWebComponentsListing": {
           "label": "FACTFinder Web Components Listing"
+        },
+        "factfinderWebComponentsCampaigns": {
+          "label": "FACTFinder Web Components Campaigns"
         }
       }
     },
@@ -19,6 +22,12 @@
       },
       "paging": {
         "label": "ff-paging"
+      },
+      "campaigns": {
+        "label": "campaigns",
+        "config": {
+          "leaveFreeIfNotSpecified": "Leave this value free if you want page to accept all campaigns matching the criteria"
+        }
       }
     }
   }

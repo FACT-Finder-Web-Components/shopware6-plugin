@@ -1,0 +1,10 @@
+{% block cms_block_commerce_factfinder_listing %}
+  <div>
+    <slot name="toolbarFilters"></slot>
+    <div class="flex-container">
+      <slot name="toolbarPaging"></slot>
+      <slot name="toolbarSorting"></slot>
+    </div>
+    <slot name="records"></slot>
+  </div>
+{% endblock %}

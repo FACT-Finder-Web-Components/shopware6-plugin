@@ -1,35 +1,4 @@
 {% block element_record_list %}
   {%  set config = element.config %}
-  <ff-record-list class="row cms-listing-row" subscribe="{{ config.subscribe.value ? 'true' : 'false' }}" {{ config.infiniteScrolling.value ? 'infinite-scrolling' : '' }} {{ config.infiniteScrolling.value ? 'infinite-debounce-delay="infiniteDebounceDelay"' : '' }} unresolved>
-      <ff-record class="cms-listing-col col-sm-6 col-lg-4 col-xl-3">
-        <div class="card product-box box-standard">
-          <div class="card-body">
-            <div class="product-image-wrapper">
-              <a class="product-image-link is-standard" title="{{ '{{record.Name}}' }}"
-                 data-redirect="{{ '{{record.Deeplink}}' }}" data-anchor="{{ '{{record.Deeplink}}' }}"
-                 data-redirect-target="_self">
-                <img class="product-image is-standard" data-image="{{ '{{record.ImageURL}}' }}"
-                     alt="{{ '{{record.Name}}' }}" title="{{ '{{record.Name}}' }}" />
-              </a>
-            </div>
-            <div class="product-info">
-              <a class="product-name" title="{{ '{{record.Name}}' }}" data-redirect-target="_self"
-                 data-redirect="{{ '{{record.Deeplink}}' }}" data-anchor="{{ '{{record.Deeplink}}' }}">
-                {{ '{{record.Name}}' }}
-              </a>
-              <div class="product-description">{{ '{{record.Brand}}' }}</div>
-              <div class="product-price-info">
-                <p class="product-price">{{ '{{record.Price}}' }} *</p>
-              </div>
-              <div class="product-action">
-                <a class="btn btn-block btn-buy" title="{{ '{{record.Name}}' }}" data-redirect-target="_self"
-                   data-redirect="{{ '{{record.Deeplink}}' }}" data-anchor="{{ '{{record.Deeplink}}' }}">
-                  {{ 'listing.boxProductDetails'|trans|sw_sanitize }}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ff-record>
-  </ff-record-list>
+  {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with { subscribe: config.subscribe, infiniteScrolling: config.infiniteScrolling, infiniteDebounceDelay: config.infiniteDebounceDelay } %}
 {% endblock %}

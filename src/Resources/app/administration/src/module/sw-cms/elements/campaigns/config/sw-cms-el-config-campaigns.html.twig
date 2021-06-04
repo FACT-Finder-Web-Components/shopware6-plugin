@@ -1,0 +1,20 @@
+{% block sw_cms_element_campaigns_config %}
+  <div>
+    <sw-help-text :text="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')">
+    </sw-help-text>
+    <sw-text-field
+      label="Advisor Campaign Name"
+      placeholder="Advisor Campaign Name"
+      v-model="element.config.advisorCampaignName.value">
+    </sw-text-field>
+
+    <sw-help-text :text="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')">
+    </sw-help-text>
+    <sw-text-field
+      label="Feedback Campaign Label"
+      placeholder="Feedback Campaign Label"
+      v-model="element.config.feedbackCampaignLabel.value">
+    </sw-text-field>
+
+  </div>
+{% endblock %}
