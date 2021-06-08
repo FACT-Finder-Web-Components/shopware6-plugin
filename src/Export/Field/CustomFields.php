@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use InvalidArgumentException;
-use Omikron\FactFinder\Shopware6\Config\ExcludedFields;
+use Omikron\FactFinder\Shopware6\Config\ExportFilters;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData;
@@ -37,12 +37,13 @@ class CustomFields implements FieldInterface
     /** @var EntityRepositoryInterface */
     private $languageRepository;
 
-    /** @var ExcludedFields */
-    private $excludedFields;
+    /** @var ExportFilters */
+    private $exportFilters;
 
     /** @var CustomFieldReadingData */
     private $customFieldReadingData;
 
+    /** @var array */
     private $loadedFields = [];
 
     public function __construct(
@@ -50,14 +51,14 @@ class CustomFields implements FieldInterface
         SalesChannelService $salesChannelService,
         EntityRepositoryInterface $customFieldRepository,
         EntityRepositoryInterface $languageRepository,
-        ExcludedFields $excludedFields,
+        ExportFilters $exportFilters,
         CustomFieldReadingData $customFieldReadingData
     ) {
         $this->propertyFormatter      = $propertyFormatter;
         $this->salesChannelService    = $salesChannelService;
         $this->customFieldRepository  = $customFieldRepository;
         $this->languageRepository     = $languageRepository;
-        $this->excludedFields         = $excludedFields;
+        $this->exportFilters         = $exportFilters;
         $this->customFieldReadingData = $customFieldReadingData;
     }
 
@@ -117,8 +118,8 @@ class CustomFields implements FieldInterface
         $productCustomFields = $product->getTranslation('customFields') ?? [];
 
         if (!empty($productCustomFields)) {
-            if (!empty($this->excludedFields->getDisabledCustomFields())) {
-                $excludedCustomFields = $this->customFieldReadingData->getCustomFieldNames($this->excludedFields->getDisabledCustomFields());
+            if (!empty($this->exportFilters->getDisabledCustomFields())) {
+                $excludedCustomFields = $this->customFieldReadingData->getCustomFieldNames($this->exportFilters->getDisabledCustomFields());
 
                 $productCustomFields = array_diff_key($productCustomFields, array_flip($excludedCustomFields));
             }

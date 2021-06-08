@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Config;
 
-class ExcludedFields extends BaseConfig
+class ExportFilters extends BaseConfig
 {
     public function getDisabledPropertyGroups()
     {
@@ -14,5 +14,10 @@ class ExcludedFields extends BaseConfig
     public function getDisabledCustomFields()
     {
         return $this->config('disabledCustomFields');
+    }
+
+    public function getCurrencyPriceExportValue()
+    {
+        return $this->config('currencyPriceExport');
     }
 }

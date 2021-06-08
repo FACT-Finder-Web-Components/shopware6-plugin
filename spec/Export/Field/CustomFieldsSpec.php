@@ -2,7 +2,7 @@
 
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
-use Omikron\FactFinder\Shopware6\Config\ExcludedFields;
+use Omikron\FactFinder\Shopware6\Config\ExportFilters;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Filter\TextFilter;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
@@ -59,7 +59,7 @@ class CustomFieldsSpec extends ObjectBehavior
         SalesChannelContext $channelContext,
         EntityRepositoryInterface $customFieldRepository,
         EntityRepositoryInterface $languageRepository,
-        ExcludedFields $excludedFields,
+        ExportFilters $excludedFields,
         CustomFieldReadingData $customFieldReadingData
     ) {
         $languageRepository->search(Argument::type(Criteria::class), Argument::cetera())->will($this->mockLanguageRepository());
