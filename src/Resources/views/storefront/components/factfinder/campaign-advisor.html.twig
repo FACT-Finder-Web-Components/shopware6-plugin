@@ -1,14 +1,20 @@
-<ff-campaign-advisor name="{{ name }}" unresolved>
-  <ff-campaign-advisor-question>
+{% block component_factfinder_campaign_advisor %}
+  <ff-campaign-advisor name="{{ name }}" unresolved>
+    {% block component_factfinder_campaign_advisor_question %}
+      <ff-campaign-advisor-question>
         <span>
             <h1 data-question>{{ '{{{text}}}' }}</h1>
         </span>
-    <div>
-      <div class="campaign-advisor-container">
-        <ff-campaign-advisor-answer>
-          <div>{{ '{{{text}}}' }}</div>
-        </ff-campaign-advisor-answer>
-      </div>
-    </div>
-  </ff-campaign-advisor-question>
-</ff-campaign-advisor>
+        <div>
+          {% block component_factfinder_campaign_advisor_question_answer %}
+          <div class="campaign-advisor-container">
+            <ff-campaign-advisor-answer>
+              <div>{{ '{{{text}}}' }}</div>
+            </ff-campaign-advisor-answer>
+          </div>
+        </div>
+        {% endblock %}
+      </ff-campaign-advisor-question>
+    {% endblock %}
+  </ff-campaign-advisor>
+{% endblock %}

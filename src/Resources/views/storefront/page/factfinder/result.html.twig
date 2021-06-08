@@ -43,7 +43,7 @@
     <div class="cms-element-product-listing-wrapper">
       <div class="cms-element-product-listing">
         {% sw_include '@Parent/storefront/components/factfinder/toolbar.html.twig' %}
-        {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with { subscribe: true } %}
+        {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with { subscribe: true, class: 'row cms-listing-row' } %}
         {% sw_include '@Parent/storefront/components/factfinder/no-results.html.twig' with { subscribe: true } %}
       </div>
     </div>
