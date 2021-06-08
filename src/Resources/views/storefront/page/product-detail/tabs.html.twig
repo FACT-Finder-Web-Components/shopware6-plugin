@@ -6,5 +6,8 @@
   <div class="container">
     {% sw_include '@Parent/storefront/components/factfinder/recommendation.html.twig' with { product_number } %}
     {% sw_include '@Parent/storefront/components/factfinder/similar-products.html.twig' with { product_number } %}
+    {% sw_include '@Parent/storefront/components/factfinder/campaign-product.html.twig' with { product_number } %}
+    {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig' with { flag: 'is-product-campaign' } %}
+    {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' with { flag: 'is-product-campaign' } %}
   </div>
 {% endblock %}

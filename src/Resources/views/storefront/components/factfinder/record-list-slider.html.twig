@@ -1,0 +1,56 @@
+{% sw_extends '@Parent/storefront/components/factfinder/record-list.html.twig' %}
+{% block component_factfinder_record %}
+<div class="cms-element-product-slider">
+  <div data-product-slider="true" class="base-slider product-slider" id="productCampaignSlider"
+       data-product-slider-options='{"productboxMinWidth":"300px","slider":{"gutter":30,"autoplayButtonOutput":false,"nav":false,"mouseDrag":false,"controls":true,"autoplay":false}}'>
+    <div class="product-slider-container" data-product-slider-container="true">
+      <ff-record>
+        <div class="product-slider-item">
+          <div class="card product-box box-standard card-body">
+            <div class="card-body">
+              <div class="product-image-wrapper">
+                <img data-image="{{ '{{record.ImageURL}}' }}" class="product-image is-standard">
+              </div>
+              <div class="product-info">
+                <a href="{{ '{{record.Deeplink}}' }}" data-action="redirect" class="product-name">
+                  <div class="product-title">{{ '{{ record.Title }}' }}</div>
+                </a>
+                <div class="product-description">
+                  {{ '{{ record.Description }}' }}
+                </div>
+                <div class="product-price-info">
+                  <div class="product-price-wrapper">
+                    {{ "detail.dataColumnReferencePrice"|trans|sw_sanitize }}
+                    <span class="product-price"> {{ '{{record.Price}}' }}</span>
+                  </div>
+                </div>
+                <div class="product-action">
+                  <a href="{{ '{{record.Deeplink}}' }}" data-action="redirect"
+                     title="{{ "listing.boxProductDetails"|trans|striptags }}" class="btn btn-block btn-light">
+                    {{ "listing.boxProductDetails"|trans|striptags }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ff-record>
+    </div>
+    <div class="product-slider-controls-container">
+      <div class="base-slider-controls"
+           data-product-slider-controls="true">
+        <button class="base-slider-controls-prev product-slider-controls-prev">
+          {% block component_factfinder_record_list_slider_record_next_prev %}
+            {% sw_icon 'arrow-head-left' %}
+          {% endblock %}
+        </button>
+        <button class="base-slider-controls-next product-slider-controls-next">
+          {% block component_factfinder_record_list_slider_record_next_icon %}
+            {% sw_icon 'arrow-head-right' %}
+          {% endblock %}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

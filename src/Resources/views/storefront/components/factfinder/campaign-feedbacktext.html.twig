@@ -1,1 +1,3 @@
-<ff-campaign-feedbacktext label="{{ label }}" unresolved>{{ '{{{text}}}' }}</ff-campaign-feedbacktext>
+{% block component_factfinder_campaign_feedbacktext %}
+  <ff-campaign-feedbacktext {{ flag }} label="{{ label }}" unresolved>{{ '{{{text}}}' }}</ff-campaign-feedbacktext>
+{% endblock %}
