@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use InvalidArgumentException;
-use Omikron\FactFinder\Shopware6\Config\ExportFilters;
+use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData;
@@ -37,7 +37,7 @@ class CustomFields implements FieldInterface
     /** @var EntityRepositoryInterface */
     private $languageRepository;
 
-    /** @var ExportFilters */
+    /** @var ExportSettings */
     private $exportFilters;
 
     /** @var CustomFieldReadingData */
@@ -51,14 +51,14 @@ class CustomFields implements FieldInterface
         SalesChannelService $salesChannelService,
         EntityRepositoryInterface $customFieldRepository,
         EntityRepositoryInterface $languageRepository,
-        ExportFilters $exportFilters,
+        ExportSettings $exportFilters,
         CustomFieldReadingData $customFieldReadingData
     ) {
         $this->propertyFormatter      = $propertyFormatter;
         $this->salesChannelService    = $salesChannelService;
         $this->customFieldRepository  = $customFieldRepository;
         $this->languageRepository     = $languageRepository;
-        $this->exportFilters         = $exportFilters;
+        $this->exportFilters          = $exportFilters;
         $this->customFieldReadingData = $customFieldReadingData;
     }
 

@@ -26,9 +26,9 @@ class EntityFactory
 
     public function __construct(PropertyFormatter $propertyFormatter, iterable $productFields, iterable $variantFields, PriceCurrencyFields $priceCurrencyFields)
     {
-        $this->propertyFormatter = $propertyFormatter;
-        $this->productFields     = iterator_to_array($productFields);
-        $this->variantFields     = iterator_to_array($variantFields);
+        $this->propertyFormatter   = $propertyFormatter;
+        $this->productFields       = iterator_to_array($productFields);
+        $this->variantFields       = iterator_to_array($variantFields);
         $this->priceCurrencyFields = $priceCurrencyFields;
     }
 

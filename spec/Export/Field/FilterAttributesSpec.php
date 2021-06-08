@@ -2,7 +2,7 @@
 
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
-use Omikron\FactFinder\Shopware6\Config\ExportFilters;
+use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use PhpSpec\ObjectBehavior;
 use Shopware\Core\Content\Product\ProductCollection;
@@ -11,7 +11,7 @@ use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOp
 
 class FilterAttributesSpec extends ObjectBehavior
 {
-    function let(PropertyFormatter $propertyFormatter, ExportFilters $excludedFields)
+    function let(PropertyFormatter $propertyFormatter, ExportSettings $excludedFields)
     {
         $this->beConstructedWith($propertyFormatter, $excludedFields);
     }

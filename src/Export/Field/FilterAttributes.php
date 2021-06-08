@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Omikron\FactFinder\Shopware6\Config\ExportFilters;
+use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
@@ -14,10 +14,10 @@ class FilterAttributes implements FieldInterface
     /** @var PropertyFormatter */
     private $propertyFormatter;
 
-    /** @var ExportFilters */
+    /** @var ExportSettings */
     private $exportFilters;
 
-    public function __construct(PropertyFormatter $propertyFormatter, ExportFilters $exportFilters)
+    public function __construct(PropertyFormatter $propertyFormatter, ExportSettings $exportFilters)
     {
         $this->propertyFormatter = $propertyFormatter;
         $this->exportFilters     = $exportFilters;

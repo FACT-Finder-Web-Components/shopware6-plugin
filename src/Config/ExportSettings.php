@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Config;
 
-class ExportFilters extends BaseConfig
+class ExportSettings extends BaseConfig
 {
     public function getDisabledPropertyGroups()
     {
@@ -16,7 +16,7 @@ class ExportFilters extends BaseConfig
         return $this->config('disabledCustomFields');
     }
 
-    public function getCurrencyPriceExportValue()
+    public function isMultiCurrencyPriceExportEnable(): bool
     {
         return $this->config('currencyPriceExport');
     }
