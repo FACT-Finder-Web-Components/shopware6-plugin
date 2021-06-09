@@ -62,12 +62,6 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     /** @var EntityRepositoryInterface */
     private $channelRepository;
 
-    /** @var EntityRepositoryInterface */
-    private $currencyRepository;
-
-    /** @var ExportSettings */
-    private $exportSettings;
-
     /** @var PriceCurrencyFields */
     private $priceCurrencyFields;
 
