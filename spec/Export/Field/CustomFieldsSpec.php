@@ -59,7 +59,7 @@ class CustomFieldsSpec extends ObjectBehavior
         SalesChannelContext $channelContext,
         EntityRepositoryInterface $customFieldRepository,
         EntityRepositoryInterface $languageRepository,
-        ExportSettings $excludedFields,
+        ExportSettings $exportSettings,
         CustomFieldReadingData $customFieldReadingData
     ) {
         $languageRepository->search(Argument::type(Criteria::class), Argument::cetera())->will($this->mockLanguageRepository());
@@ -70,7 +70,7 @@ class CustomFieldsSpec extends ObjectBehavior
             $salesChannelService,
             $customFieldRepository,
             $languageRepository,
-            $excludedFields,
+            $exportSettings,
             $customFieldReadingData
         );
     }
