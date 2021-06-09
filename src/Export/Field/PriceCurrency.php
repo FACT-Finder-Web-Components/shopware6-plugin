@@ -18,7 +18,7 @@ class PriceCurrency extends Price
 
     public function __construct(CurrencyEntity $currency, NumberFormatter $numberFormatter)
     {
-        $this->currency = $currency;
+        $this->currency        = $currency;
         $this->numberFormatter = $numberFormatter;
     }
 

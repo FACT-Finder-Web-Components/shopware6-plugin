@@ -81,6 +81,5 @@
         <service id="Omikron\FactFinder\Shopware6\Export\Field\ImageUrl">
             <tag name="factfinder.export.variant_field"/>
         </service>
-        <service id="Shopware\Core\System\Currency\CurrencyEntity" class="Shopware\Core\System\Currency\CurrencyEntity"/>
     </services>
 </container>

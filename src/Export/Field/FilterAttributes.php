@@ -15,12 +15,12 @@ class FilterAttributes implements FieldInterface
     private $propertyFormatter;
 
     /** @var ExportSettings */
-    private $exportFilters;
+    private $exportSettings;
 
-    public function __construct(PropertyFormatter $propertyFormatter, ExportSettings $exportFilters)
+    public function __construct(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
     {
-        $this->propertyFormatter = $propertyFormatter;
-        $this->exportFilters     = $exportFilters;
+        $this->propertyFormatter  = $propertyFormatter;
+        $this->exportSettings     = $exportSettings;
     }
 
     public function getName(): string
@@ -39,7 +39,7 @@ class FilterAttributes implements FieldInterface
 
     private function applyPropertyGroupsFilter(Product $product): array
     {
-        $disabledProperties = $this->exportFilters->getDisabledPropertyGroups();
+        $disabledProperties = $this->exportSettings->getDisabledPropertyGroups();
 
         if (!$disabledProperties) {
             return $product->getProperties()->getElements();

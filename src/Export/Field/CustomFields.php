@@ -38,7 +38,7 @@ class CustomFields implements FieldInterface
     private $languageRepository;
 
     /** @var ExportSettings */
-    private $exportFilters;
+    private $exportSettings;
 
     /** @var CustomFieldReadingData */
     private $customFieldReadingData;
@@ -51,15 +51,15 @@ class CustomFields implements FieldInterface
         SalesChannelService $salesChannelService,
         EntityRepositoryInterface $customFieldRepository,
         EntityRepositoryInterface $languageRepository,
-        ExportSettings $exportFilters,
+        ExportSettings $exportSettings,
         CustomFieldReadingData $customFieldReadingData
     ) {
-        $this->propertyFormatter      = $propertyFormatter;
-        $this->salesChannelService    = $salesChannelService;
-        $this->customFieldRepository  = $customFieldRepository;
-        $this->languageRepository     = $languageRepository;
-        $this->exportFilters          = $exportFilters;
-        $this->customFieldReadingData = $customFieldReadingData;
+        $this->propertyFormatter       = $propertyFormatter;
+        $this->salesChannelService     = $salesChannelService;
+        $this->customFieldRepository   = $customFieldRepository;
+        $this->languageRepository      = $languageRepository;
+        $this->exportSettings          = $exportSettings;
+        $this->customFieldReadingData  = $customFieldReadingData;
     }
 
     public function getName(): string
@@ -118,10 +118,9 @@ class CustomFields implements FieldInterface
         $productCustomFields = $product->getTranslation('customFields') ?? [];
 
         if (!empty($productCustomFields)) {
-            if (!empty($this->exportFilters->getDisabledCustomFields())) {
-                $excludedCustomFields = $this->customFieldReadingData->getCustomFieldNames($this->exportFilters->getDisabledCustomFields());
-
-                $productCustomFields = array_diff_key($productCustomFields, array_flip($excludedCustomFields));
+            if (!empty($this->exportSettings->getDisabledCustomFields())) {
+                $excludedCustomFields = $this->customFieldReadingData->getCustomFieldNames($this->exportSettings->getDisabledCustomFields());
+                $productCustomFields  = array_diff_key($productCustomFields, array_flip($excludedCustomFields));
             }
         }
 

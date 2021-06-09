@@ -19,23 +19,20 @@ class PriceCurrencyFields
     private $currencyRepository;
 
     /** @var ExportSettings */
-    private $exportFilters;
+    private $exportSettings;
 
     /** @var array */
     private $currencyFields = [];
 
-    /**
-     * @param EntityRepositoryInterface $currencyRepository
-     */
-    public function __construct(EntityRepositoryInterface $currencyRepository, ExportSettings $exportFilters)
+    public function __construct(EntityRepositoryInterface $currencyRepository, ExportSettings $exportSettings)
     {
-        $this->currencyRepository = $currencyRepository;
-        $this->exportFilters      = $exportFilters;
+        $this->currencyRepository  = $currencyRepository;
+        $this->exportSettings      = $exportSettings;
     }
 
     public function getCurrencyFields(): array
     {
-        if ($this->exportFilters->isMultiCurrencyPriceExportEnable()) {
+        if ($this->exportSettings->isMultiCurrencyPriceExportEnable()) {
             if (empty($this->currencyFields)) {
                 $this->currencyFields = $this->currencyRepository->search(new Criteria(), new Context(new SystemSource()))->map(
                     function (CurrencyEntity $currency) {

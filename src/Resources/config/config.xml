@@ -35,7 +35,7 @@
     </card>
 
     <card>
-        <title>Export filters</title>
+        <title>Export Settings</title>
 
         <component name="sw-entity-multi-id-select">
             <name>disabledPropertyGroups</name>
@@ -51,7 +51,7 @@
 
         <input-field type="checkbox">
             <name>currencyPriceExport</name>
-            <label>Should be currency prices exported</label>
+            <label>Export prices in all currencies</label>
         </input-field>
     </card>
 

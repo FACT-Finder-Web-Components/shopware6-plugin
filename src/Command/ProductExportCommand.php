@@ -66,7 +66,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     private $currencyRepository;
 
     /** @var ExportSettings */
-    private $exportFilters;
+    private $exportSettings;
 
     /** @var PriceCurrencyFields */
     private $priceCurrencyFields;
@@ -80,19 +80,19 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         EntityRepositoryInterface $languageRepository,
         EntityRepositoryInterface $channelRepository,
         EntityRepositoryInterface $currencyRepository,
-        ExportSettings $exportFilters,
+        ExportSettings $exportSettings,
         PriceCurrencyFields $priceCurrencyFields
     ) {
         parent::__construct('factfinder:export:products');
-        $this->channelService     = $channelService;
-        $this->feedFactory        = $feedFactory;
-        $this->pushImportService  = $pushImportService;
-        $this->uploadService      = $uploadService;
-        $this->languageRepository = $languageRepository;
-        $this->channelRepository  = $channelRepository;
-        $this->productFields      = iterator_to_array($productFields);
-        $this->currencyRepository = $currencyRepository;
-        $this->exportFilters      = $exportFilters;
+        $this->channelService      = $channelService;
+        $this->feedFactory         = $feedFactory;
+        $this->pushImportService   = $pushImportService;
+        $this->uploadService       = $uploadService;
+        $this->languageRepository  = $languageRepository;
+        $this->channelRepository   = $channelRepository;
+        $this->productFields       = iterator_to_array($productFields);
+        $this->currencyRepository  = $currencyRepository;
+        $this->exportSettings      = $exportSettings;
         $this->priceCurrencyFields = $priceCurrencyFields;
     }
 
