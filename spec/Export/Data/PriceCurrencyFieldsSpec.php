@@ -4,6 +4,7 @@ namespace spec\Omikron\FactFinder\Shopware6\Export\Data;
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\Field\PriceCurrency;
+use Omikron\FactFinder\Shopware6\Export\Formatter\NumberFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
@@ -24,7 +25,7 @@ class PriceCurrencyFieldsSpec extends ObjectBehavior
             ->search(Argument::cetera())
             ->will($this->mockCurrencyRepository($entitySearchResult));
 
-        $priceCurrency = ['test_id' => new PriceCurrency(new CurrencyEntity())];
+        $priceCurrency = ['test_id' => new PriceCurrency(new CurrencyEntity(), new NumberFormatter())];
 
         $entitySearchResult->map(Argument::cetera())->willReturn($priceCurrency);
         $this->getCurrencyFields()->shouldReturn($priceCurrency);
@@ -37,7 +38,7 @@ class PriceCurrencyFieldsSpec extends ObjectBehavior
             ->will($this->mockCurrencyRepository($entitySearchResult))
             ->shouldBeCalledTimes(1);
 
-        $priceCurrency = ['test_id' => new PriceCurrency(new CurrencyEntity())];
+        $priceCurrency = ['test_id' => new PriceCurrency(new CurrencyEntity(), new NumberFormatter())];
         $entitySearchResult->map(Argument::cetera())->willReturn($priceCurrency);
         $this->getCurrencyFields()->shouldReturn($priceCurrency);
         $this->getCurrencyFields()->shouldReturn($priceCurrency);
