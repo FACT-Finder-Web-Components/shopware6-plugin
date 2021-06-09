@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
-use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\Data\PriceCurrencyFields;
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
