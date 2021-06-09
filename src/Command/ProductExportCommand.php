@@ -68,6 +68,9 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     /** @var ExportSettings */
     private $exportFilters;
 
+    /** @var PriceCurrencyFields */
+    private $priceCurrencyFields;
+
     public function __construct(
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
@@ -77,7 +80,8 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         EntityRepositoryInterface $languageRepository,
         EntityRepositoryInterface $channelRepository,
         EntityRepositoryInterface $currencyRepository,
-        ExportSettings $exportFilters
+        ExportSettings $exportFilters,
+        PriceCurrencyFields $priceCurrencyFields
     ) {
         parent::__construct('factfinder:export:products');
         $this->channelService     = $channelService;
@@ -89,6 +93,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $this->productFields      = iterator_to_array($productFields);
         $this->currencyRepository = $currencyRepository;
         $this->exportFilters      = $exportFilters;
+        $this->priceCurrencyFields = $priceCurrencyFields;
     }
 
     protected function configure()
@@ -141,7 +146,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     private function getFeedColumns(): array
     {
         $base   = (array) $this->container->getParameter('factfinder.export.columns.base');
-        $fields = array_merge($this->productFields, (new PriceCurrencyFields($this->currencyRepository, $this->exportFilters))->getCurrencyFields());
+        $fields = array_merge($this->productFields, $this->priceCurrencyFields->getCurrencyFields());
 
         return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $fields))));
     }
