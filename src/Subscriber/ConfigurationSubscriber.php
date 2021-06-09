@@ -42,7 +42,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'channel'               => $this->config->getChannel(),
                 'version'               => 'ng',
                 'api'                   => 'v4',
-                'user-id'               =>  $customer ? $customer->getId() : null,
+                'user-id'               => $customer ? $customer->getId() : null,
                 'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
                 'currency-country-code' => $event->getRequest()->getLocale(),
                 'search-immediate'      => strpos($event->getRequest()->get('_route'), 'factfinder') ? 'true' : 'false',
