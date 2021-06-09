@@ -35,7 +35,7 @@
     </card>
 
     <card>
-        <title>Excluded filters</title>
+        <title>Export Settings</title>
 
         <component name="sw-entity-multi-id-select">
             <name>disabledPropertyGroups</name>
@@ -48,6 +48,11 @@
             <entity>custom_field</entity>
             <label>Select Custom fields which should be ignored be feed exporter</label>
         </component>
+
+        <input-field type="checkbox">
+            <name>currencyPriceExport</name>
+            <label>Export prices in all currencies</label>
+        </input-field>
     </card>
 
     <card>

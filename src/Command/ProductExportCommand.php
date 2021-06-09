@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
+use Omikron\FactFinder\Shopware6\Export\Data\PriceCurrencyFields;
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
@@ -60,6 +61,9 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     /** @var EntityRepositoryInterface */
     private $channelRepository;
 
+    /** @var PriceCurrencyFields */
+    private $priceCurrencyFields;
+
     public function __construct(
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
@@ -67,16 +71,18 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         UploadService $uploadService,
         Traversable $productFields,
         EntityRepositoryInterface $languageRepository,
-        EntityRepositoryInterface $channelRepository
+        EntityRepositoryInterface $channelRepository,
+        PriceCurrencyFields $priceCurrencyFields
     ) {
         parent::__construct('factfinder:export:products');
-        $this->channelService     = $channelService;
-        $this->feedFactory        = $feedFactory;
-        $this->pushImportService  = $pushImportService;
-        $this->uploadService      = $uploadService;
-        $this->languageRepository = $languageRepository;
-        $this->channelRepository  = $channelRepository;
-        $this->productFields      = iterator_to_array($productFields);
+        $this->channelService      = $channelService;
+        $this->feedFactory         = $feedFactory;
+        $this->pushImportService   = $pushImportService;
+        $this->uploadService       = $uploadService;
+        $this->languageRepository  = $languageRepository;
+        $this->channelRepository   = $channelRepository;
+        $this->productFields       = iterator_to_array($productFields);
+        $this->priceCurrencyFields = $priceCurrencyFields;
     }
 
     protected function configure()
@@ -128,8 +134,10 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
 
     private function getFeedColumns(): array
     {
-        $base = (array) $this->container->getParameter('factfinder.export.columns.base');
-        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $this->productFields))));
+        $base   = (array) $this->container->getParameter('factfinder.export.columns.base');
+        $fields = array_merge($this->productFields, $this->priceCurrencyFields->getCurrencyFields());
+
+        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $fields))));
     }
 
     private function getFieldName(FieldInterface $field): string
