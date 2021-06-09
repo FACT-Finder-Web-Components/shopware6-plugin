@@ -45,11 +45,12 @@ class CategoryView implements EventSubscriberInterface
     {
         $navigationId = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
         $category     = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
+        $path         = $this->getPath($category);
         $event->getPage()->getExtension('factfinder')->assign(
             [
                 'communication' => [
                     'search-immediate' => 'true',
-                    'add-params'       => implode(',', $this->initial + [sprintf('filter=%s', urlencode($this->fieldName . ':' . $this->getPath($category)))]),
+                    'add-params'       => $path ? implode(',', $this->initial + [sprintf('filter=%s', urlencode($this->fieldName . ':' . $path))]) : '',
                 ],
             ]);
     }
