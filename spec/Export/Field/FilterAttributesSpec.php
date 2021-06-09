@@ -11,9 +11,9 @@ use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOp
 
 class FilterAttributesSpec extends ObjectBehavior
 {
-    function let(PropertyFormatter $propertyFormatter, ExportSettings $excludedFields)
+    function let(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
     {
-        $this->beConstructedWith($propertyFormatter, $excludedFields);
+        $this->beConstructedWith($propertyFormatter, $exportSettings);
     }
 
     function it_does_not_fail_if_product_have_no_properties(
