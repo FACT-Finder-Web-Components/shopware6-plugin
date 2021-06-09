@@ -79,8 +79,6 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         Traversable $productFields,
         EntityRepositoryInterface $languageRepository,
         EntityRepositoryInterface $channelRepository,
-        EntityRepositoryInterface $currencyRepository,
-        ExportSettings $exportSettings,
         PriceCurrencyFields $priceCurrencyFields
     ) {
         parent::__construct('factfinder:export:products');
@@ -91,8 +89,6 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $this->languageRepository  = $languageRepository;
         $this->channelRepository   = $channelRepository;
         $this->productFields       = iterator_to_array($productFields);
-        $this->currencyRepository  = $currencyRepository;
-        $this->exportSettings      = $exportSettings;
         $this->priceCurrencyFields = $priceCurrencyFields;
     }
 
