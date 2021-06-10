@@ -15,30 +15,25 @@ use Shopware\Core\System\Currency\CurrencyEntity;
 
 class CurrencyFieldsProvider
 {
-    /** @var EntityRepositoryInterface */
-    private $currencyRepository;
+    private EntityRepositoryInterface $currencyRepository;
 
-    /** @var ExportSettings */
-    private $exportSettings;
+    private ExportSettings $exportSettings;
 
-    /** @var array */
-    private $currencyFields = [];
+    private array $currencyFields = [];
 
     public function __construct(EntityRepositoryInterface $currencyRepository, ExportSettings $exportSettings)
     {
-        $this->currencyRepository  = $currencyRepository;
-        $this->exportSettings      = $exportSettings;
+        $this->currencyRepository = $currencyRepository;
+        $this->exportSettings     = $exportSettings;
     }
 
     public function getCurrencyFields(): array
     {
         if ($this->exportSettings->isMultiCurrencyPriceExportEnable()) {
             if (empty($this->currencyFields)) {
-                $this->currencyFields = $this->currencyRepository->search(new Criteria(), new Context(new SystemSource()))->map(
-                    function (CurrencyEntity $currency) {
-                        return new PriceCurrency($currency, new NumberFormatter());
-                    }
-                );
+                $this->currencyFields = $this->currencyRepository
+                    ->search(new Criteria(), new Context(new SystemSource()))
+                    ->map(fn (CurrencyEntity $currency): PriceCurrency => new PriceCurrency($currency, new NumberFormatter()));
             }
         }
 

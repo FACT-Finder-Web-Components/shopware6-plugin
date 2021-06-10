@@ -10,11 +10,9 @@ use Omikron\FactFinder\Shopware6\Export\Stream\StreamInterface;
 
 class Feed
 {
-    /** @var DataProviderInterface */
-    private $dataProvider;
+    private DataProviderInterface $dataProvider;
 
-    /** @var FilterInterface */
-    private $filter;
+    private FilterInterface $filter;
 
     public function __construct(DataProviderInterface $dataProvider, FilterInterface $filter)
     {

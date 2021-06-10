@@ -25,26 +25,19 @@ use Shopware\Core\System\Language\LanguageEntity;
  */
 class CustomFields implements FieldInterface
 {
-    /** @var PropertyFormatter */
-    private $propertyFormatter;
+    private PropertyFormatter $propertyFormatter;
 
-    /** @var SalesChannelService */
-    private $salesChannelService;
+    private SalesChannelService $salesChannelService;
 
-    /** @var EntityRepositoryInterface */
-    private $customFieldRepository;
+    private EntityRepositoryInterface $customFieldRepository;
 
-    /** @var EntityRepositoryInterface */
-    private $languageRepository;
+    private EntityRepositoryInterface $languageRepository;
 
-    /** @var ExportSettings */
-    private $exportSettings;
+    private ExportSettings $exportSettings;
 
-    /** @var CustomFieldsService */
-    private $customFieldsService;
+    private CustomFieldsService $customFieldsService;
 
-    /** @var array */
-    private $loadedFields = [];
+    private array $loadedFields = [];
 
     public function __construct(
         PropertyFormatter $propertyFormatter,
@@ -98,7 +91,7 @@ class CustomFields implements FieldInterface
                     return is_array($storedValue) ? in_array($option['value'], $storedValue) : $option['value'] === $storedValue;
                 });
 
-                $translatedOptionValue = implode('#', array_map(function (array $option) use ($usedLocale, $defaultLocale) {
+                $translatedOptionValue = implode('#', array_map(function (array $option) use ($usedLocale, $defaultLocale): string {
                     return array_key_exists('label', $option) && count($option['label']) > 0
                         ? $option['label'][$usedLocale] ?? $option['label'][$defaultLocale]
                         : $option['value'];

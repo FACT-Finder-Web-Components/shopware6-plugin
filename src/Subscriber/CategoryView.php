@@ -12,17 +12,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CategoryView implements EventSubscriberInterface
 {
-    /** @var AbstractCategoryRoute */
-    private $cmsPageRoute;
+    private AbstractCategoryRoute $cmsPageRoute;
 
-    /** @var CategoryPath */
-    private $categoryPath;
+    private CategoryPath $categoryPath;
 
-    /** @var string */
-    private $fieldName;
+    private string $fieldName;
 
-    /** @var array */
-    private $initial;
+    private array $initial;
 
     public function __construct(
         AbstractCategoryRoute $cmsPageRoute,

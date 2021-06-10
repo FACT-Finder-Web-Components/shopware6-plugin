@@ -11,8 +11,9 @@
   ],
   "require": {
     "omikron/factfinder-communication-sdk": "^0.9.0",
-    "shopware/core": "^6.3",
-    "shopware/storefront": "^6.3"
+    "shopware/core": "^6.4",
+    "shopware/storefront": "^6.4",
+    "php": "^7.4 || ^8.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.16",
