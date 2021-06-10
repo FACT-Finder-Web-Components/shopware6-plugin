@@ -9,6 +9,9 @@
             <parameter key="Master">Master</parameter>
             <parameter key="Name">Name</parameter>
         </parameter>
+        <parameter key="factfinder.communication.parameters.base"  type="collection">
+            <parameter key="use-personalization" type="string">true</parameter>
+        </parameter>
         <parameter key="factfinder.navigation.category_path_field_name" type="string">CategoryPath</parameter>
         <parameter key="factfinder.field_roles" type="collection">
             <parameter key="brand">Manufacturer</parameter>
@@ -43,6 +46,7 @@
             <bind key="$categoryPathFieldName">%factfinder.navigation.category_path_field_name%</bind>
             <bind key="$customAssociations">%factfinder.export.associations%</bind>
             <bind key="$initialNavigationParams">%factfinder.navigation.initial_params%</bind>
+            <bind key="$communicationParameters">%factfinder.communication.parameters.base%</bind>
         </defaults>
 
         <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />

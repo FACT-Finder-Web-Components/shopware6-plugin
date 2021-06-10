@@ -17,10 +17,14 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     /** @var array */
     private $fieldRoles;
 
-    public function __construct(Communication $config, array $fieldRoles)
+    /** @var array */
+    private $communicationParameters;
+
+    public function __construct(Communication $config, array $fieldRoles, array $communicationParameters)
     {
-        $this->config     = $config;
-        $this->fieldRoles = $fieldRoles;
+        $this->config                  = $config;
+        $this->fieldRoles              = $fieldRoles;
+        $this->communicationParameters = $communicationParameters;
     }
 
     public static function getSubscribedEvents()
@@ -30,6 +34,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
 
     public function onPageLoaded(GenericPageLoadedEvent $event): void
     {
+        $customer = $event->getSalesChannelContext()->getCustomer();
         $event->getPage()->addExtension('factfinder', new ArrayEntity([
             'field_roles'   => $this->fieldRoles,
             'communication' => [
@@ -37,10 +42,11 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'channel'               => $this->config->getChannel(),
                 'version'               => 'ng',
                 'api'                   => 'v4',
+                'user-id'               => $customer ? $customer->getId() : null,
                 'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
                 'currency-country-code' => $event->getRequest()->getLocale(),
                 'search-immediate'      => strpos($event->getRequest()->get('_route'), 'factfinder') ? 'true' : 'false',
-            ],
+            ] + $this->communicationParameters,
         ]));
     }
 }
