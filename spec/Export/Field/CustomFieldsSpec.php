@@ -3,11 +3,11 @@
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
+use Omikron\FactFinder\Shopware6\Export\CustomFieldsService;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Filter\TextFilter;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
-use Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
@@ -60,7 +60,7 @@ class CustomFieldsSpec extends ObjectBehavior
         EntityRepositoryInterface $customFieldRepository,
         EntityRepositoryInterface $languageRepository,
         ExportSettings $exportSettings,
-        CustomFieldReadingData $customFieldReadingData
+        CustomFieldsService $customFieldsService
     ) {
         $languageRepository->search(Argument::type(Criteria::class), Argument::cetera())->will($this->mockLanguageRepository());
         $channelContext->getSalesChannel()->willReturn($this->getSalesChannel('2'));
@@ -71,7 +71,7 @@ class CustomFieldsSpec extends ObjectBehavior
             $customFieldRepository,
             $languageRepository,
             $exportSettings,
-            $customFieldReadingData
+            $customFieldsService
         );
     }
 

@@ -11,7 +11,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\System\Currency\CurrencyEntity;
 
-class PriceCurrencyFieldsSpec extends ObjectBehavior
+class CurrencyFieldsProviderSpec extends ObjectBehavior
 {
     public function let(EntityRepositoryInterface $currencyRepository, ExportSettings $exportSettings)
     {

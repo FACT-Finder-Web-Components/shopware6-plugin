@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\FactFinder\Shopware6\Export\Data;
+namespace Omikron\FactFinder\Shopware6\Export;
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\Field\PriceCurrency;
@@ -13,7 +13,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\Currency\CurrencyEntity;
 
-class PriceCurrencyFields
+class CurrencyFieldsProvider
 {
     /** @var EntityRepositoryInterface */
     private $currencyRepository;
