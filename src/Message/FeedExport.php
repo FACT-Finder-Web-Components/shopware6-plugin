@@ -6,11 +6,8 @@ namespace Omikron\FactFinder\Shopware6\Message;
 
 class FeedExport
 {
-    /** @var null | string */
-    private $salesChannelId;
-
-    /** @var null | string */
-    private $salesChannelLanguageId;
+    private ?string $salesChannelId;
+    private ?string $salesChannelLanguageId;
 
     public function __construct(string $salesChannelId = null, string $salesChannelLanguageId = null)
     {

@@ -10,14 +10,9 @@ use Shopware\Core\Framework\Adapter\Filesystem\FilesystemFactory;
 
 class UploadService
 {
-    /** @var FtpConfig */
-    private $config;
-
-    /** @var FilesystemFactory */
-    private $filesystemFactory;
-
-    /** @var SalesChannelService */
-    private $salesChannelService;
+    private FtpConfig $config;
+    private FilesystemFactory $filesystemFactory;
+    private SalesChannelService $salesChannelService;
 
     public function __construct(
         FtpConfig $config,

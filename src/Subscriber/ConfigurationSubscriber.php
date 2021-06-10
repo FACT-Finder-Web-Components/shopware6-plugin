@@ -11,14 +11,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConfigurationSubscriber implements EventSubscriberInterface
 {
-    /** @var Communication */
-    private $config;
+    private Communication $config;
 
-    /** @var array */
-    private $fieldRoles;
+    private array $fieldRoles;
 
-    /** @var array */
-    private $communicationParameters;
+    private array $communicationParameters;
 
     public function __construct(Communication $config, array $fieldRoles, array $communicationParameters)
     {

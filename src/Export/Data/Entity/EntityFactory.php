@@ -12,28 +12,26 @@ use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Prod
 
 class EntityFactory
 {
-    /** @var PropertyFormatter */
-    private $propertyFormatter;
+    private PropertyFormatter $propertyFormatter;
 
     /** @var FieldInterface[] */
-    private $productFields;
+    private array $productFields;
 
     /** @var FieldInterface[] */
-    private $variantFields;
+    private array $variantFields;
 
-    /** @var CurrencyFieldsProvider */
-    private $currencyFieldsProvider;
+    private CurrencyFieldsProvider $currencyFieldsProvider;
 
     public function __construct(
         PropertyFormatter $propertyFormatter,
-        CurrencyFieldsProvider $currencyFieldsProvider,
         iterable $productFields,
-        iterable $variantFields
+        iterable $variantFields,
+        CurrencyFieldsProvider $currencyFieldsProvider
     ) {
         $this->propertyFormatter      = $propertyFormatter;
-        $this->currencyFieldsProvider = $currencyFieldsProvider;
         $this->productFields          = iterator_to_array($productFields);
         $this->variantFields          = iterator_to_array($variantFields);
+        $this->currencyFieldsProvider = $currencyFieldsProvider;
     }
 
     /**
@@ -46,9 +44,7 @@ class EntityFactory
         $entity = new ProductEntity($product, array_merge($this->productFields, $this->currencyFieldsProvider->getCurrencyFields()));
         if ($product->getChildCount()) {
             $parentData = $entity->toArray();
-            yield from $product->getChildren()->map(function (Product $child) use ($parentData) {
-                return new VariantEntity($child, $parentData, $this->propertyFormatter, $this->variantFields);
-            });
+            yield from $product->getChildren()->map(fn (Product $child) => new VariantEntity($child, $parentData, $this->propertyFormatter, $this->variantFields));
         }
         yield $entity;
     }

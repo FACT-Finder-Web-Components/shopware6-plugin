@@ -9,8 +9,7 @@ class CsvFile implements StreamInterface
     /** @var resource */
     private $fileResource;
 
-    /** @var string */
-    private $delimiter;
+    private string $delimiter;
 
     /**
      * @param resource $fileResource

@@ -17,8 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ResultController extends StorefrontController
 {
-    /** @var GenericPageLoader */
-    private $pageLoader;
+    private GenericPageLoader $pageLoader;
 
     public function __construct(GenericPageLoader $pageLoader)
     {
