@@ -1,7 +1,7 @@
 {% sw_extends '@Storefront/storefront/page/checkout/cart/index.html.twig' %}
 {% block page_checkout_container %}
   {{ parent() }}
-  {% sw_include '@Parent/storefront/components/factfinder/campaign-shopping-cart.html.twig' with { product_numbers } %}
+  {% sw_include '@Parent/storefront/components/factfinder/campaign-shopping-cart.html.twig' %}
   {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig' with { flag: 'is-shopping-cart-campaign' } %}
   {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' with { flag: 'is-shopping-cart-campaign' } %}
 {% endblock %}
