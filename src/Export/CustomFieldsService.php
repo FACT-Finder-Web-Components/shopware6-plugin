@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\FactFinder\Shopware6\Service;
+namespace Omikron\FactFinder\Shopware6\Export;
 
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
@@ -10,17 +10,14 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
 
-class CustomFieldReadingData
+class CustomFieldsService
 {
     /** @var EntityRepositoryInterface */
     private $customFieldRepository;
+
+    /** @var array */
     private $cachedFields;
 
-    /**
-     * CustomFieldReadingData constructor.
-     *
-     * @param EntityRepositoryInterface $customFieldRepository
-     */
     public function __construct(EntityRepositoryInterface $customFieldRepository)
     {
         $this->customFieldRepository = $customFieldRepository;

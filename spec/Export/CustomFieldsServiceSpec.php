@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Omikron\FactFinder\Shopware6\Service;
+namespace spec\Omikron\FactFinder\Shopware6\Export\Data;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -12,7 +12,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
 
-class CustomFieldReadingDataSpec extends ObjectBehavior
+class CustomFieldsServiceSpec extends ObjectBehavior
 {
     public function let(
         EntityRepositoryInterface $customFieldRepository

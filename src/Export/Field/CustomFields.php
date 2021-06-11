@@ -6,9 +6,9 @@ namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use InvalidArgumentException;
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
+use Omikron\FactFinder\Shopware6\Export\CustomFieldsService;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
-use Omikron\FactFinder\Shopware6\Service\CustomFieldReadingData;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
@@ -40,8 +40,8 @@ class CustomFields implements FieldInterface
     /** @var ExportSettings */
     private $exportSettings;
 
-    /** @var CustomFieldReadingData */
-    private $customFieldReadingData;
+    /** @var CustomFieldsService */
+    private $customFieldsService;
 
     /** @var array */
     private $loadedFields = [];
@@ -52,14 +52,14 @@ class CustomFields implements FieldInterface
         EntityRepositoryInterface $customFieldRepository,
         EntityRepositoryInterface $languageRepository,
         ExportSettings $exportSettings,
-        CustomFieldReadingData $customFieldReadingData
+        CustomFieldsService $customFieldsService
     ) {
-        $this->propertyFormatter       = $propertyFormatter;
-        $this->salesChannelService     = $salesChannelService;
-        $this->customFieldRepository   = $customFieldRepository;
-        $this->languageRepository      = $languageRepository;
-        $this->exportSettings          = $exportSettings;
-        $this->customFieldReadingData  = $customFieldReadingData;
+        $this->propertyFormatter     = $propertyFormatter;
+        $this->salesChannelService   = $salesChannelService;
+        $this->customFieldRepository = $customFieldRepository;
+        $this->languageRepository    = $languageRepository;
+        $this->exportSettings        = $exportSettings;
+        $this->customFieldsService   = $customFieldsService;
     }
 
     public function getName(): string
@@ -119,7 +119,7 @@ class CustomFields implements FieldInterface
 
         if (!empty($productCustomFields)) {
             if (!empty($this->exportSettings->getDisabledCustomFields())) {
-                $excludedCustomFields = $this->customFieldReadingData->getCustomFieldNames($this->exportSettings->getDisabledCustomFields());
+                $excludedCustomFields = $this->customFieldsService->getCustomFieldNames($this->exportSettings->getDisabledCustomFields());
                 $productCustomFields  = array_diff_key($productCustomFields, array_flip($excludedCustomFields));
             }
         }
