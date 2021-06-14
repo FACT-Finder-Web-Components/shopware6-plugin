@@ -93,6 +93,7 @@ If `Export prices in all currencies` setting is set to true, price columns will 
 ### Upload Options
 
 Following settings are used for uploading already exported feed to a given FTP server.
+
 **Note:** The default port setting is 21. If your FTP is listening on different port, please change it accordingly.
 
 * Server URL
@@ -188,7 +189,8 @@ Main configuration element `ff-communication` is added in file `src/Resources/vi
 . Same as with `meta.twig.html`, it extends
 the [base.html.twig](https://github.com/shopware/platform/blob/trunk/src/Storefront/Resources/views/storefront/base.html.twig)
 file defined in default Storefront. This element is automatically filled with the data, configured in module backend
-configuration.
+confiugration.
+
 **Note:** If your theme doesn't extend the default Storefront, make sure you implement `ff-communication` element as it
 is mandatory and FACT-Finder Web Components will not work without it.
 
@@ -196,7 +198,7 @@ is mandatory and FACT-Finder Web Components will not work without it.
 
 Plugin templates could be found in `Resources/views/storefront/`. Just as with the previous sections, all templates are
 extending default Storefront wherever it is possible. You can use these templates if you are extending it
-using `sw_extends` which offers a support for a multi inheritance
+using `sw_extends` which offers a support for a multi inheritance.
 
 ### Tracking
 Plugin offers a following way of tracking customer actions
