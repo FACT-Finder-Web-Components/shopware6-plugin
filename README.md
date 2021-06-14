@@ -178,7 +178,7 @@ module.
 * Resources/public/ff-web-components/ff-web-components/bundle.js
 
 All these files are included in `Resources/views/storefront/layout/meta.html.twig`. That file extends the default
-theme [meta.html.twig](https://github.com/shopware/platform/blob/trunk/src/Storefront/Resources/views/storefront/layout/meta.html.twigl)
+theme [meta.html.twig](https://github.com/shopware/platform/blob/trunk/src/Storefront/Resources/views/storefront/layout/meta.html.twig)
 .
 **Note:** Including these scripts is obligatory for Web Components to work. Make sure you include it or if your
 storefront does not use that file, include all scripts in mentioned order on your own.
