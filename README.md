@@ -25,7 +25,6 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 -[Modification Examples](#modifications-examples)
     - [Adding New Column to Feed](#adding-new-column-to-feed)
     - [Export Fields Stored in Variants](#export-fields-stored-in-variants)
-- [Adding New Column to Feed](#adding-new-column-to-feed)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -310,7 +309,7 @@ We welcome contribution! For more information, click [here](.github/CONTRIBUTING
 
 FACT-Finder® Web Components License. For more information see the [LICENSE](LICENSE) file.
 
-[1]: https://developers.shopware.com/developers-guide/services/#registering-the-service
+[1]: https://developer.shopware.com/docs/guides/plugins/plugins/plugin-fundamentals/dependency-injection
 
 [2]: https://symfony.com/doc/3.3/service_container.html#the-autoconfigure-option
 
