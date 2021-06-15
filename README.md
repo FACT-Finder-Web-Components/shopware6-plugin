@@ -26,6 +26,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 -[Modification Examples](#modifications-examples)
     - [Adding New Column to Feed](#adding-new-column-to-feed)
     - [Export Fields Stored in Variants](#export-fields-stored-in-variants)
+    - [Extending Specific Web Component Template](#extending-specific-web-component-template)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -223,32 +224,29 @@ Plugin offers a following way of tracking customer actions
 
 ### Full List of Implemented Web Components
 Plugin implements a list of given Web Components:
-* Configuration
-    * ff-communication
 
-* Searchbox
+* Page Header
+    * ff-communication
     * ff-searchbox
     * ff-suggest
 
-* Search Result & Navigation
+* Search Result & Navigation Page
     * ff-record-list
     * ff-asn
     * ff-sortbox
     * ff-paging
     * ff-filter-cloud
+    * ff-campaign-advisor (search result and category page)
+    * ff-campaign-feedbacktext (search result and category page)
+    * ff-campaign-redirect (search result and category page)
 
-* Campaigns
-    * ff-campaign-advisor
-    * ff-campaign-feedbacktext
-    * ff-campaign-redirect
+* Product Detail Page
     * ff-campaign-product
     * ff-campaign-pushed-products
-
-* Cross Selling 
     * ff-recommendation
     * ff-similar-products
 
-* Tracking
+* Checkout Success Page
     * ff-checkout-tracking
 
 
@@ -294,7 +292,7 @@ Once your additional column is defined, register it as a service using Symfony D
 as `factfinder.export.field` and can be picked up automatically. Of course, autoconfiguration is
 just a convenience we offer, you can still assign the tag to your service manually.
 
-## Export Fields Stored in Variants
+### Export Fields Stored in Variants
 By default, only these fields are exported from variants:
     * CustomFields
     * ImageUrl
@@ -317,6 +315,25 @@ where `$association` would be a `children.cover` in that example.
 
 **Note:**
 Please note that adding more and more associations will have an impact on overall export performance.
+
+### Extending Specific Web Component Template
+All the Web Components rendering HTML, contains it inside the Twig block.
+If you need to change it just extend the parent file and override the block which contains the template.
+For example if you need to define own template for the ff-record element which is responsible for rendering record tiles on search result page
+
+    {% sw_extends '@Parent/storefront/components/factfinder/record-list.html.twig' %}
+
+    {% block component_factfinder_record %}
+        {# here comes the template #}
+    {% endblock %}
+
+As we see we use `sw_extends` to extend the parent file and then define the re-define `component_factfinder_record` block.
+It is contained in the plugin `Resources/views/storefront/components/factfinder/record-list.html.twig` file.
+With this code you override only this block and rest of the parent file HTML will be inherited.
+
+**Note:**
+Template in that section stands for the HTML rendered by Web Components, not the `.html.twig` file
+
 
 ## Contribute
 
