@@ -16,6 +16,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - [Category Pages](#category-pages)
     - [Element Settings](#element-settings)
     - [Blocks and Elements Templates](#block-and-elements-templates)
+    - [Assigning Layout to Category](#assigning-layout-to-category)
 - [Exporting Feed](#exporting-feed)
 - [Web Components Integration](#web-components-integration)
     - [Including Scripts](#including-scripts)
@@ -113,7 +114,7 @@ is two CMS blocks offered:
 
 * Listing
     * ff-record-list
-    * ff-asn
+    * ff-asn + including ff-filter-cloud
     * ff-pagination
     * ff-sortbox
 * Campaigns
@@ -136,6 +137,19 @@ Each of the block and element has it own templates which could be found, accordi
 * for blocks - `Resources/views/storefront/block`
 * for element - `Resources/views/storefront/element`
   which could be extended using Shopware `sw_extends` tag
+
+### Assigning Layout to Category
+
+Once the page layout is done, you need to assign layout to selected categories.
+![Main Settings](docs/assets/page-builder-assigning.png "Page Builder Page Assigning")
+
+We strongly recommend not creating many layouts as currently there's still only few possibilities offered anyway.
+Future development will bring more blocks and elements will be provided here.
+
+**Note:**
+Offered Cms Blocks and Elements are designed to work on pages of type `LandingPage`.
+There is a type `CategoryPage` but the builtin validation will not allow saving that prepared page, unless it contains at least one default Product Listing Block.
+The block `FACTFinder Web Components Listing` is unfortunately not taken into account.
 
 ## Exporting Feed
 
@@ -188,7 +202,7 @@ storefront does not use that file, include all scripts in mentioned order on you
 Main configuration element `ff-communication` is added in file `src/Resources/views/storefront/base.html.twig`
 . Same as with `meta.twig.html`, it extends
 the [base.html.twig](https://github.com/shopware/platform/blob/trunk/src/Storefront/Resources/views/storefront/base.html.twig)
-file defined in default Storefront. This element is automatically filled with the data, configured in module backend
+file defined in default Storefront. This element is populated automatically with the data, configured in module backend
 confiugration.
 
 **Note:** If your theme doesn't extend the default Storefront, make sure you implement `ff-communication` element as it
@@ -202,6 +216,7 @@ using `sw_extends` which offers a support for a multi inheritance.
 
 ### Tracking
 Plugin offers a following way of tracking customer actions
+ * login - logged automatically via ff-communication element when `user-id` is set
  * click on product - implemented using ff-record template [directives](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Click Tracking)
  * add to cart - implemented in a js [plugin](src/Resources/app/storefront/src/plugin/tracking.plugin.js)
  * purchase - implemented using [ff-checkout-tracking element](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Checkout Tracking)
