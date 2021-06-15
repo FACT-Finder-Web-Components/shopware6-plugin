@@ -236,9 +236,9 @@ Plugin implements a list of given Web Components:
     * ff-sortbox
     * ff-paging
     * ff-filter-cloud
-    * ff-campaign-advisor (search result and category page)
-    * ff-campaign-feedbacktext (search result and category page)
-    * ff-campaign-redirect (search result and category page)
+    * ff-campaign-advisor
+    * ff-campaign-feedbacktext
+    * ff-campaign-redirect 
 
 * Product Detail Page
     * ff-campaign-product
