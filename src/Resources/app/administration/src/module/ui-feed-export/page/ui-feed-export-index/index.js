@@ -1,4 +1,4 @@
-import template from './ui-feed-export-index.twig'
+import template from './ui-feed-export-index.html.twig'
 
 const { Component, Mixin } = Shopware;
 
