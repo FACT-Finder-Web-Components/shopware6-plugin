@@ -1,11 +1,9 @@
-<div class="ui-feed-export-button">
-  <sw-button
-            @click="getFeedExportFile('/api/_action/fact-finder/generate-feed')"
-{#             @click="getFeedExportFile('{{ path('api.action.fact_finder.export_feed') }}')"#}
-             variant="success"
-             size="large"
-  >
-    {{ $tc('ui-feed-export.component.export-button.title') }}
-  </sw-button>
-{#  <button class="btn is--primary" data-url="{{ path('administration.fact_finder.export_feed') }}">Generate feed</button>#}
-</div>
+<sw-card-view>
+  <sw-card>
+    <sw-button @click="getFeedExportFile('_action/fact-finder/generate-feed')"
+               variant="success"
+               size="large">
+      {{ $tc('ui-feed-export.component.export-button.title') }}
+    </sw-button>
+  </sw-card>
+</sw-card-view>
