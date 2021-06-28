@@ -86,5 +86,7 @@
             <tag name="factfinder.export.variant_field"/>
         </service>
         <service id="Omikron\FactFinder\Shopware6\Api\UiFeedExportController" />
+
+        <service id="Omikron\FactFinder\Shopware6\MessageHandler\FeedExportHandler" />
     </services>
 </container>

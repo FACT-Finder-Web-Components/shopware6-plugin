@@ -2,8 +2,16 @@
   "ui-feed-export": {
     "title": "Fact-Finder UI feed export",
     "component": {
-      "export-button": {
-        "title": "Generate feed"
+      "export-form": {
+        "sales_channel": {
+          "label": "Sales channel"
+        },
+        "sales_channel_language": {
+          "label": "Language"
+        },
+        "button": {
+          "title": "Generate feed"
+        }
       }
     }
   }

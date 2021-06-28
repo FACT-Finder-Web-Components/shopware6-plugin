@@ -1,0 +1,19 @@
+<sw-card-view>
+  <sw-card>
+    <sw-container columns="repeat(auto-fit, minmax(250px, 1fr)" gap="0px 30px">
+      <label for="sales_channel">{{ $tc('ui-feed-export.component.export-form.sales_channel.label') }}</label>
+      <sw-entity-single-select entity="sales_channel" id="sales_channel"></sw-entity-single-select>
+
+      <label for="sales_channel_language">{{ $tc('ui-feed-export.component.export-form.sales_channel_language.label') }}</label>
+      <sw-entity-single-select entity="language" id="sales_channel_language"></sw-entity-single-select>
+
+      <sw-button @click="getFeedExportFile('_action/fact-finder/generate-feed')"
+                 variant="success"
+                 block="true"
+                 size="large">
+        {{ $tc('ui-feed-export.component.export-form.button.title') }}
+      </sw-button>
+
+    </sw-container>
+  </sw-card>
+</sw-card-view>
