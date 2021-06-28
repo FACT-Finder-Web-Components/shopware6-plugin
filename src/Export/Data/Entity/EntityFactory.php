@@ -20,18 +20,18 @@ class EntityFactory
     /** @var FieldInterface[] */
     private array $variantFields;
 
-    private PriceCurrencyFields $priceCurrencyFields;
+    private CurrencyFieldsProvider $currencyFieldsProvider;
 
     public function __construct(
         PropertyFormatter $propertyFormatter,
         iterable $productFields,
         iterable $variantFields,
-        PriceCurrencyFields $priceCurrencyFields
+        CurrencyFieldsProvider $currencyFieldsProvider
     ) {
-        $this->propertyFormatter   = $propertyFormatter;
-        $this->productFields       = iterator_to_array($productFields);
-        $this->variantFields       = iterator_to_array($variantFields);
-        $this->priceCurrencyFields = $priceCurrencyFields;
+        $this->propertyFormatter      = $propertyFormatter;
+        $this->productFields          = iterator_to_array($productFields);
+        $this->variantFields          = iterator_to_array($variantFields);
+        $this->currencyFieldsProvider = $currencyFieldsProvider;
     }
 
     /**

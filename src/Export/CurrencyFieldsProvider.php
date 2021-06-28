@@ -19,12 +19,18 @@ class CurrencyFieldsProvider
 
     private ExportSettings $exportSettings;
 
+    private NumberFormatter $numberFormatter;
+
     private array $currencyFields = [];
 
-    public function __construct(EntityRepositoryInterface $currencyRepository, ExportSettings $exportSettings)
-    {
+    public function __construct(
+        EntityRepositoryInterface $currencyRepository,
+        ExportSettings $exportSettings,
+        NumberFormatter $numberFormatter
+    ) {
         $this->currencyRepository = $currencyRepository;
         $this->exportSettings     = $exportSettings;
+        $this->numberFormatter    = $numberFormatter;
     }
 
     public function getCurrencyFields(): array
@@ -33,7 +39,7 @@ class CurrencyFieldsProvider
             if (empty($this->currencyFields)) {
                 $this->currencyFields = $this->currencyRepository
                     ->search(new Criteria(), new Context(new SystemSource()))
-                    ->map(fn (CurrencyEntity $currency): PriceCurrency => new PriceCurrency($currency, new NumberFormatter()));
+                    ->map(fn (CurrencyEntity $currency): PriceCurrency => new PriceCurrency($currency, $this->numberFormatter));
             }
         }
 
