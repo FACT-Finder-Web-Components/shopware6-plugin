@@ -9,10 +9,10 @@
 
 <div class="filter-panel">
   {% block component_factfinder_asn %}
-  <ff-asn class="filter-panel-items-container" unresolved>
+  <ff-asn class="filter-panel-items-container" unresolved subscribe="{{ subscribe ? 'true' : 'false' }}">
     {% block component_factfinder_asn_group %}
-      <ff-asn-group class="filter-panel-item dropdown" disable-auto-expand>
-        <div slot="groupCaption" class="filter-panel-item-toggle btn">
+      <ff-asn-group class="filter-panel-item dropdown {% if vertical %} btn-block {% endif %}" disable-auto-expand>
+        <div slot="groupCaption" class="filter-panel-item-toggle btn {% if vertical %} btn-block {% endif %}">
           {{ '{{group.name}}' }}
           {% sw_icon 'arrow-medium-down' style { 'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle' } %}
         </div>
@@ -39,20 +39,22 @@
   </ff-asn>
   {% endblock %}
 
-  {% block component_factfinder_filter_cloud %}
-    <div class="filter-panel-active-container">
-      <ff-filter-cloud unresolved>
-        <span data-template="filter" class="filter-active">
-          {{ '{{element.name}}' }}
-          <button class="filter-active-remove">
-            &times;
-          </button>
-        </span>
-      </ff-filter-cloud>
+  {% if filterCloud %}
+    {% block component_factfinder_filter_cloud %}
+      <div class="filter-panel-active-container">
+        <ff-filter-cloud {% if not filterCloudBlacklist is same as('') %} blacklist="{{ filterCloudBlacklist }}" {% endif %} unresolved>
+          <span data-template="filter" class="filter-active">
+            {{ '{{element.name}}' }}
+            <button class="filter-active-remove">
+              &times;
+            </button>
+          </span>
+        </ff-filter-cloud>
 
-      <ff-asn-remove-all-filter remove-params keep-category-path unresolved class="filter-reset-all btn btn-sm btn-outline-danger">
-          {{ 'listing.filterPanelResetAll'|trans|sw_sanitize }}
-      </ff-asn-remove-all-filter>
-    </div>
-  {% endblock %}
+        <ff-asn-remove-all-filter remove-params keep-category-path unresolved class="filter-reset-all btn btn-sm btn-outline-danger">
+            {{ 'listing.filterPanelResetAll'|trans|sw_sanitize }}
+        </ff-asn-remove-all-filter>
+      </div>
+    {% endblock %}
+  {% endif %}
 </div>
