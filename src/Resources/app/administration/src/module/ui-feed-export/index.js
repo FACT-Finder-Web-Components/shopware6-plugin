@@ -1,4 +1,4 @@
-import './component/ui-feed-export-button'
+import './component/ui-feed-export-form'
 import './page/ui-feed-export-index'
 
 import deDE from './snippet/de-DE.json';
