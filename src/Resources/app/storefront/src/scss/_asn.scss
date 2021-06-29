@@ -26,6 +26,7 @@ ff-asn {
       overflow-y: auto;
       @include font-size($dropdown-font-size);
       color: $dropdown-color;
+      width: 100%;
 
       &[opened] {
         background-color: $dropdown-bg;

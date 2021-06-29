@@ -13,5 +13,17 @@ Shopware.Service('cmsService').registerCmsElement({
             value: true,
             source: 'static'
         },
+        vertical: {
+            value: false,
+            source: 'static'
+        },
+        filterCloud: {
+            value: true,
+            source: 'static'
+        },
+        filterCloudBlacklist: {
+            value: '',
+            source: 'static'
+        }
     }
 });
