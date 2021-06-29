@@ -24,7 +24,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Communication](#communication)
     - [Templates](#templates)
     - [Full List of Implemented Web Components](#full-list-of-implemented-web-components)
--[Modification Examples](#modifications-examples)
+- [Modification Examples](#modifications-examples)
     - [Adding New Column to Feed](#adding-new-column-to-feed)
     - [Export Fields Stored in Variants](#export-fields-stored-in-variants)
     - [Extending Specific Web Component Template](#extending-specific-web-component-template)
