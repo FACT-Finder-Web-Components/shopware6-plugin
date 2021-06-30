@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Message;
-
 
 class FeedExport
 {
@@ -14,7 +14,7 @@ class FeedExport
 
     public function __construct(string $salesChannelId = null, string $salesChannelLanguageId = null)
     {
-        $this->salesChannelId = $salesChannelId;
+        $this->salesChannelId         = $salesChannelId;
         $this->salesChannelLanguageId = $salesChannelLanguageId;
     }
 

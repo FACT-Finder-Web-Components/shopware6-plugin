@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Api;
@@ -20,13 +19,14 @@ class UiFeedExportController extends AbstractController
 {
     /**
      * @Route("/api/_action/fact-finder/generate-feed", name="api.action.fact_finder.export_feed", methods={"GET"}, defaults={"XmlHttpRequest"=true})
+     *
      * @param MessageBusInterface $messageBus
-     * @param Request $request
+     * @param Request             $request
      */
     public function generateExportFeedAction(MessageBusInterface $messageBus, Request $request): JsonResponse
     {
         $messageBus->dispatch(new FeedExport(
-            $request->query->get('this.salesChannelValue'),
+            $request->query->get('salesChannelValue'),
             $request->query->get('salesChannelLanguageValue')
         ));
 

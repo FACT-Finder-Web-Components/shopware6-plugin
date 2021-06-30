@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\MessageHandler;
 
 use Omikron\FactFinder\Shopware6\Message\FeedExport;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 class FeedExportHandler implements MessageHandlerInterface
 {
@@ -24,11 +25,11 @@ class FeedExportHandler implements MessageHandlerInterface
     public function __invoke(FeedExport $feedExport)
     {
         $input = new ArrayInput([
-            'command' => 'factfinder:export:products',
-            '--upload' => true,
-            '--import' => true,
+            'command'       => 'factfinder:export:products',
+            '--upload'      => true,
+            '--import'      => true,
             'sales_channel' => $feedExport->getSalesChannelId(),
-            'language' => $feedExport->getSalesChannelLanguageId()
+            'language'      => $feedExport->getSalesChannelLanguageId(),
         ]);
         $output = new BufferedOutput();
         $this->application->run($input, $output);
