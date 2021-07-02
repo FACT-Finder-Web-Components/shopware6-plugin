@@ -1,13 +1,9 @@
 import template from './ui-feed-export-index.html.twig'
 
-const { Component, Mixin } = Shopware;
+const { Component } = Shopware;
 
 Component.register('ui-feed-export-index', {
     template,
-
-    mixins: [
-        Mixin.getByName('notification')
-    ],
 
     metaInfo() {
         return {

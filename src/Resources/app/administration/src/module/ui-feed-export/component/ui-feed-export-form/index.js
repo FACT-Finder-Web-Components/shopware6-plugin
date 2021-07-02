@@ -1,6 +1,6 @@
 import template from './ui-feed-export-form.html.twig';
 
-const {Component} = Shopware;
+const { Component, Mixin } = Shopware;
 
 Component.register('ui-feed-export-form', {
     template,
@@ -8,13 +8,25 @@ Component.register('ui-feed-export-form', {
     data() {
         return {
             salesChannelValue: null,
-            salesChannelLanguageValue: null,
-            successAlertVisible: false,
-            errorAlertVisible: false
+            salesChannelLanguageValue: null
         }
     },
 
+    mixins: [
+        Mixin.getByName('notification')
+    ],
+
     methods: {
+        successFeedGenerationWindow() {
+            this.createNotificationSuccess({
+                message: this.$tc('ui-feed-export.component.export_form.alert_success.text')
+            })
+        },
+        errorFeedGenerationWindow() {
+            this.createNotificationError({
+                message: this.$tc('ui-feed-export.component.export_form.alert_error.text')
+            })
+        },
         getFeedExportFile(url) {
             const httpClient = Shopware.Service('syncService').httpClient;
             const basicHeaders = {
@@ -33,9 +45,9 @@ Component.register('ui-feed-export-form', {
                 })
                 .then((response) => {
                     if (response.status === 200) {
-                        this.successAlertVisible = true;
+                        this.successFeedGenerationWindow();
                     } else {
-                        this.errorAlertVisible = true;
+                        this.errorFeedGenerationWindow();
                     }
                 });
         }

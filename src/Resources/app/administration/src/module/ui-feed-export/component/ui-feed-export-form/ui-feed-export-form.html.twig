@@ -1,25 +1,6 @@
 <sw-card-view>
 
   <sw-card>
-
-    <sw-alert
-      v-if="successAlertVisible"
-      variant="success"
-      appearance="notification"
-      :showIcon="true"
-      :closable="true">
-      {{ $tc('ui-feed-export.component.export_form.alert_success.text') }}
-    </sw-alert>
-
-    <sw-alert
-      v-if="errorAlertVisible"
-      variant="warning"
-      appearance="notification"
-      :showIcon="true"
-      :closable="true">
-      {{ $tc('ui-feed-export.component.export_form.alert_error.text') }}
-    </sw-alert>
-
     <sw-container columns="repeat(auto-fit, minmax(250px, 1fr)" gap="0px 30px">
       <sw-entity-single-select
         v-model="salesChannelValue"

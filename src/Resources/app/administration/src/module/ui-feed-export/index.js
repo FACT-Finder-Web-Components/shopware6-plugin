@@ -12,10 +12,6 @@ Module.register('ui-feed-export', {
     title: 'ui-feed-export.title',
     description: '',
 
-    options: {
-        dataUrl: 'test'
-    },
-
     snippets: {
         'de-DE': deDE,
         'en-GB': enGB
