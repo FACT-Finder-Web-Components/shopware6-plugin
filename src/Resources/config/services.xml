@@ -87,6 +87,8 @@
         </service>
         <service id="Omikron\FactFinder\Shopware6\Api\UiFeedExportController" />
 
-        <service id="Omikron\FactFinder\Shopware6\MessageHandler\FeedExportHandler" />
+        <service id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler">
+            <tag name="messenger.message_handler" />
+        </service>
     </services>
 </container>
