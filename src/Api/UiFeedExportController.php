@@ -10,7 +10,6 @@ use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -34,10 +33,13 @@ class UiFeedExportController extends AbstractController
     /**
      * @Route("/api/_action/fact-finder/generate-feed", name="api.action.fact_finder.export_feed", methods={"GET"}, defaults={"XmlHttpRequest"=true})
      *
-     * @param MessageBusInterface $messageBus
-     * @param Request             $request
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @throws \Exception
      */
-    public function generateExportFeedAction(MessageBusInterface $messageBus, Request $request): JsonResponse
+    public function generateExportFeedAction(Request $request): JsonResponse
     {
         $this->feedExportHandler->handle(new FeedExport(
             $request->query->get('salesChannelValue'),
