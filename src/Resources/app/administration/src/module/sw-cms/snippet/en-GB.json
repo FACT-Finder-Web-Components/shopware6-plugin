@@ -3,10 +3,13 @@
     "blocks": {
       "commerce": {
         "factfinderWebComponentsListing": {
-          "label": "FACTFinder Web Components Listing"
+          "label": "FACTFinder Web Components Search Result"
         },
         "factfinderWebComponentsCampaigns": {
           "label": "FACTFinder Web Components Campaigns"
+        },
+        "factfinderWebComponentsFilters": {
+          "label": "FACTFinder Web Components Filters"
         }
       }
     },
@@ -15,7 +18,7 @@
         "label": "ff-record-list"
       },
       "asn": {
-        "label": "ff--asn"
+        "label": "ff-asn"
       },
       "sortbox": {
         "label": "ff-sortbox"

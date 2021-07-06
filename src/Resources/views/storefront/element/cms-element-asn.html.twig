@@ -1,3 +1,9 @@
 {% block element_asn %}
-  {% sw_include '@Parent/storefront/components/factfinder/asn.html.twig' %}
+  {% set config = element.config %}
+  {% sw_include '@Parent/storefront/components/factfinder/asn.html.twig' with {
+    vertical: config.vertical.value,
+    subscribe: config.subscribe.value,
+    filterCloud: config.filterCloud.value,
+    filterCloudBlacklist: config.filterCloudBlacklist.value,
+  } %}
 {% endblock %}
