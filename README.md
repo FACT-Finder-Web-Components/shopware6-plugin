@@ -2,9 +2,9 @@
 
 [![Build status](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/workflows/build/badge.svg)](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/actions)
 
-This document helps you to integrate the FACT-Finder® Web Components SDK into your Showpare6 Shop. In addition, it gives
+This document helps you to integrate the FACT-Finder® Web Components SDK into your Showpare Shop. In addition, it gives
 a concise overview of its primary functions. The first chapter *Installation* walks you through the suggested
-installation process. The second chapter *Settings* explains the customisation options in the Showpare6 backend. The
+installation process. The second chapter *Settings* explains the customisation options in the Showpare backend. The
 final chapter *Exporting Feed* describes how to use provided console command to export the feed.
 
 - [Requirements](#requirements)
@@ -18,6 +18,8 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Blocks and Elements Templates](#block-and-elements-templates)
     - [Assigning Layout to Category](#assigning-layout-to-category)
 - [Exporting Feed](#exporting-feed)
+    - [CLI](#cli)
+    - [Exporting from Admin Panel](#exporting-from-admin-panel)
 - [Web Components Integration](#web-components-integration)
     - [Web Components Documentation](#web-components-documentation)
     - [Including Scripts](#including-scripts)
@@ -158,6 +160,7 @@ The block `FACTFinder Web Components Listing` is unfortunately not taken into ac
 
 ## Exporting Feed
 
+### CLI
 Feed export is available in the Shopware CLI application. You can run it by executing:
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:products
@@ -180,6 +183,20 @@ There are two additional options:
 by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:products > export.csv
+
+### Exporting from Admin Panel
+
+There is a possibility to run whole integration: generating feed, uploading it to FTP server and trigger FACT-Finder® import.
+A dedicated form can be found under `Extensions` section
+![Admin Panel Export](docs/assets/admin-panel-export.png "Admin Panel Export")
+
+
+![Admin Panel Export Form](docs/assets/admin-panel-export-form.png "Admin Panel Export Form")
+Select fields allows you to select sales channel and languague parameter for which an integration shall be run.
+
+`Run Integration` Send a message to a bus which then might be consumed automatically by an admin worker (if enabled)
+or by CLI worker. More information about messaging you can find in official Shopware [documentation](https://developer.shopware.com/docs/guides/hosting/infrastructure/message-queue)
+
 
 ## Web Components Integration
 
@@ -264,7 +281,7 @@ Plugin implements a list of given Web Components:
 ### Adding New Column to Feed
 
 The standard feed contains all data FACT-Finder® requires to work. However, you may want to export additional
-information which is relevant for your project and not part of a default Shopware 6 installation. This section shows you
+information which is relevant for your project and not part of a default Shopware installation. This section shows you
 how to extend the feed with additional column.
 
 Start with creating field provider - a class

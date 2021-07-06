@@ -85,5 +85,10 @@
         <service id="Omikron\FactFinder\Shopware6\Export\Field\ImageUrl">
             <tag name="factfinder.export.variant_field"/>
         </service>
+        <service id="Omikron\FactFinder\Shopware6\Api\UiFeedExportController" />
+
+        <service id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler">
+            <tag name="messenger.message_handler" />
+        </service>
     </services>
 </container>

@@ -1,0 +1,24 @@
+{
+  "ui-feed-export": {
+    "title": "FACT-Finder® Feed Export",
+    "component": {
+      "export_form": {
+        "sales_channel": {
+          "label": "Sales Channel"
+        },
+        "sales_channel_language": {
+          "label": "Language"
+        },
+        "button": {
+          "title": "Run Integration"
+        },
+        "alert_success": {
+          "text": "Integration process has been started"
+        },
+        "alert_error": {
+          "text": "An error occurred during integration process"
+        }
+      }
+    }
+  }
+}
