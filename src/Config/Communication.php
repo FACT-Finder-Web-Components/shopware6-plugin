@@ -11,9 +11,9 @@ class Communication extends BaseConfig
         return trim((string) $this->config('serverUrl'));
     }
 
-    public function getChannel(): string
+    public function getChannel(?string $salesChannelId = null): string
     {
-        return (string) $this->config('channel');
+        return (string) $this->config('channel', $salesChannelId);
     }
 
     public function getCredentials(): array

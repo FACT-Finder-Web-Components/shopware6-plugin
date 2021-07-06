@@ -1,8 +1,10 @@
 # Changelog
-
 ## [Unreleased]
 ### Add
 - Add form for run Feed export from the admin panel instead of command line
+
+### Fix
+  - Fix FTP upload does not take the channel name from correct sales channel context
 
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
