@@ -1,7 +1,8 @@
 # Changelog
 
 ## [Unreleased]
-Add form for run Feed export from the admin panel instead of command line
+### Add
+- Add form for run Feed export from the admin panel instead of command line
 
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
