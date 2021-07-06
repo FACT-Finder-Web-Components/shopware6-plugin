@@ -1,0 +1,24 @@
+{
+  "ui-feed-export": {
+    "title": "Fact-Finder feed export",
+    "component": {
+      "export_form": {
+        "sales_channel": {
+          "label": "Sales channel"
+        },
+        "sales_channel_language": {
+          "label": "Language"
+        },
+        "button": {
+          "title": "Generate feed"
+        },
+        "alert_success": {
+          "text": "Your request is processing"
+        },
+        "alert_error": {
+          "text": "An error occurred during processing Your request"
+        }
+      }
+    }
+  }
+}

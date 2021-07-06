@@ -8,6 +8,7 @@ import './module/sw-cms/elements/paging';
 import './module/sw-cms/elements/campaigns';
 import './module/sw-cms/elements/shared/shared.scss'
 import './module/sw-cms/blocks/shared/shared.scss'
+import './module/ui-feed-export';
 
 import deDE from './module/sw-cms/snippet/de-DE.json';
 import enGB from './module/sw-cms/snippet/en-GB.json';
