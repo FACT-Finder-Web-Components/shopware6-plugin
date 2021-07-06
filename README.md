@@ -176,7 +176,7 @@ There are two additional options:
 * `-u` uploads the feed to the configured FTP server after feed is generated.
 * `-i` runs the FACT-Finder® import with previously uploaded feed  
   **Note:** This option works only in a combination with `-u`
-  
+
 by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:products > export.csv
@@ -226,10 +226,10 @@ using `sw_extends` which offers a support for a multi inheritance.
 
 ### Tracking
 Plugin offers a following way of tracking customer actions
- * login - logged automatically via ff-communication element when `user-id` is set
- * click on product - implemented using ff-record template [directives](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Click Tracking)
- * add to cart - implemented in a js [plugin](src/Resources/app/storefront/src/plugin/tracking.plugin.js)
- * purchase - implemented using [ff-checkout-tracking element](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Checkout Tracking)
+* login - logged automatically via ff-communication element when `user-id` is set
+* click on product - implemented using ff-record template [directives](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Click Tracking)
+* add to cart - implemented in a js [plugin](src/Resources/app/storefront/src/plugin/tracking.plugin.js)
+* purchase - implemented using [ff-checkout-tracking element](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Checkout Tracking)
 
 ### Full List of Implemented Web Components
 Plugin implements a list of given Web Components:
@@ -247,7 +247,7 @@ Plugin implements a list of given Web Components:
     * ff-filter-cloud
     * ff-campaign-advisor
     * ff-campaign-feedbacktext
-    * ff-campaign-redirect 
+    * ff-campaign-redirect
 
 * Product Detail Page
     * ff-campaign-product
@@ -303,8 +303,8 @@ just a convenience we offer, you can still assign the tag to your service manual
 
 ### Export Fields Stored in Variants
 By default, only these fields are exported from variants:
-    * CustomFields
-    * ImageUrl
+* CustomFields
+* ImageUrl
 If your setup requires more field to be exported from variants, you need to tag the desired Field with a `factfinder.export.variant_field` tag in `services.xml file`.
 
     <service id="Omikron\FactFinder\Shopware6\Export\Field\CustomFields">
@@ -355,4 +355,3 @@ FACT-Finder® Web Components License. For more information see the [LICENSE](LIC
 [1]: https://developer.shopware.com/docs/guides/plugins/plugins/plugin-fundamentals/dependency-injection
 
 [2]: https://symfony.com/doc/3.3/service_container.html#the-autoconfigure-option
-
