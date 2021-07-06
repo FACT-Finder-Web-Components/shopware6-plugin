@@ -19,11 +19,12 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Assigning Layout to Category](#assigning-layout-to-category)
 - [Exporting Feed](#exporting-feed)
 - [Web Components Integration](#web-components-integration)
+    - [Web Components Documentation](#web-components-documentation)
     - [Including Scripts](#including-scripts)
     - [Communication](#communication)
     - [Templates](#templates)
     - [Full List of Implemented Web Components](#full-list-of-implemented-web-components)
--[Modification Examples](#modifications-examples)
+- [Modification Examples](#modifications-examples)
     - [Adding New Column to Feed](#adding-new-column-to-feed)
     - [Export Fields Stored in Variants](#export-fields-stored-in-variants)
     - [Extending Specific Web Component Template](#extending-specific-web-component-template)
@@ -131,6 +132,9 @@ is two CMS blocks offered:
 Each of the element of given block contains dedicated configuration which allows to configure them without necessity of adding hardcoded values in the templates.
 ![Main Settings](docs/assets/page-builder-element-config.png "Page Builder CMS Element Configuration")
 
+If you do not want to render a specific element, just change the `subscribe` option to `false`. This will make element will not subscribe to the
+FACT-Finder® response, hence they will not render any HTML.
+
 ### Blocks and Elements Templates
 
 Each of the block and element has it own templates which could be found, according to the Shopware 6 convention:
@@ -182,11 +186,16 @@ by default export outputs data in the STDOUT. It could be easily redirected usin
 **Note:** Please note that plugin right now is supporting only classic storefronts, rendered using Twig templating
 system.
 
+### Web Components Documentation
+
+Full FACT-Finder® Web Components documentation you can found [here](https://web-components.fact-finder.de/api/4.x/ff-communication)
+
+
 ### Including Scripts
 
-The module is shipped with script including FACT-Finder Web Components. A
-whole [Including Scripts](https://web-components.fact-finder.de/documentation/4.x/include-scripts) step is done by the
-module.
+The module is shipped with script including FACT-Finder® Web Components.
+[Including Scripts](https://web-components.fact-finder.de/documentation/4.x/include-scripts) step is implemented in the
+module. No additional action is required.
 
 * Resources/public/ff-web-components/vendor/custom-elements-es5-adapter.js
 * Resources/public/ff-web-components/vendor/webcomponents-loader.js
@@ -203,11 +212,11 @@ storefront does not use that file, include all scripts in mentioned order on you
 Main configuration element `ff-communication` is added in file `src/Resources/views/storefront/base.html.twig`
 . Same as with `meta.twig.html`, it extends
 the [base.html.twig](https://github.com/shopware/platform/blob/trunk/src/Storefront/Resources/views/storefront/base.html.twig)
-file defined in default Storefront. This element is populated automatically with the data, configured in module backend
-confiugration.
+file defined in default Storefront. This element is populated automatically with the data, configured in module
+configuration.
 
 **Note:** If your theme doesn't extend the default Storefront, make sure you implement `ff-communication` element as it
-is mandatory and FACT-Finder Web Components will not work without it.
+is mandatory and FACT-Finder® Web Components will not work without it.
 
 ### Templates
 
