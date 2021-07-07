@@ -26,9 +26,9 @@ class FtpConfig extends BaseConfig
         return (string) $this->config('ftpPassword');
     }
 
-    public function getUploadFileName(): string
+    public function getUploadFileName(?string $salesChannelId = null): string
     {
-        return sprintf('export.%s.csv', $this->config('channel'));
+        return sprintf('export.%s.csv', $this->config('channel', $salesChannelId));
     }
 
     public function getPushImportTypes(): array

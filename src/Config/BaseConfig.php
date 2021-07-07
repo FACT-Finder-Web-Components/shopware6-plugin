@@ -17,12 +17,13 @@ abstract class BaseConfig
     }
 
     /**
-     * @param string $param
+     * @param string      $param
+     * @param string|null $salesChannelId
      *
      * @return mixed
      */
-    protected function config(string $param)
+    protected function config(string $param, ?string $salesChannelId = null)
     {
-        return $this->systemConfig->get('OmikronFactFinder.config.' . $param);
+        return $this->systemConfig->get('OmikronFactFinder.config.' . $param, $salesChannelId);
     }
 }

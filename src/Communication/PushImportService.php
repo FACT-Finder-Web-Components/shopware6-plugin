@@ -8,6 +8,7 @@ use Omikron\FactFinder\Communication\Resource\Import;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\FtpConfig;
 use Omikron\FactFinder\Shopware6\Exception\ImportRunningException;
+use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class PushImportService
@@ -21,11 +22,19 @@ class PushImportService
     /** @var Import */
     private $importAdapter;
 
-    public function __construct(Import $importAdapter, Communication $communicationConfig, FtpConfig $uploadConfig)
-    {
+    /** @var SalesChannelService */
+    private $salesChannelService;
+
+    public function __construct(
+        Import $importAdapter,
+        Communication $communicationConfig,
+        FtpConfig $uploadConfig,
+        SalesChannelService $salesChannelService
+    ) {
         $this->communicationConfig = $communicationConfig;
         $this->uploadConfig        = $uploadConfig;
         $this->importAdapter       = $importAdapter;
+        $this->salesChannelService = $salesChannelService;
     }
 
     /**
@@ -33,7 +42,8 @@ class PushImportService
      */
     public function execute(): void
     {
-        $channel = $this->communicationConfig->getChannel();
+        $salesChannelId = $this->salesChannelService->getSalesChannelContext()->getSalesChannel()->getId();
+        $channel        = $this->communicationConfig->getChannel($salesChannelId);
         $this->checkNotRunning($channel);
         foreach ($this->uploadConfig->getPushImportTypes() as $type) {
             $this->importAdapter->import($channel, $type);
