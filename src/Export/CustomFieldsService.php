@@ -12,11 +12,9 @@ use Shopware\Core\System\CustomField\CustomFieldEntity;
 
 class CustomFieldsService
 {
-    /** @var EntityRepositoryInterface */
-    private $customFieldRepository;
+    private EntityRepositoryInterface $customFieldRepository;
 
-    /** @var array */
-    private $cachedFields;
+    private array $cachedFields;
 
     public function __construct(EntityRepositoryInterface $customFieldRepository)
     {
@@ -32,10 +30,7 @@ class CustomFieldsService
                 new Criteria($customFieldIds),
                 new Context(new SystemSource())
             );
-
-            $this->cachedFields[$key] = $searchResult->map(function (CustomFieldEntity $customField) {
-                return $customField->getName();
-            });
+            $this->cachedFields[$key] = $searchResult->map(fn (CustomFieldEntity $customField): string => $customField->getName());
         }
 
         return $this->cachedFields[$key];

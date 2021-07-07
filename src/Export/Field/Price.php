@@ -9,8 +9,7 @@ use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Prod
 
 class Price implements FieldInterface
 {
-    /** @var NumberFormatter */
-    private $numberFormatter;
+    private NumberFormatter $numberFormatter;
 
     public function __construct(NumberFormatter $numberFormatter)
     {

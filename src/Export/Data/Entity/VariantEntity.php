@@ -12,17 +12,14 @@ use function array_map as map;
 
 class VariantEntity implements ExportEntityInterface
 {
-    /** @var Product */
-    private $product;
+    private Product $product;
 
-    /** @var array */
-    private $parentData;
+    private array $parentData;
 
-    /** @var PropertyFormatter */
-    private $propertyFormatter;
+    private PropertyFormatter $propertyFormatter;
 
     /** @var FieldInterface[] */
-    private $variantFields;
+    private iterable $variantFields;
 
     public function __construct(
         Product $product,
@@ -44,7 +41,7 @@ class VariantEntity implements ExportEntityInterface
     public function toArray(): array
     {
         $opts = '|' . implode('|', map($this->propertyFormatter, $this->product->getOptions()->getElements())) . '|';
-        return array_reduce($this->variantFields, function (array $fields, FieldInterface $field) {
+        return array_reduce($this->variantFields, function (array $fields, FieldInterface $field): array {
             return [$field->getName() => $field->getValue($this->product)] + $fields;
         }, ['ProductNumber' => $this->product->getProductNumber(), 'FilterAttributes' => $opts] + $this->parentData);
     }

@@ -6,12 +6,12 @@ namespace Omikron\FactFinder\Shopware6\Config;
 
 class ExportSettings extends BaseConfig
 {
-    public function getDisabledPropertyGroups()
+    public function getDisabledPropertyGroups(): array
     {
         return $this->config('disabledPropertyGroups');
     }
 
-    public function getDisabledCustomFields()
+    public function getDisabledCustomFields(): array
     {
         return $this->config('disabledCustomFields');
     }
