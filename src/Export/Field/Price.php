@@ -24,6 +24,9 @@ class Price implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        return $this->numberFormatter->format((float) $product->getCalculatedPrice()->getTotalPrice());
+        if ($product->getCalculatedPrices()->count() === 0) {
+            return $this->numberFormatter->format((float) $product->getCalculatedPrice()->getTotalPrice());
+        }
+        return $this->numberFormatter->format((float) $product->getCalculatedPrices()->first()->getUnitPrice());
     }
 }
