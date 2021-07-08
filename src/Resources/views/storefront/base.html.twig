@@ -15,7 +15,7 @@
       document.addEventListener('before-search', function (event) {
         if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
           event.preventDefault();
-          window.location = '{{ path('frontend.factfinder.result') }}' + factfinder.common.dictToParameterString(event.detail);
+          window.location = '{{ path('frontend.factfinder.result') }}' + factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));
         }
       });
 
