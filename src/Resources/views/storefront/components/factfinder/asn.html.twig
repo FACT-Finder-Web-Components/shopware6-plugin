@@ -9,7 +9,7 @@
 
 <div class="filter-panel">
   {% block component_factfinder_asn %}
-  <ff-asn class="filter-panel-items-container" unresolved subscribe="{{ subscribe ? 'true' : 'false' }}">
+  <ff-asn class="filter-panel-items-container" unresolved subscribe="{{ subscribe ? 'true' : 'false' }}" topic="{{ topic|default('asn') }}">
     {% block component_factfinder_asn_group %}
       <ff-asn-group class="filter-panel-item dropdown {% if vertical %} btn-block {% endif %}" disable-auto-expand>
         <div slot="groupCaption" class="filter-panel-item-toggle btn {% if vertical %} btn-block {% endif %}">

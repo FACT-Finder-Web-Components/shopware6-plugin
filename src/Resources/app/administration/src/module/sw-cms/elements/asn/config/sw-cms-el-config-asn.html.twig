@@ -1,9 +1,16 @@
 {% block sw_cms_element_asn_config %}
   <div>
     <sw-switch-field label="Subscribe" v-model="element.config.subscribe.value"></sw-switch-field>
+    <sw-text-field label="Topic" placeholder="Topic" :disabled="element.config.subscribe.value"
+                   v-model="element.config.topic.value"></sw-text-field>
     <sw-switch-field label="Vertical" v-model="element.config.vertical.value"></sw-switch-field>
+    <sw-textarea-field label="Callback function" placeholder="Callback" size="medium"
+                       v-model="element.config.callback.value"
+                       v-tooltip="{ message:'callback which will be passed as a listener to the subscribed topic'}">>
+    </sw-textarea-field>
     <p>Filter Cloud</p>
     <sw-switch-field label="Use Filter Cloud" v-model="element.config.filterCloud.value"></sw-switch-field>
-    <sw-text-field label="Blacklist" placeholder="Blacklist" v-model="element.config.filterCloudBlacklist.value"></sw-text-field>
+    <sw-text-field label="Blacklist" placeholder="Blacklist"
+                   v-model="element.config.filterCloudBlacklist.value"></sw-text-field>
   </div>
 {% endblock %}

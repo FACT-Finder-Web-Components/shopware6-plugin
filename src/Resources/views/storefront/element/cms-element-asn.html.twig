@@ -5,5 +5,16 @@
     subscribe: config.subscribe.value,
     filterCloud: config.filterCloud.value,
     filterCloudBlacklist: config.filterCloudBlacklist.value,
+    topic: config.topic.value
   } %}
+
+  <script>
+    document.addEventListener('ffReady', function ({resultDispatcher}) {
+      {% if config.callback.value %}
+      resultDispatcher.addCallback("{{ config.topic.value|default('asn') }}", groups => {
+        {{ config.callback.value|raw }}
+      });
+      {% endif %}
+    });
+  </script>
 {% endblock %}

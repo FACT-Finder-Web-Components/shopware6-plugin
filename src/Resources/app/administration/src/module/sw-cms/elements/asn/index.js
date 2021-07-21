@@ -24,6 +24,14 @@ Shopware.Service('cmsService').registerCmsElement({
         filterCloudBlacklist: {
             value: '',
             source: 'static'
+        },
+        topic: {
+            value: 'asn',
+            source: 'static'
+        },
+        callback: {
+            value: '',
+            source: 'static'
         }
     }
 });
