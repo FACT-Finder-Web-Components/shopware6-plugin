@@ -9,14 +9,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleOutput implements StreamInterface
 {
-    /** @var OutputInterface */
-    private $output;
-
-    /** @var string */
-    private $delimiter;
-
-    /** @var File */
-    private $fileResource;
+    private OutputInterface $output;
+    private string $delimiter;
+    private File $fileResource;
 
     public function __construct(OutputInterface $output, string $delimiter = ';')
     {

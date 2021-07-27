@@ -10,8 +10,7 @@ use Omikron\FactFinder\Shopware6\Config\Communication as CommunicationConfig;
 
 class ClientBuilderConfigurator
 {
-    /** @var CommunicationConfig */
-    private $config;
+    private CommunicationConfig $config;
 
     public function __construct(CommunicationConfig $config)
     {

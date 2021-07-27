@@ -12,8 +12,7 @@ use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOp
  */
 class PropertyFormatter
 {
-    /** @var FilterInterface */
-    private $filter;
+    private FilterInterface $filter;
 
     public function __construct(FilterInterface $filter)
     {

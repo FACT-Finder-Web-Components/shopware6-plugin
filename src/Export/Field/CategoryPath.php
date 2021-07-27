@@ -8,17 +8,13 @@ use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
 use Shopware\Core\Content\Category\Service\CategoryBreadcrumbBuilder;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 
 class CategoryPath implements FieldInterface
 {
-    /** @var string */
-    private $fieldName;
-
-    /** @var SalesChannelService */
-    private $channelService;
-
-    /** @var CategoryBreadcrumbBuilder */
-    private $breadcrumbBuilder;
+    private string $fieldName;
+    private SalesChannelService $channelService;
+    private CategoryBreadcrumbBuilder $breadcrumbBuilder;
 
     public function __construct(
         SalesChannelService $channelService,
@@ -37,11 +33,16 @@ class CategoryPath implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        $salesChannel = $this->channelService->getSalesChannelContext()->getSalesChannel();
+        return implode('|', $product->getCategories()->fmap($this->createPath($this->channelService->getSalesChannelContext()->getSalesChannel())));
+    }
 
-        return implode('|', $product->getCategories()->fmap(function (Category $category) use ($salesChannel): string {
+    private function createPath(SalesChannelEntity $salesChannel): callable
+    {
+        return function (Category $category) use ($salesChannel) {
             $breadcrumb = $this->breadcrumbBuilder->build($category, $salesChannel, $salesChannel->getNavigationCategoryId()) ?? [];
-            return in_array($salesChannel->getNavigationCategoryId(), array_keys($category->getPlainBreadcrumb())) ? implode('/', array_map('urlencode', $breadcrumb)) : '';
-        }));
+            return in_array($salesChannel->getNavigationCategoryId(), array_keys($category->getPlainBreadcrumb()))
+                ? implode('/', array_map('urlencode', $breadcrumb))
+                : '';
+        };
     }
 }

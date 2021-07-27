@@ -10,11 +10,8 @@ use Shopware\Core\System\Currency\CurrencyEntity;
 
 class PriceCurrency extends Price
 {
-    /** @var CurrencyEntity */
-    private $currency;
-
-    /** @var NumberFormatter */
-    private $numberFormatter;
+    private CurrencyEntity $currency;
+    private NumberFormatter $numberFormatter;
 
     public function __construct(CurrencyEntity $currency, NumberFormatter $numberFormatter)
     {

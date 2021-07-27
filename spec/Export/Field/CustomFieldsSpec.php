@@ -14,6 +14,7 @@ use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Prod
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -60,13 +61,22 @@ class CustomFieldsSpec extends ObjectBehavior
         EntityRepositoryInterface $customFieldRepository,
         EntityRepositoryInterface $languageRepository,
         ExportSettings $exportSettings,
-        CustomFieldsService $customFieldsService
+        CustomFieldsService $customFieldsService,
+        Product $product
     ) {
         $languageRepository->search(Argument::type(Criteria::class), Argument::cetera())->will($this->mockLanguageRepository());
         $channelContext->getSalesChannel()->willReturn($this->getSalesChannel('2'));
         $salesChannelService->getSalesChannelContext()->willReturn($channelContext);
-        $this->beConstructedWith(new PropertyFormatter(
-            new TextFilter()),
+        $exportSettings->getDisabledCustomFields()->willReturn([]);
+        $product->getTranslation('customFields')->willReturn(
+            [
+                'test-multi-select-field' => [
+                    'option1',
+                    'option2',
+                ]
+            ]);
+        $this->beConstructedWith(
+            new PropertyFormatter(new TextFilter()),
             $salesChannelService,
             $customFieldRepository,
             $languageRepository,
@@ -83,29 +93,28 @@ class CustomFieldsSpec extends ObjectBehavior
     function it_should_join_multiselect_option_values(
         Product $product,
         EntityRepositoryInterface $customFieldRepository,
-        EntityRepositoryInterface $languageRepository
+        EntityRepositoryInterface $languageRepository,
+        ExportSettings $exportSettings
     ) {
         $customFieldRepository
             ->search(Argument::cetera())
             ->willReturn(
-                $this->getCustomField(
-                    'test-multi-select-field',
-                    CustomFieldTypes::SELECT,
-                    $this->selectFieldConfig
+                $this->toSearchEntityResult(
+                    [
+                        $this->getCustomField(
+                            'test-multi-select-field',
+                            CustomFieldTypes::SELECT,
+                            $this->selectFieldConfig
+                        )
+                    ]
                 ));
 
-        $product->getTranslation('customFields')->willReturn(
-            [
-                'test-multi-select-field' => [
-                    'option1',
-                    'option2',
-                ]
-            ]);
 
+        $exportSettings->getDisabledCustomFields()->willReturn([]);
         $this->getValue($product)->shouldReturn('|SelectFieldDE=option1DE#option2DE|');
     }
 
-    function it_will_use_default_language_if_noone_is_stored_in_context(
+    function it_will_use_default_language_if_none_is_stored_in_context(
         Product $product,
         EntityRepositoryInterface $customFieldRepository
     ) {
@@ -117,19 +126,15 @@ class CustomFieldsSpec extends ObjectBehavior
         $customFieldRepository
             ->search(Argument::cetera())
             ->willReturn(
-                $this->getCustomField(
-                    'test-multi-select-field',
-                    CustomFieldTypes::SELECT,
-                    $config
+                $this->toSearchEntityResult(
+                    [
+                        $this->getCustomField(
+                            'test-multi-select-field',
+                            CustomFieldTypes::SELECT,
+                            $config
+                        )
+                    ]
                 ));
-
-        $product->getTranslation('customFields')->willReturn(
-            [
-                'test-multi-select-field' => [
-                    'option1',
-                    'option2',
-                ]
-            ]);
 
         $this->getValue($product)->shouldReturn('|SelectFieldEN=option1EN#option2EN|');
     }
@@ -141,26 +146,72 @@ class CustomFieldsSpec extends ObjectBehavior
         $customFieldRepository
             ->search(Argument::cetera())
             ->willReturn(
-                $this->getCustomField(
-                    'test-multi-select-field',
-                    CustomFieldTypes::SELECT,
+                $this->toSearchEntityResult(
                     [
-                        'options' => [
-                            ['value' => 'option1'],
-                            ['value' => 'option2']
-                        ]
+                        $this->getCustomField(
+                            'test-multi-select-field',
+                            CustomFieldTypes::SELECT,
+                            [
+                                'options' => [
+                                    ['value' => 'option1'],
+                                    ['value' => 'option2']
+                                ]
+                            ]
+                        )
+                    ]
+                ));
+
+        $this->getValue($product)->shouldReturn('|test-multi-select-field=option1#option2|');
+    }
+
+    function it_will_skip_disabled_custom_fields(
+        Product $product,
+        EntityRepositoryInterface $customFieldRepository, ExportSettings $exportSettings, CustomFieldsService $customFieldsService)
+    {
+        $customFieldRepository
+            ->search(Argument::cetera())
+            ->willReturn(
+                $this->toSearchEntityResult(
+                    [
+                        $this->getCustomField(
+                            'test-enabled',
+                            CustomFieldTypes::SELECT,
+                            [
+                                'label' => [
+                                    'en-GB' => 'Enabled attribute',
+                                ],
+                                'options' => [[
+                                                  'label' => ['en-GB' => 'exported value'],
+                                                  'value' => 'i should be exported',
+                                              ]],
+                            ]
+                        ),
+                        $this->getCustomField(
+                            'test-disabled',
+                            CustomFieldTypes::SELECT,
+                            [
+                                'label' => ['en-GB' => 'Disabled attribute'],
+                                'options' => [[
+                                                  'label' => ['en-GB' => 'not exported value'],
+                                                  'value' => 'i should not be exported',
+                                              ]]
+                            ]
+                        )
                     ]
                 ));
 
         $product->getTranslation('customFields')->willReturn(
             [
-                'test-multi-select-field' => [
-                    'option1',
-                    'option2',
-                ]
-            ]);
+                'test-enabled' => ['i should be exported']
+            ],
+            [
+                'test-disabled' => 'i should not be exported'
+            ]
 
-        $this->getValue($product)->shouldReturn('|test-multi-select-field=option1#option2|');
+        );
+        $exportSettings->getDisabledCustomFields()->willReturn(['test-disabled']);
+        $customFieldsService->getCustomFieldNames(['test-disabled'])->willReturn(['Disabled attribute']);
+        $this->getValue($product)->shouldReturn('|Enabled attribute=exported value|');
     }
 
     private function getSalesChannel(string $languageId): SalesChannelEntity
@@ -170,13 +221,23 @@ class CustomFieldsSpec extends ObjectBehavior
         return $salesChannel;
     }
 
-    private function getCustomField(string $key, string $type, array $config): EntitySearchResult
+    /**
+     * @param Entity[] $entities
+     */
+    private function toSearchEntityResult(array $entities)
+    {
+        $size     = is_array($entities) ? count($entities) : 1;
+        $elements = is_array($entities) ? $entities : [$entities];
+        return new EntitySearchResult('', 1, new EntityCollection($elements), null, new Criteria(), new Context(new SystemSource()));
+    }
+
+    private function getCustomField(string $key, string $type, array $config): CustomFieldEntity
     {
         $customField = new CustomFieldEntity();
         $customField->setType($type);
         $customField->setId($key);
         $customField->setConfig($config);
-        return new EntitySearchResult('',1, new EntityCollection([$customField]), null, new Criteria(), new Context(new SystemSource()));
+        return $customField;
     }
 
     private function mockLanguageRepository(): callable
@@ -188,7 +249,7 @@ class CustomFieldsSpec extends ObjectBehavior
                 $locale = new LocaleEntity();
                 $locale->setCode($languageId === Defaults::LANGUAGE_SYSTEM ? 'en-GB' : 'de-DE');
                 $language->setLocale($locale);
-                return new EntitySearchResult('',1, new EntityCollection([$language]), null, new Criteria(), new Context(new SystemSource()));
+                return new EntitySearchResult('', 1, new EntityCollection([$language]), null, new Criteria(), new Context(new SystemSource()));
             };
             return $getLanguage($args[0]->getIds()[0]);
         };

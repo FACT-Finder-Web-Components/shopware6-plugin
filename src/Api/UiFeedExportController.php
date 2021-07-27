@@ -17,8 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UiFeedExportController extends AbstractController
 {
-    /** @var FeedExportHandler */
-    private $feedExportHandler;
+    private FeedExportHandler $feedExportHandler;
 
     /**
      * UiFeedExportController constructor.

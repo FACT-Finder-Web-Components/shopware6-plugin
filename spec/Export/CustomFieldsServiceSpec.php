@@ -14,9 +14,7 @@ use Shopware\Core\System\CustomField\CustomFieldEntity;
 
 class CustomFieldsServiceSpec extends ObjectBehavior
 {
-    public function let(
-        EntityRepositoryInterface $customFieldRepository
-    ) {
+    public function let(EntityRepositoryInterface $customFieldRepository) {
         $this->beConstructedWith(
             $customFieldRepository
         );

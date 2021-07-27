@@ -8,8 +8,7 @@ use Shopware\Core\System\SalesChannel\Aggregate\SalesChannelDomain\SalesChannelD
 
 class DomainService
 {
-    /** @var SalesChannelService */
-    private $channelService;
+    private SalesChannelService $channelService;
 
     public function __construct(SalesChannelService $channelService)
     {

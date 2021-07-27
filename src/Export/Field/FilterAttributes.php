@@ -11,11 +11,8 @@ use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOp
 
 class FilterAttributes implements FieldInterface
 {
-    /** @var PropertyFormatter */
-    private $propertyFormatter;
-
-    /** @var ExportSettings */
-    private $exportSettings;
+    private PropertyFormatter $propertyFormatter;
+    private ExportSettings $exportSettings;
 
     public function __construct(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
     {
@@ -30,10 +27,10 @@ class FilterAttributes implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        $attributes = $product->getChildren()->reduce(function (array $result, Product $child): array {
-            return $result + array_map($this->propertyFormatter, $child->getOptions()->getElements());
-        }, array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($product)));
-
+        $attributes = $product->getChildren()->reduce(
+            fn (array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
+            array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($product))
+        );
         return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';
     }
 
@@ -44,9 +41,8 @@ class FilterAttributes implements FieldInterface
         if (!$disabledProperties) {
             return $product->getProperties()->getElements();
         }
-
-        return $product->getProperties()->filter(function (PropertyGroupOptionEntity $option) use ($disabledProperties) {
-            return !in_array($option->getGroupId(), $disabledProperties);
-        })->getElements();
+        return $product->getProperties()
+                       ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledProperties))
+                       ->getElements();
     }
 }

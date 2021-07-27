@@ -11,14 +11,9 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class FeedFactory
 {
-    /** @var FilterInterface */
-    private $filter;
-
-    /** @var ExportProducts */
-    private $products;
-
-    /** @var EntityFactory */
-    private $entityFactory;
+    private FilterInterface $filter;
+    private ExportProducts $products;
+    private EntityFactory $entityFactory;
 
     public function __construct(ExportProducts $products, FilterInterface $filter, EntityFactory $entityFactory)
     {

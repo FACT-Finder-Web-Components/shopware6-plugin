@@ -10,14 +10,9 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class DataProvider implements DataProviderInterface
 {
-    /** @var SalesChannelContext */
-    private $context;
-
-    /** @var ExportProducts */
-    private $products;
-
-    /** @var EntityFactory */
-    private $entityFactory;
+    private SalesChannelContext $context;
+    private ExportProducts $products;
+    private EntityFactory $entityFactory;
 
     public function __construct(SalesChannelContext $context, ExportProducts $products, EntityFactory $entityFactory)
     {

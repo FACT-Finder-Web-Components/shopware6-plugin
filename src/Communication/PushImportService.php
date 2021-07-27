@@ -13,17 +13,10 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class PushImportService
 {
-    /** @var Communication */
-    private $communicationConfig;
-
-    /** @var FtpConfig */
-    private $uploadConfig;
-
-    /** @var Import */
-    private $importAdapter;
-
-    /** @var SalesChannelService */
-    private $salesChannelService;
+    private Communication $communicationConfig;
+    private FtpConfig $uploadConfig;
+    private Import $importAdapter;
+    private SalesChannelService $salesChannelService;
 
     public function __construct(
         Import $importAdapter,

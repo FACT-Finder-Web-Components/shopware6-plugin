@@ -12,11 +12,10 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class ExportProducts
 {
-    /** @var SalesChannelRepositoryInterface */
-    private $productRepository;
+    private SalesChannelRepositoryInterface $productRepository;
 
     /** @var string[] */
-    private $customAssociations;
+    private array $customAssociations;
 
     public function __construct(SalesChannelRepositoryInterface $productRepository, array $customAssociations)
     {

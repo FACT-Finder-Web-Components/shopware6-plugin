@@ -10,11 +10,10 @@ use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Prod
 
 class ProductEntity implements ExportEntityInterface
 {
-    /** @var Product */
-    private $product;
+    private Product $product;
 
     /** @var FieldInterface[] */
-    private $productFields;
+    private iterable $productFields;
 
     public function __construct(Product $product, iterable $productFields)
     {
@@ -29,7 +28,7 @@ class ProductEntity implements ExportEntityInterface
 
     public function toArray(): array
     {
-        return array_reduce($this->productFields, function (array $fields, FieldInterface $field) {
+        return array_reduce($this->productFields, function (array $fields, FieldInterface $field): array {
             return $fields + [$field->getName() => $field->getValue($this->product)];
         }, [
             'ProductNumber' => (string) $this->product->getProductNumber(),

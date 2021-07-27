@@ -40,29 +40,16 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     private const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     private const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
 
-    /** @var SalesChannelService */
-    private $channelService;
-
-    /** @var FeedFactory */
-    private $feedFactory;
-
-    /** @var UploadService */
-    private $uploadService;
-
-    /** @var PushImportService */
-    private $pushImportService;
+    private SalesChannelService $channelService;
+    private FeedFactory $feedFactory;
+    private UploadService $uploadService;
+    private PushImportService $pushImportService;
+    private EntityRepositoryInterface $languageRepository;
+    private EntityRepositoryInterface $channelRepository;
+    private CurrencyFieldsProvider $currencyFieldsProvider;
 
     /** @var FieldInterface[] */
-    private $productFields;
-
-    /** @var EntityRepositoryInterface */
-    private $languageRepository;
-
-    /** @var EntityRepositoryInterface */
-    private $channelRepository;
-
-    /** @var CurrencyFieldsProvider */
-    private $currencyFieldsProvider;
+    private array $productFields;
 
     public function __construct(
         SalesChannelService $channelService,

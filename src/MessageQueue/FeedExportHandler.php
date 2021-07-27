@@ -13,8 +13,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class FeedExportHandler extends AbstractMessageHandler
 {
-    /** @var Application */
-    private $application;
+    private Application $application;
 
     public function __construct(KernelInterface $kernel)
     {
