@@ -1,13 +1,30 @@
 {% block sw_cms_element_record_list_config %}
   <div>
     <sw-switch-field label="subscribe" v-model="element.config.subscribe.value"></sw-switch-field>
-
+    <sw-switch-field label="infiniteScrolling" v-model="element.config.infiniteScrolling.value"></sw-switch-field>
     <sw-text-field
       label="infiniteDebounceDelay"
       placeholder="Debounce delay"
       v-model="element.config.infiniteDebounceDelay.value">
     </sw-text-field>
 
-    <sw-switch-field label="infiniteScrolling" v-model="element.config.infiniteScrolling.value"></sw-switch-field>
+    <sw-text-field label="ID"
+                   placeholder="ID"
+                   v-tooltip="{ message:$tc('sw-cms.elements.asn.config.id')}"
+                   v-model="element.config.id.value">
+    </sw-text-field>
+    <sw-textarea-field label="Add Callback"
+                       placeholder="Callback"
+                       size="medium"
+                       v-model="element.config.callback.value"
+                       v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.callback')}">
+    </sw-textarea-field>
+
+    <sw-textarea-field label="Dom Updated"
+                       placeholder="Dom Updated"
+                       size="medium"
+                       v-model="element.config.domUpdated.value"
+                       v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.domUpdated')}">
+    </sw-textarea-field>
   </div>
 {% endblock %}

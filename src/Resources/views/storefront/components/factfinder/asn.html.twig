@@ -9,40 +9,48 @@
 
 <div class="filter-panel">
   {% block component_factfinder_asn %}
-  <ff-asn class="filter-panel-items-container" unresolved subscribe="{{ subscribe ? 'true' : 'false' }}" topic="{{ topic|default('asn') }}">
-    {% block component_factfinder_asn_group %}
-      <ff-asn-group class="filter-panel-item dropdown {% if vertical %} btn-block {% endif %}" disable-auto-expand>
-        <div slot="groupCaption" class="filter-panel-item-toggle btn {% if vertical %} btn-block {% endif %}">
-          {{ '{{group.name}}' }}
-          {% sw_icon 'arrow-medium-down' style { 'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle' } %}
-        </div>
+    <ff-asn
+      {% if id %} id="{{ id }}" {% endif %}
+      class="{% if vertical %} ffw-asn-vertical {% endif %} filter-panel-items-container"
+      unresolved
+      subscribe="{{ subscribe ? 'true' : 'false' }}"
+      topic="{{ topic|default('asn') }}">
+      {% block component_factfinder_asn_group %}
+        <ff-asn-group class="filter-panel-item dropdown {% if vertical %} ffw-asn-group-vertical btn-block {% endif %}"
+                      disable-auto-expand>
+          <div slot="groupCaption" class="filter-panel-item-toggle btn {% if vertical %} btn-block {% endif %}">
+            {{ '{{group.name}}' }}
+            {% sw_icon 'arrow-medium-down' style { 'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle' } %}
+          </div>
 
-        <ff-asn-group-element class="filter-multi-select-list-item">
+          <ff-asn-group-element class="filter-multi-select-list-item" {% if vertical %}
+                                ffw-asn-group-element-vertical {% endif %}">
           <div slot="selected" class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input filter-multi-select-checkbox" checked />
+            <input type="checkbox" class="custom-control-input filter-multi-select-checkbox" checked/>
             <span class="filter-multi-select-item-label custom-control-label">{{ '{{element.name}}' }}</span>
           </div>
           <div slot="unselected" class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input filter-multi-select-checkbox" />
+            <input type="checkbox" class="custom-control-input filter-multi-select-checkbox"/>
             <span class="filter-multi-select-item-label custom-control-label">{{ '{{element.name}}' }}</span>
           </div>
-        </ff-asn-group-element>
-      </ff-asn-group>
-    {% endblock %}
+          </ff-asn-group-element>
+        </ff-asn-group>
+      {% endblock %}
 
-    <ff-asn-group-slider class="filter-panel-item dropdown" disable-auto-expand="true">
-      <div slot="groupCaption" class="filter-panel-item-toggle btn">
-        {{ '{{group.name}}' }}
-        {% sw_icon 'arrow-medium-down' style { 'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle' } %}
-      </div>
-    </ff-asn-group-slider>
-  </ff-asn>
+      <ff-asn-group-slider class="filter-panel-item dropdown" disable-auto-expand="true">
+        <div slot="groupCaption" class="filter-panel-item-toggle btn">
+          {{ '{{group.name}}' }}
+          {% sw_icon 'arrow-medium-down' style { 'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle' } %}
+        </div>
+      </ff-asn-group-slider>
+    </ff-asn>
   {% endblock %}
 
   {% if filterCloud %}
     {% block component_factfinder_filter_cloud %}
       <div class="filter-panel-active-container">
-        <ff-filter-cloud {% if not filterCloudBlacklist is same as('') %} blacklist="{{ filterCloudBlacklist }}" {% endif %} unresolved>
+        <ff-filter-cloud {% if not filterCloudBlacklist is same as('') %} blacklist="{{ filterCloudBlacklist }}" {% endif %}
+          unresolved>
           <span data-template="filter" class="filter-active">
             {{ '{{element.name}}' }}
             <button class="filter-active-remove">
@@ -51,8 +59,9 @@
           </span>
         </ff-filter-cloud>
 
-        <ff-asn-remove-all-filter remove-params keep-category-path unresolved class="filter-reset-all btn btn-sm btn-outline-danger">
-            {{ 'listing.filterPanelResetAll'|trans|sw_sanitize }}
+        <ff-asn-remove-all-filter remove-params keep-category-path unresolved
+                                  class="filter-reset-all btn btn-sm btn-outline-danger">
+          {{ 'listing.filterPanelResetAll'|trans|sw_sanitize }}
         </ff-asn-remove-all-filter>
       </div>
     {% endblock %}

@@ -29,5 +29,17 @@ Shopware.Service('cmsService').registerCmsElement({
             value: 0,
             source: 'static',
         },
+        callback: {
+            value: '',
+            source: 'static'
+        },
+        id: {
+            value: '',
+            source: 'static'
+        },
+        domUpdated: {
+            value: '',
+            source: 'static'
+        }
     },
 });

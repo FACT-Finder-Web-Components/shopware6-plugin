@@ -1,20 +1,23 @@
 {% block element_asn %}
   {% set config = element.config %}
+  {% set id = config.id.value|default(element.id) %}
+  {% set topic = config.topic.value|default('asn') %}
+
   {% sw_include '@Parent/storefront/components/factfinder/asn.html.twig' with {
     vertical: config.vertical.value,
     subscribe: config.subscribe.value,
     filterCloud: config.filterCloud.value,
     filterCloudBlacklist: config.filterCloudBlacklist.value,
-    topic: config.topic.value
+    topic: topic,
+    id: id
   } %}
 
-  <script>
-    document.addEventListener('ffReady', function ({resultDispatcher}) {
-      {% if config.callback.value %}
-      resultDispatcher.addCallback("{{ config.topic.value|default('asn') }}", groups => {
-        {{ config.callback.value|raw }}
-      });
-      {% endif %}
-    });
-  </script>
+  {% sw_include '@Parent/storefront/components/factfinder/with-callbacks.html.twig' with {
+    topic: topic,
+    arg: 'groups',
+    addCallback: config.callback.value,
+    domUpdated: config.domUpdated.value,
+    id: id
+  } %}
+
 {% endblock %}
