@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6;
 
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
-use Shopware\Core\Framework\Plugin\Context\UninstallContext;
-use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
+use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 
 class OmikronFactFinder extends Plugin
 {
@@ -34,29 +34,29 @@ class OmikronFactFinder extends Plugin
         $customFieldRepository = $installContext->getPlugin()->container->get('custom_field_set.repository');
 
         $customFieldRepository->create([[
-            'name' => self::CUSTOM_FIELD_NAME,
+            'name'   => self::CUSTOM_FIELD_NAME,
             'config' => [
                 'label' => [
                     'de-DE' => 'FACT-Finder®',
-                    'en-GB' => 'FACT-Finder®'
-                ]
+                    'en-GB' => 'FACT-Finder®',
+                ],
             ],
             'relations' => [[
-                'entityName' => 'category'
+                'entityName' => 'category',
             ]],
             'customFields' => [
                 [
-                    'name' => 'ff_cms_export',
-                    'type' => CustomFieldTypes::SWITCH,
+                    'name'   => 'ff_cms_export',
+                    'type'   => CustomFieldTypes::SWITCH,
                     'config' => [
                         'label' => [
                             'en-GB' => 'Include in FACT-Finder® CMS Export',
-                            'de-DE' => 'Include in FACT-Finder® CMS Export'
+                            'de-DE' => 'Include in FACT-Finder® CMS Export',
                         ],
-                        'customFieldPosition' => 1
-                    ]
-                ]
-            ]
+                        'customFieldPosition' => 1,
+                    ],
+                ],
+            ],
         ]], $installContext->getContext());
     }
 
