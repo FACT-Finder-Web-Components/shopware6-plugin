@@ -9,7 +9,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
-use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
@@ -27,6 +26,7 @@ class OmikronFactFinder extends Plugin
         $container->registerForAutoconfiguration(FieldInterface::class)->addTag('factfinder.export.field');
     }
 
+    //TODO: Should we add custom field on install or on plugin activation (activate method)
     public function install(InstallContext $installContext): void
     {
         parent::install($installContext);
