@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
+use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
@@ -18,7 +21,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface;
 use Traversable;
 
 class CmsExportCommand extends Command
@@ -44,12 +46,12 @@ class CmsExportCommand extends Command
         Traversable $cmsFields
     ) {
         parent::__construct();
-        $this->channelRepository = $channelRepository;
+        $this->channelRepository  = $channelRepository;
         $this->languageRepository = $languageRepository;
-        $this->channelService = $channelService;
-        $this->feedFactory = $feedFactory;
-        $this->uploadService = $uploadService;
-        $this->cmsFields = iterator_to_array($cmsFields);
+        $this->channelService     = $channelService;
+        $this->feedFactory        = $feedFactory;
+        $this->uploadService      = $uploadService;
+        $this->cmsFields          = iterator_to_array($cmsFields);
     }
 
     public function configure()
@@ -63,10 +65,10 @@ class CmsExportCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $salesChannel = $this->getSalesChannel($input);
+        $salesChannel     = $this->getSalesChannel($input);
         $selectedLanguage = $this->getLanguage($input);
-        $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()), FeedFactory::CMS_EXPORT_TYPE);
-        $feedColumns = $this->getFeedColumns();
+        $feedService      = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()), FeedFactory::CMS_EXPORT_TYPE);
+        $feedColumns      = $this->getFeedColumns();
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
             $feedService->generate(new ConsoleOutput($output), $feedColumns);

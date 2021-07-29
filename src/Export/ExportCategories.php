@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
-
 
 use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -25,7 +25,7 @@ class ExportCategories implements ExportInterface
 
     public function getByContext(SalesChannelContext $context, int $batchSize = 100): iterable
     {
-        $criteria = $this->getCriteria($batchSize);
+        $criteria   = $this->getCriteria($batchSize);
         $categories = $this->categoryRepository->search($criteria, $context);
 
         while ($categories->count()) {
@@ -48,5 +48,4 @@ class ExportCategories implements ExportInterface
 
         return $criteria;
     }
-
 }

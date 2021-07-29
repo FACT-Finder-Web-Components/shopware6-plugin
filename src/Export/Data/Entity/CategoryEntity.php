@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
-
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
-use Shopware\Core\Content\Category\CategoryEntity as Category;
 use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface;
+use Shopware\Core\Content\Category\CategoryEntity as Category;
 
 class CategoryEntity implements ExportEntityInterface
 {
@@ -17,7 +17,7 @@ class CategoryEntity implements ExportEntityInterface
 
     public function __construct(Category $category, iterable $cmsFields)
     {
-        $this->category = $category;
+        $this->category  = $category;
         $this->cmsFields = $cmsFields;
     }
 
@@ -33,5 +33,4 @@ class CategoryEntity implements ExportEntityInterface
             return $fields + [$field->getName() => $field->getValue($this->category)];
         });
     }
-
 }

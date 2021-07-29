@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6;
 
-use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface as FieldInterfaceCMS;
+use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class OmikronFactFinder extends Plugin
 {
     public const CUSTOM_FIELD_SET_NAME = 'cms_export_include';
-    public const CUSTOM_FIELD_NAME = 'ff_cms_export_include';
+    public const CUSTOM_FIELD_NAME     = 'ff_cms_export_include';
 
     public function build(ContainerBuilder $container): void
     {

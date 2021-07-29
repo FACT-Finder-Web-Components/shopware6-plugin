@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Shopware6\Export\Data;
 
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\EntityFactory;
 use Omikron\FactFinder\Shopware6\Export\ExportInterface;
-use Omikron\FactFinder\Shopware6\Export\ExportProducts;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class DataProvider implements DataProviderInterface
@@ -17,9 +16,9 @@ class DataProvider implements DataProviderInterface
 
     public function __construct(SalesChannelContext $context, ExportInterface $exportData, EntityFactory $entityFactory)
     {
-        $this->context       = $context;
+        $this->context         = $context;
         $this->exportData      = $exportData;
-        $this->entityFactory = $entityFactory;
+        $this->entityFactory   = $entityFactory;
     }
 
     /**
