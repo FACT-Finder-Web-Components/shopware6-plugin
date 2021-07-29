@@ -1,12 +1,12 @@
 <?php
 
-
 namespace Omikron\FactFinder\Shopware6\Command;
-
 
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
+use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
+use Omikron\FactFinder\Shopware6\Upload\UploadService;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
@@ -18,6 +18,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface;
+use Traversable;
 
 class CmsExportCommand extends Command
 {
@@ -29,14 +31,22 @@ class CmsExportCommand extends Command
     private EntityRepositoryInterface $languageRepository;
     private SalesChannelService $channelService;
     private FeedFactory $feedFactory;
+    private UploadService $uploadService;
 
-    public function __construct(EntityRepositoryInterface $channelRepository, EntityRepositoryInterface $languageRepository, SalesChannelService $channelService, FeedFactory $feedFactory)
+    public function __construct(
+        EntityRepositoryInterface $channelRepository,
+        EntityRepositoryInterface $languageRepository,
+        SalesChannelService $channelService,
+        FeedFactory $feedFactory,
+        UploadService $uploadService
+    )
     {
         parent::__construct();
         $this->channelRepository = $channelRepository;
         $this->languageRepository = $languageRepository;
         $this->channelService = $channelService;
         $this->feedFactory = $feedFactory;
+        $this->uploadService = $uploadService;
     }
 
     public function configure()
@@ -53,7 +63,17 @@ class CmsExportCommand extends Command
         $salesChannel = $this->getSalesChannel($input);
         $selectedLanguage = $this->getLanguage($input);
         $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()), FeedFactory::CMS_EXPORT_TYPE);
-        $feedService->generate(new ConsoleOutput($output), ['PageId', 'Master', 'Name', 'MetaTitle', 'Description', 'Keywords', 'SeoPathInfo']);
+        $feedColumns = ['PageId', 'Master', 'Name', 'MetaTitle', 'Description', 'Keywords', 'SeoPathInfo'];
+
+        if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
+            $feedService->generate(new ConsoleOutput($output), $feedColumns);
+            return 0;
+        }
+
+        $fileHandle = tmpfile();
+        $feedService->generate(new CsvFile($fileHandle), $feedColumns);
+        $this->uploadService->upload($fileHandle);
+        $output->writeln('Feed has been succesfully uploaded');
 
         return 0;
     }
