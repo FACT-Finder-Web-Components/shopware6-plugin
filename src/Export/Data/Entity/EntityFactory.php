@@ -53,7 +53,10 @@ class EntityFactory
 
         if ($data->getChildCount()) {
             $parentData = $entity->toArray();
-            $data instanceof Product ?? yield from $data->getChildren()->map(fn (Product $child) => new VariantEntity($child, $parentData, $this->propertyFormatter, $this->variantFields));
+
+            if ($data instanceof Product) {
+                yield from $data->getChildren()->map(fn (Product $child) => new VariantEntity($child, $parentData, $this->propertyFormatter, $this->variantFields));
+            }
         }
         yield $entity;
     }
