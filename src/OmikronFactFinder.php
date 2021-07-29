@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OmikronFactFinder extends Plugin
 {
-    private const CUSTOM_FIELD_NAME = 'cms_export_selector';
+    private const CUSTOM_FIELD_NAME = 'cms_export_include';
 
     public function build(ContainerBuilder $container): void
     {
@@ -33,38 +33,39 @@ class OmikronFactFinder extends Plugin
         /** @var EntityRepositoryInterface $customFieldRepository */
         $customFieldRepository = $installContext->getPlugin()->container->get('custom_field_set.repository');
 
-        $customFieldRepository->create([[
-            'name'   => self::CUSTOM_FIELD_NAME,
-            'config' => [
-                'label' => [
-                    'de-DE' => 'FACT-Finder®',
-                    'en-GB' => 'FACT-Finder®',
-                ],
-            ],
-            'relations' => [[
-                'entityName' => 'category',
-            ]],
-            'customFields' => [
-                [
-                    'name'   => 'ff_cms_export',
-                    'type'   => CustomFieldTypes::SWITCH,
-                    'config' => [
-                        'label' => [
-                            'en-GB' => 'Include in FACT-Finder® CMS Export',
-                            'de-DE' => 'Include in FACT-Finder® CMS Export',
-                        ],
-                        'customFieldPosition' => 1,
+        if (!$this->customFieldsExist($installContext->getContext())) {
+            $customFieldRepository->create([[
+                'name'   => self::CUSTOM_FIELD_NAME,
+                'config' => [
+                    'label' => [
+                        'de-DE' => 'FACT-Finder®',
+                        'en-GB' => 'FACT-Finder®',
                     ],
                 ],
-            ],
-        ]], $installContext->getContext());
+                'relations' => [[
+                    'entityName' => 'category',
+                ]],
+                'customFields' => [
+                    [
+                        'name'   => 'ff_cms_export_include',
+                        'type'   => CustomFieldTypes::SWITCH,
+                        'config' => [
+                            'label' => [
+                                'en-GB' => 'Include in FACT-Finder® CMS Export',
+                                'de-DE' => 'Include in FACT-Finder® CMS Export',
+                            ],
+                            'customFieldPosition' => 1,
+                        ],
+                    ],
+                ],
+            ]], $installContext->getContext());
+        }
     }
 
     public function uninstall(UninstallContext $uninstallContext): void
     {
         parent::uninstall($uninstallContext);
 
-        //TODO: Should we keep custom field if user select an option Remove all app data permanently on plugin uninstall
         if ($uninstallContext->keepUserData()) {
             parent::uninstall($uninstallContext);
 
