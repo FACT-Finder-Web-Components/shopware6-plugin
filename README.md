@@ -400,7 +400,8 @@ It is possible to reproduce this functionality with the PageBuilder:
 The example above divides the ASN groups into two exclusive collections.
 If you just want to duplicate some filter from the first ASN and put it in the second, just change the configuration of first ASN to be:
 ![Main Settings](docs/assets/split-asn-4.png "Split ASN - Main (duplicate filters)")
-Here we do not use `splice` method but 'slice' which does not mutate the original data.
+
+In that case we  do not use `splice` method but `slice` which does not mutate the original data.
 
 **Note:** Dom Updated listener can be empty. ASN groups from the second ASN are also present in first, so there is no need to merge them together.
 **Note:** Since all ASN groups are available in first ASN, the Filter Cloud can be used.
