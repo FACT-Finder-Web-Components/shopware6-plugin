@@ -15,6 +15,7 @@ use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\System\Language\LanguageEntity;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -83,7 +84,7 @@ class CmsExportCommand extends Command
         return 0;
     }
 
-    private function getSalesChannel(InputInterface $input)
+    private function getSalesChannel(InputInterface $input): ?EntitySearchResult
     {
         return !empty($input->getArgument(self::SALES_CHANNEL_ARGUMENT))
             ? $this->channelRepository->search(new Criteria([$input->getArgument(self::SALES_CHANNEL_ARGUMENT)]), new Context(new SystemSource()))->first()
