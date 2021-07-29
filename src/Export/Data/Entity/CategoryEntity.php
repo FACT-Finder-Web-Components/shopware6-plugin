@@ -6,21 +6,19 @@ namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
-use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
-use function GuzzleHttp\Psr7\str;
-
+use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface;
 
 class CategoryEntity implements ExportEntityInterface
 {
     private Category $category;
 
     /** @var FieldInterface[] */
-    private iterable $categoryFields;
+    private iterable $cmsFields;
 
-    public function __construct(Category $category, $categoryFields)
+    public function __construct(Category $category, iterable $cmsFields)
     {
         $this->category = $category;
-        $this->categoryFields = $categoryFields;
+        $this->cmsFields = $cmsFields;
     }
 
     public function getId(): string
@@ -30,17 +28,10 @@ class CategoryEntity implements ExportEntityInterface
 
     public function toArray(): array
     {
-        return array_reduce($this->categoryFields, function (array $fields, FieldInterface $field): array {
+        return array_reduce($this->cmsFields, function ($fields, FieldInterface $field): array {
+            $fields = !$fields ? [] : $fields;
             return $fields + [$field->getName() => $field->getValue($this->category)];
-        }, [
-            'PageId' => (string) $this->category->getCmsPageId(),
-            'Master'        => (string) $this->category->getId(),
-            'Name'          => (string) $this->category->getName(),
-            'MetaTitle' => (string) $this->category->getMetaTitle(),
-            'Description' => (string) $this->category->getDescription(),
-            'Keywords' => (string) $this->category->getKeywords(),
-            'SeoPathInfo' => (string) $this->category->getSeoUrls()->first()->getSeoPathInfo(),
-        ]);
+        });
     }
 
 }

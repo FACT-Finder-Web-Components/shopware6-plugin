@@ -23,6 +23,7 @@ class Feed
     {
         $stream->addEntity($columns);
         $emptyRecord = array_combine($columns, array_fill(0, count($columns), ''));
+
         foreach ($this->dataProvider->getEntities() as $entity) {
             $entityData = array_merge($emptyRecord, array_intersect_key($entity->toArray(), $emptyRecord));
             $stream->addEntity($this->prepare($entityData));

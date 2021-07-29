@@ -6,6 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
+use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface as CMSFieldInterface;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
@@ -17,6 +18,9 @@ class EntityFactory
     /** @var FieldInterface[] */
     private array $productFields;
 
+    /** @var CMSFieldInterface[] */
+    private array $cmsFields;
+
     /** @var FieldInterface[] */
     private array $variantFields;
 
@@ -26,12 +30,14 @@ class EntityFactory
         PropertyFormatter $propertyFormatter,
         iterable $productFields,
         iterable $variantFields,
-        CurrencyFieldsProvider $currencyFieldsProvider
+        CurrencyFieldsProvider $currencyFieldsProvider,
+        iterable $cmsFields
     ) {
         $this->propertyFormatter      = $propertyFormatter;
         $this->productFields          = iterator_to_array($productFields);
         $this->variantFields          = iterator_to_array($variantFields);
         $this->currencyFieldsProvider = $currencyFieldsProvider;
+        $this->cmsFields = iterator_to_array($cmsFields);
     }
 
     /**
@@ -41,7 +47,7 @@ class EntityFactory
     public function createEntities($data): iterable
     {
         $entity = $data instanceof Category
-            ? new CategoryEntity($data, [])
+            ? new CategoryEntity($data, $this->cmsFields)
             : new ProductEntity($data, array_merge($this->productFields, $this->currencyFieldsProvider->getCurrencyFields()));
 
         if ($data->getChildCount()) {

@@ -32,21 +32,24 @@ class CmsExportCommand extends Command
     private SalesChannelService $channelService;
     private FeedFactory $feedFactory;
     private UploadService $uploadService;
+    /** @var FieldInterface[] */
+    private array $cmsFields;
 
     public function __construct(
         EntityRepositoryInterface $channelRepository,
         EntityRepositoryInterface $languageRepository,
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
-        UploadService $uploadService
-    )
-    {
+        UploadService $uploadService,
+        Traversable $cmsFields
+    ) {
         parent::__construct();
         $this->channelRepository = $channelRepository;
         $this->languageRepository = $languageRepository;
         $this->channelService = $channelService;
         $this->feedFactory = $feedFactory;
         $this->uploadService = $uploadService;
+        $this->cmsFields = iterator_to_array($cmsFields);
     }
 
     public function configure()
@@ -63,7 +66,7 @@ class CmsExportCommand extends Command
         $salesChannel = $this->getSalesChannel($input);
         $selectedLanguage = $this->getLanguage($input);
         $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()), FeedFactory::CMS_EXPORT_TYPE);
-        $feedColumns = ['PageId', 'Master', 'Name', 'MetaTitle', 'Description', 'Keywords', 'SeoPathInfo'];
+        $feedColumns = $this->getFeedColumns();
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
             $feedService->generate(new ConsoleOutput($output), $feedColumns);
@@ -91,5 +94,15 @@ class CmsExportCommand extends Command
             new Criteria([$input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT) ?: Defaults::LANGUAGE_SYSTEM]),
             new Context(new SystemSource())
         )->first();
+    }
+
+    private function getFeedColumns(): array
+    {
+        return array_values(array_unique(array_map([$this, 'getFieldName'], $this->cmsFields)));
+    }
+
+    private function getFieldName(FieldInterface $field): string
+    {
+        return $field->getName();
     }
 }
