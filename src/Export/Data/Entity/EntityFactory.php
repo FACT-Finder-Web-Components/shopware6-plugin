@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
-use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use Shopware\Core\Content\Category\CategoryEntity as Category;
 
 class EntityFactory
 {
@@ -35,16 +35,18 @@ class EntityFactory
     }
 
     /**
-     * @param Product $product
-     *
-     * @return ExportEntityInterface[]
+     * @param Product | Category $data
+     * @return iterable
      */
-    public function createEntities(Product $product): iterable
+    public function createEntities($data): iterable
     {
-        $entity = new ProductEntity($product, array_merge($this->productFields, $this->currencyFieldsProvider->getCurrencyFields()));
-        if ($product->getChildCount()) {
+        $entity = $data instanceof Category
+            ? new CategoryEntity($data, [])
+            : new ProductEntity($data, array_merge($this->productFields, $this->currencyFieldsProvider->getCurrencyFields()));
+
+        if ($data->getChildCount()) {
             $parentData = $entity->toArray();
-            yield from $product->getChildren()->map(fn (Product $child) => new VariantEntity($child, $parentData, $this->propertyFormatter, $this->variantFields));
+            $data instanceof Product ?? yield from $data->getChildren()->map(fn (Product $child) => new VariantEntity($child, $parentData, $this->propertyFormatter, $this->variantFields));
         }
         yield $entity;
     }

@@ -18,7 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OmikronFactFinder extends Plugin
 {
-    private const CUSTOM_FIELD_NAME = 'cms_export_include';
+    public const CUSTOM_FIELD_SET_NAME = 'cms_export_include';
+    public const CUSTOM_FIELD_NAME = 'ff_cms_export_include';
 
     public function build(ContainerBuilder $container): void
     {
@@ -26,7 +27,6 @@ class OmikronFactFinder extends Plugin
         $container->registerForAutoconfiguration(FieldInterface::class)->addTag('factfinder.export.field');
     }
 
-    //TODO: Should we add custom field on install or on plugin activation (activate method)
     public function install(InstallContext $installContext): void
     {
         parent::install($installContext);
@@ -47,7 +47,7 @@ class OmikronFactFinder extends Plugin
                 ]],
                 'customFields' => [
                     [
-                        'name'   => 'ff_cms_export_include',
+                        'name'   => self::CUSTOM_FIELD_NAME,
                         'type'   => CustomFieldTypes::SWITCH,
                         'config' => [
                             'label' => [
