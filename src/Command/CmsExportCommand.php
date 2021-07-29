@@ -53,7 +53,7 @@ class CmsExportCommand extends Command
         $salesChannel = $this->getSalesChannel($input);
         $selectedLanguage = $this->getLanguage($input);
         $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()), FeedFactory::CMS_EXPORT_TYPE);
-        $feedService->generate(new ConsoleOutput($output), ['PageId', 'Master', 'Name']);
+        $feedService->generate(new ConsoleOutput($output), ['PageId', 'Master', 'Name', 'MetaTitle', 'Description', 'Keywords', 'SeoPathInfo']);
 
         return 0;
     }
@@ -71,10 +71,5 @@ class CmsExportCommand extends Command
             new Criteria([$input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT) ?: Defaults::LANGUAGE_SYSTEM]),
             new Context(new SystemSource())
         )->first();
-    }
-
-    private function getSalesChannelContext()
-    {
-
     }
 }

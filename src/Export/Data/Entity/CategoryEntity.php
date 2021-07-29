@@ -7,6 +7,7 @@ namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
+use function GuzzleHttp\Psr7\str;
 
 
 class CategoryEntity implements ExportEntityInterface
@@ -35,6 +36,10 @@ class CategoryEntity implements ExportEntityInterface
             'PageId' => (string) $this->category->getCmsPageId(),
             'Master'        => (string) $this->category->getId(),
             'Name'          => (string) $this->category->getName(),
+            'MetaTitle' => (string) $this->category->getMetaTitle(),
+            'Description' => (string) $this->category->getDescription(),
+            'Keywords' => (string) $this->category->getKeywords(),
+            'SeoPathInfo' => (string) $this->category->getSeoUrls()->first()->getSeoPathInfo(),
         ]);
     }
 

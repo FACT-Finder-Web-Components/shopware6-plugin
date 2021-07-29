@@ -35,7 +35,7 @@ class OmikronFactFinder extends Plugin
 
         if (!$this->customFieldsExist($installContext->getContext())) {
             $customFieldRepository->create([[
-                'name'   => self::CUSTOM_FIELD_NAME,
+                'name'   => self::CUSTOM_FIELD_SET_NAME,
                 'config' => [
                     'label' => [
                         'de-DE' => 'FACT-Finder®',
