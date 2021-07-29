@@ -388,10 +388,15 @@ The demo version of the split ASN approach is available [here](https://search-we
 It is possible to reproduce this functionality with the PageBuilder:
 
 1. Add two FF-ASN CMS Elements 
+
 ![Main Settings](docs/assets/split-asn-1.png "Split ASN layout")
+
 2. Configure the main ASN
+
 ![Main Settings](docs/assets/split-asn-2.png "Split ASN - Main ")
+
 3. Configure the second ASN
+
 ![Main Settings](docs/assets/split-asn-3.png "Split ASN - Second")
 
 **Note:** In that setup, Filter Cloud must be disabled as for now it has no support for custom topics
