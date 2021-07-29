@@ -12,7 +12,7 @@
 
   {% sw_include '@Parent/storefront/components/factfinder/with-callbacks.html.twig' with {
     topic: 'records',
-    arg: 'records',
+    arg: config.callbackArg.value,
     addCallback: config.callback.value,
     domUpdated: config.domUpdated.value,
     id: id

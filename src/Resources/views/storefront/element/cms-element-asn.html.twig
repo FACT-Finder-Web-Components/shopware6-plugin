@@ -8,13 +8,15 @@
     subscribe: config.subscribe.value,
     filterCloud: config.filterCloud.value,
     filterCloudBlacklist: config.filterCloudBlacklist.value,
+    filterCloudWhitelist: config.filterCloudWhitelist.value,
+    filterCloudOrder: config.filterCloudOrder.value,
     topic: topic,
     id: id
   } %}
 
   {% sw_include '@Parent/storefront/components/factfinder/with-callbacks.html.twig' with {
     topic: topic,
-    arg: 'groups',
+    arg: config.callbackArg.value,
     addCallback: config.callback.value,
     domUpdated: config.domUpdated.value,
     id: id

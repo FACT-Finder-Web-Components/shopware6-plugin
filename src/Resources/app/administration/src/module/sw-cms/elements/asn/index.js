@@ -17,16 +17,12 @@ Shopware.Service('cmsService').registerCmsElement({
             value: false,
             source: 'static'
         },
-        filterCloud: {
-            value: true,
-            source: 'static'
-        },
-        filterCloudBlacklist: {
-            value: '',
-            source: 'static'
-        },
         topic: {
             value: 'asn',
+            source: 'static'
+        },
+        callbackArg: {
+            value: 'groups',
             source: 'static'
         },
         callback: {
@@ -40,6 +36,22 @@ Shopware.Service('cmsService').registerCmsElement({
         domUpdated: {
             value: '',
             source: 'static'
-        }
+        },
+        filterCloud: {
+            value: true,
+            source: 'static'
+        },
+        filterCloudBlacklist: {
+            value: '',
+            source: 'static'
+        },
+        filterCloudWhitelist: {
+            value: '',
+            source: 'static'
+        },
+        filterCloudOrder: {
+            value: 'fact-finder',
+            source: 'static'
+        },
     }
 });

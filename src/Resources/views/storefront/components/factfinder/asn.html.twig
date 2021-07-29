@@ -11,7 +11,8 @@
   {% block component_factfinder_asn %}
     <ff-asn
       {% if id %} id="{{ id }}" {% endif %}
-      class="{% if vertical %} ffw-asn-vertical {% endif %} filter-panel-items-container"
+      class="{% if vertical %}ffw-asn-vertical{% endif %} filter-panel-items-container"
+      align="{% if vertical %}vertical{% else %}horizontal {% endif %}"
       unresolved
       subscribe="{{ subscribe ? 'true' : 'false' }}"
       topic="{{ topic|default('asn') }}">
@@ -49,7 +50,10 @@
   {% if filterCloud %}
     {% block component_factfinder_filter_cloud %}
       <div class="filter-panel-active-container">
-        <ff-filter-cloud {% if not filterCloudBlacklist is same as('') %} blacklist="{{ filterCloudBlacklist }}" {% endif %}
+        <ff-filter-cloud
+          {% if filterCloudBlacklist %} blacklist="{{ filterCloudBlacklist }}" {% endif %}
+          {% if filterCloudWhitelist %} whitelist="{{ filterCloudWhitelist }}" {% endif %}
+          {% if filterCloudOrder %} order="{{ filterCloudOrder }}" {% endif %}
           unresolved>
           <span data-template="filter" class="filter-active">
             {{ '{{element.name}}' }}

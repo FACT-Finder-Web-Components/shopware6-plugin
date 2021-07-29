@@ -17,6 +17,7 @@
       "recordList": {
         "label": "ff-record-list",
         "config": {
+          "callbackArg": "Name of argument which will be available inside the callback scope",
           "callback": "callback to the subscribed topic. It is recommended to have only one callback per topic, per page.",
           "domUpdated": "listener to dom-update event of that element.",
           "id": "Value will be passed as `id` attribute to element. If not specified, the default CMS element id will be used"
@@ -27,6 +28,7 @@
         "asn": {
           "label": "ff-asn",
           "config": {
+            "callbackArg": "Name of argument which will be available inside the callback scope",
             "callback": "callback to the subscribed topic. It is recommended to have only one callback per topic, per page.",
             "domUpdated": "listener to dom-update event of that element.",
             "id": "Value will be passed as `id` attribute to element. If not specified, the default CMS element id will be used",
