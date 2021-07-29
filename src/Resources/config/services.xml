@@ -76,6 +76,10 @@
             <argument type="service" id="Shopware\Core\Content\Category\SalesChannel\CategoryRoute"/>
         </service>
 
+        <service id="Omikron\FactFinder\Shopware6\Export\ExportCategories">
+            <argument type="service" id="sales_channel.category.repository" />
+        </service>
+
         <service id="Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface"
                  class="Omikron\FactFinder\Shopware6\Export\Filter\TextFilter" />
 
