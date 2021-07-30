@@ -16,7 +16,8 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - [Category Pages](#category-pages)
     - [Element Settings](#element-settings)
       - [ASN Element](#asn-element)
-          - [Record List Element](#record-list-element)
+      - [Record List Element](#record-list-element)
+      - [Campaigns Element](#campaigns-element)
     - [Blocks and Elements Templates](#block-and-elements-templates)
     - [Assigning Layout to Category](#assigning-layout-to-category)
 - [Exporting Feed](#exporting-feed)
@@ -146,9 +147,9 @@ FACT-Finder® response, hence they will not render any HTML.
 * Vertical - If set to true, `btn-block` CSS class is added to `ff-asn-group`, and `ff-asn` gets a `align` property set to `vertical
 * ID - Element identifier. If left empty, the CMS Element ID will be used.
 * Topic - Topic which element is subscribed to. If left empty, the element subscribes to default `asn` topic
-* Callback Argument - A name of variable holding FACT-Finder response data appropriate for the element. It will be visibile inside Callback scope
+* Callback Argument - A name of variable holding FACT-Finder response data appropriate for the element. It will be visible inside Callback scope
 * Callback - A function which allows to manipulate the received data. This data is available under the name set in CallbackArgument
-* Dom Updated - A function which is executed once the element emits `dom-updated` event.This happens when element has rendered its HTML template
+* Dom Updated - A listener to `dom-updated` event. This event is triggered when rendered its HTML template
 
 #### Record List Element
 ![Main Settings](docs/assets/page-builder-element-config-record-list.png "Page Builder CMS Element Record List")
@@ -158,7 +159,15 @@ FACT-Finder® response, hence they will not render any HTML.
 * ID - Element identifier. If left empty, the CMS Element ID will be used.
 * Callback Argument - A name of variable holding FACT-Finder response data appropriate for the element. It will be visibile inside Callback scope
 * Callback - A function which allows to manipulate the received data. This data is available under the name set in CallbackArgument
-* Dom Updated - A function which is executed once the element emits `dom-updated` event.This happens when element has rendered its HTML template
+* Dom Updated - A listener to `dom-updated` event. This event is triggered when rendered its HTML template
+
+#### Campaigns Element
+![Main Settings](docs/assets/page-builder-element-config-campaigns.png "Page Builder CMS Element Campaigns")
+* Advisor Campaign - Renders `ff-campaign-advisor` element
+* Advisor Campaign Name - Adds `label` attribute to `ff-campaign-advisor`.
+* Feedback Campaign - Renders `ff-campaign-feedbacktext` element
+* Advisor Campaign Name - Adds `label` attribute to `ff-campaign-feedbacktext`.
+* Redirect Campaign - Renders `ff-campaign-redirect` element
 
 ### Blocks and Elements Templates
 
