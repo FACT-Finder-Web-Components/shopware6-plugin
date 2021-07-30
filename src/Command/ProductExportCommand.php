@@ -98,7 +98,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
             new Context(new SystemSource())
         )->first();
 
-        $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()));
+        $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()), FeedFactory::PRODUCT_EXPORT_TYPE);
         $feedColumns = $this->getFeedColumns();
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
