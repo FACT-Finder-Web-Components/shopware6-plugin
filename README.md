@@ -18,7 +18,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
       - [ASN Element](#asn-element)
       - [Record List Element](#record-list-element)
       - [Campaigns Element](#campaigns-element)
-    - [Blocks and Elements Templates](#block-and-elements-templates)
+    - [Blocks and Elements Templates](#blocks-and-elements-templates)
     - [Assigning Layout to Category](#assigning-layout-to-category)
 - [Exporting Feed](#exporting-feed)
     - [CLI](#cli)
