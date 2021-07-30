@@ -1,0 +1,23 @@
+{% block callbacks %}
+  <script>
+    {% block add_callback %}
+      {% if addCallback %}
+      document.addEventListener('ffReady', function ({resultDispatcher}) {
+        resultDispatcher.addCallback('{{ topic }}', {{ arg }} => {
+          {{ addCallback|raw }}
+        });
+      });
+      {% endif %}
+    {% endblock %}
+
+    {% block dom_updated %}
+    {% if domUpdated %}
+    document.addEventListener('WebComponentsReady', function () {
+      document.getElementById("{{ id }}").addEventListener('dom-updated', function () {
+        {{ domUpdated|raw }}
+      });
+    });
+    {% endif %}
+    {% endblock %}
+  </script>
+{% endblock %}

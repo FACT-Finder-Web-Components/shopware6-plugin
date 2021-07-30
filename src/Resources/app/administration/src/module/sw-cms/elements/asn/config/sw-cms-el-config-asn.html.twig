@@ -1,9 +1,61 @@
 {% block sw_cms_element_asn_config %}
   <div>
     <sw-switch-field label="Subscribe" v-model="element.config.subscribe.value"></sw-switch-field>
-    <sw-switch-field label="Vertical" v-model="element.config.vertical.value"></sw-switch-field>
-    <p>Filter Cloud</p>
-    <sw-switch-field label="Use Filter Cloud" v-model="element.config.filterCloud.value"></sw-switch-field>
-    <sw-text-field label="Blacklist" placeholder="Blacklist" v-model="element.config.filterCloudBlacklist.value"></sw-text-field>
+
+    <sw-switch-field label="Vertical"
+                     v-tooltip="{ message:$tc('sw-cms.elements.asn.config.veritcal')}"
+                     v-model="element.config.vertical.value">
+    </sw-switch-field>
+
+    <sw-text-field label="ID"
+                   placeholder="ID"
+                   v-tooltip="{ message:$tc('sw-cms.elements.asn.config.id')}"
+                   v-model="element.config.id.value">
+    </sw-text-field>
+
+    <sw-text-field label="Topic"
+                   placeholder="Topic"
+                   v-tooltip="{ message:$tc('sw-cms.elements.asn.config.topic')}"
+                   v-model="element.config.topic.value">
+    </sw-text-field>
+
+    <sw-text-field label="Callback Argument"
+                   placeholder="Callback Argument"
+                   v-tooltip="{ message:$tc('sw-cms.elements.asn.config.callbackArg')}"
+                   v-model="element.config.callbackArg.value">
+    </sw-text-field>
+    <sw-textarea-field label="Callback"
+                       placeholder="Callback"
+                       size="medium"
+                       v-model="element.config.callback.value"
+                       v-tooltip="{ message:$tc('sw-cms.elements.asn.config.callback')}">
+    </sw-textarea-field>
+    <sw-textarea-field label="Dom Updated"
+                       placeholder="Dom Updated"
+                       size="medium"
+                       v-model="element.config.domUpdated.value"
+                       v-tooltip="{ message:$tc('sw-cms.elements.asn.config.domUpdated')}">
+    </sw-textarea-field>
+
+    <wrapper class="secondary">
+      <h3 class="filter-cloud">Filter Cloud</h3>
+      <sw-switch-field label="Use Filter Cloud" v-model="element.config.filterCloud.value"></sw-switch-field>
+
+      <sw-container v-if="element.config.filterCloud.value">
+        <sw-text-field label="Blacklist"
+                       placeholder="Blacklist"
+                       v-model="element.config.filterCloudBlacklist.value"></sw-text-field>
+
+        <sw-text-field label="Whitelist"
+                       placeholder="Whitelist"
+                       v-model="element.config.filterCloudWhitelist.value"></sw-text-field>
+
+        <sw-select-field label="Order" placeholder="Order" v-model="element.config.filterCloudOrder.value">
+          <option value="fact-finder">factfinder</option>
+          <option value="alphabetical">alphabetical</option>
+          <option value="user-selection">userSelection</option>
+        </sw-select-field>
+      </sw-container>
+    </wrapper>
   </div>
 {% endblock %}

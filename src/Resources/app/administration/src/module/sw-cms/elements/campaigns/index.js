@@ -17,5 +17,17 @@ Shopware.Service('cmsService').registerCmsElement({
             value: '',
             source: 'static'
         },
+        enableFeedbackCampaign: {
+            value: '',
+            source: 'static'
+        },
+        enableAdvisorCampaign: {
+            value: '',
+            source: 'static'
+        },
+        enableRedirectCampaign: {
+            value: '',
+            source: 'static'
+        }
     }
 });

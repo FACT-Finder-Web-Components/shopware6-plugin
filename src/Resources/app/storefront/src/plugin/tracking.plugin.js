@@ -23,7 +23,7 @@ export default class TrackingPlugin extends Plugin
                 type: 'getRecords',
                 recordId: productNumberInput.value,
                 idType: 'productNumber',
-                success: ([product]) => factfinder.communication.trackingManager.cart({
+                success: ([product]) => factfinder.communication.Tracking.cart({
                     id: trackingHelper.getTrackingProductId(product),
                     masterId: trackingHelper.getMasterArticleNumber(product),
                     price: trackingHelper.getPrice(product),

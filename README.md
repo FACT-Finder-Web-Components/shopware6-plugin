@@ -15,7 +15,10 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Price Columns Format](#price-columns-format)
 - [Category Pages](#category-pages)
     - [Element Settings](#element-settings)
-    - [Blocks and Elements Templates](#block-and-elements-templates)
+      - [ASN Element](#asn-element)
+      - [Record List Element](#record-list-element)
+      - [Campaigns Element](#campaigns-element)
+    - [Blocks and Elements Templates](#blocks-and-elements-templates)
     - [Assigning Layout to Category](#assigning-layout-to-category)
 - [Exporting Feed](#exporting-feed)
     - [CLI](#cli)
@@ -30,6 +33,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Adding New Column to Feed](#adding-new-column-to-feed)
     - [Export Fields Stored in Variants](#export-fields-stored-in-variants)
     - [Extending Specific Web Component Template](#extending-specific-web-component-template)
+    - [Split ASN on Category Page](#split-asn-on-category-page)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -136,6 +140,34 @@ Each of the element of given block contains dedicated configuration which allows
 
 If you do not want to render a specific element, just change the `subscribe` option to `false`. This will make element will not subscribe to the
 FACT-Finder® response, hence they will not render any HTML.
+
+#### ASN Element
+![Main Settings](docs/assets/page-builder-element-config-asn.png "Page Builder CMS Element ASN")
+* Subscribe - Activate element
+* Vertical - If set to true, `btn-block` CSS class is added to `ff-asn-group`, and `ff-asn` gets a `align` property set to `vertical
+* ID - Element identifier. If left empty, the CMS Element ID will be used.
+* Topic - Topic which element is subscribed to. If left empty, the element subscribes to default `asn` topic
+* Callback Argument - A name of variable holding FACT-Finder response data appropriate for the element. It will be visible inside Callback scope
+* Callback - A function which allows to manipulate the received data. This data is available under the name set in CallbackArgument
+* Dom Updated - A listener to `dom-updated` event. This event is triggered when rendered its HTML template
+
+#### Record List Element
+![Main Settings](docs/assets/page-builder-element-config-record-list.png "Page Builder CMS Element Record List")
+* Subscribe - activate element
+* Infinity Scrolling - Adds the `inifinity-scrolling` attribute to the `ff-record-list` element 
+* Infinite Debounce Delay - adds`infinite-debounce-delay` attribute to the `ff-record-list` element
+* ID - Element identifier. If left empty, the CMS Element ID will be used.
+* Callback Argument - A name of variable holding FACT-Finder response data appropriate for the element. It will be visibile inside Callback scope
+* Callback - A function which allows to manipulate the received data. This data is available under the name set in CallbackArgument
+* Dom Updated - A listener to `dom-updated` event. This event is triggered when rendered its HTML template
+
+#### Campaigns Element
+![Main Settings](docs/assets/page-builder-element-config-campaigns.png "Page Builder CMS Element Campaigns")
+* Advisor Campaign - Renders `ff-campaign-advisor` element
+* Advisor Campaign Name - Adds `label` attribute to `ff-campaign-advisor`.
+* Feedback Campaign - Renders `ff-campaign-feedbacktext` element
+* Advisor Campaign Name - Adds `label` attribute to `ff-campaign-feedbacktext`.
+* Redirect Campaign - Renders `ff-campaign-redirect` element
 
 ### Blocks and Elements Templates
 
@@ -360,7 +392,34 @@ With this code you override only this block and rest of the parent file HTML wil
 **Note:**
 Template in that section stands for the HTML rendered by Web Components, not the `.html.twig` file
 
+### Split ASN on Category Page
+The demo version of the split ASN approach is available [here](https://search-web-components.fact-finder.de/demos/4.x/ff-asn-split-two-parts/?query=%2a&sid=gQbPAzrjX6VOv1AOI1VQCZwipREXBX).
+It is possible to reproduce this functionality with the PageBuilder:
 
+1. Add two FF-ASN CMS Elements 
+
+![Main Settings](docs/assets/split-asn-1.png "Split ASN layout")
+
+2. Configure the main ASN
+
+![Main Settings](docs/assets/split-asn-2.png "Split ASN - Main ")
+
+3. Configure the second ASN
+
+![Main Settings](docs/assets/split-asn-3.png "Split ASN - Second")
+
+**Note:** In that setup, Filter Cloud must be disabled as for now it has no support for custom topics
+
+#### Duplicated filter variants
+The example above divides the ASN groups into two exclusive collections.
+If you just want to duplicate some filter from the first ASN and put it in the second, just change the configuration of first ASN to be:
+![Main Settings](docs/assets/split-asn-4.png "Split ASN - Main (duplicate filters)")
+
+In that case we  do not use `splice` method but `slice` which does not mutate the original data.
+
+**Note:** Dom Updated listener can be empty. ASN groups from the second ASN are also present in first, so there is no need to merge them together.
+**Note:** Since all ASN groups are available in first ASN, the Filter Cloud can be used.
+   
 ## Contribute
 
 We welcome contribution! For more information, click [here](.github/CONTRIBUTING.md)
