@@ -24,6 +24,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Traversable;
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class CmsExportCommand extends Command
 {
     private const UPLOAD_FEED_OPTION              = 'upload';
