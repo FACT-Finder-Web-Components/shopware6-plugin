@@ -9,6 +9,13 @@
             <parameter key="Master">Master</parameter>
             <parameter key="Name">Name</parameter>
         </parameter>
+        <parameter key="factfinder.export.cms.columns.base" type="collection">
+            <parameter key="Id">Id</parameter>
+            <parameter key="Title">Title</parameter>
+            <parameter key="Content">Content</parameter>
+            <parameter key="Keywords">Keywords</parameter>
+            <parameter key="MetaTitle">MetaTitle</parameter>
+        </parameter>
         <parameter key="factfinder.communication.parameters.base"  type="collection">
             <parameter key="use-personalization" type="string">true</parameter>
         </parameter>
@@ -26,13 +33,7 @@
             <parameter key="trackingProductNumber">ProductNumber</parameter>
         </parameter>
         <parameter key="factfinder.cms_field_roles" type="collection">
-            <parameter key="pageId">PageId</parameter>
-            <parameter key="master">Master</parameter>
-            <parameter key="name">Name</parameter>
-            <parameter key="metaTitle">MetaTitle</parameter>
-            <parameter key="description">Description</parameter>
-            <parameter key="keywords">Keywords</parameter>
-            <parameter key="seoPathInfo">SeoPathInfo</parameter>
+            <parameter key="deepLink">DeepLink</parameter>
         </parameter>
         <parameter key="factfinder.export.associations" type="collection">
             <parameter key="variant_cover">children.cover</parameter>
