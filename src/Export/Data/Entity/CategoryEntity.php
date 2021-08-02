@@ -28,9 +28,14 @@ class CategoryEntity implements ExportEntityInterface
 
     public function toArray(): array
     {
-        return array_reduce($this->cmsFields, function ($fields, FieldInterface $field): array {
-            $fields = !$fields ? [] : $fields;
+        return array_reduce($this->cmsFields, function (array $fields, FieldInterface $field): array {
             return $fields + [$field->getName() => $field->getValue($this->category)];
-        });
+        }, [
+            'Id'        => $this->category->getId() ?? '',
+            'Title'     => $this->category->getName() ?? '',
+            'Content'   => $this->category->getDescription() ?? '',
+            'Keywords'  => $this->category->getKeywords() ?? '',
+            'MetaTitle' => $this->category->getMetaTitle() ?? '',
+        ]);
     }
 }

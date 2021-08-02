@@ -15,21 +15,25 @@ use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\System\Language\LanguageEntity;
+use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Traversable;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class CmsExportCommand extends Command
+class CmsExportCommand extends Command implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     private const UPLOAD_FEED_OPTION              = 'upload';
     private const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     private const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
@@ -72,7 +76,10 @@ class CmsExportCommand extends Command
     {
         $salesChannel     = $this->getSalesChannel($input);
         $selectedLanguage = $this->getLanguage($input);
-        $feedService      = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()), FeedFactory::CMS_EXPORT_TYPE);
+        $feedService      = $this->feedFactory->create(
+            $this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()),
+            FeedFactory::CMS_EXPORT_TYPE);
+
         $feedColumns      = $this->getFeedColumns();
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
@@ -88,7 +95,7 @@ class CmsExportCommand extends Command
         return 0;
     }
 
-    private function getSalesChannel(InputInterface $input): ?EntitySearchResult
+    private function getSalesChannel(InputInterface $input): ?SalesChannelEntity
     {
         return !empty($input->getArgument(self::SALES_CHANNEL_ARGUMENT))
             ? $this->channelRepository->search(new Criteria([$input->getArgument(self::SALES_CHANNEL_ARGUMENT)]), new Context(new SystemSource()))->first()
@@ -105,7 +112,8 @@ class CmsExportCommand extends Command
 
     private function getFeedColumns(): array
     {
-        return array_values(array_unique(array_map([$this, 'getFieldName'], $this->cmsFields)));
+        $base   = (array) $this->container->getParameter('factfinder.export.cms.columns.base');
+        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $this->cmsFields))));
     }
 
     private function getFieldName(FieldInterface $field): string
