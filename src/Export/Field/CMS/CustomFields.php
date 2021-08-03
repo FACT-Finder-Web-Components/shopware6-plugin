@@ -31,16 +31,6 @@ class CustomFields implements FieldInterface
     private CustomFieldsService $customFieldsService;
     private array $loadedFields = [];
 
-    /**
-     * CustomFields constructor.
-     *
-     * @param PropertyFormatter         $propertyFormatter
-     * @param SalesChannelService       $salesChannelService
-     * @param EntityRepositoryInterface $customFieldRepository
-     * @param EntityRepositoryInterface $languageRepository
-     * @param ExportSettings            $exportSettings
-     * @param CustomFieldsService       $customFieldsService
-     */
     public function __construct(
         PropertyFormatter $propertyFormatter,
         SalesChannelService $salesChannelService,
