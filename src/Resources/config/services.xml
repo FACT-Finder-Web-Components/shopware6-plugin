@@ -34,6 +34,7 @@
         </parameter>
         <parameter key="factfinder.cms_field_roles" type="collection">
             <parameter key="deepLink">DeepLink</parameter>
+            <parameter key="customField">CustomField</parameter>
         </parameter>
         <parameter key="factfinder.export.associations" type="collection">
             <parameter key="variant_cover">children.cover</parameter>
