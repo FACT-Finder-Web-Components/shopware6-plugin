@@ -44,7 +44,7 @@ class ExportCategories implements ExportInterface
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
         }
-        $criteria->addFilter(new EqualsFilter(sprintf('customFields.%s', OmikronFactFinder::CUSTOM_FIELD_NAME), true));
+        $criteria->addFilter(new EqualsFilter(sprintf('customFields.%s', OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME), true));
 
         return $criteria;
     }
