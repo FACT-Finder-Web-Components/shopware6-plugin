@@ -19,8 +19,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OmikronFactFinder extends Plugin
 {
-    public const CUSTOM_FIELD_SET_NAME = 'cms_export_include';
-    public const CUSTOM_FIELD_NAME     = 'ff_cms_export_include';
+    public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_SET_NAME = 'cms_export_include';
+    public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME     = 'ff_cms_export_include';
 
     public function build(ContainerBuilder $container): void
     {
@@ -37,7 +37,7 @@ class OmikronFactFinder extends Plugin
 
         if (!$this->customFieldsExist($installContext->getContext())) {
             $customFieldRepository->create([[
-                'name'   => self::CUSTOM_FIELD_SET_NAME,
+                'name'   => self::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_SET_NAME,
                 'config' => [
                     'label' => [
                         'de-DE' => 'FACT-Finder®',
@@ -49,7 +49,7 @@ class OmikronFactFinder extends Plugin
                 ]],
                 'customFields' => [
                     [
-                        'name'   => self::CUSTOM_FIELD_NAME,
+                        'name'   => self::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME,
                         'type'   => CustomFieldTypes::SWITCH,
                         'config' => [
                             'label' => [
@@ -93,7 +93,7 @@ class OmikronFactFinder extends Plugin
         $customFieldSetRepository = $this->container->get('custom_field_set.repository');
 
         $criteria = new Criteria();
-        $criteria->addFilter(new EqualsAnyFilter('name', [self::CUSTOM_FIELD_NAME]));
+        $criteria->addFilter(new EqualsAnyFilter('name', [self::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME]));
 
         $ids = $customFieldSetRepository->searchIds($criteria, $context);
 
