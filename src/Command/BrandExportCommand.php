@@ -1,21 +1,21 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Command;
 
-
+use Shopware\Core\Defaults;
+use Shopware\Core\Framework\Api\Context\SystemSource;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\Language\LanguageEntity;
+use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Shopware\Core\System\SalesChannel\SalesChannelEntity;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\Api\Context\SystemSource;
-use Shopware\Core\Defaults;
 
 class BrandExportCommand extends Command
 {
