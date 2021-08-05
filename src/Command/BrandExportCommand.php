@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Command;
 
+use Omikron\FactFinder\Shopware6\Export\Field\Manufacturer\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
@@ -21,6 +22,7 @@ use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Traversable;
 
 class BrandExportCommand extends Command implements ContainerAwareInterface
 {
@@ -34,14 +36,23 @@ class BrandExportCommand extends Command implements ContainerAwareInterface
     private EntityRepositoryInterface $languageRepository;
     private FeedFactory $feedFactory;
     private SalesChannelService $channelService;
+    /** @var FieldInterface[] */
+    private array $manufacturerFields;
 
-    public function __construct(EntityRepositoryInterface $channelRepository, EntityRepositoryInterface $languageRepository, FeedFactory $feedFactory, SalesChannelService $channelService)
+    public function __construct(
+        EntityRepositoryInterface $channelRepository,
+        EntityRepositoryInterface $languageRepository,
+        FeedFactory $feedFactory,
+        SalesChannelService $channelService,
+        Traversable $manufacturerFields
+    )
     {
         parent::__construct();
         $this->channelRepository = $channelRepository;
         $this->languageRepository = $languageRepository;
         $this->feedFactory = $feedFactory;
         $this->channelService = $channelService;
+        $this->manufacturerFields          = iterator_to_array($manufacturerFields);
     }
 
     public function configure()

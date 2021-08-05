@@ -11,13 +11,15 @@
         </parameter>
         <parameter key="factfinder.export.brands.columns.base" type="collection">
             <parameter key="BrandName">BrandName</parameter>
-            <parameter key="BrandLogo">BrandLogo</parameter>
             <parameter key="BrandURL">BrandURL</parameter>
         </parameter>
         <parameter key="factfinder.communication.parameters.base"  type="collection">
             <parameter key="use-personalization" type="string">true</parameter>
         </parameter>
         <parameter key="factfinder.navigation.category_path_field_name" type="string">CategoryPath</parameter>
+        <parameter key="factfinder.manufacturer_field_roles" type="collection">
+            <parameter key="brandLogo">BrandLogo</parameter>
+        </parameter>
         <parameter key="factfinder.field_roles" type="collection">
             <parameter key="brand">Manufacturer</parameter>
             <parameter key="deeplink">Deeplink</parameter>
@@ -42,7 +44,9 @@
     <services>
         <defaults autoconfigure="true" autowire="true">
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
+            <bind key="$manufacturerFieldRoles">%factfinder.manufacturer_field_roles%</bind>
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
+            <bind key="$manufacturerFields" type="tagged_iterator" tag="factfinder.export.manufacturer_field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$channelRepository" type="service" id="sales_channel.repository" />
             <bind key="$customFieldRepository" type="service" id="custom_field.repository" />
