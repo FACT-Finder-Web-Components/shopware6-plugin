@@ -9,6 +9,11 @@
             <parameter key="Master">Master</parameter>
             <parameter key="Name">Name</parameter>
         </parameter>
+        <parameter key="factfinder.export.brands.columns.base" type="collection">
+            <parameter key="BrandName">BrandName</parameter>
+            <parameter key="BrandLogo">BrandLogo</parameter>
+            <parameter key="BrandURL">BrandURL</parameter>
+        </parameter>
         <parameter key="factfinder.communication.parameters.base"  type="collection">
             <parameter key="use-personalization" type="string">true</parameter>
         </parameter>
@@ -90,5 +95,9 @@
         <service id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler">
             <tag name="messenger.message_handler" />
         </service>
+        <service id="Omikron\FactFinder\Shopware6\Export\ExportBrands">
+            <argument type="service" id="product_manufacturer.repository" />
+        </service>
+
     </services>
 </container>

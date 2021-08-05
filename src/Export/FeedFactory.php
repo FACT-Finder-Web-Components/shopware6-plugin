@@ -11,19 +11,35 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class FeedFactory
 {
+    public const BRAND_EXPORT_TYPE     = 'manufacturer';
+    public const PRODUCT_EXPORT_TYPE   = 'product';
+
     private FilterInterface $filter;
     private ExportProducts $products;
     private EntityFactory $entityFactory;
+    private ExportBrands $brands;
 
-    public function __construct(ExportProducts $products, FilterInterface $filter, EntityFactory $entityFactory)
+    public function __construct(ExportProducts $products, FilterInterface $filter, EntityFactory $entityFactory, ExportBrands $brands)
     {
         $this->products      = $products;
         $this->filter        = $filter;
         $this->entityFactory = $entityFactory;
+        $this->brands        = $brands;
     }
 
-    public function create(SalesChannelContext $context): Feed
+    public function create(SalesChannelContext $context, string $exportType): Feed
     {
-        return new Feed(new DataProvider($context, $this->products, $this->entityFactory), $this->filter);
+        switch ($exportType) {
+            case self::BRAND_EXPORT_TYPE:
+                $exportData = $this->brands;
+                break;
+            case self::PRODUCT_EXPORT_TYPE:
+                $exportData = $this->products;
+                break;
+            default:
+                throw new \Exception('Unknown export type: ' . $exportType);
+        }
+
+        return new Feed(new DataProvider($context, $exportData, $this->entityFactory), $this->filter);
     }
 }
