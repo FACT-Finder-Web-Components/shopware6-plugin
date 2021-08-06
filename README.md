@@ -229,6 +229,31 @@ Select fields allows you to select sales channel and languague parameter for whi
 `Run Integration` Send a message to a bus which then might be consumed automatically by an admin worker (if enabled)
 or by CLI worker. More information about messaging you can find in official Shopware [documentation](https://developer.shopware.com/docs/guides/hosting/infrastructure/message-queue)
 
+## Exporting Brands (Manufacturers)
+
+### CLI
+Feed export is available in the Shopware CLI application. You can run it by executing:
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands
+
+The command can be run with an optional argument indicating the sales channel ID that you are targeting. The ID is an
+string value.
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands SALES_CHANNEL_ID
+
+If a specific language needs to be specified, theres is a second argument which allows that.
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands SALES_CHANNEL_ID LANGUGAGE_ID
+
+There are two additional options:
+
+* `-u` uploads the feed to the configured FTP server after feed is generated.
+* `-i` runs the FACT-Finder® import with previously uploaded feed  
+  **Note:** This option works only in a combination with `-u`
+
+by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands > export.csv
 
 ## Web Components Integration
 
