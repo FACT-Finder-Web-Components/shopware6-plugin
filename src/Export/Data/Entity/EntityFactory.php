@@ -18,9 +18,6 @@ class EntityFactory
     /** @var FieldInterface[] */
     private array $productFields;
 
-    /** @var \Omikron\FactFinder\Shopware6\Export\Field\Manufacturer\FieldInterface[] */
-    private array $manufacturerFields;
-
     /** @var FieldInterface[] */
     private array $variantFields;
 
@@ -30,13 +27,11 @@ class EntityFactory
         PropertyFormatter $propertyFormatter,
         iterable $productFields,
         iterable $variantFields,
-        CurrencyFieldsProvider $currencyFieldsProvider,
-        iterable $manufacturerFields
+        CurrencyFieldsProvider $currencyFieldsProvider
     ) {
         $this->propertyFormatter      = $propertyFormatter;
         $this->productFields          = iterator_to_array($productFields);
         $this->variantFields          = iterator_to_array($variantFields);
-        $this->manufacturerFields     = iterator_to_array($manufacturerFields);
         $this->currencyFieldsProvider = $currencyFieldsProvider;
     }
 

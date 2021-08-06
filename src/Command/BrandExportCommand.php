@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Command;
 
-use Omikron\FactFinder\Shopware6\Export\Field\Manufacturer\FieldInterface;
+use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
@@ -37,14 +37,14 @@ class BrandExportCommand extends Command implements ContainerAwareInterface
     private FeedFactory $feedFactory;
     private SalesChannelService $channelService;
     /** @var FieldInterface[] */
-    private array $manufacturerFields;
+    private array $brandFields;
 
     public function __construct(
         EntityRepositoryInterface $channelRepository,
         EntityRepositoryInterface $languageRepository,
         FeedFactory $feedFactory,
         SalesChannelService $channelService,
-        Traversable $manufacturerFields
+        Traversable $brandFields
     )
     {
         parent::__construct();
@@ -52,7 +52,7 @@ class BrandExportCommand extends Command implements ContainerAwareInterface
         $this->languageRepository = $languageRepository;
         $this->feedFactory = $feedFactory;
         $this->channelService = $channelService;
-        $this->manufacturerFields          = iterator_to_array($manufacturerFields);
+        $this->brandFields = iterator_to_array($brandFields);
     }
 
     public function configure()
@@ -66,6 +66,7 @@ class BrandExportCommand extends Command implements ContainerAwareInterface
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        dd($this->brandFields);
         $salesChannel     = $this->getSalesChannel($input);
         $selectedLanguage = $this->getLanguage($input);
         $feedService      = $this->feedFactory->create(
