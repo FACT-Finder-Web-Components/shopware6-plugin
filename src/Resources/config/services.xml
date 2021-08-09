@@ -35,6 +35,7 @@
             <parameter key="price">Price</parameter>
             <parameter key="productName">Name</parameter>
             <parameter key="trackingProductNumber">ProductNumber</parameter>
+            <parameter key="numericalAttributes">NumericalAttributes</parameter>
         </parameter>
         <parameter key="factfinder.export.associations" type="collection">
             <parameter key="variant_cover">children.cover</parameter>
