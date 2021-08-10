@@ -41,7 +41,7 @@ class EntityFactory
     }
 
     /**
-     * @param Product | Category $data
+     * @param Product|Category $data
      *
      * @return iterable
      */
