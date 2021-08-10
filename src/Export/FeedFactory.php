@@ -11,15 +11,15 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class FeedFactory
 {
-    public const PRODUCT_EXPORT_TYPE = 'product';
-    public const CMS_EXPORT_TYPE     = 'cms';
     public const BRAND_EXPORT_TYPE     = 'manufacturer';
+    public const PRODUCT_EXPORT_TYPE   = 'product';
+    public const CMS_EXPORT_TYPE       = 'cms';
 
     private FilterInterface $filter;
     private ExportProducts $products;
     private EntityFactory $entityFactory;
-    private ExportCategories $categories;
     private ExportBrands $brands;
+    private ExportCategories $categories;
 
     public function __construct(ExportProducts $products, FilterInterface $filter, EntityFactory $entityFactory, ExportCategories $categories, ExportBrands $brands)
     {
