@@ -15,6 +15,6 @@ class BrandLogo implements FieldInterface
 
     public function getValue(Brand $brand): string
     {
-        return $brand->getMediaId() ?? '';
+        return $brand->getMedia() ? $brand->getMedia()->getUrl() : '';
     }
 }

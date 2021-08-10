@@ -48,7 +48,7 @@ class ExportBrands implements ExportInterface
     {
         $criteria = new Criteria();
         $criteria->setLimit($batchSize);
-        $criteria->addAssociation('mediaId');
+        $criteria->addAssociation('media');
 
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
