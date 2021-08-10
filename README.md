@@ -250,8 +250,6 @@ If a specific language needs to be specified, theres is a second argument which 
 There are two additional options:
 
 * `-u` uploads the feed to the configured FTP server after feed is generated.
-* `-i` runs the FACT-Finder® import with previously uploaded feed  
-  **Note:** This option works only in a combination with `-u`
 
 by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
 
