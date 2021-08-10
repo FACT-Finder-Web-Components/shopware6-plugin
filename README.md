@@ -262,6 +262,8 @@ by default export outputs data in the STDOUT. It could be easily redirected usin
     php [SHOPWARE_ROOT]/bin/console factfinder:export:cms > export.csv
 
 
+<bind key="$brandFields" type="tagged_iterator" tag="factfinder.export.brand_field" />
+
 ## Web Components Integration
 
 **Note:** Please note that plugin right now is supporting only classic storefronts, rendered using Twig templating
