@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field\CMS;
-
 
 use Shopware\Core\Content\Category\CategoryEntity as Category;
 
@@ -18,5 +18,4 @@ class ImageUrl implements FieldInterface
         $url = $category->getMedia() ? $category->getMedia()->getUrl() : null;
         return $url ?? '';
     }
-
 }
