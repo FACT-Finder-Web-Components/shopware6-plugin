@@ -29,9 +29,6 @@
             <parameter key="productName">Name</parameter>
             <parameter key="trackingProductNumber">ProductNumber</parameter>
         </parameter>
-        <parameter key="factfinder.brand_field_roles" type="collection">
-            <parameter key="brandLogo">BrandLogo</parameter>
-        </parameter>
         <parameter key="factfinder.export.associations" type="collection">
             <parameter key="variant_cover">children.cover</parameter>
         </parameter>
@@ -44,7 +41,6 @@
     <services>
         <defaults autoconfigure="true" autowire="true">
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
-            <bind key="$brandFieldRoles">%factfinder.brand_field_roles%</bind>
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
             <bind key="$brandFields" type="tagged_iterator" tag="factfinder.export.brand_field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />

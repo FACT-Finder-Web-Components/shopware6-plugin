@@ -24,6 +24,10 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Traversable;
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class BrandExportCommand extends Command implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
@@ -66,7 +70,6 @@ class BrandExportCommand extends Command implements ContainerAwareInterface
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        dd($this->brandFields);
         $salesChannel     = $this->getSalesChannel($input);
         $selectedLanguage = $this->getLanguage($input);
         $feedService      = $this->feedFactory->create(
@@ -97,9 +100,14 @@ class BrandExportCommand extends Command implements ContainerAwareInterface
         )->first();
     }
 
-    private function getFeedColumns()
+    private function getFeedColumns(): array
     {
         $base   = (array) $this->container->getParameter('factfinder.export.brands.columns.base');
-        return array_values(array_unique($base));
+        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $this->brandFields))));
+    }
+
+    private function getFieldName(FieldInterface $field): string
+    {
+        return $field->getName();
     }
 }

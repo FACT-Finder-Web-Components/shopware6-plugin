@@ -15,6 +15,6 @@ class OmikronFactFinder extends Plugin
     {
         parent::build($container);
         $container->registerForAutoconfiguration(FieldInterface::class)->addTag('factfinder.export.field');
-        $container->registerForAutoconfiguration(FieldInterfaceBrand::class)->addTag('factfinder.export.cms_field');
+        $container->registerForAutoconfiguration(FieldInterfaceBrand::class)->addTag('factfinder.export.brand_field');
     }
 }
