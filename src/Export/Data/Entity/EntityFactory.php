@@ -10,8 +10,8 @@ use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface as BrandFieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
-use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity as Brand;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
+use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity as Brand;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
 class EntityFactory
@@ -49,7 +49,7 @@ class EntityFactory
     }
 
     /**
-     * @param Product|Category|Brand $data
+     * @param Product|Brand|Category $data
      *
      * @return ExportEntityInterface[]
      */
