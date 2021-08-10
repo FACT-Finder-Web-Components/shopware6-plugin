@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Command;
 
+use Omikron\FactFinder\Shopware6\Export\FeedFactory;
+use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface;
+use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
+use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
@@ -16,19 +20,42 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Traversable;
 
-class BrandExportCommand extends Command
+/**
+ * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class BrandExportCommand extends Command implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     private const UPLOAD_FEED_OPTION              = 'upload';
     private const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     private const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
 
     private EntityRepositoryInterface $channelRepository;
     private EntityRepositoryInterface $languageRepository;
+    private FeedFactory $feedFactory;
+    private SalesChannelService $channelService;
+    /** @var FieldInterface[] */
+    private array $brandFields;
 
-    public function __construct(string $name = null)
-    {
-        parent::__construct($name);
+    public function __construct(
+        EntityRepositoryInterface $channelRepository,
+        EntityRepositoryInterface $languageRepository,
+        FeedFactory $feedFactory,
+        SalesChannelService $channelService,
+        Traversable $brandFields
+    ) {
+        parent::__construct();
+        $this->channelRepository  = $channelRepository;
+        $this->languageRepository = $languageRepository;
+        $this->feedFactory        = $feedFactory;
+        $this->channelService     = $channelService;
+        $this->brandFields        = iterator_to_array($brandFields);
     }
 
     public function configure()
@@ -44,7 +71,16 @@ class BrandExportCommand extends Command
     {
         $salesChannel     = $this->getSalesChannel($input);
         $selectedLanguage = $this->getLanguage($input);
+        $feedService      = $this->feedFactory->create(
+            $this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()),
+            FeedFactory::BRAND_EXPORT_TYPE);
 
+        $feedColumns = $this->getFeedColumns();
+
+        if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
+            $feedService->generate(new ConsoleOutput($output), $feedColumns);
+            return 0;
+        }
         return 0;
     }
 
@@ -61,5 +97,16 @@ class BrandExportCommand extends Command
             new Criteria([$input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT) ?: Defaults::LANGUAGE_SYSTEM]),
             new Context(new SystemSource())
         )->first();
+    }
+
+    private function getFeedColumns(): array
+    {
+        $base   = (array) $this->container->getParameter('factfinder.export.brands.columns.base');
+        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $this->brandFields))));
+    }
+
+    private function getFieldName(FieldInterface $field): string
+    {
+        return $field->getName();
     }
 }
