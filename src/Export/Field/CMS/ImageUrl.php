@@ -15,7 +15,6 @@ class ImageUrl implements FieldInterface
 
     public function getValue(Category $category): string
     {
-        $url = $category->getMedia() ? $category->getMedia()->getUrl() : null;
-        return $url ?? '';
+        return $category->getMedia() ? $category->getMedia()->getUrl() : '';
     }
 }

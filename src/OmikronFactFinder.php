@@ -93,7 +93,7 @@ class OmikronFactFinder extends Plugin
         $customFieldSetRepository = $this->container->get('custom_field_set.repository');
 
         $criteria = new Criteria();
-        $criteria->addFilter(new EqualsAnyFilter('name', [self::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME]));
+        $criteria->addFilter(new EqualsAnyFilter('name', [self::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_SET_NAME]));
 
         $ids = $customFieldSetRepository->searchIds($criteria, $context);
 

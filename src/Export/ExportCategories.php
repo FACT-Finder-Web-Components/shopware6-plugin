@@ -40,6 +40,7 @@ class ExportCategories implements ExportInterface
         $criteria = new Criteria();
         $criteria->setLimit($batchSize);
         $criteria->addAssociation('customFields');
+        $criteria->addAssociation('media');
         $criteria->addAssociation('seoUrls');
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
