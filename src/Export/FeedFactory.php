@@ -8,6 +8,7 @@ use Omikron\FactFinder\Shopware6\Export\Data\DataProvider;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\EntityFactory;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
+use Exception;
 
 class FeedFactory
 {
@@ -39,7 +40,7 @@ class FeedFactory
 
                 break;
             default:
-                throw new \Exception('Unknown export type: ' . $exportType);
+                throw new Exception('Unknown export type: ' . $exportType);
         }
 
         return new Feed(new DataProvider($context, $exportData, $this->entityFactory), $this->filter);

@@ -11,6 +11,9 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
+/**
+ * @SuppressWarnings(PHPMD.LongVariable)
+ */
 class ExportBrands implements ExportInterface
 {
     private EntityRepository $productManufacturerRepository;
