@@ -32,7 +32,6 @@ class BrandEntity implements ExportEntityInterface
             return $fields + [$field->getName() => $field->getValue($this->brand)];
         }, [
             'BrandName'         => (string) $this->brand->getName(),
-            'BrandLogo'         => (string) $this->brand->getMediaId(),
             'BrandURL'          => (string) $this->brand->getLink(),
         ]);
     }
