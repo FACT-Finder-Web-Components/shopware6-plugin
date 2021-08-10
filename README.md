@@ -159,7 +159,7 @@ There is a type `CategoryPage` but the builtin validation will not allow saving 
 The block `FACTFinder Web Components Listing` is unfortunately not taken into account.
 
 
-## Exporting Feed
+## Exporting Feeds
 
 ### Products
 #### CLI
@@ -200,7 +200,7 @@ Select fields allows you to select sales channel and languague parameter for whi
 or by CLI worker. More information about messaging you can find in official Shopware [documentation](https://developer.shopware.com/docs/guides/hosting/infrastructure/message-queue)
 
 
-### CMS
+### CMS Pages
 
 #### CLI
 CMS export is available in the Shopware CLI application. You can run it by executing:
