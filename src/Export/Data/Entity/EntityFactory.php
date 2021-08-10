@@ -10,6 +10,7 @@ use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity as Brand;
+use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface as BrandFieldInterface;
 
 class EntityFactory
 {
@@ -21,17 +22,22 @@ class EntityFactory
     /** @var FieldInterface[] */
     private array $variantFields;
 
+    /** @var BrandFieldInterface[]  */
+    private array $brandFields;
+
     private CurrencyFieldsProvider $currencyFieldsProvider;
 
     public function __construct(
         PropertyFormatter $propertyFormatter,
         iterable $productFields,
         iterable $variantFields,
-        CurrencyFieldsProvider $currencyFieldsProvider
+        CurrencyFieldsProvider $currencyFieldsProvider,
+        iterable $brandFields
     ) {
         $this->propertyFormatter      = $propertyFormatter;
         $this->productFields          = iterator_to_array($productFields);
         $this->variantFields          = iterator_to_array($variantFields);
+        $this->brandFields = iterator_to_array($brandFields);
         $this->currencyFieldsProvider = $currencyFieldsProvider;
     }
 
@@ -47,7 +53,7 @@ class EntityFactory
                 $entity = new ProductEntity($data, array_merge($this->productFields, $this->currencyFieldsProvider->getCurrencyFields()));
                 break;
             case $data instanceof Brand:
-                $entity = new BrandEntity($data);
+                $entity = new BrandEntity($data, $this->brandFields);
                 break;
         }
 
