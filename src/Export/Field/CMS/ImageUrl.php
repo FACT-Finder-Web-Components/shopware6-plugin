@@ -1,21 +1,22 @@
 <?php
 
-declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field\CMS;
 
+
 use Shopware\Core\Content\Category\CategoryEntity as Category;
 
-class DeepLink implements FieldInterface
+class ImageUrl implements FieldInterface
 {
     public function getName(): string
     {
-        return 'DeepLink';
+        return 'ImageUrl';
     }
 
     public function getValue(Category $category): string
     {
-        $url = $category->getSeoUrls() ? $category->getSeoUrls()->first() : null;
-        return $url ? '/' . ltrim($url->getSeoPathInfo(), '/') : '';
+        $url = $category->getMedia() ? $category->getMedia()->getUrl() : null;
+        return $url ?? '';
     }
+
 }
