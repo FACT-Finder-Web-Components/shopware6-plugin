@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
-
 
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
 use Shopware\Core\Framework\Api\Context\SystemSource;
@@ -21,17 +21,18 @@ class ExportBrands implements ExportInterface
     public function __construct(EntityRepository $productManufacturerRepository, array $customAssociations)
     {
         $this->productManufacturerRepository = $productManufacturerRepository;
-        $this->customAssociations = $customAssociations;
+        $this->customAssociations            = $customAssociations;
     }
 
     /**
      * @param SalesChannelContext $context
-     * @param int $batchSize
+     * @param int                 $batchSize
+     *
      * @return ProductManufacturerEntity[]
      */
     public function getByContext(SalesChannelContext $context, int $batchSize = 100): iterable
     {
-        $criteria = $this->getCriteria($batchSize);
+        $criteria      = $this->getCriteria($batchSize);
         $manufacturers = $this->productManufacturerRepository->search($criteria, new Context(new SystemSource()));
         while ($manufacturers->count()) {
             yield from $manufacturers;
@@ -52,5 +53,4 @@ class ExportBrands implements ExportInterface
 
         return $criteria;
     }
-
 }

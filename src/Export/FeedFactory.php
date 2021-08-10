@@ -32,9 +32,11 @@ class FeedFactory
         switch ($exportType) {
             case self::BRAND_EXPORT_TYPE:
                 $exportData = $this->brands;
+
                 break;
             case self::PRODUCT_EXPORT_TYPE:
                 $exportData = $this->products;
+
                 break;
             default:
                 throw new \Exception('Unknown export type: ' . $exportType);
