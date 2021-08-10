@@ -190,9 +190,11 @@ Offered Cms Blocks and Elements are designed to work on pages of type `LandingPa
 There is a type `CategoryPage` but the builtin validation will not allow saving that prepared page, unless it contains at least one default Product Listing Block.
 The block `FACTFinder Web Components Listing` is unfortunately not taken into account.
 
-## Exporting Feed
+## Exporting Feeds
 
-### CLI
+### Products
+
+#### CLI
 Feed export is available in the Shopware CLI application. You can run it by executing:
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:products
@@ -216,7 +218,7 @@ by default export outputs data in the STDOUT. It could be easily redirected usin
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:products > export.csv
 
-### Exporting from Admin Panel
+#### Exporting from Admin Panel
 
 There is a possibility to run whole integration: generating feed, uploading it to FTP server and trigger FACT-Finder® import.
 A dedicated form can be found under `Extensions` section
@@ -229,9 +231,9 @@ Select fields allows you to select sales channel and languague parameter for whi
 `Run Integration` Send a message to a bus which then might be consumed automatically by an admin worker (if enabled)
 or by CLI worker. More information about messaging you can find in official Shopware [documentation](https://developer.shopware.com/docs/guides/hosting/infrastructure/message-queue)
 
-## Exporting Brands (Manufacturers)
+### Brands (Manufacturers)
 
-### CLI
+#### CLI
 Feed export is available in the Shopware CLI application. You can run it by executing:
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:brands
