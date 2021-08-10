@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
+use Exception;
 use Omikron\FactFinder\Shopware6\Export\Data\DataProvider;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\EntityFactory;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
-use Exception;
 
 class FeedFactory
 {
