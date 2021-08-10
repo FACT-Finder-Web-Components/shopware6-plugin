@@ -32,10 +32,6 @@
             <parameter key="productName">Name</parameter>
             <parameter key="trackingProductNumber">ProductNumber</parameter>
         </parameter>
-        <parameter key="factfinder.cms_field_roles" type="collection">
-            <parameter key="deepLink">DeepLink</parameter>
-            <parameter key="customField">CustomField</parameter>
-        </parameter>
         <parameter key="factfinder.export.associations" type="collection">
             <parameter key="variant_cover">children.cover</parameter>
         </parameter>
@@ -48,7 +44,6 @@
     <services>
         <defaults autoconfigure="true" autowire="true">
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
-            <bind key="$cmsFieldRoles">%factfinder.cms_field_roles%</bind>
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
             <bind key="$cmsFields" type="tagged_iterator" tag="factfinder.export.cms_field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
