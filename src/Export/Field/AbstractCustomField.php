@@ -1,20 +1,20 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
-
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\CustomFieldsService;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\OmikronFactFinder;
+use Shopware\Core\Content\Category\CategoryEntity as Category;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
-use Shopware\Core\Content\Category\CategoryEntity as Category;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
@@ -54,7 +54,7 @@ abstract class AbstractCustomField
     abstract public function getName(): string;
 
     /**
-     * @param Product | Category $entity
+     * @param Product|Category $entity
      */
     public function getValue($entity): string
     {
@@ -104,7 +104,7 @@ abstract class AbstractCustomField
     }
 
     /**
-     * @param Product | Category $entity
+     * @param Product|Category $entity
      *
      * @return array
      */
@@ -115,7 +115,7 @@ abstract class AbstractCustomField
         if (!empty($customFields)) {
             if (!empty($this->exportSettings->getDisabledCustomFields())) {
                 $excludedCustomFields  = $this->customFieldsService->getCustomFieldNames($this->exportSettings->getDisabledCustomFields());
-                $customFields  = array_diff_key($customFields, array_flip($excludedCustomFields));
+                $customFields          = array_diff_key($customFields, array_flip($excludedCustomFields));
             }
         }
 
