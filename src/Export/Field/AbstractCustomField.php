@@ -11,7 +11,7 @@ use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 
 /**
- * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ * @SuppressWarnings("unused")
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 abstract class AbstractCustomField
