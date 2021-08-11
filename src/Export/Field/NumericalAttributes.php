@@ -6,7 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
-class NumericalAttributes implements FieldInterface
+class NumericalAttributes extends AbstractPropertyGroupFilter implements FieldInterface
 {
     public function getName(): string
     {
@@ -15,7 +15,8 @@ class NumericalAttributes implements FieldInterface
 
     public function getValue(Product $product): string
     {
-        return 'num_attr';
+        parent::setGroupAttribute(parent::SELECTED_NUMERICAL_ATTRIBUTES);
+        return parent::getValue($product);
     }
 
 }

@@ -44,6 +44,12 @@
         </component>
 
         <component name="sw-entity-multi-id-select">
+            <name>selectedNumericalAttributes</name>
+            <entity>property_group</entity>
+            <label>Select Numerical attributes which should be included to feed </label>
+        </component>
+
+        <component name="sw-entity-multi-id-select">
             <name>disabledCustomFields</name>
             <entity>custom_field</entity>
             <label>Select Custom Fields which should be ignored</label>
