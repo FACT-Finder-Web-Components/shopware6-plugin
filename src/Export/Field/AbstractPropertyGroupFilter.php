@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
-
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
@@ -11,12 +11,12 @@ use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOp
 
 abstract class AbstractPropertyGroupFilter
 {
-    public const SELECTED_FILTER_ATTRIBUTES = 'getSelectedFilterAttributes';
+    public const SELECTED_FILTER_ATTRIBUTES    = 'getSelectedFilterAttributes';
     public const SELECTED_NUMERICAL_ATTRIBUTES = 'getSelectedNumericalAttributes';
+    protected string $groupAttribute;
 
     private PropertyFormatter $propertyFormatter;
     private ExportSettings $exportSettings;
-    protected string $groupAttribute;
 
     public function __construct(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
     {
@@ -46,12 +46,15 @@ abstract class AbstractPropertyGroupFilter
         switch ($this->groupAttribute) {
             case self::SELECTED_FILTER_ATTRIBUTES:
                 $selectedAttributes = call_user_func([$this->exportSettings, self::SELECTED_FILTER_ATTRIBUTES]);
+
                 break;
             case self::SELECTED_NUMERICAL_ATTRIBUTES:
                 $selectedAttributes = call_user_func([$this->exportSettings, self::SELECTED_NUMERICAL_ATTRIBUTES]);
+
                 break;
             default:
                 $selectedAttributes = [];
+
                 break;
         }
 
