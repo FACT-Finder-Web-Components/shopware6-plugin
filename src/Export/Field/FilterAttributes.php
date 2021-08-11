@@ -37,6 +37,7 @@ class FilterAttributes implements FieldInterface
             fn (array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
             array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($entity))
         );
+
         return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';
     }
 
@@ -47,13 +48,14 @@ class FilterAttributes implements FieldInterface
 
     private function applyPropertyGroupsFilter(Product $product): array
     {
-        $disabledProperties = $this->exportSettings->getDisabledPropertyGroups();
+        $selectedFilterAttributes = $this->exportSettings->getSelectedFilterAttributes();
 
-        if (!$disabledProperties) {
-            return $product->getProperties()->getElements();
+        if (empty($selectedFilterAttributes)) {
+            return [];
         }
+
         return $product->getProperties()
-                       ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledProperties))
+                       ->filter(fn (PropertyGroupOptionEntity $option): bool => in_array($option->getGroupId(), $selectedFilterAttributes))
                        ->getElements();
     }
 }

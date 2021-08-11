@@ -13,7 +13,7 @@ class FilterAttributesSpec extends ObjectBehavior
 {
     function let(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
     {
-        $exportSettings->getDisabledPropertyGroups()->willReturn([]);
+        $exportSettings->getSelectedFilterAttributes()->willReturn([]);
         $this->beConstructedWith($propertyFormatter, $exportSettings);
     }
 
