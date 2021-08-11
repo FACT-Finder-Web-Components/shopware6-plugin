@@ -16,6 +16,11 @@ class ExportSettings extends BaseConfig
         return $this->config('selectedNumericalAttributes') ?? [];
     }
 
+    public function getSelectedNumericalAttributes(): array
+    {
+        return $this->config('selectedNumericalAttributes') ?? [];
+    }
+
     public function getDisabledCustomFields(): array
     {
         return $this->toArray($this->config('disabledCustomFields'));
