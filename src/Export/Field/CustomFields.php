@@ -19,5 +19,4 @@ class CustomFields extends AbstractCustomField implements FieldInterface
     {
         return parent::getValue($entity);
     }
-
 }
