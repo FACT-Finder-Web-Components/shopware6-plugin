@@ -40,13 +40,7 @@
         <component name="sw-entity-multi-id-select">
             <name>selectedFilterAttributes</name>
             <entity>property_group</entity>
-            <label>Select Filter attributes which should be included to feed </label>
-        </component>
-
-        <component name="sw-entity-multi-id-select">
-            <name>selectedNumericalAttributes</name>
-            <entity>property_group</entity>
-            <label>Select Numerical attributes which should be included to feed </label>
+            <label>Select Filter attributes which should be ignored be feed exporter</label>
         </component>
 
         <component name="sw-entity-multi-id-select">
