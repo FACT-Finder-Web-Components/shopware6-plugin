@@ -66,15 +66,11 @@ class OmikronFactFinder extends Plugin
 
     public function uninstall(UninstallContext $uninstallContext): void
     {
-        parent::uninstall($uninstallContext);
-
-        if ($uninstallContext->keepUserData()) {
-            parent::uninstall($uninstallContext);
-
-            return;
+        if (!$uninstallContext->keepUserData()) {
+            $this->removeCustomField($uninstallContext);
         }
 
-        $this->removeCustomField($uninstallContext);
+        parent::uninstall($uninstallContext);
     }
 
     private function removeCustomField(UninstallContext $uninstallContext): void
