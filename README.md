@@ -24,10 +24,10 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Products](#products)
         - [CLI](#cli)
         - [Exporting from Admin Panel](#exporting-from-admin-panel)
-    - [CMS Pages](#cms-pages)
-      - [CLI](#cms-pages-cli)
     - [Brands](#brands-manufacturers)
         - [CLI](#brands-manufacturers-cli)
+    - [CMS Pages](#cms-pages)
+        - [CLI](#cms-pages-cli)
 - [Web Components Integration](#web-components-integration)
     - [Web Components Documentation](#web-components-documentation)
     - [Including Scripts](#including-scripts)
@@ -194,7 +194,6 @@ Future development will bring more blocks and elements will be provided here.
 Offered Cms Blocks and Elements are designed to work on pages of type `LandingPage`.
 There is a type `CategoryPage` but the builtin validation will not allow saving that prepared page, unless it contains at least one default Product Listing Block.
 The block `FACTFinder Web Components Listing` is unfortunately not taken into account.
-
 
 ## Exporting Feeds
 
