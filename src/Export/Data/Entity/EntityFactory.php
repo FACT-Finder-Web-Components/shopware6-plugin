@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
+use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface as CMSFieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface as BrandFieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity as Brand;
+use Shopware\Core\Content\Category\CategoryEntity as Category;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
 class EntityFactory
@@ -18,6 +20,9 @@ class EntityFactory
 
     /** @var FieldInterface[] */
     private array $productFields;
+
+    /** @var CMSFieldInterface[] */
+    private array $cmsFields;
 
     /** @var FieldInterface[] */
     private array $variantFields;
@@ -32,17 +37,19 @@ class EntityFactory
         iterable $productFields,
         iterable $variantFields,
         CurrencyFieldsProvider $currencyFieldsProvider,
-        iterable $brandFields
+        iterable $brandFields,
+        iterable $cmsFields
     ) {
         $this->propertyFormatter      = $propertyFormatter;
         $this->productFields          = iterator_to_array($productFields);
         $this->variantFields          = iterator_to_array($variantFields);
         $this->brandFields            = iterator_to_array($brandFields);
         $this->currencyFieldsProvider = $currencyFieldsProvider;
+        $this->cmsFields              = iterator_to_array($cmsFields);
     }
 
     /**
-     * @param Product|Brand $data
+     * @param Product|Category|Brand $data
      *
      * @return ExportEntityInterface[]
      */
@@ -57,6 +64,12 @@ class EntityFactory
                 $entity = new BrandEntity($data, $this->brandFields);
 
                 break;
+            case $data instanceof Category:
+                $entity = new CategoryEntity($data, $this->cmsFields);
+
+                break;
+            default:
+                throw new \Exception('Unknown entity ' . get_class($data));
         }
 
         if (method_exists($data, 'getChildCount')) {
@@ -68,7 +81,6 @@ class EntityFactory
                 }
             }
         }
-
         yield $entity;
     }
 }

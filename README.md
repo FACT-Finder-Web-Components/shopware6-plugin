@@ -24,6 +24,8 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Products](#products)
         - [CLI](#cli)
         - [Exporting from Admin Panel](#exporting-from-admin-panel)
+    - [CMS Pages](#cms-pages)
+      - [CLI](#cms-pages-cli)
     - [Brands](#brands-manufacturers)
         - [CLI](#brands-manufacturers-cli)
 - [Web Components Integration](#web-components-integration)
@@ -193,10 +195,10 @@ Offered Cms Blocks and Elements are designed to work on pages of type `LandingPa
 There is a type `CategoryPage` but the builtin validation will not allow saving that prepared page, unless it contains at least one default Product Listing Block.
 The block `FACTFinder Web Components Listing` is unfortunately not taken into account.
 
+
 ## Exporting Feeds
 
 ### Products
-
 #### CLI
 Feed export is available in the Shopware CLI application. You can run it by executing:
 
@@ -216,7 +218,7 @@ There are two additional options:
 * `-u` uploads the feed to the configured FTP server after feed is generated.
 * `-i` runs the FACT-Finder® import with previously uploaded feed  
   **Note:** This option works only in a combination with `-u`
-  
+
 by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:products > export.csv
@@ -258,6 +260,33 @@ by default export outputs data in the STDOUT. It could be easily redirected usin
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:brands > export.csv
 
+### CMS Pages
+
+<h4 id="cms-pages-cli">CLI</h4>
+CMS export is available in the Shopware CLI application. You can run it by executing:
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:cms
+
+The command can be run with an optional argument indicating the sales channel ID that you are targeting. The ID is an
+string value.
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:cms SALES_CHANNEL_ID
+
+If a specific language needs to be specified, there is a second argument which allows that.
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:cms SALES_CHANNEL_ID LANGUGAGE_ID
+
+There are two additional options:
+
+* `-u` uploads the feed to the configured FTP server after feed is generated.
+  
+**Note:** This option works only in a combination with `-u`
+
+by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:cms > export.csv
+
+
 ## Web Components Integration
 
 **Note:** Please note that plugin right now is supporting only classic storefronts, rendered using Twig templating
@@ -265,7 +294,7 @@ system.
 
 ### Web Components Documentation
 
-Full FACT-Finder® Web Components documentation you can found [here](https://web-components.fact-finder.de/api/4.x/ff-communication)
+Full FACT-Finder® Web Components documentation you can find [here](https://web-components.fact-finder.de/api/4.x/ff-communication)
 
 
 ### Including Scripts

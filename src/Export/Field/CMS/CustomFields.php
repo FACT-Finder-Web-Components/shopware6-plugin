@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Omikron\FactFinder\Shopware6\Export\Field;
+namespace Omikron\FactFinder\Shopware6\Export\Field\CMS;
 
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use Omikron\FactFinder\Shopware6\Export\Field\AbstractCustomField;
+use Shopware\Core\Content\Category\CategoryEntity as Category;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
@@ -17,8 +18,8 @@ class CustomFields extends AbstractCustomField implements FieldInterface
         return 'CustomFields';
     }
 
-    public function getValue(Product $product): string
+    public function getValue(Category $category): string
     {
-        return $this->getFieldValue($product);
+        return $this->getFieldValue($category);
     }
 }
