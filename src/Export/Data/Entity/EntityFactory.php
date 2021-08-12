@@ -13,6 +13,7 @@ use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity as Brand;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class EntityFactory
 {
@@ -49,11 +50,11 @@ class EntityFactory
     }
 
     /**
-     * @param Product|Brand|Category $data
+     * @param Entity $data
      *
      * @return ExportEntityInterface[]
      */
-    public function createEntities($data): iterable
+    public function createEntities(Entity $data): iterable
     {
         switch (true) {
             case $data instanceof Product:
