@@ -10,7 +10,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepositoryInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
-class ExportProducts
+class ExportProducts implements ExportInterface
 {
     private SalesChannelRepositoryInterface $productRepository;
 
@@ -40,7 +40,7 @@ class ExportProducts
         }
     }
 
-    private function getCriteria(int $batchSize): Criteria
+    public function getCriteria(int $batchSize): Criteria
     {
         $criteria = new Criteria();
         $criteria->setLimit($batchSize);

@@ -9,6 +9,13 @@
             <parameter key="Master">Master</parameter>
             <parameter key="Name">Name</parameter>
         </parameter>
+        <parameter key="factfinder.export.cms.columns.base" type="collection">
+            <parameter key="Id">Id</parameter>
+            <parameter key="Title">Title</parameter>
+            <parameter key="Content">Content</parameter>
+            <parameter key="Keywords">Keywords</parameter>
+            <parameter key="MetaTitle">MetaTitle</parameter>
+        </parameter>
         <parameter key="factfinder.communication.parameters.base"  type="collection">
             <parameter key="use-personalization" type="string">true</parameter>
         </parameter>
@@ -38,6 +45,7 @@
         <defaults autoconfigure="true" autowire="true">
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
             <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
+            <bind key="$cmsFields" type="tagged_iterator" tag="factfinder.export.cms_field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$channelRepository" type="service" id="sales_channel.repository" />
             <bind key="$customFieldRepository" type="service" id="custom_field.repository" />
@@ -74,6 +82,10 @@
 
         <service id="Omikron\FactFinder\Shopware6\Subscriber\CategoryView">
             <argument type="service" id="Shopware\Core\Content\Category\SalesChannel\CategoryRoute"/>
+        </service>
+
+        <service id="Omikron\FactFinder\Shopware6\Export\ExportCategories">
+            <argument type="service" id="sales_channel.category.repository" />
         </service>
 
         <service id="Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface"
