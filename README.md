@@ -25,7 +25,9 @@ final chapter *Exporting Feed* describes how to use provided console command to 
         - [CLI](#cli)
         - [Exporting from Admin Panel](#exporting-from-admin-panel)
     - [CMS Pages](#cms-pages)
-      - [CLI](#cms-pages-cli)
+        - [CLI](#cms-pages-cli)
+    - [Brands](#brands-manufacturers)
+        - [CLI](#brands-manufacturers-cli)
 - [Web Components Integration](#web-components-integration)
     - [Web Components Documentation](#web-components-documentation)
     - [Including Scripts](#including-scripts)
@@ -197,6 +199,7 @@ The block `FACTFinder Web Components Listing` is unfortunately not taken into ac
 ## Exporting Feeds
 
 ### Products
+
 #### CLI
 Feed export is available in the Shopware CLI application. You can run it by executing:
 
@@ -262,7 +265,29 @@ by default export outputs data in the STDOUT. It could be easily redirected usin
     php [SHOPWARE_ROOT]/bin/console factfinder:export:cms > export.csv
 
 
-<bind key="$brandFields" type="tagged_iterator" tag="factfinder.export.brand_field" />
+### Brands (Manufacturers)
+<h4 id="brands-manufacturers-cli">CLI</h4>
+
+Feed export is available in the Shopware CLI application. You can run it by executing:
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands
+
+The command can be run with an optional argument indicating the sales channel ID that you are targeting. The ID is an
+string value.
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands SALES_CHANNEL_ID
+
+If a specific language needs to be specified, theres is a second argument which allows that.
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands SALES_CHANNEL_ID LANGUGAGE_ID
+
+There are two additional options:
+
+* `-u` uploads the feed to the configured FTP server after feed is generated.
+
+by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands > export.csv
 
 ## Web Components Integration
 
