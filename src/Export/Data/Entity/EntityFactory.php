@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
-use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface as CMSFieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface as BrandFieldInterface;
+use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface as CMSFieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
