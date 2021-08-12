@@ -20,9 +20,12 @@ final chapter *Exporting Feed* describes how to use provided console command to 
       - [Campaigns Element](#campaigns-element)
     - [Blocks and Elements Templates](#blocks-and-elements-templates)
     - [Assigning Layout to Category](#assigning-layout-to-category)
-- [Exporting Feed](#exporting-feed)
-    - [CLI](#cli)
-    - [Exporting from Admin Panel](#exporting-from-admin-panel)
+- [Exporting Feeds](#exporting-feeds)
+    - [Products](#products)
+        - [CLI](#cli)
+        - [Exporting from Admin Panel](#exporting-from-admin-panel)
+    - [Brands](#brands-manufacturers)
+        - [CLI](#brands-manufacturers-cli)
 - [Web Components Integration](#web-components-integration)
     - [Web Components Documentation](#web-components-documentation)
     - [Including Scripts](#including-scripts)
@@ -232,8 +235,8 @@ Select fields allows you to select sales channel and languague parameter for whi
 or by CLI worker. More information about messaging you can find in official Shopware [documentation](https://developer.shopware.com/docs/guides/hosting/infrastructure/message-queue)
 
 ### Brands (Manufacturers)
+<h4 id="brands-manufacturers-cli">CLI</h4>
 
-#### CLI
 Feed export is available in the Shopware CLI application. You can run it by executing:
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:brands
