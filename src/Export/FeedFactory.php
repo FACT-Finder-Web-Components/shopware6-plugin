@@ -9,6 +9,9 @@ use Omikron\FactFinder\Shopware6\Export\Data\Entity\EntityFactory;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
+/**
+ * @SuppressWarnings(PHPMD.MissingImport)
+ */
 class FeedFactory
 {
     public const BRAND_EXPORT_TYPE     = 'manufacturer';
