@@ -15,6 +15,10 @@ use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufactu
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.MissingImport)
+ */
 class EntityFactory
 {
     private PropertyFormatter $propertyFormatter;
