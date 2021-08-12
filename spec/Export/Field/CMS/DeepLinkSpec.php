@@ -1,6 +1,5 @@
 <?php
 
-
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field\CMS;
 
 use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface;
@@ -8,7 +7,6 @@ use PhpSpec\ObjectBehavior;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
 use Shopware\Core\Content\Seo\SeoUrl\SeoUrlCollection;
 use Shopware\Core\Content\Seo\SeoUrl\SeoUrlEntity;
-
 
 class DeepLinkSpec extends ObjectBehavior
 {
