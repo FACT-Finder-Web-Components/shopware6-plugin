@@ -91,7 +91,7 @@ trait CustomFieldTrait
                 new Context(new SystemSource())
             )->first();
             if (!$customField) {
-                throw new InvalidArgumentException('There is no custom field with a given key');
+                throw new \InvalidArgumentException('There is no custom field with a given key');
             }
             $this->loadedFields[$key] = $customField;
         }
