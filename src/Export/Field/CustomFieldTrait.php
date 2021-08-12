@@ -16,6 +16,9 @@ use Shopware\Core\System\CustomField\CustomFieldEntity;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
 use Shopware\Core\System\Language\LanguageEntity;
 
+/**
+ * @SuppressWarnings(PHPMD)
+ */
 trait CustomFieldTrait
 {
     public function getFieldValue(Entity $entity): string
