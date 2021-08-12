@@ -195,7 +195,6 @@ Offered Cms Blocks and Elements are designed to work on pages of type `LandingPa
 There is a type `CategoryPage` but the builtin validation will not allow saving that prepared page, unless it contains at least one default Product Listing Block.
 The block `FACTFinder Web Components Listing` is unfortunately not taken into account.
 
-
 ## Exporting Feeds
 
 ### Products

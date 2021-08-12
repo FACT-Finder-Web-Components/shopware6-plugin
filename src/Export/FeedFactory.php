@@ -13,22 +13,42 @@ class FeedFactory
 {
     public const PRODUCT_EXPORT_TYPE = 'product';
     public const CMS_EXPORT_TYPE     = 'cms';
+    public const BRAND_EXPORT_TYPE     = 'manufacturer';
 
     private FilterInterface $filter;
     private ExportProducts $products;
     private EntityFactory $entityFactory;
     private ExportCategories $categories;
+    private ExportBrands $brands;
 
-    public function __construct(ExportProducts $products, FilterInterface $filter, EntityFactory $entityFactory, ExportCategories $categories)
+    public function __construct(ExportProducts $products, FilterInterface $filter, EntityFactory $entityFactory, ExportCategories $categories, ExportBrands $brands)
     {
         $this->products      = $products;
         $this->filter        = $filter;
         $this->entityFactory = $entityFactory;
         $this->categories    = $categories;
+        $this->brands        = $brands;
     }
 
     public function create(SalesChannelContext $context, string $exportType): Feed
     {
-        return new Feed(new DataProvider($context, $exportType === self::CMS_EXPORT_TYPE ? $this->categories : $this->products, $this->entityFactory), $this->filter);
+        switch ($exportType) {
+            case self::BRAND_EXPORT_TYPE:
+                $exportData = $this->brands;
+
+                break;
+            case self::PRODUCT_EXPORT_TYPE:
+                $exportData = $this->products;
+
+                break;
+            case self::CMS_EXPORT_TYPE:
+                $exportData = $this->categories;
+
+                break;
+            default:
+                throw new \Exception('Unknown export type: ' . $exportType);
+        }
+
+        return new Feed(new DataProvider($context, $exportData, $this->entityFactory), $this->filter);
     }
 }

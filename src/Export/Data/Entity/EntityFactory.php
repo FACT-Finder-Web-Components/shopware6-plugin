@@ -6,8 +6,11 @@ namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface as CMSFieldInterface;
+use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
+use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface as BrandFieldInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
+use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity as Brand;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
@@ -24,6 +27,9 @@ class EntityFactory
     /** @var FieldInterface[] */
     private array $variantFields;
 
+    /** @var BrandFieldInterface[] */
+    private array $brandFields;
+
     private CurrencyFieldsProvider $currencyFieldsProvider;
 
     public function __construct(
@@ -31,31 +37,48 @@ class EntityFactory
         iterable $productFields,
         iterable $variantFields,
         CurrencyFieldsProvider $currencyFieldsProvider,
+        iterable $brandFields,
         iterable $cmsFields
     ) {
         $this->propertyFormatter      = $propertyFormatter;
         $this->productFields          = iterator_to_array($productFields);
         $this->variantFields          = iterator_to_array($variantFields);
+        $this->brandFields            = iterator_to_array($brandFields);
         $this->currencyFieldsProvider = $currencyFieldsProvider;
         $this->cmsFields              = iterator_to_array($cmsFields);
     }
 
     /**
-     * @param Product|Category $data
+     * @param Product|Category|Brand $data
      *
-     * @return iterable
+     * @return ExportEntityInterface[]
      */
     public function createEntities($data): iterable
     {
-        $entity = $data instanceof Category
-            ? new CategoryEntity($data, $this->cmsFields)
-            : new ProductEntity($data, array_merge($this->productFields, $this->currencyFieldsProvider->getCurrencyFields()));
+        switch (true) {
+            case $data instanceof Product:
+                $entity = new ProductEntity($data, array_merge($this->productFields, $this->currencyFieldsProvider->getCurrencyFields()));
 
-        if ($data->getChildCount()) {
-            $parentData = $entity->toArray();
+                break;
+            case $data instanceof Brand:
+                $entity = new BrandEntity($data, $this->brandFields);
 
-            if ($data instanceof Product) {
-                yield from $data->getChildren()->map(fn (Product $child) => new VariantEntity($child, $parentData, $this->propertyFormatter, $this->variantFields));
+                break;
+            case $data instanceof Category:
+                $entity = new CategoryEntity($data, $this->cmsFields);
+
+                break;
+            default:
+                throw new \Exception('Unknown entity ' . get_class($data));
+        }
+
+        if (method_exists($data, 'getChildCount')) {
+            if ($data->getChildCount()) {
+                $parentData = $entity->toArray();
+
+                if ($data instanceof Product) {
+                    yield from $data->getChildren()->map(fn (Product $child) => new VariantEntity($child, $parentData, $this->propertyFormatter, $this->variantFields));
+                }
             }
         }
         yield $entity;
