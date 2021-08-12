@@ -20,9 +20,12 @@ final chapter *Exporting Feed* describes how to use provided console command to 
       - [Campaigns Element](#campaigns-element)
     - [Blocks and Elements Templates](#blocks-and-elements-templates)
     - [Assigning Layout to Category](#assigning-layout-to-category)
-- [Exporting Feed](#exporting-feed)
-    - [CLI](#cli)
-    - [Exporting from Admin Panel](#exporting-from-admin-panel)
+- [Exporting Feeds](#exporting-feeds)
+    - [Products](#products)
+        - [CLI](#cli)
+        - [Exporting from Admin Panel](#exporting-from-admin-panel)
+    - [CMS Pages](#cms-pages)
+      - [CLI](#cms-pages-cli)
 - [Web Components Integration](#web-components-integration)
     - [Web Components Documentation](#web-components-documentation)
     - [Including Scripts](#including-scripts)
@@ -234,7 +237,7 @@ or by CLI worker. More information about messaging you can find in official Shop
 
 ### CMS Pages
 
-#### CLI
+<h4 id="cms-pages-cli">CLI</h4>
 CMS export is available in the Shopware CLI application. You can run it by executing:
 
     php [SHOPWARE_ROOT]/bin/console factfinder:export:cms
@@ -266,7 +269,7 @@ system.
 
 ### Web Components Documentation
 
-Full FACT-Finder® Web Components documentation you can found [here](https://web-components.fact-finder.de/api/4.x/ff-communication)
+Full FACT-Finder® Web Components documentation you can find [here](https://web-components.fact-finder.de/api/4.x/ff-communication)
 
 
 ### Including Scripts
