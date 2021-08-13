@@ -86,10 +86,10 @@ store cache in order the new applied configuration to start working.
 
 Settings placed in this section for customizing the export
 
-* Select Filter attributes which should be ignored be feed exporter - product properties selected here will not be
+* Select Filter attributes which should be ignored- product properties selected here will not be
   exported. By default, all properties are being exported.
   **Note:** Variant products properties which are part of the configuration will ignore that settings.
-* Select Custom fields which should be ignored be feed exporter - custom fields selected here will not be exported. By
+* Select Custom fields which should be ignored - custom fields selected here will not be exported. By
   default, all custom fields are being exported.
 * Export prices in all currencies - if disabled, export will contain only one column `Price`. If enabled, all product
   price will be exported in all currency configured for a given sales channel.
