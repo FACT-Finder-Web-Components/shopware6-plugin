@@ -43,14 +43,19 @@
         <parameter key="factfinder.navigation.initial_params" type="collection">
             <parameter key="navigation=true">navigation=true</parameter>
         </parameter>
+
+        <parameter key="factfinder.export.factory.map" type="collection">
+            <parameter key="Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity">Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity</parameter>
+            <parameter key="Shopware\Core\Content\Category\CategoryEntity">Omikron\FactFinder\Shopware6\Export\Data\Entity\CategoryEntity</parameter>
+            <parameter key="Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity">Omikron\FactFinder\Shopware6\Export\Data\Entity\BrandEntity</parameter>
+        </parameter>
     </parameters>
 
     <services>
         <defaults autoconfigure="true" autowire="true">
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
-            <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
-            <bind key="$cmsFields" type="tagged_iterator" tag="factfinder.export.cms_field" />
-            <bind key="$brandFields" type="tagged_iterator" tag="factfinder.export.brand_field" />
+            <bind key="$exportedEntities" type="tagged_iterator" tag="factfinder.export.entity" />
+            <bind key="$exportedEntityFactories" type="tagged_iterator" tag="factfinder.export.entity_factory" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$channelRepository" type="service" id="sales_channel.repository" />
             <bind key="$customFieldRepository" type="service" id="custom_field.repository" />
@@ -60,6 +65,11 @@
             <bind key="$customAssociations">%factfinder.export.associations%</bind>
             <bind key="$initialNavigationParams">%factfinder.navigation.initial_params%</bind>
             <bind key="$communicationParameters">%factfinder.communication.parameters.base%</bind>
+            <bind key="$fieldProviders" type="collection">
+                <bind key="Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity" type="tagged_iterator" tag="factfinder.export.field" />
+                <bind key="Shopware\Core\Content\Category\CategoryEntity" type="tagged_iterator" tag="factfinder.export.cms_field"/>
+                <bind key="Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity" type="tagged_iterator" tag="factfinder.export.brand_field"/>
+            </bind>
         </defaults>
 
         <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />
@@ -69,6 +79,12 @@
         <service id="Omikron\FactFinder\Communication\Client\ClientBuilder">
             <configurator service="Omikron\FactFinder\Shopware6\Communication\ClientBuilderConfigurator" method="configure" />
         </service>
+
+        <instanceof id="Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface">
+            <call method="setFactoryConfig">
+                <argument>%factfinder.export.factory.map%</argument>
+            </call>
+        </instanceof>
 
         <instanceof id="Shopware\Core\Framework\Adapter\Filesystem\Adapter\AdapterFactoryInterface">
             <tag name="shopware.filesystem.factory" />

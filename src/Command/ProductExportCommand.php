@@ -12,6 +12,7 @@ use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
@@ -25,7 +26,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Traversable;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
@@ -47,19 +47,17 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     private EntityRepositoryInterface $languageRepository;
     private EntityRepositoryInterface $channelRepository;
     private CurrencyFieldsProvider $currencyFieldsProvider;
-
-    /** @var FieldInterface[] */
-    private array $productFields;
+    private array $fieldProviders;
 
     public function __construct(
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
         PushImportService $pushImportService,
         UploadService $uploadService,
-        Traversable $productFields,
         EntityRepositoryInterface $languageRepository,
         EntityRepositoryInterface $channelRepository,
-        CurrencyFieldsProvider $currencyFieldsProvider
+        CurrencyFieldsProvider $currencyFieldsProvider,
+        array $fieldProviders
     ) {
         parent::__construct('factfinder:export:products');
         $this->channelService         = $channelService;
@@ -69,7 +67,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         $this->languageRepository     = $languageRepository;
         $this->channelRepository      = $channelRepository;
         $this->currencyFieldsProvider = $currencyFieldsProvider;
-        $this->productFields          = iterator_to_array($productFields);
+        $this->fieldProviders         = $fieldProviders;
     }
 
     protected function configure()
@@ -98,7 +96,8 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
             new Context(new SystemSource())
         )->first();
 
-        $feedService = $this->feedFactory->create($this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()), FeedFactory::PRODUCT_EXPORT_TYPE);
+        $context     = $this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId());
+        $feedService = $this->feedFactory->create($context, SalesChannelProductEntity::class);
         $feedColumns = $this->getFeedColumns();
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
@@ -122,7 +121,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
     private function getFeedColumns(): array
     {
         $base   = (array) $this->container->getParameter('factfinder.export.columns.base');
-        $fields = array_merge($this->productFields, $this->currencyFieldsProvider->getCurrencyFields());
+        $fields = array_merge(iterator_to_array($this->fieldProviders[SalesChannelProductEntity::class]), $this->currencyFieldsProvider->getCurrencyFields());
 
         return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $fields))));
     }

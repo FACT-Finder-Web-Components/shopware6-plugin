@@ -10,6 +10,7 @@ use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
+use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
@@ -24,7 +25,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Traversable;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
@@ -43,8 +43,7 @@ class CmsExportCommand extends Command implements ContainerAwareInterface
     private SalesChannelService $channelService;
     private FeedFactory $feedFactory;
     private UploadService $uploadService;
-    /** @var FieldInterface[] */
-    private array $cmsFields;
+    private array $fieldProviders;
 
     public function __construct(
         EntityRepositoryInterface $channelRepository,
@@ -52,7 +51,7 @@ class CmsExportCommand extends Command implements ContainerAwareInterface
         SalesChannelService $channelService,
         FeedFactory $feedFactory,
         UploadService $uploadService,
-        Traversable $cmsFields
+        array $fieldProviders
     ) {
         parent::__construct();
         $this->channelRepository  = $channelRepository;
@@ -60,7 +59,7 @@ class CmsExportCommand extends Command implements ContainerAwareInterface
         $this->channelService     = $channelService;
         $this->feedFactory        = $feedFactory;
         $this->uploadService      = $uploadService;
-        $this->cmsFields          = iterator_to_array($cmsFields);
+        $this->fieldProviders     = $fieldProviders;
     }
 
     public function configure()
@@ -76,10 +75,8 @@ class CmsExportCommand extends Command implements ContainerAwareInterface
     {
         $salesChannel     = $this->getSalesChannel($input);
         $selectedLanguage = $this->getLanguage($input);
-        $feedService      = $this->feedFactory->create(
-            $this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId()),
-            FeedFactory::CMS_EXPORT_TYPE);
-
+        $context          = $this->channelService->getSalesChannelContext($salesChannel, $selectedLanguage->getId());
+        $feedService      = $this->feedFactory->create($context, CategoryEntity::class);
         $feedColumns      = $this->getFeedColumns();
 
         if (!$input->getOption(self::UPLOAD_FEED_OPTION)) {
@@ -113,7 +110,8 @@ class CmsExportCommand extends Command implements ContainerAwareInterface
     private function getFeedColumns(): array
     {
         $base   = (array) $this->container->getParameter('factfinder.export.cms.columns.base');
-        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $this->cmsFields))));
+        $fields = iterator_to_array($this->fieldProviders[CategoryEntity::class]);
+        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $fields))));
     }
 
     private function getFieldName(FieldInterface $field): string

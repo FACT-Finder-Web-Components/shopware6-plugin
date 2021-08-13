@@ -56,4 +56,9 @@ class ExportBrands implements ExportInterface
 
         return $criteria;
     }
+
+    public function getEntityType(): string
+    {
+        return ProductManufacturerEntity::class;
+    }
 }

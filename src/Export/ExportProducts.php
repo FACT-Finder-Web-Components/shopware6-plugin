@@ -58,4 +58,9 @@ class ExportProducts implements ExportInterface
         $criteria->addFilter(new EqualsFilter('parentId', null));
         return $criteria;
     }
+
+    public function getEntityType(): string
+    {
+        return SalesChannelProductEntity::class;
+    }
 }

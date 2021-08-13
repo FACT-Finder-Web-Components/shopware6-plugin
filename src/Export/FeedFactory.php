@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
+use InvalidArgumentException;
 use Omikron\FactFinder\Shopware6\Export\Data\DataProvider;
-use Omikron\FactFinder\Shopware6\Export\Data\Entity\EntityFactory;
+use Omikron\FactFinder\Shopware6\Export\Data\Factory\CompositeFactory;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
@@ -14,44 +15,30 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
  */
 class FeedFactory
 {
-    public const BRAND_EXPORT_TYPE     = 'manufacturer';
-    public const PRODUCT_EXPORT_TYPE   = 'product';
-    public const CMS_EXPORT_TYPE       = 'cms';
-
+    /** ExportInterface[] */
+    private array $exportEntities;
     private FilterInterface $filter;
-    private ExportProducts $products;
-    private EntityFactory $entityFactory;
-    private ExportBrands $brands;
-    private ExportCategories $categories;
+    private CompositeFactory $compositeFactory;
 
-    public function __construct(ExportProducts $products, FilterInterface $filter, EntityFactory $entityFactory, ExportCategories $categories, ExportBrands $brands)
+    public function __construct(iterable $exportedEntities, FilterInterface $filter, CompositeFactory $compositeFactory)
     {
-        $this->products      = $products;
-        $this->filter        = $filter;
-        $this->entityFactory = $entityFactory;
-        $this->categories    = $categories;
-        $this->brands        = $brands;
+        $this->filter           = $filter;
+        $this->compositeFactory = $compositeFactory;
+        $this->exportEntities   = iterator_to_array($exportedEntities);
     }
 
     public function create(SalesChannelContext $context, string $exportType): Feed
     {
-        switch ($exportType) {
-            case self::BRAND_EXPORT_TYPE:
-                $exportData = $this->brands;
-
-                break;
-            case self::PRODUCT_EXPORT_TYPE:
-                $exportData = $this->products;
-
-                break;
-            case self::CMS_EXPORT_TYPE:
-                $exportData = $this->categories;
-
-                break;
-            default:
-                throw new \Exception('Unknown export type: ' . $exportType);
+        $exporter = $this->first(array_filter(($this->exportEntities), fn (ExportInterface $exp): bool => $exp->getEntityType() === $exportType));
+        if (!$exporter instanceof ExportInterface) {
+            throw new InvalidArgumentException(sprintf('There is no exporter for given type: %s', $exportType));
         }
 
-        return new Feed(new DataProvider($context, $exportData, $this->entityFactory), $this->filter);
+        return new Feed(new DataProvider($context, $exporter, $this->compositeFactory), $this->filter);
+    }
+
+    private function first(array $arr): ?ExportInterface
+    {
+        return empty($arr) ? null : reset($arr);
     }
 }
