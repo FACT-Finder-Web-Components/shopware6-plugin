@@ -29,7 +29,8 @@
     "test": [
       "php-cs-fixer fix --dry-run -v",
       "phpspec run --format=dot",
-      "phpmd src text phpmd.xml.dist"
+      "phpmd src text phpmd.xml.dist",
+      "php phpcpd.phar src"
     ]
   },
   "extra": {

@@ -8,16 +8,21 @@ class ExportSettings extends BaseConfig
 {
     public function getDisabledPropertyGroups(): array
     {
-        return $this->config('disabledPropertyGroups');
+        return $this->toArray($this->config('disabledPropertyGroups'));
     }
 
     public function getDisabledCustomFields(): array
     {
-        return $this->config('disabledCustomFields');
+        return $this->toArray($this->config('disabledCustomFields'));
     }
 
     public function isMultiCurrencyPriceExportEnable(): bool
     {
-        return $this->config('currencyPriceExport');
+        return (bool) $this->config('currencyPriceExport');
+    }
+
+    private function toArray(?array $value): array
+    {
+        return (array) $value;
     }
 }

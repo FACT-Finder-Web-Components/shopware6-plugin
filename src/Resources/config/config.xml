@@ -40,18 +40,18 @@
         <component name="sw-entity-multi-id-select">
             <name>disabledPropertyGroups</name>
             <entity>property_group</entity>
-            <label>Select Filter attributes which should be ignored be feed exporter</label>
+            <label>Select Filter Attributes which should be ignored</label>
         </component>
 
         <component name="sw-entity-multi-id-select">
             <name>disabledCustomFields</name>
             <entity>custom_field</entity>
-            <label>Select Custom fields which should be ignored be feed exporter</label>
+            <label>Select Custom Fields which should be ignored</label>
         </component>
 
         <input-field type="checkbox">
             <name>currencyPriceExport</name>
-            <label>Export prices in all currencies</label>
+            <label>Export Prices for all Currencies</label>
         </input-field>
     </card>
 

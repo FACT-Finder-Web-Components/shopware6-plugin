@@ -10,7 +10,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Activating the Module](#activating-the-module)
-- [Settings](#settings)
+- [Main Settings](#main-settings)
 - [Export Settings](#export-settings)
     - [Price Columns Format](#price-columns-format)
 - [Category Pages](#category-pages)
@@ -51,7 +51,7 @@ To install the plugin, open your terminal and run the command:
 
     composer require omikron/shopware6-factfinder
 
-After plugin is successfully installed it will be visible in the extensions list. Depending on the Shopware 6 versions
+After successfully installation, it will be visible in the extensions list. Depending on the Shopware 6 versions
 the view could be different.
 
 ![Module Enabled](docs/assets/extension-disabled.png "Extension disable")
@@ -68,7 +68,7 @@ After it is installed, its configuration is available under the three dots icon.
 ![Module Enabled](docs/assets/extension-config.png "Extension configuration")
 All sections will be covered in the following paragraphs.
 
-## Settings
+## Main Settings
 
 ![Main Settings](docs/assets/main-settings.png "Main settings")
 
@@ -87,14 +87,14 @@ store cache in order the new applied configuration to start working.
 
 ### Export Settings
 
-Settings placed in this section for customizing the export
+![Main Settings](docs/assets/export-settings.png "Export Settings")
 
-* Select Filter attributes which should be ignored be feed exporter - product properties selected here will not be
+* Select Filter Attributes which should be ignored- product properties selected here will not be
   exported. By default, all properties are being exported.
   **Note:** Variant products properties which are part of the configuration will ignore that settings.
-* Select Custom fields which should be ignored be feed exporter - custom fields selected here will not be exported. By
+* Select Custom Fields which should be ignored - custom fields selected here will not be exported. By
   default, all custom fields are being exported.
-* Export prices in all currencies - if disabled, export will contain only one column `Price`. If enabled, all product
+* Export prices for all Currencies - if disabled, export will contain only one column `Price`. If enabled, all product
   price will be exported in all currency configured for a given sales channel.
 
 #### Price Columns Format
