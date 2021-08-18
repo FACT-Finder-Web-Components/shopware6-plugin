@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -51,11 +52,22 @@ class ExportProducts implements ExportInterface
         $criteria->addAssociation('properties');
         $criteria->addAssociation('customFields');
         $criteria->addAssociation('properties.group');
+        $criteria->addAssociation('media');
         $criteria->addAssociation('seoUrls');
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
         }
         $criteria->addFilter(new EqualsFilter('parentId', null));
         return $criteria;
+    }
+
+    public function getCoveredEntityType(): string
+    {
+        return SalesChannelProductEntity::class;
+    }
+
+    public function getProducedExportEntityType(): string
+    {
+        return ExportProductEntity::class;
     }
 }

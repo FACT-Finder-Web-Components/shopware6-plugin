@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class Brand implements FieldInterface
 {
@@ -13,8 +14,13 @@ class Brand implements FieldInterface
         return 'Brand';
     }
 
-    public function getValue(Product $product): string
+    public function getValue(Entity $entity): string
     {
-        return $product->getManufacturer() ? (string) $product->getManufacturer()->getTranslation('name') : '';
+        return $entity->getManufacturer() ? (string) $entity->getManufacturer()->getTranslation('name') : '';
+    }
+
+    public function getCompatibleEntityTypes(): array
+    {
+        return [SalesChannelProductEntity::class];
     }
 }

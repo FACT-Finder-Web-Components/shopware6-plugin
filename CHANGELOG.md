@@ -5,6 +5,7 @@
  - Drop PHP 7.3 compatibility
 ### Add
 - Introduced Category Export
+- Introduced Brand Export
 - Add callback and dom-updated fields to ASN and RecordList CMS Elements which allows to pass inject javascript interacting with Web Components from the PageBuilder
 ### Fix
  - Fix Export Settings

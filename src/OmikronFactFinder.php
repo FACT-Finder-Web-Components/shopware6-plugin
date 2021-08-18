@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6;
 
-use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface as FieldInterfaceCMS;
+use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
+use Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface;
+use Omikron\FactFinder\Shopware6\Export\ExportInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
@@ -17,6 +19,9 @@ use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class OmikronFactFinder extends Plugin
 {
     public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_SET_NAME = 'cms_export_include';
@@ -26,7 +31,9 @@ class OmikronFactFinder extends Plugin
     {
         parent::build($container);
         $container->registerForAutoconfiguration(FieldInterface::class)->addTag('factfinder.export.field');
-        $container->registerForAutoconfiguration(FieldInterfaceCMS::class)->addTag('factfinder.export.cms_field');
+        $container->registerForAutoconfiguration(ExportInterface::class)->addTag('factfinder.export.exporter');
+        $container->registerForAutoconfiguration(ExportEntityInterface::class)->addTag('factfinder.export.entity');
+        $container->registerForAutoconfiguration(FactoryInterface::class)->addTag('factfinder.export.entity_factory');
     }
 
     public function install(InstallContext $installContext): void

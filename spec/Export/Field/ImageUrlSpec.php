@@ -6,8 +6,10 @@ namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use PhpSpec\ObjectBehavior;
+use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Media\MediaEntity as Media;
-use Shopware\Core\Content\Product\Aggregate\ProductMedia\ProductMediaEntity as Cover;
+use Shopware\Core\Content\Product\Aggregate\ProductMedia\ProductMediaCollection;
+use Shopware\Core\Content\Product\Aggregate\ProductMedia\ProductMediaEntity;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 
 class ImageUrlSpec extends ObjectBehavior
@@ -22,17 +24,28 @@ class ImageUrlSpec extends ObjectBehavior
         $this->getName()->shouldReturn('ImageUrl');
     }
 
-    function it_does_not_fail_if_the_image_is_not_present(Product $product, Cover $cover, Media $media)
-    {
+    function it_does_not_fail_if_the_image_is_not_present(
+        Product                $product,
+        ProductMediaCollection $mediaCollection,
+        ProductMediaEntity     $productMediaEntity,
+        Media                  $media
+    ) {
         $this->shouldNotThrow()->during('getValue', [$product]);
         $this->getValue($product)->shouldReturn('');
 
-        $product->getCover()->willReturn($cover);
-        $this->shouldNotThrow()->during('getValue', [$product]);
-        $this->getValue($product)->shouldReturn('');
+        $product->getMedia()->willReturn($mediaCollection);
+        $mediaCollection->first()->willReturn($productMediaEntity);
+        $productMediaEntity->getMedia()->willReturn($media);
 
-        $cover->getMedia()->willReturn($media);
         $media->getUrl()->willReturn('/product_image.jpg');
         $this->getValue($product)->shouldReturn('/product_image.jpg');
     }
+
+    function it_does_not_fail_if_media_is_not_a_collection(CategoryEntity $category, Media $media)
+    {
+        $category->getMedia()->willReturn($media);
+        $media->getUrl()->willReturn('/category_image.jpg');
+        $this->getValue($category)->shouldReturn('/category_image.jpg');
+    }
+
 }

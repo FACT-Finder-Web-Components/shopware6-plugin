@@ -11,10 +11,14 @@
         </parameter>
         <parameter key="factfinder.export.cms.columns.base" type="collection">
             <parameter key="Id">Id</parameter>
-            <parameter key="Title">Title</parameter>
+            <parameter key="Name">Name</parameter>
             <parameter key="Content">Content</parameter>
             <parameter key="Keywords">Keywords</parameter>
             <parameter key="MetaTitle">MetaTitle</parameter>
+        </parameter>
+        <parameter key="factfinder.export.brands.columns.base" type="collection">
+            <parameter key="Name">Name</parameter>
+            <parameter key="Deeplink">Deeplink</parameter>
         </parameter>
         <parameter key="factfinder.communication.parameters.base"  type="collection">
             <parameter key="use-personalization" type="string">true</parameter>
@@ -44,8 +48,10 @@
     <services>
         <defaults autoconfigure="true" autowire="true">
             <bind key="$fieldRoles">%factfinder.field_roles%</bind>
-            <bind key="$productFields" type="tagged_iterator" tag="factfinder.export.field" />
-            <bind key="$cmsFields" type="tagged_iterator" tag="factfinder.export.cms_field" />
+            <bind key="$exporters" type="tagged_iterator" tag="factfinder.export.exporter" />
+            <bind key="$exportedEntityTypes" type="tagged_iterator" tag="factfinder.export.export_entity" />
+            <bind key="$exportedEntityFactories" type="tagged_iterator" tag="factfinder.export.entity_factory" />
+            <bind key="$exportedFields" type="tagged_iterator" tag="factfinder.export.field" />
             <bind key="$productRepository" type="service" id="sales_channel.product.repository" />
             <bind key="$channelRepository" type="service" id="sales_channel.repository" />
             <bind key="$customFieldRepository" type="service" id="custom_field.repository" />
@@ -101,6 +107,9 @@
 
         <service id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler">
             <tag name="messenger.message_handler" />
+        </service>
+        <service id="Omikron\FactFinder\Shopware6\Export\ExportBrands">
+            <argument type="service" id="product_manufacturer.repository" />
         </service>
     </services>
 </container>

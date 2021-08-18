@@ -12,4 +12,8 @@ interface ExportInterface
     public function getByContext(SalesChannelContext $context, int $batchSize = 100): iterable;
 
     public function getCriteria(int $batchSize): Criteria;
+
+    public function getCoveredEntityType(): string;
+
+    public function getProducedExportEntityType(): string;
 }
