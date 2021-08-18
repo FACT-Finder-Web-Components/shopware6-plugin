@@ -18,7 +18,7 @@ class ImageUrl implements FieldInterface
     {
         $media = $entity->getMedia();
         return $media
-            ? method_exists($media,'first')
+            ? method_exists($media, 'first')
                 ? $media->first()->getMedia()->getUrl()
                 : $media->getUrl()
             : '';
