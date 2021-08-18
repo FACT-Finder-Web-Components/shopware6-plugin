@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
-use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\CategoryEntity as ExportCategoryEntity;
+use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;

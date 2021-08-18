@@ -49,10 +49,10 @@ class CmsExportCommand extends Command implements ContainerAwareInterface
     public function __construct(
         EntityRepositoryInterface $channelRepository,
         EntityRepositoryInterface $languageRepository,
-        SalesChannelService       $channelService,
-        FeedFactory               $feedFactory,
-        UploadService             $uploadService,
-        FieldsProvider            $fieldsProviders
+        SalesChannelService $channelService,
+        FeedFactory $feedFactory,
+        UploadService $uploadService,
+        FieldsProvider $fieldsProviders
     ) {
         parent::__construct();
         $this->channelRepository  = $channelRepository;

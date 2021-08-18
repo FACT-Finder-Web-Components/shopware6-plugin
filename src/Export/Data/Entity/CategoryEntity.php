@@ -38,9 +38,4 @@ class CategoryEntity implements ExportEntityInterface
             'MetaTitle' => $this->category->getMetaTitle() ?? '',
         ]);
     }
-
-    static public function getCoveredEntityType(): string
-    {
-        return ShopwareCategoryEntity::class;
-    }
 }

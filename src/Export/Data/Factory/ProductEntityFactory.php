@@ -26,8 +26,8 @@ class ProductEntityFactory implements FactoryInterface
         CurrencyFieldsProvider $currencyFieldsProvider,
         Traversable $variantFields
     ) {
-        $this->propertyFormatter   = $propertyFormatter;
-        $this->fieldsProvider     = $fieldsProviders;
+        $this->propertyFormatter      = $propertyFormatter;
+        $this->fieldsProvider         = $fieldsProviders;
         $this->variantFields          = $variantFields;
         $this->currencyFieldsProvider = $currencyFieldsProvider;
     }
@@ -40,8 +40,10 @@ class ProductEntityFactory implements FactoryInterface
     /**
      * @param Entity $entity
      * @param string $producedType
+     *
      * @return iterable
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     *
      * @todo use $producedType
      */
     public function createEntities(Entity $entity, string $producedType = ProductEntity::class): iterable
@@ -49,7 +51,7 @@ class ProductEntityFactory implements FactoryInterface
         $fields = array_merge($this->fieldsProvider->getFields(get_class($entity), $this->currencyFieldsProvider->getCurrencyFields()));
         $parent = new $producedType($entity, $fields);
         if ($entity->getChildCount()) {
-            yield from $entity->getChildren()->map(fn(
+            yield from $entity->getChildren()->map(fn (
                 SalesChannelProductEntity $child) => new VariantEntity($child, $parent->toArray(), $this->propertyFormatter, iterator_to_array($this->variantFields)));
         }
         yield $parent;

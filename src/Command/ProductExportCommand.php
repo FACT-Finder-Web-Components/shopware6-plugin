@@ -58,7 +58,7 @@ class ProductExportCommand extends Command implements ContainerAwareInterface
         EntityRepositoryInterface $languageRepository,
         EntityRepositoryInterface $channelRepository,
         CurrencyFieldsProvider $currencyFieldsProvider,
-        FieldsProvider  $fieldProviders
+        FieldsProvider $fieldProviders
     ) {
         parent::__construct('factfinder:export:products');
         $this->channelService         = $channelService;

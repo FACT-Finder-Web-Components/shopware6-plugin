@@ -6,10 +6,10 @@ namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Content\Category\Service\CategoryBreadcrumbBuilder;
-use Shopware\Core\System\SalesChannel\SalesChannelEntity;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 
 class CategoryPath implements FieldInterface
 {
@@ -37,6 +37,11 @@ class CategoryPath implements FieldInterface
         return implode('|', $entity->getCategories()->fmap($this->createPath($this->channelService->getSalesChannelContext()->getSalesChannel())));
     }
 
+    public function getCompatibleEntityTypes(): array
+    {
+        return [SalesChannelProductEntity::class];
+    }
+
     private function createPath(SalesChannelEntity $salesChannel): callable
     {
         return function (Category $category) use ($salesChannel) {
@@ -45,10 +50,5 @@ class CategoryPath implements FieldInterface
                 ? implode('/', array_map('urlencode', $breadcrumb))
                 : '';
         };
-    }
-
-    public function getCompatibleEntityTypes(): array
-    {
-        return [SalesChannelProductEntity::class];
     }
 }

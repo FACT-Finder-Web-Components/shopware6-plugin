@@ -6,8 +6,8 @@ namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Export\Formatter\NumberFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
-use Shopware\Core\System\Currency\CurrencyEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Shopware\Core\System\Currency\CurrencyEntity;
 
 class PriceCurrency extends Price
 {

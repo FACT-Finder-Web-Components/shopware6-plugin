@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
+use InvalidArgumentException;
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\CustomFieldsService;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
@@ -22,7 +23,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
 use Shopware\Core\System\Language\LanguageEntity;
-use InvalidArgumentException;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
@@ -39,12 +39,12 @@ class CustomFields implements FieldInterface
     private array $loadedFields = [];
 
     public function __construct(
-        PropertyFormatter         $propertyFormatter,
-        SalesChannelService       $salesChannelService,
+        PropertyFormatter $propertyFormatter,
+        SalesChannelService $salesChannelService,
         EntityRepositoryInterface $customFieldRepository,
         EntityRepositoryInterface $languageRepository,
-        ExportSettings            $exportSettings,
-        CustomFieldsService       $customFieldsService
+        ExportSettings $exportSettings,
+        CustomFieldsService $customFieldsService
     ) {
         $this->propertyFormatter     = $propertyFormatter;
         $this->salesChannelService   = $salesChannelService;

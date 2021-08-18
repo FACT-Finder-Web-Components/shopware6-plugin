@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Export\Formatter\NumberFormatter;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 
 class Price implements FieldInterface
 {

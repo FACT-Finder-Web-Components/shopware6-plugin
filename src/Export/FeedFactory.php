@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
-
 use InvalidArgumentException;
 use Omikron\FactFinder\Shopware6\Export\Data\DataProvider;
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\CompositeFactory;
