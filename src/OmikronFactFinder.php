@@ -7,8 +7,6 @@ namespace Omikron\FactFinder\Shopware6;
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface;
 use Omikron\FactFinder\Shopware6\Export\ExportInterface;
-use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface as FieldInterfaceBrand;
-use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface as FieldInterfaceCMS;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
