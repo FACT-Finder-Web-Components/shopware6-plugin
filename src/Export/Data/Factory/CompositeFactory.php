@@ -9,8 +9,6 @@ use Traversable;
 
 class CompositeFactory implements FactoryInterface
 {
-    use FactoryConfigAware;
-
     private Traversable $exportEntityFactories;
 
     public function __construct(Traversable $exportedEntityFactories)
@@ -23,12 +21,12 @@ class CompositeFactory implements FactoryInterface
         return false;
     }
 
-    public function createEntities(Entity $entity): iterable
+    public function createEntities(Entity $entity, string $producedType): iterable
     {
         /** @var FactoryInterface $factory */
         foreach ($this->exportEntityFactories as $factory) {
             if ($factory->handle($entity)) {
-                yield from $factory->createEntities($entity);
+                yield from $factory->createEntities($entity, $producedType);
             }
         }
     }

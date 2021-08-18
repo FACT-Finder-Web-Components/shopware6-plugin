@@ -10,5 +10,5 @@ interface FactoryInterface
 {
     public function handle(Entity $entity): bool;
 
-    public function createEntities(Entity $entity): iterable;
+    public function createEntities(Entity $entity, string $producedType): iterable;
 }

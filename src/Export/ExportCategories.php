@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export;
 
 use Omikron\FactFinder\Shopware6\OmikronFactFinder;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\CategoryEntity as ExportCategoryEntity;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -51,8 +52,13 @@ class ExportCategories implements ExportInterface
         return $criteria;
     }
 
-    public function getEntityType(): string
+    public function getCoveredEntityType(): string
     {
         return CategoryEntity::class;
+    }
+
+    public function getProducedExportEntityType(): string
+    {
+        return ExportCategoryEntity::class;
     }
 }

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field\Brand;
 
-use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity as Brand;
+use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class BrandLogo implements FieldInterface
 {
@@ -13,8 +14,13 @@ class BrandLogo implements FieldInterface
         return 'BrandLogo';
     }
 
-    public function getValue(Brand $brand): string
+    public function getValue(Entity $entity): string
     {
-        return $brand->getMedia() ? $brand->getMedia()->getUrl() : '';
+        return $entity->getMedia() ? $entity->getMedia()->getUrl() : '';
+    }
+
+    public function getCompatibleEntityTypes(): array
+    {
+        return [];
     }
 }

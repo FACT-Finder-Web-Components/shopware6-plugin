@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6;
 
+use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface;
 use Omikron\FactFinder\Shopware6\Export\ExportInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface as FieldInterfaceBrand;
@@ -32,9 +33,8 @@ class OmikronFactFinder extends Plugin
     {
         parent::build($container);
         $container->registerForAutoconfiguration(FieldInterface::class)->addTag('factfinder.export.field');
-        $container->registerForAutoconfiguration(FieldInterfaceBrand::class)->addTag('factfinder.export.brand_field');
-        $container->registerForAutoconfiguration(FieldInterfaceCMS::class)->addTag('factfinder.export.cms_field');
-        $container->registerForAutoconfiguration(ExportInterface::class)->addTag('factfinder.export.entity');
+        $container->registerForAutoconfiguration(ExportInterface::class)->addTag('factfinder.export.exporter');
+        $container->registerForAutoconfiguration(ExportEntityInterface::class)->addTag('factfinder.export.entity');
         $container->registerForAutoconfiguration(FactoryInterface::class)->addTag('factfinder.export.entity_factory');
     }
 

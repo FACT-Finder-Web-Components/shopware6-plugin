@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\BrandEntity as ExportBrandEntity;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
@@ -57,8 +58,13 @@ class ExportBrands implements ExportInterface
         return $criteria;
     }
 
-    public function getEntityType(): string
+    public function getCoveredEntityType(): string
     {
         return ProductManufacturerEntity::class;
+    }
+
+    public function getProducedExportEntityType(): string
+    {
+        return ExportBrandEntity::class;
     }
 }

@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
-use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface;
+use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
+use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
@@ -40,14 +41,14 @@ class BrandExportCommand extends Command implements ContainerAwareInterface
     private EntityRepositoryInterface $languageRepository;
     private FeedFactory $feedFactory;
     private SalesChannelService $channelService;
-    private array $fieldProviders;
+    private FieldsProvider $fieldProviders;
 
     public function __construct(
         EntityRepositoryInterface $channelRepository,
         EntityRepositoryInterface $languageRepository,
         FeedFactory $feedFactory,
         SalesChannelService $channelService,
-        array $fieldProviders
+        FieldsProvider $fieldProviders
     ) {
         parent::__construct();
         $this->channelRepository  = $channelRepository;
@@ -99,7 +100,7 @@ class BrandExportCommand extends Command implements ContainerAwareInterface
     private function getFeedColumns(): array
     {
         $base   = (array) $this->container->getParameter('factfinder.export.brands.columns.base');
-        $fields = iterator_to_array($this->fieldProviders[ProductManufacturerEntity::class]);
+        $fields = $this->fieldProviders->getFields(ProductManufacturerEntity::class);
         return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $fields))));
     }
 

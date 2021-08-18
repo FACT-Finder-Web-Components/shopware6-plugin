@@ -7,6 +7,7 @@ namespace Omikron\FactFinder\Shopware6\Export\Field;
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
 
 class FilterAttributes implements FieldInterface
@@ -25,11 +26,15 @@ class FilterAttributes implements FieldInterface
         return 'FilterAttributes';
     }
 
-    public function getValue(Product $product): string
+    /**
+     * @param Product $entity
+     * @return string
+     */
+    public function getValue(Entity $entity): string
     {
-        $attributes = $product->getChildren()->reduce(
+        $attributes = $entity->getChildren()->reduce(
             fn (array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
-            array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($product))
+            array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($entity))
         );
         return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';
     }
@@ -44,5 +49,10 @@ class FilterAttributes implements FieldInterface
         return $product->getProperties()
                        ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledProperties))
                        ->getElements();
+    }
+
+    public function getCompatibleEntityTypes(): array
+    {
+        return [Product::class];
     }
 }

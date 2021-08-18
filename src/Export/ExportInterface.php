@@ -13,5 +13,7 @@ interface ExportInterface
 
     public function getCriteria(int $batchSize): Criteria;
 
-    public function getEntityType(): string;
+    public function getCoveredEntityType(): string;
+
+    public function getProducedExportEntityType(): string;
 }

@@ -27,7 +27,7 @@ class DataProvider implements DataProviderInterface
     public function getEntities(): iterable
     {
         foreach ($this->exportData->getByContext($this->context) as $entity) {
-            yield from $this->entityFactory->createEntities($entity);
+            yield from $this->entityFactory->createEntities($entity, $this->exportData->getProducedExportEntityType());
         }
     }
 }

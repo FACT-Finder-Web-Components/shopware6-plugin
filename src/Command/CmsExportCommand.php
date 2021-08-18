@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
-use Omikron\FactFinder\Shopware6\Export\Field\CMS\FieldInterface;
+use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
+use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
@@ -43,15 +44,15 @@ class CmsExportCommand extends Command implements ContainerAwareInterface
     private SalesChannelService $channelService;
     private FeedFactory $feedFactory;
     private UploadService $uploadService;
-    private array $fieldProviders;
+    private FieldsProvider $fieldsProvider;
 
     public function __construct(
         EntityRepositoryInterface $channelRepository,
         EntityRepositoryInterface $languageRepository,
-        SalesChannelService $channelService,
-        FeedFactory $feedFactory,
-        UploadService $uploadService,
-        array $fieldProviders
+        SalesChannelService       $channelService,
+        FeedFactory               $feedFactory,
+        UploadService             $uploadService,
+        FieldsProvider            $fieldsProviders
     ) {
         parent::__construct();
         $this->channelRepository  = $channelRepository;
@@ -59,7 +60,7 @@ class CmsExportCommand extends Command implements ContainerAwareInterface
         $this->channelService     = $channelService;
         $this->feedFactory        = $feedFactory;
         $this->uploadService      = $uploadService;
-        $this->fieldProviders     = $fieldProviders;
+        $this->fieldsProvider     = $fieldsProviders;
     }
 
     public function configure()
@@ -110,7 +111,7 @@ class CmsExportCommand extends Command implements ContainerAwareInterface
     private function getFeedColumns(): array
     {
         $base   = (array) $this->container->getParameter('factfinder.export.cms.columns.base');
-        $fields = iterator_to_array($this->fieldProviders[CategoryEntity::class]);
+        $fields = $this->fieldsProvider->getFields(CategoryEntity::class);
         return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $fields))));
     }
 

@@ -4,42 +4,35 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
-use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
+use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Traversable;
 
 class GenericEntityFactory implements FactoryInterface
 {
-    use FactoryConfigAware;
-
     protected PropertyFormatter $propertyFormatter;
-    protected array $fieldProviders;
+    protected FieldsProvider $fieldsProvider;
+    protected array $exportedEntityTypes;
 
-    public function __construct(PropertyFormatter $propertyFormatter, array $fieldProviders)
-    {
-        $this->propertyFormatter = $propertyFormatter;
-        $this->fieldProviders    = $fieldProviders;
+    public function __construct(
+        PropertyFormatter $propertyFormatter,
+        FieldsProvider    $fieldsProviders,
+        Traversable       $exportedEntityTypes
+    ) {
+        $this->propertyFormatter   = $propertyFormatter;
+        $this->fieldsProvider      = $fieldsProviders;
+        $this->exportedEntityTypes = iterator_to_array($exportedEntityTypes);
     }
 
     public function handle(Entity $entity): bool
     {
-        return true;
+        return !$entity instanceof SalesChannelProductEntity;
     }
 
-    public function createEntities(Entity $entity): iterable
+    public function createEntities(Entity $entity, string $producedType): iterable
     {
-        yield $this->getInstance($entity);
-    }
-
-    protected function getInstance(Entity $entity): ExportEntityInterface
-    {
-        $type        = get_class($entity);
-        $createdType = $this->getCreatedType($type);
-        return new $createdType($entity, $this->getFieldProviders($type));
-    }
-
-    protected function getFieldProviders(string $type): array
-    {
-        return $this->fieldProviders[$type] ? iterator_to_array($this->fieldProviders[$type]) : [];
+        yield new $producedType($entity, $this->fieldsProvider->getFields(get_class($entity)));
     }
 }

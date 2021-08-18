@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
-use Omikron\FactFinder\Shopware6\Export\Field\Brand\FieldInterface;
+use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity as Brand;
 
 class BrandEntity implements ExportEntityInterface

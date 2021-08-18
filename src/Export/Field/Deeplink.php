@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Shopware\Core\Content\Category\CategoryEntity;
 
 class Deeplink implements FieldInterface
 {
@@ -13,9 +15,14 @@ class Deeplink implements FieldInterface
         return 'Deeplink';
     }
 
-    public function getValue(Product $product): string
+    public function getValue(Entity $entity): string
     {
-        $url = $product->getSeoUrls()->first();
+        $url = $entity->getSeoUrls()->first();
         return $url ? '/' . ltrim($url->getSeoPathInfo(), '/') : '';
+    }
+
+    public function getCompatibleEntityTypes(): array
+    {
+        return [SalesChannelProductEntity::class, CategoryEntity::class];
     }
 }
