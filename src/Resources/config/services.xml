@@ -11,14 +11,14 @@
         </parameter>
         <parameter key="factfinder.export.cms.columns.base" type="collection">
             <parameter key="Id">Id</parameter>
-            <parameter key="Title">Title</parameter>
+            <parameter key="Name">Name</parameter>
             <parameter key="Content">Content</parameter>
             <parameter key="Keywords">Keywords</parameter>
             <parameter key="MetaTitle">MetaTitle</parameter>
         </parameter>
         <parameter key="factfinder.export.brands.columns.base" type="collection">
-            <parameter key="BrandName">BrandName</parameter>
-            <parameter key="BrandURL">BrandURL</parameter>
+            <parameter key="Name">Name</parameter>
+            <parameter key="Deeplink">Deeplink</parameter>
         </parameter>
         <parameter key="factfinder.communication.parameters.base"  type="collection">
             <parameter key="use-personalization" type="string">true</parameter>

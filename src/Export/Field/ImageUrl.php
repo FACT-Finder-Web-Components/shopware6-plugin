@@ -16,12 +16,16 @@ class ImageUrl implements FieldInterface
 
     public function getValue(Entity $entity): string
     {
-        $cover = $entity->getCover();
-        return $cover && $cover->getMedia() ? $cover->getMedia()->getUrl() : '';
+        $media = $entity->getMedia();
+        return $media
+            ? method_exists($media,'first')
+                ? $media->first()->getMedia()->getUrl()
+                : $media->getUrl()
+            : '';
     }
 
     public function getCompatibleEntityTypes(): array
     {
-        return [SalesChannelProductEntity::class];
+        return [SalesChannelProductEntity::class, CategoryEntity::class, ProductManufacturerEntity::class];
     }
 }
