@@ -7,8 +7,13 @@ namespace Omikron\FactFinder\Shopware6\Command;
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
+use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
+use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
+use Shopware\Core\Content\Category\CategoryEntity;
+use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
@@ -27,7 +32,8 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class DataExportCommand extends Command implements ContainerAwareInterface
 {
-    use ContainerAwareTrait;
+    use ContainerAwareTrait,
+        DataExportTypeMapperTrait;
 
     private const UPLOAD_FEED_OPTION              = 'upload';
     private const PUSH_IMPORT_OPTION              = 'import';
@@ -38,6 +44,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     private const CMS_EXPORT_TYPE = 'cms';
     private const BRANDS_EXPORT_TYPE = 'brands';
 
+    private SalesChannelService $channelService;
     private EntityRepositoryInterface $channelRepository;
     private FeedFactory $feedFactory;
     private UploadService $uploadService;
@@ -47,6 +54,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     private FieldsProvider $fieldProviders;
 
     public function __construct(
+        SalesChannelService $channelService,
         EntityRepositoryInterface $channelRepository,
         FeedFactory $feedFactory,
         UploadService $uploadService,
@@ -57,6 +65,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     )
     {
         parent::__construct();
+        $this->channelService = $channelService;
         $this->channelRepository = $channelRepository;
         $this->feedFactory = $feedFactory;
         $this->uploadService = $uploadService;
@@ -85,39 +94,55 @@ class DataExportCommand extends Command implements ContainerAwareInterface
                 0
             );
             $dataExportTypeQuestion->setErrorMessage('Invalid option %s');
-            $dataExportType = $helper->ask($input, $output, $dataExportTypeQuestion);
+            $entity = $this->getEntityFqnByType($helper->ask($input, $output, $dataExportTypeQuestion));
 
             $salesChannelQuestion = new Question('ID of the sales channel (leave empty if no value)');
-            $salesChannel = $helper->ask($input, $output, $salesChannelQuestion);
+            $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, $salesChannelQuestion));
 
             $languageQuestion = new Question('ID of the sales channel language (leave empty if no value)');
-            $language = $helper->ask($input, $output, $languageQuestion);
+            $language = $this->getLanguage($helper->ask($input, $output, $languageQuestion));
 
         } else {
-            $salesChannel     = $this->getSalesChannel($input);
-            $language = $this->getLanguage($input);
-            $dataExportType = $input->getArgument(self::EXPORT_TYPE) ?? 'products';
+            $salesChannel     = $this->getSalesChannel($input->getArgument(self::SALES_CHANNEL_ARGUMENT));
+            $language = $this->getLanguage($input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT));
+            $entity = $this->getEntityFqnByType($input->getArgument(self::EXPORT_TYPE) ?? 'products');
         }
 
-        dump($dataExportType, $salesChannel, $language);
+        $context          = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
+        $feedService      = $this->feedFactory->create($context, $entity);
+        $feedColumns      = $this->getFeedColumns();
+
+        dump($entity, $salesChannel, $language);
 
         $output->writeln('no interactpion mode');
 
         return 0;
     }
 
-    private function getSalesChannel(InputInterface $input): ?SalesChannelEntity
+    private function getSalesChannel(string $id = null): ?SalesChannelEntity
     {
-        return !empty($input->getArgument(self::SALES_CHANNEL_ARGUMENT))
-            ? $this->channelRepository->search(new Criteria([$input->getArgument(self::SALES_CHANNEL_ARGUMENT)]), new Context(new SystemSource()))->first()
+        return !is_null($id)
+            ? $this->channelRepository->search(new Criteria([$id]), new Context(new SystemSource()))->first()
             : null;
     }
 
-    private function getLanguage(InputInterface $input): LanguageEntity
+    private function getLanguage(string $id = null): LanguageEntity
     {
         return $this->languageRepository->search(
-            new Criteria([$input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT) ?: Defaults::LANGUAGE_SYSTEM]),
+            new Criteria([$id ?: Defaults::LANGUAGE_SYSTEM]),
             new Context(new SystemSource())
         )->first();
+    }
+
+    private function getFeedColumns(): array
+    {
+        $base   = (array) $this->container->getParameter('factfinder.export.cms.columns.base');
+        $fields = $this->fieldProviders->getFields(CategoryEntity::class);
+        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $fields))));
+    }
+
+    private function getFieldName(FieldInterface $field): string
+    {
+        return $field->getName();
     }
 }
