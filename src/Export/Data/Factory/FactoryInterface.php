@@ -6,6 +6,9 @@ namespace Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
+/**
+ * @api
+ */
 interface FactoryInterface
 {
     public function handle(Entity $entity): bool;

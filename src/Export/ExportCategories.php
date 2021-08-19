@@ -37,7 +37,17 @@ class ExportCategories implements ExportInterface
         }
     }
 
-    public function getCriteria(int $batchSize): Criteria
+    public function getCoveredEntityType(): string
+    {
+        return CategoryEntity::class;
+    }
+
+    public function getProducedExportEntityType(): string
+    {
+        return ExportCategoryEntity::class;
+    }
+
+    private function getCriteria(int $batchSize): Criteria
     {
         $criteria = new Criteria();
         $criteria->setLimit($batchSize);
@@ -50,15 +60,5 @@ class ExportCategories implements ExportInterface
         $criteria->addFilter(new EqualsFilter(sprintf('customFields.%s', OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME), true));
 
         return $criteria;
-    }
-
-    public function getCoveredEntityType(): string
-    {
-        return CategoryEntity::class;
-    }
-
-    public function getProducedExportEntityType(): string
-    {
-        return ExportCategoryEntity::class;
     }
 }
