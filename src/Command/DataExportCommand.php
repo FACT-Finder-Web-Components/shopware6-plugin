@@ -10,6 +10,7 @@ use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
+use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
@@ -24,6 +25,7 @@ use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
@@ -32,8 +34,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class DataExportCommand extends Command implements ContainerAwareInterface
 {
-    use ContainerAwareTrait,
-        DataExportTypeMapperTrait;
+    use ContainerAwareTrait;
 
     private const UPLOAD_FEED_OPTION              = 'upload';
     private const PUSH_IMPORT_OPTION              = 'import';
@@ -79,6 +80,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     {
         $this->setName('factfinder:data:export');
         $this->setDescription('Allows to export feed data for products, CMS and brands');
+        $this->addOption(self::UPLOAD_FEED_OPTION, 'u', InputOption::VALUE_NONE, 'Should upload after exporting');
         $this->addArgument(self::EXPORT_TYPE, InputArgument::OPTIONAL, sprintf('Set data export type(%s, %s, %s', self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE));
         $this->addArgument(self::SALES_CHANNEL_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel');
         $this->addArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel language');
@@ -88,33 +90,52 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     {
         if ($input->isInteractive()) {
             $helper = $this->getHelper('question');
-            $dataExportTypeQuestion = new ChoiceQuestion(
-                sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE),
-                [self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE],
+
+            $exportTypeQuestion = $this->getChoiceQuestion(
+                sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE), [self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE], 'Invalid option %s', 0
+            );
+            $exportType = $helper->ask($input, $output, $exportTypeQuestion);
+
+            $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value)')));
+            $language = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value)')));
+
+            $uploadFeedQuestion = $this->getChoiceQuestion(
+                'Should upload after exporting (default  - no)',
+                ['no', 'yes'],
+                'Invalid option %s',
                 0
             );
-            $dataExportTypeQuestion->setErrorMessage('Invalid option %s');
-            $entity = $this->getEntityFqnByType($helper->ask($input, $output, $dataExportTypeQuestion));
+            $uploadFeed = (bool) array_flip($uploadFeedQuestion->getChoices())[$helper->ask($input, $output, $uploadFeedQuestion)];
 
-            $salesChannelQuestion = new Question('ID of the sales channel (leave empty if no value)');
-            $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, $salesChannelQuestion));
-
-            $languageQuestion = new Question('ID of the sales channel language (leave empty if no value)');
-            $language = $this->getLanguage($helper->ask($input, $output, $languageQuestion));
-
+            $pushImportQuestion = $this->getChoiceQuestion(
+                'Should import after uploading (default  - no)',
+                ['no', 'yes'],
+                'Invalid option %s',
+                0
+            );
+            $pushImport = (bool) array_flip($pushImportQuestion->getChoices())[$helper->ask($input, $output, $pushImportQuestion)];
         } else {
             $salesChannel     = $this->getSalesChannel($input->getArgument(self::SALES_CHANNEL_ARGUMENT));
             $language = $this->getLanguage($input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT));
-            $entity = $this->getEntityFqnByType($input->getArgument(self::EXPORT_TYPE) ?? 'products');
+            $exportType = $input->getArgument(self::EXPORT_TYPE) ?? self::PRODUCTS_EXPORT_TYPE;
+            $uploadFeed = $input->getOption(self::UPLOAD_FEED_OPTION);
+            $pushImport = $input->getOption(self::PUSH_IMPORT_OPTION);
         }
 
         $context          = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
-        $feedService      = $this->feedFactory->create($context, $entity);
-        $feedColumns      = $this->getFeedColumns();
+        $entityFQN        = $this->getEntityFqnByType($exportType);
+        $feedService      = $this->feedFactory->create($context, $entityFQN);
+        $feedColumns      = $this->getFeedColumns($exportType, $entityFQN);
 
-        dump($entity, $salesChannel, $language);
+        if (!$uploadFeed) {
+            $feedService->generate(new ConsoleOutput($output), $feedColumns);
+            return 0;
+        }
 
-        $output->writeln('no interactpion mode');
+        if ($pushImport) {
+            $this->pushImportService->execute();
+            $output->writeln('FACT-Finder import has been start');
+        }
 
         return 0;
     }
@@ -134,15 +155,44 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         )->first();
     }
 
-    private function getFeedColumns(): array
+    private function getFeedColumns(string $exportType, string $entityFqn): array
     {
-        $base   = (array) $this->container->getParameter('factfinder.export.cms.columns.base');
-        $fields = $this->fieldProviders->getFields(CategoryEntity::class);
+        $base   = (array) $this->container->getParameter(sprintf('factfinder.export.%s.columns.base', $exportType));
+        $fields = $this->fieldProviders->getFields($entityFqn);
         return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $fields))));
     }
 
     private function getFieldName(FieldInterface $field): string
     {
         return $field->getName();
+    }
+
+    private function getChoiceQuestion(string $question, array $choices, string $errorMessage, $defaultValue = null): ChoiceQuestion
+    {
+        return (new ChoiceQuestion(
+            $question,
+            $choices,
+            $defaultValue
+        ))->setErrorMessage($errorMessage);
+    }
+
+    private function getEntityFqnByType(string $exportType): string
+    {
+        $entityTypeMap = $this->getTypeEntityMap();
+
+        if (isset($entityTypeMap[$exportType])) {
+            return $entityTypeMap[$exportType];
+        } else {
+            throw new \Exception('Unknown export type');
+        }
+    }
+
+    private function getTypeEntityMap(): array
+    {
+        return [
+            self::PRODUCTS_EXPORT_TYPE => SalesChannelProductEntity::class,
+            self::BRANDS_EXPORT_TYPE => ProductManufacturerEntity::class,
+            self::CMS_EXPORT_TYPE => CategoryEntity::class
+        ];
     }
 }
