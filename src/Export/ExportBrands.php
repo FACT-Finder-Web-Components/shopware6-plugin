@@ -45,7 +45,7 @@ class ExportBrands implements ExportInterface
         }
     }
 
-    public function getCriteria(int $batchSize): Criteria
+    private function getCriteria(int $batchSize): Criteria
     {
         $criteria = new Criteria();
         $criteria->setLimit($batchSize);

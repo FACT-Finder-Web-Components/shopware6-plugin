@@ -37,6 +37,8 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - [Modification Examples](#modifications-examples)
     - [Adding New Column to Feed](#adding-new-column-to-feed)
     - [Export Fields Stored in Variants](#export-fields-stored-in-variants)
+    - [Creating Custom Entity Export](#creating-custom-entity-export)
+        - [Generic Entity Factory](#generic-entity-factory) 
     - [Extending Specific Web Component Template](#extending-specific-web-component-template)
     - [Split ASN on Category Page](#split-asn-on-category-page)
 - [Contribute](#contribute)
@@ -383,12 +385,18 @@ interface FieldInterface
     public function getName(): string;
 
     public function getValue(Product $product): string;
+    
+    public function getCompatibleEntityTypes(): array;
 }
 ```
-
+The method `getName` contains name of Column under which field should be exported
 The method `getValue` contains your field logic and receives the article detail currently being exported.
+The method `getCompatibleEntityTypes` contains an array of Shopware Entity classes of which the given field can be applied to
 
 ```php
+
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+
 class CustomColumn implements FieldInterface
 {
      public function getName(): string
@@ -399,6 +407,11 @@ class CustomColumn implements FieldInterface
     public function getValue(Product $product): string
     {
         // Implement logic to fetch and transform data for a given article detail  
+    }
+    
+    public function getCompatibleEntityTypes(): array
+    {
+        return [SalesChannelProductEntity::class];
     }
 }
 ```
@@ -414,12 +427,15 @@ By default, only these fields are exported from variants:
     * ImageUrl
 If your setup requires more field to be exported from variants, you need to tag the desired Field with a `factfinder.export.variant_field` tag in `services.xml file`.
 
+    //src/Resources/config/services.xml:100
     <service id="Omikron\FactFinder\Shopware6\Export\Field\CustomFields">
         <tag name="factfinder.export.variant_field"/>
     </service>
-However,exporting data from variants may require additional joins during the data fetch.
+
+However, exporting data from variants may require additional joins during the data fetch.
 To define custom association (join) set them in under a parameter of that name
 
+    //src/Resources/config/services.xml:39
     <parameter key="factfinder.export.associations" type="collection">
         <parameter key="variant_cover">children.cover</parameter>
     </parameter>
@@ -431,6 +447,44 @@ where `$association` would be a `children.cover` in that example.
 
 **Note:**
 Please note that adding more and more associations will have an impact on overall export performance.
+
+### Creating Custom Entity Export
+Plugin offers a flexible export mechanism which could be specified to work with different types of entities.
+In current state of plugin it allows to export three types of entities:
+* SalesChannelProductEntity
+* CategoryEntity
+* ProductManufacturerEntity
+
+You can extend base with new kinds of entities. In order to do so you need to provide at least three classes
+* implementation of the Omikron\FactFinder\Shopware6\Export\ExportInterface which is responsible for exporting shopware entities
+* implementation of Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface which is a representation Facof shopware entity in an exportable form.
+* implementation of Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface which is responsible for yielding exportable entities mentioned above
+
+#### Generic Entity Factory
+If your Entity does not require custom logic in order to be yield (for instance ProductEntityFactory also yields VariantEntities if product is configurable with properties)
+You don't need to create new Factory for it. It will be handled by Omikron\FactFinder\Shopware6\Export\Data\Factory\GenericEntityFactory.
+
+**Note:** By entity we consider a class that extends Shopware\Core\Framework\DataAbstractionLayer\Entity class.
+
+If some fields needs more complex logic you can create additional Fields. This is a class that implements Omikron\FactFinder\Shopware6\Export\Field\FieldInterface.
+In method getCompatibleEntityTypes you can specify which entities this field could be applied to.
+All fields applicable for given entity will be passed in a form of iterator to the instance of Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface.
+Here is the example (ProductEntity)
+
+    //src/Export/Data/Entity/ProductEntity.php:18
+    public function __construct(Product $product, iterable $productFields)
+    {
+        $this->product       = $product;
+        $this->productFields = $productFields;
+    }
+
+
+after that you cann call Omikron\FactFinder\Shopware6\Export\FeedFactory to create a Feed wi
+    
+    $feed = $this->feedFactory->create($context, YourCustomEntity::class);
+    $feed->generate();
+
+**Note:** $context is object of class Shopware\Core\System\SalesChannel\SalesChannelContext
 
 ### Extending Specific Web Component Template
 All the Web Components rendering HTML, contains it inside the Twig block.
