@@ -12,6 +12,8 @@ use Traversable;
 
 /**
  * @SuppressWarnings(PHPMD.MissingImport)
+ *
+ * @api
  */
 class FeedFactory
 {
