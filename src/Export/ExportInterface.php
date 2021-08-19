@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 /**

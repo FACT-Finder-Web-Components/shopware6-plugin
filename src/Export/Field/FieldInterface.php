@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-    namespace Omikron\FactFinder\Shopware6\Export\Field;
+namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
