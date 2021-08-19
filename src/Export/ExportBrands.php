@@ -28,12 +28,6 @@ class ExportBrands implements ExportInterface
         $this->customAssociations            = $customAssociations;
     }
 
-    /**
-     * @param SalesChannelContext $context
-     * @param int                 $batchSize
-     *
-     * @return ProductManufacturerEntity[]
-     */
     public function getByContext(SalesChannelContext $context, int $batchSize = 100): iterable
     {
         $criteria      = $this->getCriteria($batchSize);
@@ -43,6 +37,16 @@ class ExportBrands implements ExportInterface
             $criteria->setOffset($criteria->getOffset() + $criteria->getLimit());
             $manufacturers = $this->productManufacturerRepository->search($criteria, new Context(new SystemSource()));
         }
+    }
+
+    public function getCoveredEntityType(): string
+    {
+        return ProductManufacturerEntity::class;
+    }
+
+    public function getProducedExportEntityType(): string
+    {
+        return ExportBrandEntity::class;
     }
 
     private function getCriteria(int $batchSize): Criteria
@@ -56,15 +60,5 @@ class ExportBrands implements ExportInterface
         }
 
         return $criteria;
-    }
-
-    public function getCoveredEntityType(): string
-    {
-        return ProductManufacturerEntity::class;
-    }
-
-    public function getProducedExportEntityType(): string
-    {
-        return ExportBrandEntity::class;
     }
 }
