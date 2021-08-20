@@ -8,11 +8,13 @@ class FeedExport
 {
     private ?string $salesChannelId;
     private ?string $salesChannelLanguageId;
+    private ?string $exportTypeValue;
 
-    public function __construct(string $salesChannelId = null, string $salesChannelLanguageId = null)
+    public function __construct(string $salesChannelId = null, string $salesChannelLanguageId = null, string $exportTypeValue = null)
     {
         $this->salesChannelId         = $salesChannelId;
         $this->salesChannelLanguageId = $salesChannelLanguageId;
+        $this->exportTypeValue = $exportTypeValue;
     }
 
     public function getSalesChannelId(): ?string
@@ -23,5 +25,10 @@ class FeedExport
     public function getSalesChannelLanguageId(): ?string
     {
         return $this->salesChannelLanguageId;
+    }
+
+    public function getExportTypeValue(): ?string
+    {
+        return $this->exportTypeValue;
     }
 }

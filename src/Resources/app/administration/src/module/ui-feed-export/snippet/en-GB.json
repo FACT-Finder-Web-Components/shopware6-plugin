@@ -17,6 +17,9 @@
         },
         "alert_error": {
           "text": "An error occurred during integration process"
+        },
+        "export_type": {
+          "label": "Select export type"
         }
       }
     }

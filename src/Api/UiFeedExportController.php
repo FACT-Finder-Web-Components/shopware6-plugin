@@ -42,7 +42,8 @@ class UiFeedExportController extends AbstractController
     {
         $this->feedExportHandler->handle(new FeedExport(
             $request->query->get('salesChannelValue'),
-            $request->query->get('salesChannelLanguageValue')
+            $request->query->get('salesChannelLanguageValue'),
+            $request->query->get('exportTypeValue')
         ));
 
         return new JsonResponse();

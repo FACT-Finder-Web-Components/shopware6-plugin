@@ -8,7 +8,8 @@ Component.register('ui-feed-export-form', {
     data() {
         return {
             salesChannelValue: null,
-            salesChannelLanguageValue: null
+            salesChannelLanguageValue: null,
+            exportTypeValue: null
         }
     },
 
@@ -35,7 +36,8 @@ Component.register('ui-feed-export-form', {
             };
             const params = {
                 salesChannelValue: this.salesChannelValue,
-                salesChannelLanguageValue: this.salesChannelLanguageValue
+                salesChannelLanguageValue: this.salesChannelLanguageValue,
+                exportTypeValue: this.exportTypeValue
             };
 
             httpClient
