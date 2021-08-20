@@ -3,13 +3,13 @@
 
 namespace Omikron\FactFinder\Shopware6\Command;
 
+use Omikron\FactFinder\Shopware6\Export\{CurrencyFieldsProvider, FeedFactory, FieldsProvider, SalesChannelService};
+use Symfony\Component\Console\Input\{InputArgument, InputInterface, InputOption};
+use Symfony\Component\Console\Question\{ChoiceQuestion, Question};
+use Symfony\Component\DependencyInjection\{ContainerAwareInterface, ContainerAwareTrait};
 
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
-use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
-use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
-use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
-use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
 use Shopware\Core\Content\Category\CategoryEntity;
@@ -23,14 +23,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\Language\LanguageEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ChoiceQuestion;
-use Symfony\Component\Console\Question\Question;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class DataExportCommand extends Command implements ContainerAwareInterface
 {
@@ -76,11 +69,21 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $this->fieldProviders = $fieldProviders;
     }
 
+    public function getTypeEntityMap(): array
+    {
+        return [
+            self::PRODUCTS_EXPORT_TYPE => SalesChannelProductEntity::class,
+            self::BRANDS_EXPORT_TYPE => ProductManufacturerEntity::class,
+            self::CMS_EXPORT_TYPE => CategoryEntity::class
+        ];
+    }
+
     public function configure()
     {
         $this->setName('factfinder:data:export');
         $this->setDescription('Allows to export feed data for products, CMS and brands');
         $this->addOption(self::UPLOAD_FEED_OPTION, 'u', InputOption::VALUE_NONE, 'Should upload after exporting');
+        $this->addOption(self::PUSH_IMPORT_OPTION, 'i', InputOption::VALUE_NONE, 'Should import after uploading');
         $this->addArgument(self::EXPORT_TYPE, InputArgument::OPTIONAL, sprintf('Set data export type(%s, %s, %s', self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE));
         $this->addArgument(self::SALES_CHANNEL_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel');
         $this->addArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel language');
@@ -91,28 +94,17 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         if ($input->isInteractive()) {
             $helper = $this->getHelper('question');
 
-            $exportTypeQuestion = $this->getChoiceQuestion(
-                sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE), [self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE], 'Invalid option %s', 0
-            );
+            $exportTypeQuestion = $this->getChoiceQuestion(sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE), [self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE], 'Invalid option %s', 0);
             $exportType = $helper->ask($input, $output, $exportTypeQuestion);
 
             $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value)')));
+
             $language = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value)')));
 
-            $uploadFeedQuestion = $this->getChoiceQuestion(
-                'Should upload after exporting (default  - no)',
-                ['no', 'yes'],
-                'Invalid option %s',
-                0
-            );
+            $uploadFeedQuestion = $this->getChoiceQuestion('Should upload after exporting (default  - no)', ['no', 'yes'], 'Invalid option %s', 0);
             $uploadFeed = (bool) array_flip($uploadFeedQuestion->getChoices())[$helper->ask($input, $output, $uploadFeedQuestion)];
 
-            $pushImportQuestion = $this->getChoiceQuestion(
-                'Should import after uploading (default  - no)',
-                ['no', 'yes'],
-                'Invalid option %s',
-                0
-            );
+            $pushImportQuestion = $this->getChoiceQuestion('Should import after uploading (default  - no)', ['no', 'yes'], 'Invalid option %s', 0);
             $pushImport = (bool) array_flip($pushImportQuestion->getChoices())[$helper->ask($input, $output, $pushImportQuestion)];
         } else {
             $salesChannel     = $this->getSalesChannel($input->getArgument(self::SALES_CHANNEL_ARGUMENT));
@@ -169,11 +161,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     private function getChoiceQuestion(string $question, array $choices, string $errorMessage, $defaultValue = null): ChoiceQuestion
     {
-        return (new ChoiceQuestion(
-            $question,
-            $choices,
-            $defaultValue
-        ))->setErrorMessage($errorMessage);
+        return (new ChoiceQuestion($question, $choices, $defaultValue))->setErrorMessage($errorMessage);
     }
 
     private function getEntityFqnByType(string $exportType): string
@@ -185,14 +173,5 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         } else {
             throw new \Exception('Unknown export type');
         }
-    }
-
-    private function getTypeEntityMap(): array
-    {
-        return [
-            self::PRODUCTS_EXPORT_TYPE => SalesChannelProductEntity::class,
-            self::BRANDS_EXPORT_TYPE => ProductManufacturerEntity::class,
-            self::CMS_EXPORT_TYPE => CategoryEntity::class
-        ];
     }
 }

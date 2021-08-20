@@ -35,7 +35,7 @@ class FeedFactory
             throw new InvalidArgumentException(sprintf('There is no exporter for given type: %s', $exportType));
         }
 
-        return new Feed(new DataProvider($context, $exporter, $this->compositeFactory), $this->filter);
+        return new Feed($context, $exporter, $this->compositeFactory, $this->filter);
     }
 
     private function first(array $arr): ?ExportInterface
