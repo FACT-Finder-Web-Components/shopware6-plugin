@@ -132,9 +132,6 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             $pushImport = $input->getOption(self::PUSH_IMPORT_OPTION);
         }
 
-
-        dd($exportType);
-
         $context          = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
         $entityFQN        = $this->getEntityFqnByType($exportType);
         $feedService      = $this->feedFactory->create($context, $entityFQN);
