@@ -34,6 +34,10 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class DataExportCommand extends Command implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
