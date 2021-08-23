@@ -1,28 +1,17 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Command;
 
-use Omikron\FactFinder\Shopware6\Export\{CurrencyFieldsProvider,
-    FeedFactory,
-    FieldsProvider,
-    SalesChannelService,
-    Stream\CsvFile};
-
-use Symfony\Component\Console\Input\{InputArgument,
-    InputInterface,
-    InputOption};
-
-use Symfony\Component\Console\Question\{ChoiceQuestion,
-    Question};
-
-use Symfony\Component\DependencyInjection\{ContainerAwareInterface,
-    ContainerAwareTrait,
-    ParameterBag\ParameterBagInterface};
-
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
+use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
+use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
+use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
+use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
+use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
@@ -35,7 +24,15 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\Language\LanguageEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class DataExportCommand extends Command implements ContainerAwareInterface
 {
@@ -43,13 +40,13 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     public const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     public const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
-    public const EXPORT_TYPE_ARGUMENT = 'export_type';
+    public const EXPORT_TYPE_ARGUMENT            = 'export_type';
 
     private const UPLOAD_FEED_OPTION              = 'upload';
     private const PUSH_IMPORT_OPTION              = 'import';
-    private const PRODUCTS_EXPORT_TYPE = 'products';
-    private const CMS_EXPORT_TYPE = 'cms';
-    private const BRANDS_EXPORT_TYPE = 'brands';
+    private const PRODUCTS_EXPORT_TYPE            = 'products';
+    private const CMS_EXPORT_TYPE                 = 'cms';
+    private const BRANDS_EXPORT_TYPE              = 'brands';
 
     private SalesChannelService $channelService;
     private EntityRepositoryInterface $channelRepository;
@@ -71,26 +68,25 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         CurrencyFieldsProvider $currencyFieldsProvider,
         FieldsProvider $fieldProviders,
         ParameterBagInterface $parameterBag
-    )
-    {
+    ) {
         parent::__construct();
-        $this->channelService = $channelService;
-        $this->channelRepository = $channelRepository;
-        $this->feedFactory = $feedFactory;
-        $this->uploadService = $uploadService;
-        $this->pushImportService = $pushImportService;
-        $this->languageRepository = $languageRepository;
+        $this->channelService         = $channelService;
+        $this->channelRepository      = $channelRepository;
+        $this->feedFactory            = $feedFactory;
+        $this->uploadService          = $uploadService;
+        $this->pushImportService      = $pushImportService;
+        $this->languageRepository     = $languageRepository;
         $this->currencyFieldsProvider = $currencyFieldsProvider;
-        $this->fieldProviders = $fieldProviders;
-        $this->parameterBag = $parameterBag;
+        $this->fieldProviders         = $fieldProviders;
+        $this->parameterBag           = $parameterBag;
     }
 
     public function getTypeEntityMap(): array
     {
         return [
             self::PRODUCTS_EXPORT_TYPE => SalesChannelProductEntity::class,
-            self::BRANDS_EXPORT_TYPE => ProductManufacturerEntity::class,
-            self::CMS_EXPORT_TYPE => CategoryEntity::class
+            self::BRANDS_EXPORT_TYPE   => ProductManufacturerEntity::class,
+            self::CMS_EXPORT_TYPE      => CategoryEntity::class,
         ];
     }
 
@@ -111,25 +107,25 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             $helper = $this->getHelper('question');
 
             $exportTypeQuestion = $this->getChoiceQuestion(sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE), [self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE], 'Invalid option %s', 0);
-            $exportType = $helper->ask($input, $output, $exportTypeQuestion);
+            $exportType         = $helper->ask($input, $output, $exportTypeQuestion);
 
             $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
-            $language = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
+            $language         = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
 
             $saveFileQuestion = $this->getChoiceQuestion('Save export to local file? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
-            $saveFile = (bool) array_flip($saveFileQuestion->getChoices())[$helper->ask($input, $output, $saveFileQuestion)];
+            $saveFile         = (bool) array_flip($saveFileQuestion->getChoices())[$helper->ask($input, $output, $saveFileQuestion)];
 
             $uploadFeedQuestion = $this->getChoiceQuestion('Should upload after exporting? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
-            $uploadFeed = (bool) array_flip($uploadFeedQuestion->getChoices())[$helper->ask($input, $output, $uploadFeedQuestion)];
+            $uploadFeed         = (bool) array_flip($uploadFeedQuestion->getChoices())[$helper->ask($input, $output, $uploadFeedQuestion)];
 
             $pushImportQuestion = $this->getChoiceQuestion('Should import after uploading? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
-            $pushImport = (bool) array_flip($pushImportQuestion->getChoices())[$helper->ask($input, $output, $pushImportQuestion)];
+            $pushImport         = (bool) array_flip($pushImportQuestion->getChoices())[$helper->ask($input, $output, $pushImportQuestion)];
         } else {
             $salesChannel     = $this->getSalesChannel($input->getArgument(self::SALES_CHANNEL_ARGUMENT));
-            $language = $this->getLanguage($input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT));
-            $exportType = $input->getArgument(self::EXPORT_TYPE_ARGUMENT) ?? self::PRODUCTS_EXPORT_TYPE;
-            $uploadFeed = $input->getOption(self::UPLOAD_FEED_OPTION);
-            $pushImport = $input->getOption(self::PUSH_IMPORT_OPTION);
+            $language         = $this->getLanguage($input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT));
+            $exportType       = $input->getArgument(self::EXPORT_TYPE_ARGUMENT) ?? self::PRODUCTS_EXPORT_TYPE;
+            $uploadFeed       = $input->getOption(self::UPLOAD_FEED_OPTION);
+            $pushImport       = $input->getOption(self::PUSH_IMPORT_OPTION);
         }
 
         $context          = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
@@ -145,7 +141,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             }
 
             $filename = $dir . DIRECTORY_SEPARATOR . 'test.csv';
-            $file = fopen($filename, "rw+");
+            $file     = fopen($filename, 'rw+');
             $feedService->generate(new CsvFile($file), $feedColumns);
         }
 
@@ -200,8 +196,8 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
         if (isset($entityTypeMap[$exportType])) {
             return $entityTypeMap[$exportType];
-        } else {
-            throw new \Exception('Unknown export type');
         }
+
+        throw new \Exception('Unknown export type');
     }
 }

@@ -14,7 +14,7 @@ class FeedExport
     {
         $this->salesChannelId         = $salesChannelId;
         $this->salesChannelLanguageId = $salesChannelLanguageId;
-        $this->exportTypeValue = $exportTypeValue;
+        $this->exportTypeValue        = $exportTypeValue;
     }
 
     public function getSalesChannelId(): ?string

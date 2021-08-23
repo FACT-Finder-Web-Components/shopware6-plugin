@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
-use Omikron\FactFinder\Shopware6\Export\Data\DataProviderInterface;
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\CompositeFactory;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Omikron\FactFinder\Shopware6\Export\Stream\StreamInterface;
@@ -19,10 +18,10 @@ class Feed
 
     public function __construct(SalesChannelContext $context, ExportInterface $exporter, CompositeFactory $compositeFactory, FilterInterface $filter)
     {
-        $this->context = $context;
-        $this->exporter = $exporter;
+        $this->context          = $context;
+        $this->exporter         = $exporter;
         $this->compositeFactory = $compositeFactory;
-        $this->filter = $filter;
+        $this->filter           = $filter;
     }
 
     public function generate(StreamInterface $stream, array $columns): void
@@ -36,9 +35,6 @@ class Feed
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEntities(): iterable
     {
         foreach ($this->exporter->getByContext($this->context) as $entity) {

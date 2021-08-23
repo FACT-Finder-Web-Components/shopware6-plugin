@@ -30,11 +30,11 @@ class FeedExportHandler extends AbstractMessageHandler
     public function handle($message): void
     {
         $input = new ArrayInput([
-            'command'       => 'factfinder:data:export',
-            '--upload'      => true,
-            '--import'      => true,
-            DataExportCommand::EXPORT_TYPE_ARGUMENT => $message->getExportTypeValue() ?? '',
-            DataExportCommand::SALES_CHANNEL_ARGUMENT => $message->getSalesChannelId(),
+            'command'                                               => 'factfinder:data:export',
+            '--upload'                                              => true,
+            '--import'                                              => true,
+            DataExportCommand::EXPORT_TYPE_ARGUMENT                 => $message->getExportTypeValue() ?? '',
+            DataExportCommand::SALES_CHANNEL_ARGUMENT               => $message->getSalesChannelId(),
             DataExportCommand::SALES_CHANNEL_LANGUAGE_ARGUMENT      => $message->getSalesChannelLanguageId(),
         ]);
         $input->setInteractive(false);
