@@ -3,6 +3,10 @@
 ### Breaking
  - Drop Shopware 6.3 compatibility
  - Drop PHP 7.3 compatibility
+ - Remove commands for feed exporting (`factfinder:export:products`, `factfinder:export:cms`, `fiactfinder:export:brands`)
+and replace theme with single command `factfinder:data:export`
+   
+
 ### Add
 - Introduced Category Export
 - Introduced Brand Export
