@@ -101,6 +101,11 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $this->addArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel language');
     }
 
+
+    /**
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->isInteractive()) {
