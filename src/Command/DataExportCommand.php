@@ -37,6 +37,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.ElseExpression)
  */
 class DataExportCommand extends Command implements ContainerAwareInterface
 {
