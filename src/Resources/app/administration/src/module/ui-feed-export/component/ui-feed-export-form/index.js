@@ -9,7 +9,12 @@ Component.register('ui-feed-export-form', {
         return {
             salesChannelValue: null,
             salesChannelLanguageValue: null,
-            exportTypeValue: null
+            exportTypeValue: null,
+            typeSelectOptions: {
+                'products': 'Products',
+                'cms': 'CMS',
+                'brands': 'Brands'
+            }
         }
     },
 

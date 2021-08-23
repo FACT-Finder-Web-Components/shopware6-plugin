@@ -197,23 +197,31 @@ The block `FACTFinder Web Components Listing` is unfortunately not taken into ac
 
 ## Exporting Feeds
 
-### Products
+FACT-Finder allows to export different types of feeds, like a **products**, **cms** and **brands** (or manufacturers)
+
+Feed can be exported in two ways: using admin panel (www.yourhost.com/admin#/ui/feed/export/index) or using CLI
 
 #### CLI
 Feed export is available in the Shopware CLI application. You can run it by executing:
 
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:products
+    php [SHOPWARE_ROOT]/bin/console factfinder:data:export
+
+and follow the instructions in console.
+
+If You want to run command whitout interaction mode, type command with `-n` option:
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:data:export -n
 
 The command can be run with an optional argument indicating the sales channel ID that you are targeting. The ID is an
 string value.
 
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:products SALES_CHANNEL_ID
+    php [SHOPWARE_ROOT]/bin/console factfinder:data:export -n SALES_CHANNEL_ID
 
 If a specific language needs to be specified, theres is a second argument which allows that.
 
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:products SALES_CHANNEL_ID LANGUGAGE_ID
+    php [SHOPWARE_ROOT]/bin/console factfinder:data:export -n SALES_CHANNEL_ID LANGUGAGE_ID
 
-There are two additional options:
+There are two additional options (except `-n`:
 
 * `-u` uploads the feed to the configured FTP server after feed is generated.
 * `-i` runs the FACT-Finder® import with previously uploaded feed  
@@ -221,7 +229,7 @@ There are two additional options:
 
 by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
 
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:products > export.csv
+    php [SHOPWARE_ROOT]/bin/console factfinder:data:export -n > export.csv
 
 #### Exporting from Admin Panel
 
@@ -236,57 +244,6 @@ Select fields allows you to select sales channel and languague parameter for whi
 `Run Integration` Send a message to a bus which then might be consumed automatically by an admin worker (if enabled)
 or by CLI worker. More information about messaging you can find in official Shopware [documentation](https://developer.shopware.com/docs/guides/hosting/infrastructure/message-queue)
 
-
-### CMS Pages
-
-<h4 id="cms-pages-cli">CLI</h4>
-CMS export is available in the Shopware CLI application. You can run it by executing:
-
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:cms
-
-The command can be run with an optional argument indicating the sales channel ID that you are targeting. The ID is an
-string value.
-
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:cms SALES_CHANNEL_ID
-
-If a specific language needs to be specified, there is a second argument which allows that.
-
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:cms SALES_CHANNEL_ID LANGUGAGE_ID
-
-There are two additional options:
-
-* `-u` uploads the feed to the configured FTP server after feed is generated.
-  
-**Note:** This option works only in a combination with `-u`
-
-by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
-
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:cms > export.csv
-
-
-### Brands (Manufacturers)
-<h4 id="brands-manufacturers-cli">CLI</h4>
-
-Feed export is available in the Shopware CLI application. You can run it by executing:
-
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands
-
-The command can be run with an optional argument indicating the sales channel ID that you are targeting. The ID is an
-string value.
-
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands SALES_CHANNEL_ID
-
-If a specific language needs to be specified, theres is a second argument which allows that.
-
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands SALES_CHANNEL_ID LANGUGAGE_ID
-
-There are two additional options:
-
-* `-u` uploads the feed to the configured FTP server after feed is generated.
-
-by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
-
-    php [SHOPWARE_ROOT]/bin/console factfinder:export:brands > export.csv
 
 ## Web Components Integration
 
