@@ -113,17 +113,17 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             $exportTypeQuestion = $this->getChoiceQuestion(sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE), [self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE], 'Invalid option %s', 0);
             $exportType = $helper->ask($input, $output, $exportTypeQuestion);
 
-//            $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
-//            $language = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
-//
-//            $saveFileQuestion = $this->getChoiceQuestion('Save export to local file? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
-//            $saveFile = (bool) array_flip($saveFileQuestion->getChoices())[$helper->ask($input, $output, $saveFileQuestion)];
-//
-//            $uploadFeedQuestion = $this->getChoiceQuestion('Should upload after exporting? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
-//            $uploadFeed = (bool) array_flip($uploadFeedQuestion->getChoices())[$helper->ask($input, $output, $uploadFeedQuestion)];
-//
-//            $pushImportQuestion = $this->getChoiceQuestion('Should import after uploading? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
-//            $pushImport = (bool) array_flip($pushImportQuestion->getChoices())[$helper->ask($input, $output, $pushImportQuestion)];
+            $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
+            $language = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
+
+            $saveFileQuestion = $this->getChoiceQuestion('Save export to local file? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
+            $saveFile = (bool) array_flip($saveFileQuestion->getChoices())[$helper->ask($input, $output, $saveFileQuestion)];
+
+            $uploadFeedQuestion = $this->getChoiceQuestion('Should upload after exporting? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
+            $uploadFeed = (bool) array_flip($uploadFeedQuestion->getChoices())[$helper->ask($input, $output, $uploadFeedQuestion)];
+
+            $pushImportQuestion = $this->getChoiceQuestion('Should import after uploading? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
+            $pushImport = (bool) array_flip($pushImportQuestion->getChoices())[$helper->ask($input, $output, $pushImportQuestion)];
         } else {
             $salesChannel     = $this->getSalesChannel($input->getArgument(self::SALES_CHANNEL_ARGUMENT));
             $language = $this->getLanguage($input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT));
