@@ -11,6 +11,7 @@ use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
+use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
@@ -121,6 +122,9 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
             $language         = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
 
+            $saveFileQuestion = $this->getChoiceQuestion('Save export to local file? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
+            $saveFile         = (bool) array_flip($saveFileQuestion->getChoices())[$helper->ask($input, $output, $saveFileQuestion)];
+
             $uploadFeedQuestion = $this->getChoiceQuestion('Should upload after exporting? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
             $uploadFeed         = (bool) array_flip($uploadFeedQuestion->getChoices())[$helper->ask($input, $output, $uploadFeedQuestion)];
 
@@ -138,6 +142,21 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $entityFQN        = $this->getEntityFqnByType($exportType);
         $feedService      = $this->feedFactory->create($context, $entityFQN);
         $feedColumns      = $this->getFeedColumns($exportType, $entityFQN);
+
+        if (isset($saveFile) && $saveFile) {
+            $dir = $this->parameterBag->get('kernel.project_dir') . '/var/factfinder';
+
+            if (!is_dir($dir)) {
+                mkdir($dir);
+            }
+
+            is_writable($dir) ? $output->writeln(sprintf('Directory %s is writible', $dir)) : '';
+
+            $filename = $dir . DIRECTORY_SEPARATOR . sprintf('export.%s.csv', $exportType);
+            $file     = fopen($filename, 'rw+');
+            dd($file);
+            $feedService->generate(new CsvFile($file), $feedColumns);
+        }
 
         if (!$uploadFeed) {
             $feedService->generate(new ConsoleOutput($output), $feedColumns);
