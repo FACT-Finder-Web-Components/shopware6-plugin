@@ -153,8 +153,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             is_writable($dir) ? $output->writeln(sprintf('Directory %s is writible', $dir)) : '';
 
             $filename = $dir . DIRECTORY_SEPARATOR . sprintf('export.%s.csv', $exportType);
-            $file     = fopen($filename, 'rw+');
-            dd($file);
+            $file     = fopen($filename, 'w+');
             $feedService->generate(new CsvFile($file), $feedColumns);
         }
 

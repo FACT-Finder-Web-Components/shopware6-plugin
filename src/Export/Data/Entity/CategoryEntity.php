@@ -32,7 +32,7 @@ class CategoryEntity implements ExportEntityInterface
             return $fields + [$field->getName() => $field->getValue($this->category)];
         }, [
             'Id'        => $this->category->getId() ?? '',
-            'Title'     => $this->category->getName() ?? '',
+            'Name'     => $this->category->getName() ?? '',
             'Content'   => $this->category->getDescription() ?? '',
             'Keywords'  => $this->category->getKeywords() ?? '',
             'MetaTitle' => $this->category->getMetaTitle() ?? '',
