@@ -86,6 +86,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $this->currencyFieldsProvider = $currencyFieldsProvider;
         $this->fieldProviders         = $fieldProviders;
         $this->parameterBag           = $parameterBag;
+        $this->file                   = tmpfile();
     }
 
     public function getTypeEntityMap(): array
@@ -146,13 +147,8 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $feedService      = $this->feedFactory->create($context, $entityFQN);
         $feedColumns      = $this->getFeedColumns($exportType, $entityFQN);
 
-        $output = $saveFile ? new CsvFile($this->createFile($exportType)) : new ConsoleOutput($output);
+        $output = $saveFile ? new CsvFile($this->createFile($exportType, $uploadFeed)) : new ConsoleOutput($output);
         $feedService->generate($output, $feedColumns);
-
-        if (!$this->file) {
-            $this->file = tmpfile();
-            $feedService->generate(new CsvFile($this->file), $feedColumns);
-        }
 
         if ($uploadFeed) {
             $this->uploadService->upload($this->file);
@@ -160,6 +156,10 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
         if ($pushImport) {
             $this->pushImportService->execute();
+        }
+
+        if (!$saveFile && $this->file) {
+            unlink(stream_get_meta_data($this->file)['uri']);
         }
 
         return 0;
@@ -210,13 +210,20 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     /**
      * @param string $exportType
+     * @param bool   $tmp
      *
      * @return false|resource
      *
      * @throws \Exception
      */
-    private function createFile(string $exportType)
+    private function createFile(string $exportType, bool $tmp)
     {
+        if ($tmp) {
+            $this->file = tmpfile();
+
+            return $this->file;
+        }
+
         $dir = $this->parameterBag->get('kernel.project_dir') . '/var/factfinder';
 
         if (!is_dir($dir)) {
