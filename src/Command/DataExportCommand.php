@@ -210,7 +210,9 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     /**
      * @param string $exportType
+     *
      * @return false|resource
+     *
      * @throws \Exception
      */
     private function createFile(string $exportType)
@@ -225,7 +227,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             throw new \Exception('Directory ' . $dir . ' is not writable. Aborting');
         }
 
-        $filename = $dir . DIRECTORY_SEPARATOR . sprintf('export.%s.csv', $exportType);
+        $filename   = $dir . DIRECTORY_SEPARATOR . sprintf('export.%s.csv', $exportType);
         $this->file = fopen($filename, 'w+');
 
         return $this->file;
