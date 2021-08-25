@@ -63,6 +63,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     private CurrencyFieldsProvider $currencyFieldsProvider;
     private FieldsProvider $fieldProviders;
     private ParameterBagInterface $parameterBag;
+    private $file;
 
     public function __construct(
         SalesChannelService $channelService,
@@ -89,11 +90,11 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     public function getTypeEntityMap(): array
     {
-        return [
+        return array_merge([
             self::PRODUCTS_EXPORT_TYPE => SalesChannelProductEntity::class,
             self::BRANDS_EXPORT_TYPE   => ProductManufacturerEntity::class,
             self::CMS_EXPORT_TYPE      => CategoryEntity::class,
-        ];
+        ], $this->container->getParameter('factfinder.data_export.entity_type_map'));
     }
 
     public function configure()
@@ -113,6 +114,8 @@ class DataExportCommand extends Command implements ContainerAwareInterface
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $saveFile = null;
+
         if ($input->isInteractive()) {
             $helper = $this->getHelper('question');
 
@@ -143,28 +146,20 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $feedService      = $this->feedFactory->create($context, $entityFQN);
         $feedColumns      = $this->getFeedColumns($exportType, $entityFQN);
 
-        if (isset($saveFile) && $saveFile) {
-            $dir = $this->parameterBag->get('kernel.project_dir') . '/var/factfinder';
+        $output = $saveFile ? new CsvFile($this->createFile($exportType)) : new ConsoleOutput($output);
+        $feedService->generate($output, $feedColumns);
 
-            if (!is_dir($dir)) {
-                mkdir($dir);
-            }
-
-            is_writable($dir) ? $output->writeln(sprintf('Directory %s is writible', $dir)) : '';
-
-            $filename = $dir . DIRECTORY_SEPARATOR . sprintf('export.%s.csv', $exportType);
-            $file     = fopen($filename, 'w+');
-            $feedService->generate(new CsvFile($file), $feedColumns);
+        if (!$this->file) {
+            $this->file = tmpfile();
+            $feedService->generate(new CsvFile($this->file), $feedColumns);
         }
 
-        if (!$uploadFeed) {
-            $feedService->generate(new ConsoleOutput($output), $feedColumns);
-            return 0;
+        if ($uploadFeed) {
+            $this->uploadService->upload($this->file);
         }
 
         if ($pushImport) {
             $this->pushImportService->execute();
-            $output->writeln('FACT-Finder import has been start');
         }
 
         return 0;
@@ -211,5 +206,28 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         }
 
         throw new \Exception('Unknown export type');
+    }
+
+    /**
+     * @param string $exportType
+     * @return false|resource
+     * @throws \Exception
+     */
+    private function createFile(string $exportType)
+    {
+        $dir = $this->parameterBag->get('kernel.project_dir') . '/var/factfinder';
+
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
+
+        if (!is_writable($dir)) {
+            throw new \Exception('Directory ' . $dir . ' is not writable. Aborting');
+        }
+
+        $filename = $dir . DIRECTORY_SEPARATOR . sprintf('export.%s.csv', $exportType);
+        $this->file = fopen($filename, 'w+');
+
+        return $this->file;
     }
 }

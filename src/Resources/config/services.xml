@@ -43,6 +43,7 @@
         <parameter key="factfinder.navigation.initial_params" type="collection">
             <parameter key="navigation=true">navigation=true</parameter>
         </parameter>
+        <parameter key="factfinder.data_export.entity_type_map" type="collection"></parameter>
     </parameters>
 
     <services>
