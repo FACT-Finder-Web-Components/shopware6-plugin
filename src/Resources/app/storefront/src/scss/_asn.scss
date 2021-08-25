@@ -50,24 +50,22 @@ ff-asn {
     }
   }
 
-  @at-root {
-    [slot="groupCaption"] {
-      cursor: pointer;
-    }
+  [slot="groupCaption"] {
+    cursor: pointer;
+  }
 
-    [data-container="detailedLinks"] {
-      padding: $dropdown-padding-y 0;
+  [data-container="detailedLinks"] {
+    padding: $dropdown-padding-y 0;
 
-      &:not(:only-child) {
-        padding-bottom: 0;
-      }
+    &:not(:only-child) {
+      padding-bottom: 0;
     }
+  }
 
-    [data-container="showMore"], [data-container="showLess"], [data-container="removeFilter"] {
-      display: block;
-      padding: 5px 15px;
-      cursor: pointer;
-    }
+  [data-container="showMore"], [data-container="showLess"], [data-container="removeFilter"] {
+    display: block;
+    padding: 5px 15px;
+    cursor: pointer;
   }
 
   .ffw-asn-group-container, .ffw-container {
@@ -80,7 +78,7 @@ ff-asn {
     }
   }
 
-  @at-root ff-filter-cloud .filter-active {
+ ff-filter-cloud .filter-active {
     cursor: pointer;
   }
 

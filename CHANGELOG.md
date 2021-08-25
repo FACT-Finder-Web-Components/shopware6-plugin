@@ -16,8 +16,10 @@
 ### Add
 - Add Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface which should be implemented by class which will instantiate object implementing
 - Add callback and dom-updated fields to ASN and RecordList CMS Elements which allows to pass inject javascript interacting with Web Components from the PageBuilder
+
 ### Fix
- - Fix Export Settings
+ - Fix Export Settings might cause an error on fresh installation of plugin
+ - Fix ASN styles which might have affected mobile viewport
  - Fix communication parameters rendering by applying a default filter with empty array 
 
 ## [v1.1.0] - 2021.07.08
@@ -31,6 +33,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v2.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.0.0
 [v1.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v1.0.0
 
