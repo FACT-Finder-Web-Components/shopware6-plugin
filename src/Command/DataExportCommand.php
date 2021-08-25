@@ -147,7 +147,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $feedService      = $this->feedFactory->create($context, $entityFQN);
         $feedColumns      = $this->getFeedColumns($exportType, $entityFQN);
 
-        $output = $saveFile ? new CsvFile($this->createFile($exportType, $uploadFeed)) : new ConsoleOutput($output);
+        $output = $saveFile ? new CsvFile($this->createFile($exportType)) : new ConsoleOutput($output);
         $feedService->generate($output, $feedColumns);
 
         if ($uploadFeed) {
@@ -210,20 +210,13 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     /**
      * @param string $exportType
-     * @param bool   $tmp
      *
      * @return false|resource
      *
      * @throws \Exception
      */
-    private function createFile(string $exportType, bool $tmp)
+    private function createFile(string $exportType)
     {
-        if ($tmp) {
-            $this->file = tmpfile();
-
-            return $this->file;
-        }
-
         $dir = $this->parameterBag->get('kernel.project_dir') . '/var/factfinder';
 
         if (!is_dir($dir)) {
