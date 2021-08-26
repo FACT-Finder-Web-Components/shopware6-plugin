@@ -196,6 +196,8 @@ The block `FACTFinder Web Components Listing` is unfortunately not taken into ac
 
 FACT-Finder allows to export different types of feeds, like a **products**, **cms** and **brands** (or manufacturers)
 
+Also you can define your own data types to export in `services.xml` file in `factfinder.data_export.entity_type_map` parameter
+
 Feed can be exported in two ways: using admin panel (www.yourhost.com/admin#/ui/feed/export/index) or using CLI
 
 #### CLI
