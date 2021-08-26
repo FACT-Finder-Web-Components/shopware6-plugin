@@ -32,6 +32,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
@@ -74,9 +75,8 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         EntityRepositoryInterface $languageRepository,
         CurrencyFieldsProvider $currencyFieldsProvider,
         FieldsProvider $fieldProviders,
-        ParameterBagInterface $parameterBag
+        ParameterBagInterface $parameterBag, ContainerInterface $container
     ) {
-        parent::__construct();
         $this->channelService         = $channelService;
         $this->channelRepository      = $channelRepository;
         $this->feedFactory            = $feedFactory;
@@ -87,6 +87,8 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $this->fieldProviders         = $fieldProviders;
         $this->parameterBag           = $parameterBag;
         $this->file                   = tmpfile();
+        $this->container              = $container;
+        parent::__construct();
     }
 
     public function getTypeEntityMap(): array
@@ -104,7 +106,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $this->setDescription('Allows to export feed data for products, CMS and brands');
         $this->addOption(self::UPLOAD_FEED_OPTION, 'u', InputOption::VALUE_NONE, 'Should upload after exporting');
         $this->addOption(self::PUSH_IMPORT_OPTION, 'i', InputOption::VALUE_NONE, 'Should import after uploading');
-        $this->addArgument(self::EXPORT_TYPE_ARGUMENT, InputArgument::OPTIONAL, sprintf('Set data export type(%s, %s, %s', self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE));
+        $this->addArgument(self::EXPORT_TYPE_ARGUMENT, InputArgument::OPTIONAL, sprintf('Set data export type(%s)', implode(', ', array_keys($this->getTypeEntityMap()))));
         $this->addArgument(self::SALES_CHANNEL_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel');
         $this->addArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel language');
     }
@@ -120,7 +122,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         if ($input->isInteractive()) {
             $helper = $this->getHelper('question');
 
-            $exportTypeQuestion = $this->getChoiceQuestion(sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE), [self::PRODUCTS_EXPORT_TYPE, self::CMS_EXPORT_TYPE, self::BRANDS_EXPORT_TYPE], 'Invalid option %s', 0);
+            $exportTypeQuestion = $this->getChoiceQuestion(sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE), array_keys($this->getTypeEntityMap()), 'Invalid option %s', 0);
             $exportType         = $helper->ask($input, $output, $exportTypeQuestion);
 
             $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
