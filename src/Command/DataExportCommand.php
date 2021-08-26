@@ -33,7 +33,6 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
@@ -63,7 +62,6 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     private EntityRepositoryInterface $languageRepository;
     private CurrencyFieldsProvider $currencyFieldsProvider;
     private FieldsProvider $fieldProviders;
-    private ParameterBagInterface $parameterBag;
     private $file;
 
     public function __construct(
@@ -75,7 +73,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         EntityRepositoryInterface $languageRepository,
         CurrencyFieldsProvider $currencyFieldsProvider,
         FieldsProvider $fieldProviders,
-        ParameterBagInterface $parameterBag, ContainerInterface $container
+        ContainerInterface $container
     ) {
         $this->channelService         = $channelService;
         $this->channelRepository      = $channelRepository;
@@ -85,7 +83,6 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $this->languageRepository     = $languageRepository;
         $this->currencyFieldsProvider = $currencyFieldsProvider;
         $this->fieldProviders         = $fieldProviders;
-        $this->parameterBag           = $parameterBag;
         $this->file                   = tmpfile();
         $this->container              = $container;
         parent::__construct();
@@ -225,7 +222,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             return $this->file;
         }
 
-        $dir = $this->parameterBag->get('kernel.project_dir') . '/var/factfinder';
+        $dir = $this->container->getParameter('kernel.project_dir') . '/var/factfinder';
 
         if (!is_dir($dir)) {
             mkdir($dir);
