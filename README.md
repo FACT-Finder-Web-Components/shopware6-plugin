@@ -13,6 +13,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - [Main Settings](#main-settings)
 - [Export Settings](#export-settings)
     - [Price Columns Format](#price-columns-format)
+- [Upload Settings](#upload-settings)
 - [Category Pages](#category-pages)
     - [Element Settings](#element-settings)
       - [ASN Element](#asn-element)
@@ -22,6 +23,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Assigning Layout to Category](#assigning-layout-to-category)
 - [Exporting Feeds](#exporting-feeds)
     - [CLI](#cli)
+    - [Selecting Categories for CMS Export](#selecting-categories-for-cms-export)
     - [Exporting from Admin Panel](#exporting-from-admin-panel)
 - [Web Components Integration](#web-components-integration)
     - [Web Components Documentation](#web-components-documentation)
@@ -86,7 +88,7 @@ store cache in order the new applied configuration to start working.
 
 ### Export Settings
 
-![Main Settings](docs/assets/export-settings.png "Export Settings")
+![Export Settings](docs/assets/export-settings.png "Export Settings")
 
 * Select Filter Attributes which should be ignored- product properties selected here will not be
   exported. By default, all properties are being exported.
@@ -101,8 +103,9 @@ store cache in order the new applied configuration to start working.
 If `Export prices in all currencies` setting is set to true, price columns will be exported in followed pattern
 `Price_[currency ISO code]` i.e. `Price_De`
 
-### Upload Options
+### Upload Settings
 
+![Upload Setting](docs/assets/upload-settings.png "Upload Setting")
 Following settings are used for uploading already exported feed to a given FTP server.
 
 **Note:** The default port setting is 21. If your FTP is listening on different port, please change it accordingly.
@@ -132,19 +135,19 @@ is two CMS blocks offered:
     * ff-campaign-advisor
     * ff-campaign-redirect
 
-![Main Settings](docs/assets/page-builder-cms-blocks.png "Page Builder CMS Blocks")
-![Main Settings](docs/assets/page-builder-listing.png "Page Builder CMS Preview")
+![Page Builder CMS Blocks](docs/assets/page-builder-cms-blocks.png "Page Builder CMS Blocks")
+![Page Builder CMS Preview](docs/assets/page-builder-listing.png "Page Builder CMS Preview")
 
 ### Element Settings
 
 Each of the element of given block contains dedicated configuration which allows to configure them without necessity of adding hardcoded values in the templates.
-![Main Settings](docs/assets/page-builder-element-config.png "Page Builder CMS Element Configuration")
+![Page Builder CMS Element Configuration](docs/assets/page-builder-element-config.png "Page Builder CMS Element Configuration")
 
 If you do not want to render a specific element, just change the `subscribe` option to `false`. This will make element will not subscribe to the
 FACT-Finder® response, hence they will not render any HTML.
 
 #### ASN Element
-![Main Settings](docs/assets/page-builder-element-config-asn.png "Page Builder CMS Element ASN")
+![Page Builder CMS Element ASN](docs/assets/page-builder-element-config-asn.png "Page Builder CMS Element ASN")
 * Subscribe - Activate element
 * Vertical - If set to true, `btn-block` CSS class is added to `ff-asn-group`, and `ff-asn` gets a `align` property set to `vertical
 * ID - Element identifier. If left empty, the CMS Element ID will be used.
@@ -154,7 +157,7 @@ FACT-Finder® response, hence they will not render any HTML.
 * Dom Updated - A listener to `dom-updated` event. This event is triggered when rendered its HTML template
 
 #### Record List Element
-![Main Settings](docs/assets/page-builder-element-config-record-list.png "Page Builder CMS Element Record List")
+![Page Builder CMS Element Record List](docs/assets/page-builder-element-config-record-list.png "Page Builder CMS Element Record List")
 * Subscribe - activate element
 * Infinity Scrolling - Adds the `inifinity-scrolling` attribute to the `ff-record-list` element 
 * Infinite Debounce Delay - adds`infinite-debounce-delay` attribute to the `ff-record-list` element
@@ -164,7 +167,7 @@ FACT-Finder® response, hence they will not render any HTML.
 * Dom Updated - A listener to `dom-updated` event. This event is triggered when rendered its HTML template
 
 #### Campaigns Element
-![Main Settings](docs/assets/page-builder-element-config-campaigns.png "Page Builder CMS Element Campaigns")
+![Page Builder CMS Element Campaigns](docs/assets/page-builder-element-config-campaigns.png "Page Builder CMS Element Campaigns")
 * Advisor Campaign - Renders `ff-campaign-advisor` element
 * Advisor Campaign Name - Adds `label` attribute to `ff-campaign-advisor`.
 * Feedback Campaign - Renders `ff-campaign-feedbacktext` element
@@ -182,7 +185,7 @@ Each of the block and element has it own templates which could be found, accordi
 ### Assigning Layout to Category
 
 Once the page layout is done, you need to assign layout to selected categories.
-![Main Settings](docs/assets/page-builder-assigning.png "Page Builder Page Assigning")
+![Page Builder Page Assigning](docs/assets/page-builder-assigning.png "Page Builder Page Assigning")
 
 We strongly recommend not creating many layouts as currently there's still only few possibilities offered anyway.
 Future development will bring more blocks and elements will be provided here.
@@ -229,6 +232,11 @@ There are two additional options (except `-n`):
 by default export outputs data in the STDOUT. It could be easily redirected using Linux way of redirecting output.
 
     php [SHOPWARE_ROOT]/bin/console factfinder:data:export -n > export.csv
+
+#### Selecting Categories for CMS Export
+With CMS Export we introduced custom field for CategoryEntity by which we filter the Categories going to be exported.
+You can find it on Category edit page. 
+![Include in CMS Export Custom Field](docs/assets/cms-export-custom-field.png "Include in CMS Export Custom Field")
 
 #### Exporting from Admin Panel
 
@@ -464,22 +472,22 @@ It is possible to reproduce this functionality with the PageBuilder:
 
 1. Add two FF-ASN CMS Elements 
 
-![Main Settings](docs/assets/split-asn-1.png "Split ASN layout")
+![Split ASN layout](docs/assets/split-asn-1.png "Split ASN layout")
 
 2. Configure the main ASN
 
-![Main Settings](docs/assets/split-asn-2.png "Split ASN - Main ")
+![Split ASN - Main](docs/assets/split-asn-2.png "Split ASN - Main")
 
 3. Configure the second ASN
 
-![Main Settings](docs/assets/split-asn-3.png "Split ASN - Second")
+![Split ASN - Second](docs/assets/split-asn-3.png "Split ASN - Second")
 
 **Note:** In that setup, Filter Cloud must be disabled as for now it has no support for custom topics
 
 #### Duplicated filter variants
 The example above divides the ASN groups into two exclusive collections.
 If you just want to duplicate some filter from the first ASN and put it in the second, just change the configuration of first ASN to be:
-![Main Settings](docs/assets/split-asn-4.png "Split ASN - Main (duplicate filters)")
+![Split ASN - Main (duplicate filters)](docs/assets/split-asn-4.png "Split ASN - Main (duplicate filters)")
 
 In that case we  do not use `splice` method but `slice` which does not mutate the original data.
 

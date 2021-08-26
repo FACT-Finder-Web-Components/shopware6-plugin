@@ -1,5 +1,5 @@
 # Changelog
-## [v2.0.0] - Unreleased
+## [v2.0.0] - 2021.08.26
 ### Breaking
  - IMPORTANT! Drop Shopware 6.3 compatibility
  - IMPORTANT! Drop PHP 7.3 compatibility
@@ -10,11 +10,13 @@
     * Omikron\FactFinder\Shopware6\Export\ExportInterface
         -  added method `getCoveredEntityType` which expect to return a class extending Shopware\Core\Framework\DataAbstractionLayer\Entity which given Exported will be exporting
         -  added method `getProducedExportEntityType` which expect to return a class that implements Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface - a exportable version of Entity 
- - Remove commands for feed exporting (`factfinder:export:products`, `factfinder:export:cms`, `fiactfinder:export:brands`) and replace them with single command `factfinder:data:export`
+ - Remove ProductExportCommand (`factfinder:export:products`) and replace them with universal DataExportCommand `factfinder:data:export`
    
 ### Add
 - Add Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface which should be implemented by class which will instantiate object implementing
 - Add callback and dom-updated fields to ASN and RecordList CMS Elements which allows to pass inject javascript interacting with Web Components from the PageBuilder
+- Introduce CMS Export
+- Introduce Manufacturers Export
 
 ### Fix
  - Fix Export Settings might cause an error on fresh installation of plugin
