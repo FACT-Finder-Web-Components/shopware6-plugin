@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\MessageQueue;
 
+use Omikron\FactFinder\Shopware6\Command\DataExportCommand;
 use Omikron\FactFinder\Shopware6\Message\FeedExport;
 use Shopware\Core\Framework\MessageQueue\Handler\AbstractMessageHandler;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -29,12 +30,14 @@ class FeedExportHandler extends AbstractMessageHandler
     public function handle($message): void
     {
         $input = new ArrayInput([
-            'command'       => 'factfinder:export:products',
-            '--upload'      => true,
-            '--import'      => true,
-            'sales_channel' => $message->getSalesChannelId() ?? '',
-            'language'      => $message->getSalesChannelLanguageId() ?? '',
+            'command'                                               => 'factfinder:data:export',
+            '--upload'                                              => true,
+            '--import'                                              => true,
+            DataExportCommand::EXPORT_TYPE_ARGUMENT                 => $message->getExportTypeValue() ?? '',
+            DataExportCommand::SALES_CHANNEL_ARGUMENT               => $message->getSalesChannelId(),
+            DataExportCommand::SALES_CHANNEL_LANGUAGE_ARGUMENT      => $message->getSalesChannelLanguageId(),
         ]);
+        $input->setInteractive(false);
         $output = new NullOutput();
         $this->application->run($input, $output);
     }

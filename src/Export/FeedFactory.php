@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export;
 
 use InvalidArgumentException;
-use Omikron\FactFinder\Shopware6\Export\Data\DataProvider;
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\CompositeFactory;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -37,7 +36,7 @@ class FeedFactory
             throw new InvalidArgumentException(sprintf('There is no exporter for given type: %s', $exportType));
         }
 
-        return new Feed(new DataProvider($context, $exporter, $this->compositeFactory), $this->filter);
+        return new Feed($context, $exporter, $this->compositeFactory, $this->filter);
     }
 
     private function first(array $arr): ?ExportInterface

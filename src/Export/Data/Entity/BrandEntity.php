@@ -31,8 +31,8 @@ class BrandEntity implements ExportEntityInterface
         return array_reduce($this->brandFields, function (array $fields, FieldInterface $field): array {
             return $fields + [$field->getName() => $field->getValue($this->brand)];
         }, [
-            'BrandName'         => (string) $this->brand->getName(),
-            'BrandURL'          => (string) $this->brand->getLink(),
+            'Name'              => (string) $this->brand->getName(),
+            'Deeplink'          => (string) $this->brand->getLink(),
         ]);
     }
 }

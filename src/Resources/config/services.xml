@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="factfinder.export.columns.base" type="collection">
+        <parameter key="factfinder.export.products.columns.base" type="collection">
             <parameter key="ProductNumber">ProductNumber</parameter>
             <parameter key="Master">Master</parameter>
             <parameter key="Name">Name</parameter>
@@ -42,6 +42,8 @@
         <parameter key="factfinder.navigation.category_path_field_name" type="string">CategoryPath</parameter>
         <parameter key="factfinder.navigation.initial_params" type="collection">
             <parameter key="navigation=true">navigation=true</parameter>
+        </parameter>
+        <parameter key="factfinder.data_export.entity_type_map" type="collection">
         </parameter>
     </parameters>
 

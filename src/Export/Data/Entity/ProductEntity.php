@@ -31,8 +31,8 @@ class ProductEntity implements ExportEntityInterface
         return array_reduce($this->productFields, function (array $fields, FieldInterface $field): array {
             return $fields + [$field->getName() => $field->getValue($this->product)];
         }, [
-            'ProductNumber' => (string) $this->product->getProductNumber(),
-            'Master'        => (string) $this->product->getProductNumber(),
+            'ProductNumber' => $this->product->getProductNumber(),
+            'Master'        => $this->product->getProductNumber(),
             'Name'          => (string) $this->product->getTranslation('name'),
         ]);
     }

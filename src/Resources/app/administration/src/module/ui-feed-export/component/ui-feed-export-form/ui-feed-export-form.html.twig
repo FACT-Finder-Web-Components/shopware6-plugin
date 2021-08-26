@@ -16,13 +16,21 @@
         :label="$tc('ui-feed-export.component.export_form.sales_channel_language.label')">
       </sw-entity-single-select>
 
-      <sw-button @click="getFeedExportFile('_action/fact-finder/generate-feed')"
-                 variant="success"
-                 block="true"
-                 size="large">
-        {{ $tc('ui-feed-export.component.export_form.button.title') }}
-      </sw-button>
+      <sw-select-field id="export_type"
+                       v-model="exportTypeValue"
+                       :label="$tc('ui-feed-export.component.export_form.export_type.label')">
+        <option v-for="(key, value) in typeSelectOptions" :value="value">
+          {{ key }}
+        </option>
+      </sw-select-field>
 
     </sw-container>
+    <sw-button @click="getFeedExportFile('_action/fact-finder/generate-feed')"
+               variant="success"
+               block="true"
+               size="large">
+
+      {{ $tc('ui-feed-export.component.export_form.button.title') }}
+    </sw-button>
   </sw-card>
 </sw-card-view>
