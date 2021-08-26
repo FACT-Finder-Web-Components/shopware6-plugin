@@ -213,6 +213,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     /**
      * @param string $exportType
+     * @param bool   $uploadFeed
      *
      * @return false|resource
      *
