@@ -220,7 +220,9 @@ class DataExportCommand extends Command implements ContainerAwareInterface
      */
     private function createFile(string $exportType, bool $uploadFeed)
     {
-        if ($uploadFeed) return $this->file;
+        if ($uploadFeed) {
+            return $this->file;
+        }
 
         $dir = $this->parameterBag->get('kernel.project_dir') . '/var/factfinder';
 
