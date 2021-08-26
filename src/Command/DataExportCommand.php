@@ -114,7 +114,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $saveFile = null;
+        $saveFile = false;
 
         if ($input->isInteractive()) {
             $helper = $this->getHelper('question');
