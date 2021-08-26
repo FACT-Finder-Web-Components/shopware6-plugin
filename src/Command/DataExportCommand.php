@@ -103,7 +103,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     public function configure()
     {
         $this->setName('factfinder:data:export');
-        $this->setDescription('Allows to export feed data for products, CMS and brands');
+        $this->setDescription('Allows to export feed for different data types');
         $this->addOption(self::UPLOAD_FEED_OPTION, 'u', InputOption::VALUE_NONE, 'Should upload after exporting');
         $this->addOption(self::PUSH_IMPORT_OPTION, 'i', InputOption::VALUE_NONE, 'Should import after uploading');
         $this->addArgument(self::EXPORT_TYPE_ARGUMENT, InputArgument::OPTIONAL, sprintf('Set data export type(%s)', implode(', ', array_keys($this->getTypeEntityMap()))));
@@ -150,7 +150,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $feedColumns      = $this->getFeedColumns($exportType, $entityFQN);
 
         $needFile = $saveFile || $uploadFeed;
-        $output   = $needFile ? new CsvFile($this->createFile($exportType)) : new ConsoleOutput($output);
+        $output   = $needFile ? new CsvFile($this->createFile($exportType, $uploadFeed)) : new ConsoleOutput($output);
         $feedService->generate($output, $feedColumns);
 
         if ($uploadFeed) {
@@ -218,8 +218,10 @@ class DataExportCommand extends Command implements ContainerAwareInterface
      *
      * @throws \Exception
      */
-    private function createFile(string $exportType)
+    private function createFile(string $exportType, bool $uploadFeed)
     {
+        if ($uploadFeed) return $this->file;
+
         $dir = $this->parameterBag->get('kernel.project_dir') . '/var/factfinder';
 
         if (!is_dir($dir)) {

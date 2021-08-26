@@ -218,7 +218,7 @@ If a specific language needs to be specified, theres is a second argument which 
 
     php [SHOPWARE_ROOT]/bin/console factfinder:data:export -n SALES_CHANNEL_ID LANGUGAGE_ID
 
-There are two additional options (except `-n`:
+There are two additional options (except `-n`):
 
 * `-u` uploads the feed to the configured FTP server after feed is generated.
 * `-i` runs the FACT-Finder® import with previously uploaded feed  
