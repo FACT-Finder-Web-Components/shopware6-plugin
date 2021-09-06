@@ -342,11 +342,14 @@ Start with creating field provider - a class
 implementing `Omikron\FactFinder\Shopware6\Export\FieldFieldInterface` which will be used to export your data.
 
 ```php
+
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+
 interface FieldInterface
 {
     public function getName(): string;
 
-    public function getValue(Product $product): string;
+    public function getValue(Entity $entity): string;
     
     public function getCompatibleEntityTypes(): array;
 }
@@ -357,7 +360,7 @@ The method `getCompatibleEntityTypes` contains an array of Shopware Entity class
 
 ```php
 
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class CustomColumn implements FieldInterface
 {
@@ -366,7 +369,7 @@ class CustomColumn implements FieldInterface
         return 'MyColumnName'; // Will be used as column header in the CSV feed
      }
 
-    public function getValue(Product $product): string
+    public function getValue(Entity $entity): string
     {
         // Implement logic to fetch and transform data for a given article detail  
     }
