@@ -6,7 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Config;
 
 class ExportSettings extends BaseConfig
 {
-    public function getSelectedFilterAttributes(): array
+    public function getDisabledPropertyGroups(): array
     {
         return $this->toArray($this->config('disabledPropertyGroups'));
     }

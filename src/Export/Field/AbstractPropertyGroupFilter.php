@@ -8,10 +8,11 @@ use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 abstract class AbstractPropertyGroupFilter
 {
-    public const SELECTED_FILTER_ATTRIBUTES    = 'getSelectedFilterAttributes';
+    public const SELECTED_FILTER_ATTRIBUTES    = 'getDisabledPropertyGroups';
     public const SELECTED_NUMERICAL_ATTRIBUTES = 'getSelectedNumericalAttributes';
     protected string $groupAttribute;
 
@@ -31,11 +32,16 @@ abstract class AbstractPropertyGroupFilter
         return $this;
     }
 
-    public function getValue(Product $product)
+    public function getGroupAttribute()
     {
-        $attributes = $product->getChildren()->reduce(
+        return $this->groupAttribute;
+    }
+
+    public function getValue(Entity $entity)
+    {
+        $attributes = $entity->getChildren()->reduce(
             fn (array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
-            array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($product))
+            array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($entity))
         );
 
         return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';
@@ -43,7 +49,7 @@ abstract class AbstractPropertyGroupFilter
 
     private function applyPropertyGroupsFilter(Product $product): array
     {
-        switch ($this->groupAttribute) {
+        switch ($this->getGroupAttribute()) {
             case self::SELECTED_FILTER_ATTRIBUTES:
                 $selectedAttributes = call_user_func([$this->exportSettings, self::SELECTED_FILTER_ATTRIBUTES]);
 

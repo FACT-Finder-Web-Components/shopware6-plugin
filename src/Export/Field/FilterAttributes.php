@@ -48,14 +48,16 @@ class FilterAttributes implements FieldInterface
 
     private function applyPropertyGroupsFilter(Product $product): array
     {
-        $selectedFilterAttributes = $this->exportSettings->getSelectedFilterAttributes();
+        $disabledPropertyGroups      = $this->exportSettings->getDisabledPropertyGroups();
+        $selectedNumericalAttributes = $this->exportSettings->getSelectedNumericalAttributes();
 
-        if (empty($selectedFilterAttributes)) {
+        if (empty($disabledPropertyGroups)) {
             return [];
         }
 
         return $product->getProperties()
-                       ->filter(fn (PropertyGroupOptionEntity $option): bool => in_array($option->getGroupId(), $selectedFilterAttributes))
+                       ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledPropertyGroups))
+                       ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $selectedNumericalAttributes))
                        ->getElements();
     }
 }
