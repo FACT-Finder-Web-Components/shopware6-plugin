@@ -14,7 +14,7 @@ class NumericalAttributesSpec extends ObjectBehavior
 {
     function let(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
     {
-        $exportSettings->getDisabledPropertyGroups()->willReturn([]);
+        $exportSettings->getSelectedNumericalAttributes()->willReturn([]);
         $this->beConstructedWith($propertyFormatter, $exportSettings);
     }
 

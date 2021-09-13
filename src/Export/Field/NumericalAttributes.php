@@ -11,11 +11,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class NumericalAttributes extends AbstractPropertyGroupFilter implements FieldInterface
 {
-    public function __construct(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
-    {
-        parent::__construct($propertyFormatter, $exportSettings);
-    }
-
     public function getValue(Entity $entity): string
     {
         parent::setGroupAttribute(self::SELECTED_NUMERICAL_ATTRIBUTES);
