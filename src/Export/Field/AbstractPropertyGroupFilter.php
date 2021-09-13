@@ -21,8 +21,8 @@ abstract class AbstractPropertyGroupFilter
 
     public function __construct(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
     {
-        $this->propertyFormatter  = $propertyFormatter;
-        $this->exportSettings     = $exportSettings;
+        $this->propertyFormatter = $propertyFormatter;
+        $this->exportSettings    = $exportSettings;
     }
 
     public function setGroupAttribute(string $groupAttribute = self::SELECTED_FILTER_ATTRIBUTES)
@@ -51,25 +51,27 @@ abstract class AbstractPropertyGroupFilter
     {
         switch ($this->getGroupAttribute()) {
             case self::SELECTED_FILTER_ATTRIBUTES:
-                $selectedAttributes = call_user_func([$this->exportSettings, self::SELECTED_FILTER_ATTRIBUTES]);
+                $disabledPropertyGroups      = call_user_func([$this->exportSettings, self::SELECTED_FILTER_ATTRIBUTES]);
+                $selectedNumericalAttributes = call_user_func([$this->exportSettings, self::SELECTED_NUMERICAL_ATTRIBUTES]);
 
-                break;
+                if (empty($disabledPropertyGroups)) {
+                    return [];
+                }
+
+                return $product->getProperties()
+                    ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledPropertyGroups))
+                    ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $selectedNumericalAttributes))
+                    ->getElements();
+
             case self::SELECTED_NUMERICAL_ATTRIBUTES:
                 $selectedAttributes = call_user_func([$this->exportSettings, self::SELECTED_NUMERICAL_ATTRIBUTES]);
 
-                break;
+                return $product->getProperties()
+                    ->filter(fn (PropertyGroupOptionEntity $option): bool => in_array($option->getGroupId(), $selectedAttributes))
+                    ->getElements();
+
             default:
-                $selectedAttributes = [];
-
-                break;
+                return [];
         }
-
-        if (empty($selectedAttributes)) {
-            return $selectedAttributes;
-        }
-
-        return $product->getProperties()
-            ->filter(fn (PropertyGroupOptionEntity $option): bool => in_array($option->getGroupId(), $selectedAttributes))
-            ->getElements();
     }
 }
