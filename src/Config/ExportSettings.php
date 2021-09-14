@@ -31,6 +31,16 @@ class ExportSettings extends BaseConfig
         return (bool) $this->config('currencyPriceExport');
     }
 
+    public function getIgnoredFilteredValuesData(): array
+    {
+        return array_unique(array_merge($this->getDisabledPropertyGroups(), $this->getSelectedNumericalAttributes()));
+    }
+
+    public function getNumericalValuesColumnData(): array
+    {
+        return array_diff($this->getSelectedNumericalAttributes(), $this->getDisabledPropertyGroups());
+    }
+
     private function toArray(?array $value): array
     {
         return (array) $value;

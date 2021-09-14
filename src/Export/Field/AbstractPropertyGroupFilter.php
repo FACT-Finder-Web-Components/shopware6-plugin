@@ -54,25 +54,17 @@ abstract class AbstractPropertyGroupFilter
     {
         switch ($this->getGroupAttribute()) {
             case self::SELECTED_FILTER_ATTRIBUTES:
-                $disabledPropertyGroups      = call_user_func([$this->exportSettings, self::SELECTED_FILTER_ATTRIBUTES]);
-                $selectedNumericalAttributes = call_user_func([$this->exportSettings, self::SELECTED_NUMERICAL_ATTRIBUTES]);
-
-                if (empty($disabledPropertyGroups)) {
-                    return [];
-                }
+                $ignoredValues = $this->exportSettings->getIgnoredFilteredValuesData();
 
                 return $product->getProperties()
-                    ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledPropertyGroups))
-                    ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $selectedNumericalAttributes))
+                    ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $ignoredValues))
                     ->getElements();
 
             case self::SELECTED_NUMERICAL_ATTRIBUTES:
-                $disabledPropertyGroups      = call_user_func([$this->exportSettings, self::SELECTED_FILTER_ATTRIBUTES]);
-                $selectedAttributes = call_user_func([$this->exportSettings, self::SELECTED_NUMERICAL_ATTRIBUTES]);
+                $numericalValues = $this->exportSettings->getNumericalValuesColumnData();
 
                 return $product->getProperties()
-                    ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledPropertyGroups))
-                    ->filter(fn (PropertyGroupOptionEntity $option): bool => in_array($option->getGroupId(), $selectedAttributes))
+                    ->filter(fn (PropertyGroupOptionEntity $option): bool => in_array($option->getGroupId(), $numericalValues))
                     ->getElements();
 
             default:
