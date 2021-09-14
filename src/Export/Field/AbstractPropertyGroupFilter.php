@@ -28,19 +28,19 @@ abstract class AbstractPropertyGroupFilter
         $this->exportSettings    = $exportSettings;
     }
 
-    public function setGroupAttribute(string $groupAttribute = self::SELECTED_FILTER_ATTRIBUTES)
+    public function setGroupAttribute(string $groupAttribute = self::SELECTED_FILTER_ATTRIBUTES): self
     {
         $this->groupAttribute = $groupAttribute;
 
         return $this;
     }
 
-    public function getGroupAttribute()
+    public function getGroupAttribute(): string
     {
         return $this->groupAttribute;
     }
 
-    public function getValue(Entity $entity)
+    public function getValue(Entity $entity): string
     {
         $attributes = $entity->getChildren()->reduce(
             fn (array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
@@ -67,9 +67,11 @@ abstract class AbstractPropertyGroupFilter
                     ->getElements();
 
             case self::SELECTED_NUMERICAL_ATTRIBUTES:
+                $disabledPropertyGroups      = call_user_func([$this->exportSettings, self::SELECTED_FILTER_ATTRIBUTES]);
                 $selectedAttributes = call_user_func([$this->exportSettings, self::SELECTED_NUMERICAL_ATTRIBUTES]);
 
                 return $product->getProperties()
+                    ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledPropertyGroups))
                     ->filter(fn (PropertyGroupOptionEntity $option): bool => in_array($option->getGroupId(), $selectedAttributes))
                     ->getElements();
 
