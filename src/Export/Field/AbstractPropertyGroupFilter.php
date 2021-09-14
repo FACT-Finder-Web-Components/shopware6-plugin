@@ -10,6 +10,9 @@ use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Prod
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
+/**
+ * @SuppressWarnings(PHPMD.LongVariable)
+ */
 abstract class AbstractPropertyGroupFilter
 {
     public const SELECTED_FILTER_ATTRIBUTES    = 'getDisabledPropertyGroups';
