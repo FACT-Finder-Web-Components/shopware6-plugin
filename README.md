@@ -43,8 +43,8 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 
 ## Requirements
 
-- Shopware 6.3 or higher
-- PHP version 7.3 or higher
+- Shopware 6.4 or higher
+- PHP version 7.4 or higher
 
 ## Installation
 
