@@ -1,9 +1,16 @@
 # Changelog
-
+### Add
 ## Unreleased
-### Fix
- - Custom export types, defined by user, are also visible in the export type selector in export form
+ - Category
+    - Add `use ff-communication/search-immediate` field, which set `search-immediate=true` in given category page
 
+
+### Fix
+ - Export
+    - Custom export types, defined by user, are not visible in the entity type selector in the export form
+ - Category
+    - Fix CustomField `Include in FACT-Finder® CMS Export` is always rendered as selected 
+ 
 ## [v2.0.0] - 2021.08.26
 ### Breaking
  - IMPORTANT! Drop Shopware 6.3 compatibility
@@ -31,7 +38,6 @@
  - Fix Export Settings might cause an error on fresh installation of plugin
  - Fix ASN styles which might have affected mobile viewport
  - Fix communication parameters rendering by applying a default filter with empty array 
- - Fix CustomField `Include in FACT-Finder® CMS Export` is always rendered as selected
 
 ## [v1.1.0] - 2021.07.08
 ### Add

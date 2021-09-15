@@ -44,6 +44,19 @@ class OmikronFactFinder extends Plugin
                 'customFieldPosition' => 1,
             ],
         ],
+        [
+            'name'   => self::USE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME,
+            'type'   => CustomFieldTypes::BOOL,
+            'config' => [
+                'label'               => [
+                    'en-GB' => 'Use `ff-communication/search-immediate`',
+                    'en-GB' => 'Use `ff-communication/search-immediate`'
+                ],
+                'componentName'       => 'sw-field',
+                'customFieldType'     => CustomFieldTypes::SWITCH,
+                'customFieldPosition' => 2,
+            ],
+        ],
     ];
 
     public function build(ContainerBuilder $container): void
