@@ -15,8 +15,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\Entity;
  */
 abstract class AbstractPropertyGroupFilter
 {
-    public const SELECTED_FILTER_ATTRIBUTES    = 'getDisabledPropertyGroups';
-    public const SELECTED_NUMERICAL_ATTRIBUTES = 'getSelectedNumericalAttributes';
+    public const SELECTED_IGNORED_ATTRIBUTES    = 'getDisabledPropertyGroups';
+    public const SELECTED_NUMERICAL_ATTRIBUTES  = 'getSelectedNumericalAttributes';
     protected string $groupAttribute;
 
     private PropertyFormatter $propertyFormatter;
@@ -28,7 +28,7 @@ abstract class AbstractPropertyGroupFilter
         $this->exportSettings    = $exportSettings;
     }
 
-    public function setGroupAttribute(string $groupAttribute = self::SELECTED_FILTER_ATTRIBUTES): self
+    public function setGroupAttribute(string $groupAttribute = self::SELECTED_IGNORED_ATTRIBUTES): self
     {
         $this->groupAttribute = $groupAttribute;
 
@@ -50,10 +50,10 @@ abstract class AbstractPropertyGroupFilter
         return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';
     }
 
-    private function applyPropertyGroupsFilter(Product $product): array
+    private function applyPropertyGroupsFilter(Entity $product): array
     {
         switch ($this->getGroupAttribute()) {
-            case self::SELECTED_FILTER_ATTRIBUTES:
+            case self::SELECTED_IGNORED_ATTRIBUTES:
                 $ignoredValues = $this->exportSettings->getIgnoredFilteredValuesData();
 
                 return $product->getProperties()

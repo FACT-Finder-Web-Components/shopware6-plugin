@@ -11,7 +11,7 @@ class FilterAttributes extends AbstractPropertyGroupFilter implements FieldInter
 {
     public function getValue(Entity $entity): string
     {
-        parent::setGroupAttribute(self::SELECTED_FILTER_ATTRIBUTES);
+        parent::setGroupAttribute(self::SELECTED_IGNORED_ATTRIBUTES);
         return parent::getValue($entity);
     }
 
