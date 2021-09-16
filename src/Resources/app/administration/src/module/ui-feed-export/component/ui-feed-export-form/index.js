@@ -10,11 +10,7 @@ Component.register('ui-feed-export-form', {
             salesChannelValue: null,
             salesChannelLanguageValue: null,
             exportTypeValue: null,
-            typeSelectOptions: {
-                'products': 'Products',
-                'cms': 'CMS',
-                'brands': 'Brands'
-            }
+            typeSelectOptions: this.getExportTypeValues()
         }
     },
 
@@ -23,6 +19,27 @@ Component.register('ui-feed-export-form', {
     ],
 
     methods: {
+        getExportTypeValues() {
+            let values = {};
+            const httpClient = Shopware.Service('syncService').httpClient;
+            let url = '_action/fact-finder/get-export-type-options';
+            const basicHeaders = {
+                Authorization: `Bearer ${Shopware.Context.api.authToken.access}`,
+                'Content-Type': 'application/json'
+            };
+
+            httpClient
+                .get(url, {
+                    headers: basicHeaders
+                })
+                .then((response) => {
+                    if (response.status === 200) {
+                        values = response.data;
+                    }
+                });
+
+            return values;
+        },
         successFeedGenerationWindow() {
             this.createNotificationSuccess({
                 message: this.$tc('ui-feed-export.component.export_form.alert_success.text')

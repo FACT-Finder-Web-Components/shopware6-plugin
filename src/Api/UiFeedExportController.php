@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Api;
 
+use Omikron\FactFinder\Shopware6\Command\DataExportCommand;
 use Omikron\FactFinder\Shopware6\Message\FeedExport;
 use Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
@@ -47,5 +48,15 @@ class UiFeedExportController extends AbstractController
         ));
 
         return new JsonResponse();
+    }
+
+    /**
+     * @Route("/api/_action/fact-finder/get-export-type-options", name="api.action.fact_finder.get_export_type_options", methods={"GET"}, defaults={"XmlHttpRequest"=true})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getTypeEntityMap(Request $request): JsonResponse
+    {
+        return new JsonResponse(array_merge(DataExportCommand::getBaseTypeEntityMap(), $this->container->getParameter('factfinder.data_export.entity_type_map')));
     }
 }
