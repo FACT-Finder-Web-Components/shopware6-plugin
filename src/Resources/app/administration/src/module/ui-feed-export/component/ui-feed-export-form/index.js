@@ -10,17 +10,19 @@ Component.register('ui-feed-export-form', {
             salesChannelValue: null,
             salesChannelLanguageValue: null,
             exportTypeValue: null,
-            typeSelectOptions: this.getExportTypeValues()
+            selectValues: [],
+            typeSelectOptions: [],
         }
     },
 
     mixins: [
         Mixin.getByName('notification')
     ],
-
+    mounted () {
+        this.getExportTypeValues()
+    },
     methods: {
         getExportTypeValues() {
-            let values = {};
             const httpClient = Shopware.Service('syncService').httpClient;
             let url = '_action/fact-finder/get-export-type-options';
             const basicHeaders = {
@@ -34,11 +36,9 @@ Component.register('ui-feed-export-form', {
                 })
                 .then((response) => {
                     if (response.status === 200) {
-                        values = response.data;
+                        this.typeSelectOptions = response.data
                     }
                 });
-
-            return values;
         },
         successFeedGenerationWindow() {
             this.createNotificationSuccess({
