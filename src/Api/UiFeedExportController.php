@@ -52,7 +52,9 @@ class UiFeedExportController extends AbstractController
 
     /**
      * @Route("/api/_action/fact-finder/get-export-type-options", name="api.action.fact_finder.get_export_type_options", methods={"GET"}, defaults={"XmlHttpRequest"=true})
+     *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function getTypeEntityMap(Request $request): JsonResponse
