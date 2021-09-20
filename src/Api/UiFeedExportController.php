@@ -19,15 +19,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class UiFeedExportController extends AbstractController
 {
     private FeedExportHandler $feedExportHandler;
+    private DataExportCommand $dataExportCommand;
 
     /**
      * UiFeedExportController constructor.
      *
      * @param FeedExportHandler $feedExportHandler
      */
-    public function __construct(FeedExportHandler $feedExportHandler)
+    public function __construct(FeedExportHandler $feedExportHandler, DataExportCommand $dataExportCommand)
     {
         $this->feedExportHandler = $feedExportHandler;
+        $this->dataExportCommand = $dataExportCommand;
     }
 
     /**
@@ -53,12 +55,10 @@ class UiFeedExportController extends AbstractController
     /**
      * @Route("/api/_action/fact-finder/get-export-type-options", name="api.action.fact_finder.get_export_type_options", methods={"GET"}, defaults={"XmlHttpRequest"=true})
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
-    public function getTypeEntityMap(Request $request): JsonResponse
+    public function getTypeEntityMap(): JsonResponse
     {
-        return new JsonResponse(array_merge(DataExportCommand::getBaseTypeEntityMap(), $this->container->getParameter('factfinder.data_export.entity_type_map')));
+        return new JsonResponse(array_merge($this->dataExportCommand->getBaseTypeEntityMap(), $this->container->getParameter('factfinder.data_export.entity_type_map')));
     }
 }

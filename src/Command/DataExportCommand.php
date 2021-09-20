@@ -88,7 +88,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         parent::__construct();
     }
 
-    public static function getBaseTypeEntityMap(): array
+    public function getBaseTypeEntityMap(): array
     {
         return [
             self::PRODUCTS_EXPORT_TYPE => SalesChannelProductEntity::class,
