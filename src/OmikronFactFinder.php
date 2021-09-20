@@ -26,8 +26,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class OmikronFactFinder extends Plugin
 {
-    public const FACT_FINDER_CUSTOM_FIELD_SET_NAME = 'cms_export_include';
-    public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME = 'ff_cms_export_include';
+    public const FACT_FINDER_CUSTOM_FIELD_SET_NAME      = 'cms_export_include';
+    public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME   = 'ff_cms_export_include';
     public const USE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME = 'ff_cms_use_search_immediate';
 
     private array $customFields = [
@@ -67,7 +67,7 @@ class OmikronFactFinder extends Plugin
         if (!$factFinderFieldsSet) {
             $this->installCustomFieldsSet([
                'name'      => self::FACT_FINDER_CUSTOM_FIELD_SET_NAME,
-               'config' => [
+               'config'    => [
                    'label' => [
                        'de-DE' => 'FACT-Finder®',
                        'en-GB' => 'FACT-Finder®',
@@ -76,7 +76,7 @@ class OmikronFactFinder extends Plugin
                'relations' => [
                    [
                        'entityName' => 'category',
-                   ]
+                   ],
                ],
            ], $appContext);
         }
@@ -84,7 +84,7 @@ class OmikronFactFinder extends Plugin
         foreach ($this->customFields as $customField) {
             if (!$this->getCustomField($customField['name'], $appContext)) {
                 $this->installCustomField($customField, $appContext, self::FACT_FINDER_CUSTOM_FIELD_SET_NAME);
-            };
+            }
         }
     }
 
@@ -143,7 +143,7 @@ class OmikronFactFinder extends Plugin
     }
 
     /**
-     * This function is introduced to fix FFWEB-2023
+     * This function is introduced to fix FFWEB-2023.
      *
      * @param Context $context
      */
@@ -152,13 +152,13 @@ class OmikronFactFinder extends Plugin
         /** @var EntityRepositoryInterface $customFieldRepository */
         $customFieldRepository = $this->container->get('custom_field.repository');
 
-        $field = $this->getCustomField( OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME, $context);
+        $field = $this->getCustomField(OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME, $context);
         if ($field instanceof CustomFieldEntity) {
             $customFieldRepository->update(
                    [
                     [
                         'id'     => $field->getId(),
-                        'type' => CustomFieldTypes::BOOL,
+                        'type'   => CustomFieldTypes::BOOL,
                         'config' => [
                             'componentName'   => 'sw-field',
                             'customFieldType' => CustomFieldTypes::SWITCH,
@@ -166,8 +166,8 @@ class OmikronFactFinder extends Plugin
                                 'en-GB' => 'Include in FACT-Finder® CMS Export',
                                 'de-DE' => 'Include in FACT-Finder® CMS Export',
                             ],
-                        ]
-                    ]
+                        ],
+                    ],
                 ], $context);
         }
     }
