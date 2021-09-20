@@ -30,7 +30,7 @@ Component.register('ui-feed-export-form', {
     methods: {
         getExportTypeValues() {
             const httpClient = Shopware.Service('syncService').httpClient;
-            let url = '_action/fact-finder/get-export-type-options';
+            const url = '_action/fact-finder/get-export-type-options';
             const basicHeaders = {
                 Authorization: `Bearer ${Shopware.Context.api.authToken.access}`,
                 'Content-Type': 'application/json'
