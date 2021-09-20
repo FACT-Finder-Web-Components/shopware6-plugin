@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Shopware\Core\Content\Category\CategoryEntity;
-use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
@@ -31,14 +30,15 @@ class ImageUrl implements FieldInterface
     {
         $media = $entity->getMedia();
 
-        if (!$media) return '';
+        if (!$media) {
+            return '';
+        }
 
         if (method_exists($media, 'first')) {
             if (!is_null($media->first())) {
                 return $media->first()->getMedia()->getUrl();
-            } else {
-                return '';
             }
+            return '';
         }
 
         return $media->getUrl();
