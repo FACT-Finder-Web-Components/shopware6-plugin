@@ -11,11 +11,13 @@ use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
+use Shopware\Core\Framework\Plugin\Exception\PluginNotInstalledException;
+use Shopware\Core\System\CustomField\Aggregate\CustomFieldSet\CustomFieldSetEntity;
+use Shopware\Core\System\CustomField\CustomFieldEntity;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -24,8 +26,25 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class OmikronFactFinder extends Plugin
 {
-    public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_SET_NAME = 'cms_export_include';
-    public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME     = 'ff_cms_export_include';
+    public const FACT_FINDER_CUSTOM_FIELD_SET_NAME = 'cms_export_include';
+    public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME = 'ff_cms_export_include';
+    public const USE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME = 'ff_cms_use_search_immediate';
+
+    private array $customFields = [
+        [
+            'name'   => self::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME,
+            'type'   => CustomFieldTypes::BOOL,
+            'config' => [
+                'label'               => [
+                    'en-GB' => 'Include in FACT-Finder® CMS Export',
+                    'de-DE' => 'Include in FACT-Finder® CMS Export',
+                ],
+                'componentName'       => 'sw-field',
+                'customFieldType'     => CustomFieldTypes::SWITCH,
+                'customFieldPosition' => 1,
+            ],
+        ],
+    ];
 
     public function build(ContainerBuilder $container): void
     {
@@ -39,67 +58,117 @@ class OmikronFactFinder extends Plugin
     public function install(InstallContext $installContext): void
     {
         parent::install($installContext);
-        /** @var EntityRepositoryInterface $customFieldRepository */
-        $customFieldRepository = $installContext->getPlugin()->container->get('custom_field_set.repository');
+        $appContext = $installContext->getContext();
 
-        if (!$this->customFieldsExist($installContext->getContext())) {
-            $customFieldRepository->create([[
-                'name'   => self::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_SET_NAME,
-                'config' => [
-                    'label' => [
-                        'de-DE' => 'FACT-Finder®',
-                        'en-GB' => 'FACT-Finder®',
-                    ],
-                ],
-                'relations' => [[
-                    'entityName' => 'category',
-                ]],
-                'customFields' => [
-                    [
-                        'name'   => self::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME,
-                        'type'   => CustomFieldTypes::SWITCH,
-                        'config' => [
-                            'label' => [
-                                'en-GB' => 'Include in FACT-Finder® CMS Export',
-                                'de-DE' => 'Include in FACT-Finder® CMS Export',
-                            ],
-                            'customFieldPosition' => 1,
-                        ],
-                    ],
-                ],
-            ]], $installContext->getContext());
+        $this->fixCMSExportIncludeFieldType($appContext);
+
+        $factFinderFieldsSet = $this->getCustomFieldSet(self::FACT_FINDER_CUSTOM_FIELD_SET_NAME, $appContext);
+
+        if (!$factFinderFieldsSet) {
+            $this->installCustomFieldsSet([
+               'name'      => self::FACT_FINDER_CUSTOM_FIELD_SET_NAME,
+               'config' => [
+                   'label' => [
+                       'de-DE' => 'FACT-Finder®',
+                       'en-GB' => 'FACT-Finder®',
+                   ],
+               ],
+               'relations' => [
+                   [
+                       'entityName' => 'category',
+                   ]
+               ],
+           ], $appContext);
+        }
+
+        foreach ($this->customFields as $customField) {
+            if (!$this->getCustomField($customField['name'], $appContext)) {
+                $this->installCustomField($customField, $appContext, self::FACT_FINDER_CUSTOM_FIELD_SET_NAME);
+            };
         }
     }
 
     public function uninstall(UninstallContext $uninstallContext): void
     {
         if (!$uninstallContext->keepUserData()) {
-            $this->removeCustomField($uninstallContext);
+            $this->removeModuleData($uninstallContext);
         }
 
         parent::uninstall($uninstallContext);
     }
 
-    private function removeCustomField(UninstallContext $uninstallContext): void
+    private function removeModuleData(UninstallContext $uninstallContext): void
     {
         $customFieldSetRepository = $this->container->get('custom_field_set.repository');
 
-        $fieldIds = $this->customFieldsExist($uninstallContext->getContext());
+        $setId = $this->customFieldsExist($uninstallContext->getContext());
 
-        if ($fieldIds) {
-            $customFieldSetRepository->delete(array_values($fieldIds->getData()), $uninstallContext->getContext());
+        if ($setId) {
+            $customFieldSetRepository->delete(array_values($setId->getData()), $uninstallContext->getContext());
         }
     }
 
-    private function customFieldsExist(Context $context): ?IdSearchResult
+    private function getCustomFieldSet(string $name, Context $context): ?CustomFieldSetEntity
     {
         $customFieldSetRepository = $this->container->get('custom_field_set.repository');
+        $searchResult             = $customFieldSetRepository->search((new Criteria())->addFilter(new EqualsFilter('name', $name)), $context);
 
-        $criteria = new Criteria();
-        $criteria->addFilter(new EqualsAnyFilter('name', [self::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_SET_NAME]));
+        return $searchResult->first();
+    }
 
-        $ids = $customFieldSetRepository->searchIds($criteria, $context);
+    private function getCustomField(string $name, Context $context): ?CustomFieldEntity
+    {
+        $customFieldsRepository = $this->container->get('custom_field.repository');
+        $searchResult           = $customFieldsRepository->search((new Criteria())->addFilter(new EqualsFilter('name', $name)), $context);
 
-        return $ids->getTotal() > 0 ? $ids : null;
+        return $searchResult->first();
+    }
+
+    private function installCustomFieldsSet(array $data, Context $context): void
+    {
+        /** @var EntityRepositoryInterface $customFielSetRepository */
+        $customFieldSetRepository = $this->container->get('custom_field_set.repository');
+        $customFieldSetRepository->create([$data], $context);
+    }
+
+    private function installCustomField(array $data, Context $context, string $setName): void
+    {
+        /** @var EntityRepositoryInterface $customFieldRepository */
+        $customFieldsRepository = $this->container->get('custom_field.repository');
+        $customFieldSet         = $this->getCustomFieldSet($setName, $context);
+        if (!$customFieldSet) {
+            throw new PluginNotInstalledException('omikron/shopware6-factfinder');
+        }
+        $customFieldsRepository->create([$data + ['customFieldSetId' => $customFieldSet->getId()]], $context);
+    }
+
+    /**
+     * This function is introduced to fix FFWEB-2023
+     *
+     * @param Context $context
+     */
+    private function fixCMSExportIncludeFieldType(Context $context): void
+    {
+        /** @var EntityRepositoryInterface $customFieldRepository */
+        $customFieldRepository = $this->container->get('custom_field.repository');
+
+        $field = $this->getCustomField( OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME, $context);
+        if ($field instanceof CustomFieldEntity) {
+            $customFieldRepository->update(
+                   [
+                    [
+                        'id'     => $field->getId(),
+                        'type' => CustomFieldTypes::BOOL,
+                        'config' => [
+                            'componentName'   => 'sw-field',
+                            'customFieldType' => CustomFieldTypes::SWITCH,
+                            'label'           => [
+                                'en-GB' => 'Include in FACT-Finder® CMS Export',
+                                'de-DE' => 'Include in FACT-Finder® CMS Export',
+                            ],
+                        ]
+                    ]
+                ], $context);
+        }
     }
 }

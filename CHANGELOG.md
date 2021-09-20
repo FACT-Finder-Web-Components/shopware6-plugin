@@ -26,6 +26,7 @@
  - Fix Export Settings might cause an error on fresh installation of plugin
  - Fix ASN styles which might have affected mobile viewport
  - Fix communication parameters rendering by applying a default filter with empty array 
+ - Fix CustomField `Include in FACT-Finder® CMS Export` is always rendered as selected
 
 ## [v1.1.0] - 2021.07.08
 ### Add
