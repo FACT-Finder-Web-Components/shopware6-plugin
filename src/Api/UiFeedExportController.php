@@ -59,6 +59,6 @@ class UiFeedExportController extends AbstractController
      */
     public function getTypeEntityMap(): JsonResponse
     {
-        return new JsonResponse(array_merge($this->dataExportCommand->getBaseTypeEntityMap(), $this->container->getParameter('factfinder.data_export.entity_type_map')));
+        return new JsonResponse($this->dataExportCommand->getTypeEntityMap());
     }
 }
