@@ -88,13 +88,18 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         parent::__construct();
     }
 
-    public function getTypeEntityMap(): array
+    public function getBaseTypeEntityMap(): array
     {
-        return array_merge([
+        return [
             self::PRODUCTS_EXPORT_TYPE => SalesChannelProductEntity::class,
             self::BRANDS_EXPORT_TYPE   => ProductManufacturerEntity::class,
             self::CMS_EXPORT_TYPE      => CategoryEntity::class,
-        ], $this->container->getParameter('factfinder.data_export.entity_type_map'));
+        ];
+    }
+
+    public function getTypeEntityMap(): array
+    {
+        return array_merge($this->getBaseTypeEntityMap(), $this->container->getParameter('factfinder.data_export.entity_type_map'));
     }
 
     public function configure()

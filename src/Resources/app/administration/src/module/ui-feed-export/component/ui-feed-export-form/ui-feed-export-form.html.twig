@@ -20,7 +20,7 @@
                        v-model="exportTypeValue"
                        :label="$tc('ui-feed-export.component.export_form.export_type.label')">
         <option v-for="(key, value) in typeSelectOptions" :value="value">
-          {{ key }}
+          {{ value | capitalize }}
         </option>
       </sw-select-field>
 
