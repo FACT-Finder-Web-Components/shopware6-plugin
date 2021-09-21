@@ -1,4 +1,9 @@
 # Changelog
+
+## Unreleased
+### Fix
+ - Custom export types, defined by user, are also visible in the export type selector in export form
+
 ## [v2.0.0] - 2021.08.26
 ### Breaking
  - IMPORTANT! Drop Shopware 6.3 compatibility
