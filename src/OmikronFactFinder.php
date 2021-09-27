@@ -50,7 +50,7 @@ class OmikronFactFinder extends Plugin
             'config' => [
                 'label'               => [
                     'en-GB' => 'Use `ff-communication/search-immediate`',
-                    'en-GB' => 'Use `ff-communication/search-immediate`'
+                    'en-GB' => 'Use `ff-communication/search-immediate`',
                 ],
                 'componentName'       => 'sw-field',
                 'customFieldType'     => CustomFieldTypes::SWITCH,

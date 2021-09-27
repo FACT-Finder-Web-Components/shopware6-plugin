@@ -43,7 +43,7 @@ class CategoryView implements EventSubscriberInterface
         $navigationId  = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
         $category      = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
         $path          = $this->getPath($category);
-        $safeGetByName = fn(?array $collection) => fn(string $name) => is_array($collection) && isset($collection[$name]) && $collection[$name];
+        $safeGetByName = fn (?array $collection) => fn (string $name) => is_array($collection) && isset($collection[$name]) && $collection[$name];
 
         $event->getPage()->getExtension('factfinder')->assign(
             [
