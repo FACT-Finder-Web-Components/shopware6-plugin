@@ -28,19 +28,15 @@ class ImageUrl implements FieldInterface
 
     private function checkAndReturnMediaUrlOrEmptyString(?Entity $entity = null): string
     {
-        $media = $entity->getMedia();
+        $media = $entity ? $entity->getMedia() : null;
 
-        if (!$media) {
-            return '';
-        }
-
-        if (method_exists($media, 'first')) {
-            if (!is_null($media->first())) {
-                return $media->first()->getMedia()->getUrl();
+        if ($media) {
+            if (method_exists($media, 'first')) {
+                return $this->checkAndReturnMediaUrlOrEmptyString($media->first());
             }
-            return '';
+            return $media->getUrl();
         }
 
-        return $media->getUrl();
+        return '';
     }
 }
