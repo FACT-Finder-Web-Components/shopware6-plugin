@@ -2,8 +2,7 @@
 ### Add
 ## Unreleased
  - Category
-    - Add `use ff-communication/search-immediate` field, which set `search-immediate=true` in given category page
-
+    - Add `Disable ff-communication/search-immediate` field, which prevents setting `search-immediate=true` in `ff-communication` on selected category page
 
 ### Fix
  - Export

@@ -48,7 +48,7 @@ class CategoryView implements EventSubscriberInterface
         $event->getPage()->getExtension('factfinder')->assign(
             [
                 'communication' => [
-                    'search-immediate' => $safeGetByName($category->getCustomFields())(OmikronFactFinder::USE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME) ? 'true' : 'false',
+                    'search-immediate' => $safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME) ? 'false' : 'true',
                     'add-params'       => $path ? implode(',', $this->initial + [sprintf('filter=%s', urlencode($this->fieldName . ':' . $path))]) : '',
                 ],
             ]);

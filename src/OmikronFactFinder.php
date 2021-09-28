@@ -26,9 +26,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class OmikronFactFinder extends Plugin
 {
-    public const FACT_FINDER_CUSTOM_FIELD_SET_NAME      = 'cms_export_include';
-    public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME   = 'ff_cms_export_include';
-    public const USE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME = 'ff_cms_use_search_immediate';
+    public const FACT_FINDER_CUSTOM_FIELD_SET_NAME          = 'cms_export_include';
+    public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME       = 'ff_cms_export_include';
+    public const DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME = 'ff_cms_disable_search_immediate';
 
     private array $customFields = [
         [
@@ -45,12 +45,12 @@ class OmikronFactFinder extends Plugin
             ],
         ],
         [
-            'name'   => self::USE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME,
+            'name'   => self::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME,
             'type'   => CustomFieldTypes::BOOL,
             'config' => [
                 'label'               => [
-                    'en-GB' => 'Use `ff-communication/search-immediate`',
-                    'en-GB' => 'Use `ff-communication/search-immediate`',
+                    'en-GB' => 'Disable `ff-communication/search-immediate`',
+                    'en-GB' => 'Disable `ff-communication/search-immediate`',
                 ],
                 'componentName'       => 'sw-field',
                 'customFieldType'     => CustomFieldTypes::SWITCH,
