@@ -4,8 +4,8 @@
 
   {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with {
     subscribe: config.subscribe,
-    infiniteScrolling: config.infiniteScrolling,
-    infiniteDebounceDelay: config.infiniteDebounceDelay,
+    infiniteScrolling: config.infiniteScrolling.value,
+    infiniteDebounceDelay: config.infiniteDebounceDelay.value,
     class: 'row cms-listing-row',
     id: id
   } %}
