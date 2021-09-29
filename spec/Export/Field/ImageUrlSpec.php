@@ -48,13 +48,17 @@ class ImageUrlSpec extends ObjectBehavior
         $this->getValue($category)->shouldReturn('/category_image.jpg');
     }
 
-    function it_does_not_fail_if_media_first_is_null(
-        Product $product,
-        ProductMediaCollection $mediaCollection
-    )
+    function it_does_not_fail_if_media_first_is_null(Product $product, ProductMediaCollection $mediaCollection)
     {
         $product->getMedia()->willReturn($mediaCollection);
         $mediaCollection->first()->willReturn(null);
+
+        $this->shouldNotThrow()->during('getValue', [$product]);
+    }
+
+    function it_does_not_fail_if_media_is_null(Product $product)
+    {
+        $product->getMedia()->willReturn(null);
 
         $this->shouldNotThrow()->during('getValue', [$product]);
     }
