@@ -1,11 +1,13 @@
 # Changelog
-## Unreleased
+## [v2.1.0] - 2021.09.30
+### Add
  - Category
     - Add `Disable ff-communication/search-immediate` field, which prevents setting `search-immediate=true` in `ff-communication` on selected category page
 
 ### Fix
  - Export
-    - Custom export types, defined by user, are also visible in the export type selector in export form
+    - Custom export types, defined by user, are not visible in the export type selector in export form
+    - Fix "Call getMedia On null in `ImageProvider.php`"
  - Page Builder
     - infinite-scrolling is always set to true
     - infinite-debounce-delay is always set to true with incorrect value
@@ -51,6 +53,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v2.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.1.0
 [v2.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.0.0
 [v1.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v1.0.0
