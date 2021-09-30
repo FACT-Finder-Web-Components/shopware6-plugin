@@ -1,15 +1,17 @@
 # Changelog
-### Add
 ## Unreleased
  - Category
     - Add `Disable ff-communication/search-immediate` field, which prevents setting `search-immediate=true` in `ff-communication` on selected category page
 
 ### Fix
  - Export
-    - Custom export types, defined by user, are not visible in the entity type selector in the export form
- - Category
-    - Fix CustomField `Include in FACT-Finder® CMS Export` is always rendered as selected 
- 
+    - Custom export types, defined by user, are also visible in the export type selector in export form
+ - Page Builder
+    - infinite-scrolling is always set to true
+    - infinite-debounce-delay is always set to true with incorrect value
+ - Configuration
+  - Fix Category CustomField `Include in FACT-Finder® CMS Export` is always rendered as selected
+
 ## [v2.0.0] - 2021.08.26
 ### Breaking
  - IMPORTANT! Drop Shopware 6.3 compatibility
