@@ -3,7 +3,7 @@
     {% if id %} id="{{ id }}" {% endif %}
     class="{{ class }}"
     subscribe="{{ subscribe ? 'true' : 'false' }}"
-    {{ infiniteScrolling ? 'infinite-scrolling' : '' }} {{ infiniteScrolling ? "infinite-debounce-delay=#{infiniteDebounceDelay}" : '' }}
+    {{ infiniteScrolling ? 'infinite-scrolling infinite-debounce-delay=#{infiniteDebounceDelay}' : '' }}
     unresolved>
     {% block component_factfinder_record %}
       <ff-record class="cms-listing-col col-sm-6 col-lg-4 col-xl-3">
