@@ -24,7 +24,7 @@ class Price implements FieldInterface
 
     public function getValue(Entity $entity): string
     {
-        return $this->numberFormatter->format((float)$entity->getCalculatedPrice()->getTotalPrice());
+        return $this->numberFormatter->format((float) $entity->getCalculatedPrice()->getTotalPrice());
     }
 
     public function getCompatibleEntityTypes(): array
