@@ -31,6 +31,21 @@ class FtpConfig extends BaseConfig
         return sprintf('export.%s.csv', $this->config('channel', $salesChannelId));
     }
 
+    public function getProtocol(): string
+    {
+        return (string) $this->config('protocol');
+    }
+
+    public function getPrivateKeyFile(): string
+    {
+        return (string) $this->config('privateKey');
+    }
+
+    public function getKeyPassphrase(): string
+    {
+        return (string) $this->config('keyPassphrase');
+    }
+
     public function getPushImportTypes(): array
     {
         return (array) $this->config('pushImport');

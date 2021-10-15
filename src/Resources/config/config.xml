@@ -59,6 +59,23 @@
         <title>Upload Settings</title>
         <title lang="de-DE">FTP-Konfiguration</title>
 
+        <input-field type="single-select">
+            <name>protocol</name>
+            <label>Protocol</label>
+            <label lang="de-DE">Protocol</label>
+            <options>
+                <option>
+                    <id>ftp</id>
+                    <name>FTP</name>
+                </option>
+                <option>
+                    <id>sftp</id>
+                    <name>SFTP</name>
+                </option>
+            </options>
+            <required>true</required>
+        </input-field>
+
         <input-field>
             <name>ftpHost</name>
             <label>Server URL</label>
@@ -85,10 +102,29 @@
             <name>ftpPassword</name>
             <label>Password</label>
             <label lang="de-DE">Passwort</label>
-            <required>true</required>
+            <required>false</required>
+            <helpText>If your authentication method does not require user password, please ignore that file</helpText>
         </input-field>
 
-        <input-field type="multi-select">
+        <input-field type="textarea">
+            <name>privateKey</name>
+            <label>Private Key Content</label>
+            <helpText>Put the content of the received key file into the text area. If your authentication method does not require key, please ignore that file</helpText>
+            <required>false</required>
+        </input-field>
+
+        <input-field type="password">
+            <name>keyPassphrase</name>
+            <label>Key Passphrase</label>
+            <helpText>If your key is not protected with a passphrase, please ignore this field</helpText>
+            <required>false</required>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Import Settings</title>
+        <title lang="de-DE">Import-Konfiguration</title>
+            <input-field type="multi-select">
             <name>pushImport</name>
             <label>Enable Automatic Import for</label>
             <label lang="de-DE">Aktivieren Sie den automatischen Import für</label>

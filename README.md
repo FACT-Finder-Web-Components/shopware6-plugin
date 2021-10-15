@@ -14,6 +14,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - [Export Settings](#export-settings)
     - [Price Columns Format](#price-columns-format)
 - [Upload Settings](#upload-settings)
+- [Import Settings](#import-settings)
 - [Category Pages](#category-pages)
     - [Element Settings](#element-settings)
       - [ASN Element](#asn-element)
@@ -106,14 +107,25 @@ If `Export prices in all currencies` setting is set to true, price columns will 
 ### Upload Settings
 
 ![Upload Setting](docs/assets/upload-settings.png "Upload Setting")
-Following settings are used for uploading already exported feed to a given FTP server.
+Following settings are used for uploading already exported feed to a given FTP/SFTP server.
 
-**Note:** The default port setting is 21. If your FTP is listening on different port, please change it accordingly.
+**Note:** The default port setting is 21. If your server is listening on different port, please change it accordingly.
 
+* Protocol
 * Server URL
 * Port
-* username
-* password
+* Username
+* Password
+* Private Key Content
+* Passphrase
+
+*Note** Fields "Private Key Content" and "Passphrase" are optional. Use them only if your SFTP server require this method of authentication. 
+
+
+### Import Settings
+
+![Upload Setting](docs/assets/import-settings.png "Import Setting")
+
 * Enable Automatic Import for - define import types which should be triggered. Possible types are: Suggest, Search and
   Recommendation
 
