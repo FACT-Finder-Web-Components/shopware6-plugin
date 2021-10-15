@@ -17,6 +17,15 @@ class CommunicationSpec extends ObjectBehavior
         $this->getCredentials()->shouldContainOnlyStrings();
     }
 
+    function it_should_return_factfinder_channel_configured_for_specific_saleschannel(SystemConfigService $configService)
+    {
+        $configService->get('OmikronFactFinder.config.channel', '1')->willReturn('channel_1');
+        $configService->get('OmikronFactFinder.config.channel', '2')->willReturn('channel_2');
+
+        $this->getChannel('1')->shouldReturn('channel_1');
+        $this->getChannel('2')->shouldReturn('channel_2');
+    }
+
     public function getMatchers(): array
     {
         return [

@@ -31,12 +31,14 @@ class ConfigurationSubscriber implements EventSubscriberInterface
 
     public function onPageLoaded(GenericPageLoadedEvent $event): void
     {
-        $customer = $event->getSalesChannelContext()->getCustomer();
+        $customer       = $event->getSalesChannelContext()->getCustomer();
+        $salesChannelId = $event->getSalesChannelContext()->getSalesChannel()->getId();
+
         $event->getPage()->addExtension('factfinder', new ArrayEntity([
             'field_roles'   => $this->fieldRoles,
             'communication' => [
                 'url'                   => $this->config->getServerUrl(),
-                'channel'               => $this->config->getChannel(),
+                'channel'               => $this->config->getChannel($salesChannelId),
                 'version'               => 'ng',
                 'api'                   => 'v4',
                 'user-id'               => $customer ? $customer->getId() : null,

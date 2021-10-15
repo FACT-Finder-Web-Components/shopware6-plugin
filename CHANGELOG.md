@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+  - Config
+    - Configuration is not taking sales channel id argument into account when load the FACT-Finder channel
+
 ## [v2.1.1] - 2021.10.05
 ### Fix
  - Export
