@@ -13,6 +13,7 @@
     "omikron/factfinder-communication-sdk": "^0.9.0",
     "shopware/core": "^6.4",
     "shopware/storefront": "^6.4",
+    "league/flysystem-sftp": "1.0.22",
     "php": "^7.4 || ^8.0"
   },
   "require-dev": {
