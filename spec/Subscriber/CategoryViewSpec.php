@@ -38,6 +38,7 @@ class CategoryViewSpec extends ObjectBehavior
         $salesChannelContext->getSalesChannel()->willReturn($salesChannelEntity);
         $salesChannelEntity->getNavigationCategoryId()->willReturn($navigationId);
         $request->get('navigationId', $navigationId)->willReturn($navigationId);
+        $request->get('_route')->willReturn('');
         $cmsPageRoute->load('1', $request, $salesChannelContext)->willReturn($categoryRouteResponse);
         $categoryRouteResponse->getCategory()->willReturn($categoryEntity);
         $categoryEntity->getBreadcrumb()->willReturn(
