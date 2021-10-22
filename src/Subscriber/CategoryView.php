@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
-use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Category\SalesChannel\AbstractCategoryRoute;
 use Shopware\Storefront\Page\Navigation\NavigationPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use function \Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
+use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class CategoryView implements EventSubscriberInterface
 {
