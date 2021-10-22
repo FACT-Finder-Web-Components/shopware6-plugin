@@ -24,7 +24,8 @@
   "autoload": {
     "psr-4": {
       "Omikron\\FactFinder\\Shopware6\\": "src/"
-    }
+    },
+    "files": ["src/Internal/utils.php"]
   },
   "scripts": {
     "test": [

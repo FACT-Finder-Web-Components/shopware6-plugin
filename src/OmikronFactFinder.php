@@ -113,11 +113,10 @@ class OmikronFactFinder extends Plugin
     private function removeModuleData(UninstallContext $uninstallContext): void
     {
         $customFieldSetRepository = $this->container->get('custom_field_set.repository');
+        $customFieldSet           = $this->getCustomFieldSet(self::FACT_FINDER_CUSTOM_FIELD_SET_NAME, $uninstallContext->getContext());
 
-        $setId = $this->customFieldsExist($uninstallContext->getContext());
-
-        if ($setId) {
-            $customFieldSetRepository->delete(array_values($setId->getData()), $uninstallContext->getContext());
+        if ($customFieldSet) {
+            $customFieldSetRepository->delete([['id' => $customFieldSet->getId()]], $uninstallContext->getContext());
         }
     }
 
@@ -168,7 +167,7 @@ class OmikronFactFinder extends Plugin
         $field = $this->getCustomField(OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME, $context);
         if ($field instanceof CustomFieldEntity) {
             $customFieldRepository->update(
-                   [
+                [
                     [
                         'id'     => $field->getId(),
                         'type'   => CustomFieldTypes::BOOL,
