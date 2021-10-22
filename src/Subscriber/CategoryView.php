@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
+use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Category\SalesChannel\AbstractCategoryRoute;
 use Shopware\Storefront\Page\Navigation\NavigationPageLoadedEvent;
@@ -43,13 +44,13 @@ class CategoryView implements EventSubscriberInterface
         $navigationId     = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
         $category         = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
         $path             = $this->getPath($category);
-        $disableImmediate = safeGetByName($category->getCustomFields())('ff_cms_use_search_immediate');
+        $disableImmediate = safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $event->getRequest()->get('_route') === 'frontend.home.page';
 
         $event->getPage()->getExtension('factfinder')->assign(
             [
                 'communication' => [
-                    'search-immediate' => !$isHome || !$disableImmediate ? 'true' : 'false',
+                    'search-immediate' => !$isHome && !$disableImmediate ? 'true' : 'false',
                     'add-params'       => $path ? implode(',', $this->initial + [sprintf('filter=%s', urlencode($this->fieldName . ':' . $path))]) : '',
                 ],
             ]);
