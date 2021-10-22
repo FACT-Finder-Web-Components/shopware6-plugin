@@ -1,7 +1,18 @@
 # Changelog
-## Unreleased
-  - Config
+## [v2.2.0] - 2021.10.25
+### Add 
+ - Upload
+    - Added SFTP support
+
+### Change
+ - Category
+    - Force search-immediate="false" on Home Page
+
+### Fix
+  - Configuration
     - Configuration is not taking sales channel id argument into account when load the FACT-Finder channel
+  - Setup
+    - Fix is not removing its Custom Field Sets
 
 ## [v2.1.1] - 2021.10.05
 ### Fix
@@ -62,6 +73,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v2.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.2.0
 [v2.1.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.1.1
 [v2.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.1.0
 [v2.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.0.0
