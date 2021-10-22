@@ -10,6 +10,7 @@ use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Category\SalesChannel\AbstractCategoryRoute;
 use Shopware\Storefront\Page\Navigation\NavigationPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use function \Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class CategoryView implements EventSubscriberInterface
 {
@@ -40,15 +41,16 @@ class CategoryView implements EventSubscriberInterface
 
     public function onPageLoaded(NavigationPageLoadedEvent $event): void
     {
-        $navigationId  = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
-        $category      = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
-        $path          = $this->getPath($category);
-        $safeGetByName = fn (?array $collection) => fn (string $name) => is_array($collection) && isset($collection[$name]) && $collection[$name];
+        $navigationId     = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
+        $category         = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
+        $path             = $this->getPath($category);
+        $disableImmediate = safeGetByName($category->getCustomFields())('ff_cms_use_search_immediate');
+        $isHome           = $event->getRequest()->get('_route') === 'frontend.home.page';
 
         $event->getPage()->getExtension('factfinder')->assign(
             [
                 'communication' => [
-                    'search-immediate' => $safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME) ? 'false' : 'true',
+                    'search-immediate' => !$isHome || !$disableImmediate ? 'true' : 'false',
                     'add-params'       => $path ? implode(',', $this->initial + [sprintf('filter=%s', urlencode($this->fieldName . ':' . $path))]) : '',
                 ],
             ]);

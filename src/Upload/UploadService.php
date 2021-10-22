@@ -48,7 +48,7 @@ class UploadService
     private function config(): array
     {
         return [
-            'type'   => $this->config->getAuthenticationType(),
+            'type'   => $this->config->getProtocol(),
             'config' => array_filter([
                 'host'       => $this->config->getHost(),
                 'port'       => $this->config->getPort(),
