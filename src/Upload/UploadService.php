@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Upload;
 
 use Exception;
-use League\Flysystem\FilesystemInterface;
 use Omikron\FactFinder\Shopware6\Config\FtpConfig;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Framework\Adapter\Filesystem\FilesystemFactory;
@@ -36,11 +35,7 @@ class UploadService
         $connection     = $this->filesystemFactory->factory($this->config());
         $salesChannelId = $this->salesChannelService->getSalesChannelContext()->getSalesChannel()->getId();
 
-        if (!$connection->has('export')) {
-            $this->createExportDirectory($connection);
-        }
-
-        if (!$connection->putStream('/export/' . $this->config->getUploadFileName($salesChannelId), $fileHandle)) {
+        if (!$connection->putStream($this->config->getUploadFileName($salesChannelId), $fileHandle)) {
             throw new Exception('Failed to upload file');
         }
     }
@@ -57,15 +52,8 @@ class UploadService
                 'ssl'        => true,
                 'privateKey' => $this->config->getPrivateKeyFile(),
                 'passphrase' => $this->config->getKeyPassphrase(),
+                'root'       => $this->config->getRoot(),
             ]),
         ];
-    }
-
-    private function createExportDirectory(FilesystemInterface $filesystem): bool
-    {
-        $result = $filesystem->createDir('export');
-        if (!$result) {
-            throw new Exception('Failed to create "export directory"');
-        }
     }
 }

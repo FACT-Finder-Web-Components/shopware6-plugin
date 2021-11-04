@@ -106,6 +106,14 @@
             <helpText>If your authentication method does not require user password, please ignore that file</helpText>
         </input-field>
 
+        <input-field>
+            <name>rootDir</name>
+            <label>Root Directory</label>
+            <defaultValue>21</defaultValue>
+            <label lang="de-DE">Root</label>
+            <required>false</required>
+        </input-field>
+
         <input-field type="textarea">
             <name>privateKey</name>
             <label>Private Key Content</label>
