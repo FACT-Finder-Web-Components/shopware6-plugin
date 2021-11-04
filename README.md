@@ -116,6 +116,7 @@ Following settings are used for uploading already exported feed to a given FTP/S
 * Port
 * Username
 * Password
+* Root Directory
 * Private Key Content
 * Passphrase
 
