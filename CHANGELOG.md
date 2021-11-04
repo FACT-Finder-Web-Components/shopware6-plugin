@@ -1,4 +1,15 @@
 # Changelog
+## [v2.2.1] - 2021.11.08
+### Add 
+ - Upload
+    - Added Root Directory Field which allows to specify where uploaded file has to be saved
+
+### Fix
+  - Upload
+    - Fix Type Error occurs when upload directory does not exist
+  - Category
+    - Fix force disable search-immediate on home page wasn't work as expected
+   
 ## [v2.2.0] - 2021.10.25
 ### Add 
  - Upload
@@ -73,6 +84,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v2.2.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.2.1
 [v2.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.2.0
 [v2.1.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.1.1
 [v2.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.1.0
