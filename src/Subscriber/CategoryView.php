@@ -50,7 +50,7 @@ class CategoryView implements EventSubscriberInterface
         $event->getPage()->getExtension('factfinder')->assign(
             [
                 'communication' => [
-                    'search-immediate' => $isHome && $disableImmediate ? 'false' : 'true',
+                    'search-immediate' => !$isHome && !$disableImmediate ? 'true' : 'false',
                     'add-params'       => $path ? implode(',', $this->initial + [sprintf('filter=%s', urlencode($this->fieldName . ':' . $path))]) : '',
                 ],
             ]);
