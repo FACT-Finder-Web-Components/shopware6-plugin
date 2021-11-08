@@ -109,7 +109,6 @@
         <input-field>
             <name>rootDir</name>
             <label>Root Directory</label>
-            <defaultValue>21</defaultValue>
             <label lang="de-DE">Root</label>
             <required>false</required>
         </input-field>
