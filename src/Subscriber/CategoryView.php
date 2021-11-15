@@ -47,14 +47,20 @@ class CategoryView implements EventSubscriberInterface
         $disableImmediate = safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $event->getRequest()->get('_route') === 'frontend.home.page';
 
+        $filterValue = $this->fieldName === 'CategoryPath' ? '\'\'' : urlencode($this->fieldName . ':' . $path);
+        $addParams = $path ? implode(',', $this->initial + [sprintf('filter=%s', $filterValue)]) : '';
+        $categoryPage = $this->fieldName === 'CategoryPath' ? urlencode($this->fieldName . ':' . $path) : '\'\'';
         $event->getPage()->getExtension('factfinder')->assign(
             [
                 'communication' => [
                     'search-immediate' => !$isHome && !$disableImmediate ? 'true' : 'false',
-                    'add-params'       => $path ? implode(',', $this->initial + [sprintf('filter=%s', urlencode($this->fieldName . ':' . $path))]) : '',
+                    'add-params'       => $addParams,
+                    'category-page'    => $categoryPage
                 ],
             ]);
     }
+
+    private function removeNavigation(){}
 
     private function getPath(CategoryEntity $category): string
     {

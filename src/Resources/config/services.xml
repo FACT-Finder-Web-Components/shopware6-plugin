@@ -40,9 +40,7 @@
             <parameter key="variant_cover">children.cover</parameter>
         </parameter>
         <parameter key="factfinder.navigation.category_path_field_name" type="string">CategoryPath</parameter>
-        <parameter key="factfinder.navigation.initial_params" type="collection">
-            <parameter key="navigation=true">navigation=true</parameter>
-        </parameter>
+        <parameter key="factfinder.navigation.initial_params" type="collection"></parameter>
         <parameter key="factfinder.data_export.entity_type_map" type="collection">
         </parameter>
     </parameters>
