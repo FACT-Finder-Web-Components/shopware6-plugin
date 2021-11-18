@@ -57,7 +57,7 @@ abstract class AbstractPropertyGroupFilter
                 $ignoredValues = $this->exportSettings->getIgnoredFilteredValuesData();
 
                 return $product->getProperties()
-                    ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $ignoredValues))
+                    ->filter(fn (PropertyGroupOptionEntity $option): bool => in_array($option->getGroupId(), $ignoredValues))
                     ->getElements();
 
             case self::SELECTED_NUMERICAL_ATTRIBUTES:
