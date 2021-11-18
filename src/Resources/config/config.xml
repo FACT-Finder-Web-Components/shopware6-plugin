@@ -38,7 +38,7 @@
         <title>Export Settings</title>
 
         <component name="sw-entity-multi-id-select">
-            <name>selectedFilterAttributes</name>
+            <name>getDisabledPropertyGroups</name>
             <entity>property_group</entity>
             <label>Select Filter attributes which should be ignored be feed exporter</label>
         </component>
