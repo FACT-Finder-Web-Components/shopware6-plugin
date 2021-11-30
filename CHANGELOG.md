@@ -1,4 +1,11 @@
 # Changelog
+## Unreleased
+
+### Fix
+  - Export
+    - Fix Entity types custom fields are causing export to throw an error while reading from options of the field 
+    - Fix Entity multi selection custom fields are causing export while formatting output value
+
 ## [v2.2.1] - 2021.11.08
 ### Add 
  - Upload

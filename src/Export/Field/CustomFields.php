@@ -23,6 +23,9 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
 use Shopware\Core\System\Language\LanguageEntity;
+use Shopware\Core\System\SalesChannel\SalesChannelEntity;
+use function array_map as map;
+use function Omikron\FactFinder\Shopware6\Internal\Utils\flatMap;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
@@ -72,15 +75,20 @@ class CustomFields implements FieldInterface
     public function getFieldValue(Entity $entity): string
     {
         $fields           = $this->getFields($entity);
-        $translatedFields = array_merge([], ...array_map($this->customFieldConfig(), array_keys($fields), array_values($fields)));
-        $value            = array_map([$this->propertyFormatter, 'format'], array_keys($translatedFields), array_values($translatedFields));
+        $translatedFields = flatMap(
+            $this->toTranslatedKeyValuePairs($this->salesChannelService->getSalesChannelContext()->getSalesChannel()),
+            array_keys($fields),
+            array_values($fields)
+        );
+
+        $value = map([$this->propertyFormatter, 'format'], array_keys($translatedFields), array_values($translatedFields));
 
         return $value ? '|' . implode('|', $value) . '|' : '';
     }
 
-    private function customFieldConfig()
+    private function toTranslatedKeyValuePairs(SalesChannelEntity $salesChannel): callable
     {
-        $usedLocale    = $this->findLanguage($this->salesChannelService->getSalesChannelContext()->getSalesChannel()->getLanguageId())->getLocale()->getCode();
+        $usedLocale    = $this->findLanguage($salesChannel->getLanguageId())->getLocale()->getCode();
         $defaultLocale = $this->findLanguage(Defaults::LANGUAGE_SYSTEM)->getLocale()->getCode();
 
         /*
@@ -89,34 +97,28 @@ class CustomFields implements FieldInterface
          *
          * @return array
          */
-        return function (string $key, $storedValue) use ($usedLocale, $defaultLocale) {
+        return function (string $key, $storedValue) use ($usedLocale, $defaultLocale): array {
             try {
                 $customField = $this->getCustomField($key);
             } catch (InvalidArgumentException $e) {
                 return [$key => $storedValue];
             }
 
-            if ($customField->getType() === CustomFieldTypes::SELECT) {
-                $options = array_filter($customField->getConfig()['options'], function (array $option) use ($storedValue
-                ) {
-                    return is_array($storedValue) ? in_array($option['value'], $storedValue) : $option['value'] === $storedValue;
-                });
+            $config = $customField->getConfig();
+            //select types not necessarily must have 'options', entity selectors don't have it
+            if ($customField->getType() === CustomFieldTypes::SELECT && isset($config['options'])) {
+                $options = array_filter($config['options'], fn (array $option): bool => is_array($storedValue) ? in_array($option['value'], $storedValue) : $option['value'] === $storedValue);
 
-                $translatedOptionValue = implode('#', array_map(function (array $option) use (
-                    $usedLocale,
-                    $defaultLocale
-                ): string {
-                    return array_key_exists('label', $option) && count($option['label']) > 0
-                        ? $option['label'][$usedLocale] ?? $option['label'][$defaultLocale]
-                        : $option['value'];
-                }, $options));
+                $translatedOptionValue = implode('#', map(fn (array $option): string => array_key_exists('label', $option) && count($option['label']) > 0
+                    ? $option['label'][$usedLocale] ?? $option['label'][$defaultLocale]
+                    : $option['value'], $options));
             }
 
-            $label = $customField->getConfig() !== null && array_key_exists('label', $customField->getConfig())
-                ? ($customField->getConfig()['label'][$usedLocale] ?? $customField->getConfig()['label'][$defaultLocale])
+            $label = $config !== null && array_key_exists('label', $config)
+                ? ($config['label'][$usedLocale] ?? $config['label'][$defaultLocale])
                 : $key;
 
-            return [$label => $translatedOptionValue ?? $storedValue];
+            return [$label => $translatedOptionValue ?? (is_array($storedValue) ? implode('#', $storedValue) : $storedValue)];
         };
     }
 
