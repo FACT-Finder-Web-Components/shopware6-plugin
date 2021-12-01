@@ -46,13 +46,13 @@ class CategoryView implements EventSubscriberInterface
         $path             = $this->getPath($category);
         $disableImmediate = safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $event->getRequest()->get('_route') === 'frontend.home.page';
-        $addParams = $this->prepareAddParams();
-        $communication = [
+        $addParams        = $this->prepareAddParams();
+        $communication    = [
             'search-immediate' => !$isHome && !$disableImmediate ? 'true' : 'false',
             'category-page'    => $this->prepareCategoryPath($path),
         ];
 
-        if ($addParams) {
+        if (!empty($addParams)) {
             $communication['add-params'] = $addParams;
         }
 
@@ -67,19 +67,21 @@ class CategoryView implements EventSubscriberInterface
         if (empty($this->initial)) {
             return null;
         }
-        $paramsString = '';
-        $i=0;
-        $initialCount = count($this->initial);
 
-        foreach ($this->initial as $key=>$value) {
-            $i++;
-            $paramsString .= $key . '=' .$value;
-            if ($i<$initialCount) {
-                $paramsString .= ',';
-            }
-        }
-        return $paramsString;
+        return implode(',', $this->initial);
 
+//        $i=0;
+//        $paramsString = '';
+//        $initialCount = count($this->initial);
+//
+//        foreach ($this->initial as $key=>$value) {
+//            $i++;
+//            $paramsString .= $key . '=' .$value;
+//            if ($i<$initialCount) {
+//                $paramsString .= ',';
+//            }
+//        }
+//        return $paramsString;
     }
 
     private function prepareCategoryPath($path): string
