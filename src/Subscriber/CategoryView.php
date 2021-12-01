@@ -69,19 +69,6 @@ class CategoryView implements EventSubscriberInterface
         }
 
         return implode(',', $this->initial);
-
-//        $i=0;
-//        $paramsString = '';
-//        $initialCount = count($this->initial);
-//
-//        foreach ($this->initial as $key=>$value) {
-//            $i++;
-//            $paramsString .= $key . '=' .$value;
-//            if ($i<$initialCount) {
-//                $paramsString .= ',';
-//            }
-//        }
-//        return $paramsString;
     }
 
     private function prepareCategoryPath($path): string

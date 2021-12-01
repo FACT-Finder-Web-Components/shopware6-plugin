@@ -99,7 +99,7 @@ class CategoryViewSpec extends ObjectBehavior
     )
     {
         $categoryEntity->getCustomFields()->willReturn([]);
-        $extension->assign(Argument::withEntry('communication', Argument::withEntry('add-params', Argument::containingString('filter=\'\''))))->shouldBeCalled();
+        $extension->assign(Argument::withEntry('communication', Argument::withEntry('category-page', Argument::containingString('filter=CategoryPath%2C+%5B%5D%3ABooks%2520%2526%2520Sports%2FHome%2520%2526%2520Garden'))))->shouldBeCalled();
         $this->onPageLoaded($event);
     }
 }
