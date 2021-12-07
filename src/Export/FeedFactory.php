@@ -9,6 +9,7 @@ use Omikron\FactFinder\Shopware6\Export\Data\Factory\CompositeFactory;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Traversable;
+use function Omikron\FactFinder\Shopware6\Internal\Utils\first;
 
 /**
  * @SuppressWarnings(PHPMD.MissingImport)
@@ -31,16 +32,11 @@ class FeedFactory
 
     public function create(SalesChannelContext $context, string $exportType): Feed
     {
-        $exporter = $this->first(array_filter(($this->exporters), fn (ExportInterface $exp): bool => $exp->getCoveredEntityType() === $exportType));
+        $exporter = first(array_filter(($this->exporters), fn (ExportInterface $exp): bool => $exp->getCoveredEntityType() === $exportType));
         if (!$exporter instanceof ExportInterface) {
             throw new InvalidArgumentException(sprintf('There is no exporter for given type: %s', $exportType));
         }
 
         return new Feed($context, $exporter, $this->compositeFactory, $this->filter);
-    }
-
-    private function first(array $arr): ?ExportInterface
-    {
-        return empty($arr) ? null : reset($arr);
     }
 }
