@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
@@ -29,24 +31,20 @@ use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 class CustomFieldsSpec extends ObjectBehavior
 {
     private $selectFieldConfig = [
-        'label'   =>
-            [
+        'label'   => [
                 'de-DE' => 'SelectFieldDE',
                 'en-GB' => 'SelectFieldEN',
             ],
-        'options' =>
-            [
+        'options' => [
                 [
-                    'label' =>
-                        [
+                    'label' => [
                             'de-DE' => 'option1DE',
                             'en-GB' => 'option1EN',
                         ],
                     'value' => 'option1',
                 ],
                 [
-                    'label' =>
-                        [
+                    'label' => [
                             'de-DE' => 'option2DE',
                             'en-GB' => 'option2EN',
                         ],
@@ -73,7 +71,7 @@ class CustomFieldsSpec extends ObjectBehavior
                 'test-multi-select-field' => [
                     'option1',
                     'option2',
-                ]
+                ],
             ]);
         $this->beConstructedWith(
             new PropertyFormatter(new TextFilter()),
@@ -105,10 +103,9 @@ class CustomFieldsSpec extends ObjectBehavior
                             'test-multi-select-field',
                             CustomFieldTypes::SELECT,
                             $this->selectFieldConfig
-                        )
+                        ),
                     ]
                 ));
-
 
         $exportSettings->getDisabledCustomFields()->willReturn([]);
         $this->getValue($product)->shouldReturn('|SelectFieldDE=option1DE#option2DE|');
@@ -132,7 +129,7 @@ class CustomFieldsSpec extends ObjectBehavior
                             'test-multi-select-field',
                             CustomFieldTypes::SELECT,
                             $config
-                        )
+                        ),
                     ]
                 ));
 
@@ -154,10 +151,10 @@ class CustomFieldsSpec extends ObjectBehavior
                             [
                                 'options' => [
                                     ['value' => 'option1'],
-                                    ['value' => 'option2']
-                                ]
+                                    ['value' => 'option2'],
+                                ],
                             ]
-                        )
+                        ),
                     ]
                 ));
 
@@ -190,28 +187,57 @@ class CustomFieldsSpec extends ObjectBehavior
                             'test-disabled',
                             CustomFieldTypes::SELECT,
                             [
-                                'label' => ['en-GB' => 'Disabled attribute'],
+                                'label'   => ['en-GB' => 'Disabled attribute'],
                                 'options' => [[
                                                   'label' => ['en-GB' => 'not exported value'],
                                                   'value' => 'i should not be exported',
-                                              ]]
+                                              ]],
                             ]
-                        )
+                        ),
                     ]
                 ));
 
         $product->getTranslation('customFields')->willReturn(
             [
-                'test-enabled' => ['i should be exported']
+                'test-enabled' => ['i should be exported'],
             ],
             [
-                'test-disabled' => 'i should not be exported'
+                'test-disabled' => 'i should not be exported',
             ]
-
         );
         $exportSettings->getDisabledCustomFields()->willReturn(['test-disabled']);
         $customFieldsService->getCustomFieldNames(['test-disabled'])->willReturn(['Disabled attribute']);
         $this->getValue($product)->shouldReturn('|Enabled attribute=exported value|');
+    }
+
+    function it_should_join_multiselect_entity_value(
+        Product $product,
+        EntityRepositoryInterface $customFieldRepository
+    ) {
+        $config = $this->selectFieldConfig;
+        unset($config['options']);
+        $product->getTranslation('customFields')->willReturn(
+            [
+                'test-multi-select-entity-field' => [
+                    'some-product-id-1',
+                    'some-product-id-2',
+                ],
+            ]);
+
+        $customFieldRepository
+            ->search(Argument::cetera())
+            ->willReturn(
+                $this->toSearchEntityResult(
+                    [
+                        $this->getCustomField(
+                            'test-multi-select-entity-field',
+                            CustomFieldTypes::SELECT,
+                            $config
+                        ),
+                    ]
+                ));
+
+        $this->getValue($product)->shouldReturn('|SelectFieldDE=some-product-id-1#some-product-id-2|');
     }
 
     private function getSalesChannel(string $languageId): SalesChannelEntity

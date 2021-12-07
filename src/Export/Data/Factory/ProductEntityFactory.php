@@ -43,8 +43,6 @@ class ProductEntityFactory implements FactoryInterface
      *
      * @return iterable
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     *
-     * @todo use $producedType
      */
     public function createEntities(Entity $entity, string $producedType = ProductEntity::class): iterable
     {
