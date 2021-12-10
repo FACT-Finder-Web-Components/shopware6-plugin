@@ -1,8 +1,12 @@
 # Changelog
 ## Unreleased
 ## Add
- - Implement `ff-communication/category-page` attribute which serves to correctly filter products on category pages 
+ - Category
+  - Implement `ff-communication/category-page` attribute which serves to correctly filter products on category pages 
  
+ ### Change
+  - Upgrade Web Components to version 4.0.5
+  
 ### Fix
   - Export
     - Fix Entity types custom fields are causing export to throw an error while reading from options of the field 
