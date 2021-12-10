@@ -20,7 +20,7 @@ class CategoryView implements EventSubscriberInterface
 
     private string $fieldName;
 
-    private array $initial;
+    private array $addParams;
 
     public function __construct(
         AbstractCategoryRoute $cmsPageRoute,
@@ -31,7 +31,7 @@ class CategoryView implements EventSubscriberInterface
         $this->cmsPageRoute = $cmsPageRoute;
         $this->categoryPath = $categoryPath;
         $this->fieldName    = $categoryPathFieldName;
-        $this->initial      = $initialNavigationParams;
+        $this->addParams    = $initialNavigationParams;
     }
 
     public static function getSubscribedEvents()
@@ -43,17 +43,25 @@ class CategoryView implements EventSubscriberInterface
     {
         $navigationId     = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
         $category         = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
-        $path             = $this->getPath($category);
+
         $disableImmediate = safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $event->getRequest()->get('_route') === 'frontend.home.page';
+        $isCategory       = !$isHome && !$disableImmediate;
 
-        $event->getPage()->getExtension('factfinder')->assign(
-            [
-                'communication' => [
-                    'search-immediate' => !$isHome && !$disableImmediate ? 'true' : 'false',
-                    'add-params'       => $path ? implode(',', $this->initial + [sprintf('filter=%s', urlencode($this->fieldName . ':' . $path))]) : '',
-                ],
-            ]);
+        $categoryPath     = $this->getPath($this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory());
+
+        $communication = [
+                'search-immediate' => !$isHome && !$disableImmediate ? 'true' : 'false',
+                'add-params'       => implode(',', $this->addParams),
+            ] + ($isCategory ? ['category-page' => $this->prepareCategoryPath($categoryPath)] : []);
+
+        $event->getPage()->getExtension('factfinder')->assign(['communication' => $communication]);
+    }
+
+    private function prepareCategoryPath($path): string
+    {
+        $filterValue = is_int(strpos($this->fieldName, 'CategoryPath')) ? urlencode($this->fieldName . ':' . $path) : '\'\'';
+        return sprintf('filter=%s', $filterValue);
     }
 
     private function getPath(CategoryEntity $category): string
