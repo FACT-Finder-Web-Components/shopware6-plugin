@@ -2,8 +2,10 @@
 ## Unreleased
 ## Add
  - Category
-  - Implement `ff-communication/category-page` attribute which serves to correctly filter products on category pages 
- 
+   - Implement `ff-communication/category-page` attribute which serves to correctly filter products on category pages 
+ - Export
+   - Call SEO URL indexer to reindex when no SEO URL is available for given product during the export 
+
  ### Change
   - Upgrade Web Components to version 4.0.5
   
