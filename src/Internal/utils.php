@@ -8,7 +8,7 @@ use Closure;
 
 function safeGetByName(?array $collection): Closure
 {
-    return fn (string $name) => (is_array($collection) && isset($collection[$name])) ? $collection[$name] : null;
+    return fn (string $name): ?string => isset($collection[$name]) ? $collection[$name] : null;
 }
 
 function flatMap(callable $fnc, array $arr, array ...$arrays): array
