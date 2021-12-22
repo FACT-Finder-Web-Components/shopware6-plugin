@@ -23,12 +23,20 @@ export default class TrackingPlugin extends Plugin
                 type: 'getRecords',
                 recordId: productNumberInput.value,
                 idType: 'productNumber',
-                success: ([product]) => factfinder.communication.Tracking.cart({
-                    id: trackingHelper.getTrackingProductId(product),
-                    masterId: trackingHelper.getMasterArticleNumber(product),
-                    price: trackingHelper.getPrice(product),
-                    count: 1,
-                }),
+
+                success: ([product]) => {
+                    const fieldRoles = factfinder.communication.fieldRoles;
+                    const getMasterId = ({record}) => record[fieldRoles.masterArticleNumber] || record[fieldRoles.masterId];
+                    const getTrackingNumber = ({record}) => record[fieldRoles.trackingProductNumber] || record[fieldRoles.productNumber]
+
+                    factfinder.communication.Tracking.cart({
+                        id: getTrackingNumber(product),
+                        masterId: getMasterId(product),
+                        price: trackingHelper.getPrice(product),
+                        title: trackingHelper.getTitle(product),
+                        count: 1,
+                    });
+                },
             });
         });
     }

@@ -13,6 +13,8 @@
   - Export
     - Fix Entity types custom fields are causing export to throw an error while reading from options of the field 
     - Fix Entity multi selection custom fields are causing export while formatting output value
+  - Tracking
+    - Fix cart tracking is not sending mandatory field id if field roles are not correctly set 
 
 ## [v2.2.1] - 2021.11.08
 ### Add 
