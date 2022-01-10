@@ -1,4 +1,19 @@
 # Changelog
+## Unreleased
+### Add
+ - Introduce `add-params` for ConfigurationSubscriber
+### Change
+ - Rename CategoryView subscriber to CategoryPageSubscriber
+ - Change parameter and variables name in `services.xml`:
+    
+    - `factfinder.navigation.initial_params` to `factfinder.category_page.add_params`
+    - `$initialNavigationParams` to `$categoryPageAddParams`
+    
+ - Add new parameters and variable:
+
+    - `factfinder.configuration.add_params`
+    - `$configurationAddParams`
+
 ## [v2.2.2] - 2021.12.22
 ## Add
  - Category

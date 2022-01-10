@@ -12,7 +12,7 @@ use Shopware\Storefront\Page\Navigation\NavigationPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
-class CategoryView implements EventSubscriberInterface
+class CategoryPageSubscriber implements EventSubscriberInterface
 {
     private AbstractCategoryRoute $cmsPageRoute;
 
@@ -20,18 +20,18 @@ class CategoryView implements EventSubscriberInterface
 
     private string $fieldName;
 
-    private array $addParams;
+    private array $categoryPageAddParams;
 
     public function __construct(
         AbstractCategoryRoute $cmsPageRoute,
         CategoryPath $categoryPath,
         string $categoryPathFieldName,
-        array $initialNavigationParams = []
+        array $categoryPageAddParams = []
     ) {
-        $this->cmsPageRoute = $cmsPageRoute;
-        $this->categoryPath = $categoryPath;
-        $this->fieldName    = $categoryPathFieldName;
-        $this->addParams    = $initialNavigationParams;
+        $this->cmsPageRoute           = $cmsPageRoute;
+        $this->categoryPath           = $categoryPath;
+        $this->fieldName              = $categoryPathFieldName;
+        $this->categoryPageAddParams  = $categoryPageAddParams;
     }
 
     public static function getSubscribedEvents()
@@ -41,8 +41,10 @@ class CategoryView implements EventSubscriberInterface
 
     public function onPageLoaded(NavigationPageLoadedEvent $event): void
     {
-        $navigationId     = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
-        $category         = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
+        $configurationAddParamsValues = safeGetByName($event->getPage()->getExtension('factfinder')->get('communication'))('add-params');
+        $configurationAddParams       = $configurationAddParamsValues ? explode(',', $configurationAddParamsValues) : [];
+        $navigationId                 = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
+        $category                     = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
 
         $disableImmediate = safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $event->getRequest()->get('_route') === 'frontend.home.page';
@@ -50,9 +52,14 @@ class CategoryView implements EventSubscriberInterface
 
         $categoryPath     = $this->getPath($this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory());
 
+        $addParamsArray = array_reduce($this->categoryPageAddParams + $configurationAddParams, function (array $acc, string $expr) {
+            list($key, $value) = explode('=', $expr);
+            return $acc + [$key => $value];
+        }, []);
+
         $communication = [
                 'search-immediate' => !$isHome && !$disableImmediate ? 'true' : 'false',
-                'add-params'       => implode(',', $this->addParams),
+                'add-params'       => implode(', ', array_map(fn (string $key, string $value) => sprintf('%s=%s', $key, $value), array_keys($addParamsArray), array_values($addParamsArray))),
             ] + ($isCategory ? ['category-page' => $this->prepareCategoryPath($categoryPath)] : []);
 
         $event->getPage()->getExtension('factfinder')->assign(['communication' => $communication]);
