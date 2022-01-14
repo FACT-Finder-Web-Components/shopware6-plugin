@@ -59,11 +59,11 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
 
     public function it_should_not_fail_if_ff_cms_use_search_immediate_is_not_present_in_custom_fields(
         CategoryEntity $categoryEntity,
-        ArrayEntity $extension,
-        NavigationPageLoadedEvent $event
+        NavigationPageLoadedEvent $event,
+        ArrayEntity $extension
     ) {
+        $extension->assign(Argument::cetera())->shouldBeCalled();
         $this->shouldNotThrow()->during('onPageLoaded', [$event]);
-        $this->onPageLoaded($event);
     }
 
     public function it_should_encode_category_path_correctly(
@@ -105,12 +105,37 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         SalesChannelEntity $salesChannelEntity,
         CategoryRouteResponse $categoryRouteResponse
     ) {
-        $this->configure($cmsPageRoute, $categoryPath, $event, $request, $categoryEntity, $navigationPage, $extension, $salesChannelContext, $salesChannelEntity, $categoryRouteResponse, ['navigation=true', 'filterCustom=customValue']);
+        $this->configure($cmsPageRoute, $categoryPath, $event, $request, $categoryEntity, $navigationPage, $extension, $salesChannelContext, $salesChannelEntity, $categoryRouteResponse, ['param1' => 'navigation=true', 'param2' =>'filterCustom=customValue']);
         $categoryEntity->getCustomFields()->willReturn([]);
         $extension->assign(Argument::withEntry('communication', Argument::withEntry('add-params', 'navigation=true,filterCustom=customValue')))->shouldBeCalled();
         $this->onPageLoaded($event);
     }
 
+    public function it_should_merge_add_params_from_the_configuration_subscriber(
+        AbstractCategoryRoute $cmsPageRoute,
+        CategoryPath $categoryPath,
+        NavigationPageLoadedEvent $event,
+        Request $request,
+        CategoryEntity $categoryEntity,
+        NavigationPage $navigationPage,
+        ArrayEntity $extension,
+        SalesChannelContext $salesChannelContext,
+        SalesChannelEntity $salesChannelEntity,
+        CategoryRouteResponse $categoryRouteResponse
+    ) {
+        $baseAddParams     = 'configurationParam=baseValue,configurationParam2=baseValue';
+        $categoryAddParams = ['param1'=>'configurationParam=overridden', 'param2'=>'categoryParam=value1'];
+
+        $this->configure($cmsPageRoute, $categoryPath, $event, $request, $categoryEntity, $navigationPage, $extension, $salesChannelContext, $salesChannelEntity, $categoryRouteResponse, $categoryAddParams);
+        $extension->get('communication')->willReturn(['add-params' => $baseAddParams]);
+
+        $extension->assign(Argument::withEntry('communication', Argument::withEntry('add-params', 'configurationParam=overridden,categoryParam=value1,configurationParam2=baseValue')))->shouldBeCalled();
+        $this->onPageLoaded($event);
+    }
+
+    /**
+     * This pseudo constructor is added to give possibility to specify different add-params for specific test cases.
+     */
     private function configure(
         AbstractCategoryRoute $cmsPageRoute,
         CategoryPath $categoryPath,
@@ -122,7 +147,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         SalesChannelContext $salesChannelContext,
         SalesChannelEntity $salesChannelEntity,
         CategoryRouteResponse $categoryRouteResponse,
-        array $addParams = ['navigation=true']
+        array $addParams = ['param1' =>'navigation=true'] //addParams parameters collections are passed as associative array
     ) {
         $navigationId = '1';
         $categoryEntity->getCustomFields()->willReturn(null);
@@ -141,6 +166,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
                 2 => 'Home & Garden',
             ])->shouldBeCalled();
         $event->getPage()->willReturn($navigationPage);
+        $extension->get('communication')->willReturn([]);
         $navigationPage->getExtension('factfinder')->willReturn($extension);
         $this->beConstructedWith($cmsPageRoute, $categoryPath, 'CategoryPath', $addParams);
     }

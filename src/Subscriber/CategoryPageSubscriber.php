@@ -20,7 +20,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
     private string $fieldName;
 
-    private array $categoryPageAddParams;
+    private array $addParams;
 
     public function __construct(
         AbstractCategoryRoute $cmsPageRoute,
@@ -28,10 +28,10 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         string $categoryPathFieldName,
         array $categoryPageAddParams = []
     ) {
-        $this->cmsPageRoute           = $cmsPageRoute;
-        $this->categoryPath           = $categoryPath;
-        $this->fieldName              = $categoryPathFieldName;
-        $this->categoryPageAddParams  = $categoryPageAddParams;
+        $this->cmsPageRoute = $cmsPageRoute;
+        $this->categoryPath = $categoryPath;
+        $this->fieldName    = $categoryPathFieldName;
+        $this->addParams    = $categoryPageAddParams;
     }
 
     public static function getSubscribedEvents()
@@ -41,10 +41,8 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
     public function onPageLoaded(NavigationPageLoadedEvent $event): void
     {
-        $configurationAddParamsValues = safeGetByName($event->getPage()->getExtension('factfinder')->get('communication'))('add-params');
-        $configurationAddParams       = $configurationAddParamsValues ? explode(',', $configurationAddParamsValues) : [];
-        $navigationId                 = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
-        $category                     = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
+        $navigationId = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
+        $category     = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
 
         $disableImmediate = safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $event->getRequest()->get('_route') === 'frontend.home.page';
@@ -52,14 +50,19 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
         $categoryPath     = $this->getPath($this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory());
 
-        $addParamsArray = array_reduce($this->categoryPageAddParams + $configurationAddParams, function (array $acc, string $expr) {
+        $baseAddParams   = array_filter(explode(',', (string) safeGetByName($event->getPage()->getExtension('factfinder')->get('communication'))('add-params')));
+        /**
+         * $this->addParams + $baseAddParams will not override entries from $baseAddParams as $this->addParams is associative array and $baseAddParms is not
+         * $this->addParams is associative array because this is how parameters collection is passed as an argument constructor in Symfony.
+         */
+        $mergedAddParams = array_reduce($this->addParams + $baseAddParams, function (array $acc, string $expr): array {
             list($key, $value) = explode('=', $expr);
             return $acc + [$key => $value];
         }, []);
 
         $communication = [
                 'search-immediate' => !$isHome && !$disableImmediate ? 'true' : 'false',
-                'add-params'       => implode(', ', array_map(fn (string $key, string $value) => sprintf('%s=%s', $key, $value), array_keys($addParamsArray), array_values($addParamsArray))),
+                'add-params'       => implode(',', array_map(fn (string $key, string $value) => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
             ] + ($isCategory ? ['category-page' => $this->prepareCategoryPath($categoryPath)] : []);
 
         $event->getPage()->getExtension('factfinder')->assign(['communication' => $communication]);
