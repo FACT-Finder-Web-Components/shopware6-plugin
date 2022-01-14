@@ -147,7 +147,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         SalesChannelContext $salesChannelContext,
         SalesChannelEntity $salesChannelEntity,
         CategoryRouteResponse $categoryRouteResponse,
-        array $addParams = ['param1' =>'navigation=true'] //addParams parameters collections are passed as associative array
+        array $addParams = ['param1' =>'navigation=true'] //addParams parameters collections are passed as associative array (see comment src/Subscriber/CategoryPageSubscriber.php:55)
     ) {
         $navigationId = '1';
         $categoryEntity->getCustomFields()->willReturn(null);

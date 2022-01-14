@@ -52,7 +52,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
         $baseAddParams   = array_filter(explode(',', (string) safeGetByName($event->getPage()->getExtension('factfinder')->get('communication'))('add-params')));
         /**
-         * $this->addParams + $baseAddParams will not override entries from $baseAddParams as $this->addParams is associative array and $baseAddParms is not
+         * $this->addParams + $baseAddParams will not override entries from $baseAddParams as $this->addParams is associative array and $baseAddParams is not
          * $this->addParams is associative array because this is how parameters collection is passed as an argument constructor in Symfony.
          */
         $mergedAddParams = array_reduce($this->addParams + $baseAddParams, function (array $acc, string $expr): array {
