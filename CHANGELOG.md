@@ -1,4 +1,22 @@
 # Changelog
+## Unreleased
+
+### BREAKING
+ - Omikron\FactFinder\Shopware6\Subscriber\CategoryView.php
+    - rename class name from CategoryView  to CategoryPageSubscriber
+    - change argument name from `$initialNavigationParams` to `$categoryPageAddParams`
+    
+ - Omikron\FactFinder\Shopware6\Subscriber\ConfigurationSubscriber.php
+    - add new constructor argument string[] $configurationAddParams
+    - `$initialNavigationParams` to `$categoryPageAddParams`
+    
+ - src/Resources/services.xml
+  - rename `factfinder.navigation.initial_params` to `factfinder.category_page.add_params`
+  - add new parameters collection `factfinder.configuration.add_params` which is bound to argument name $configurationAddParams
+  
+### Add
+ - introduce setting `add-params` for ConfigurationSubscriber. Arguments from both ConfigurationSubscriber and CategoryPageSubscriber are merged
+
 ## [v2.2.2] - 2021.12.22
 ## Add
  - Category
