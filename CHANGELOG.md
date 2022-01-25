@@ -1,6 +1,5 @@
 # Changelog
-## Unreleased
-
+## [v4.0.6] - 2022.01.25
 ### BREAKING
  - Omikron\FactFinder\Shopware6\Subscriber\CategoryView.php
     - rename class name from CategoryView  to CategoryPageSubscriber
@@ -17,6 +16,9 @@
 ### Add
  - introduce setting `add-params` for ConfigurationSubscriber. Arguments from both ConfigurationSubscriber and CategoryPageSubscriber are merged
 
+### Change
+ - Upgrade Web Components to version 4.0.6
+  
 ## [v2.2.2] - 2021.12.22
 ## Add
  - Category
