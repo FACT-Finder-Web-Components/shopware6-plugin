@@ -46,9 +46,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
         $disableImmediate = safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $event->getRequest()->get('_route') === 'frontend.home.page';
-        $isCategory       = !$isHome && !$disableImmediate;
-
-        $categoryPath     = $this->getPath($this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory());
+        $searchImmediate  = !$isHome && !$disableImmediate;
 
         $baseAddParams   = array_filter(explode(',', (string) safeGetByName($event->getPage()->getExtension('factfinder')->get('communication'))('add-params')));
         /**
@@ -61,21 +59,27 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         }, []);
 
         $communication = [
-                'search-immediate' => !$isHome && !$disableImmediate ? 'true' : 'false',
+                'search-immediate' => $searchImmediate ? 'true' : 'false',
                 'add-params'       => implode(',', array_map(fn (string $key, string $value) => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
-            ] + ($isCategory ? ['category-page' => $this->prepareCategoryPath($categoryPath)] : []);
+            ] + ($searchImmediate ? ['category-page' => $this->prepareCategoryPath($category)] : []);
 
         $event->getPage()->getExtension('factfinder')->assign(['communication' => $communication]);
     }
 
-    private function prepareCategoryPath($path): string
+    private function prepareCategoryPath(CategoryEntity $categoryEntity): string
     {
-        $filterValue = is_int(strpos($this->fieldName, 'CategoryPath')) ? urlencode($this->fieldName . ':' . $path) : '\'\'';
-        return sprintf('filter=%s', $filterValue);
+        $categories   = array_slice($categoryEntity->getBreadcrumb(), 1);
+        $categoryPath = implode('/', array_map(function ($category) {
+            return $this->encodeCategoryName($category);
+        }, $categories));
+
+        return sprintf('filter=%s', urlencode($this->fieldName . ':' . $categoryPath));
     }
 
-    private function getPath(CategoryEntity $category): string
+    private function encodeCategoryName(string $path): string
     {
-        return implode('/', array_map('rawurlencode', array_slice($category->getBreadcrumb(), 1)));
+        //important! do not modify this method
+        return preg_replace('/\+/', '%2B', preg_replace('/\//', '%2F',
+            preg_replace('/%/', '%25', $path)));
     }
 }

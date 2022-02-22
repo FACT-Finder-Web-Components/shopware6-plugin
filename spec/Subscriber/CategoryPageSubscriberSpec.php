@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryPageSubscriberSpec extends ObjectBehavior
 {
-    private string $filterCategoryPath = 'filter=CategoryPath%3ABooks%2520%2526%2520Sports%2FHome%2520%2526%2520Garden';
+    private string $filterCategoryPath = 'filter=CategoryPath%3ABooks+%252B+Sports%2FHome+%252F+Garden+100%2525';
 
     public function let(
         AbstractCategoryRoute $cmsPageRoute,
@@ -161,10 +161,10 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         $categoryRouteResponse->getCategory()->willReturn($categoryEntity);
         $categoryEntity->getBreadcrumb()->willReturn(
             [
-                0 => 'Home',
-                1 => 'Books & Sports',
-                2 => 'Home & Garden',
-            ])->shouldBeCalled();
+                0 => 'Home%',
+                1 => 'Books + Sports',
+                2 => 'Home / Garden 100%',
+            ]);
         $event->getPage()->willReturn($navigationPage);
         $extension->get('communication')->willReturn([]);
         $navigationPage->getExtension('factfinder')->willReturn($extension);
