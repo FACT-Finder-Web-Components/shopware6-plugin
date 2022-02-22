@@ -1,3 +1,8 @@
 {% block element_paging %}
-  {% sw_include '@Parent/storefront/components/factfinder/paging.html.twig' %}
+  {% set config = element.config %}
+  {% if config.subscribe.value %}
+    {% sw_include '@Parent/storefront/components/factfinder/paging.html.twig' with {
+      showOnly: config.showOnly.value,
+    } %}
+  {% endif %}
 {% endblock %}
