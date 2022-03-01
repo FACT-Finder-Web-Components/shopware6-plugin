@@ -161,7 +161,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         $categoryRouteResponse->getCategory()->willReturn($categoryEntity);
         $categoryEntity->getBreadcrumb()->willReturn(
             [
-                0 => 'Home%',
+                0 => 'Home',
                 1 => 'Books + Sports',
                 2 => 'Home / Garden 100%',
             ]);
