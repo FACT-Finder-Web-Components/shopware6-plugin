@@ -60,7 +60,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
         $communication = [
                 'search-immediate' => $searchImmediate ? 'true' : 'false',
-                'add-params'       => implode(',', array_map(fn (string $key, string $value) => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
+                'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
             ] + ($searchImmediate ? ['category-page' => $this->prepareCategoryPath($category)] : []);
 
         $event->getPage()->getExtension('factfinder')->assign(['communication' => $communication]);
@@ -69,9 +69,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
     private function prepareCategoryPath(CategoryEntity $categoryEntity): string
     {
         $categories   = array_slice($categoryEntity->getBreadcrumb(), 1);
-        $categoryPath = implode('/', array_map(function ($category) {
-            return $this->encodeCategoryName($category);
-        }, $categories));
+        $categoryPath = implode('/', array_map(fn ($category): string => $this->encodeCategoryName($category), $categories));
 
         return sprintf('filter=%s', urlencode($this->fieldName . ':' . $categoryPath));
     }
