@@ -1,24 +1,24 @@
 # Changelog
-## Unreleased
+## [v3.0.1] - 2022.03.10
 
 ### Fix
- - Category
-   - fix encoding for special characters in category names 
+ - `Omikron\FactFinder\Shopware6\Subscriber\CategoryView`
+  - fix category path is not encoded correctly 
 
 ### Change
- - Upgrade Web Components to version 4.0.8
+ - upgrade Web Components to version [4.0.8](https://github.com/FACT-Finder-Web-Components/ff-web-components/releases/tag/4.0.8)
  
-## [v4.0.6] - 2022.01.25
+## [v3.0.0] - 2022.01.25
 ### BREAKING
- - Omikron\FactFinder\Shopware6\Subscriber\CategoryView.php
+ - `Omikron\FactFinder\Shopware6\Subscriber\CategoryView`
     - rename class name from CategoryView  to CategoryPageSubscriber
     - change argument name from `$initialNavigationParams` to `$categoryPageAddParams`
     
- - Omikron\FactFinder\Shopware6\Subscriber\ConfigurationSubscriber.php
+ - `Omikron\FactFinder\Shopware6\Subscriber\ConfigurationSubscriber`
     - add new constructor argument string[] $configurationAddParams
     - `$initialNavigationParams` to `$categoryPageAddParams`
     
- - src/Resources/services.xml
+ - `src/Resources/services.xml`
   - rename `factfinder.navigation.initial_params` to `factfinder.category_page.add_params`
   - add new parameters collection `factfinder.configuration.add_params` which is bound to argument name $configurationAddParams
   
