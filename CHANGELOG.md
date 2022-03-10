@@ -1,4 +1,13 @@
 # Changelog
+## Unreleased
+
+### Fix
+ - Category
+   - fix encoding for special characters in category names 
+
+### Change
+ - Upgrade Web Components to version 4.0.8
+ 
 ## [v4.0.6] - 2022.01.25
 ### BREAKING
  - Omikron\FactFinder\Shopware6\Subscriber\CategoryView.php
