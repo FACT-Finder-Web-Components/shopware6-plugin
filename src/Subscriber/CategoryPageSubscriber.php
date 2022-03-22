@@ -44,11 +44,11 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         $navigationId = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
         $category     = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
 
-        $disableImmediate = safeGetByName($category->getCustomFields())(OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
+        $disableImmediate = safeGetByName($category->getCustomFields(), OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $event->getRequest()->get('_route') === 'frontend.home.page';
         $searchImmediate  = !$isHome && !$disableImmediate;
 
-        $baseAddParams   = array_filter(explode(',', (string) safeGetByName($event->getPage()->getExtension('factfinder')->get('communication'))('add-params')));
+        $baseAddParams = array_filter(explode(',', (string) safeGetByName($event->getPage()->getExtension('factfinder')->get('communication'), 'add-params')));
         /**
          * $this->addParams + $baseAddParams will not override entries from $baseAddParams as $this->addParams is associative array and $baseAddParams is not
          * $this->addParams is associative array because this is how parameters collection is passed as an argument constructor in Symfony.
