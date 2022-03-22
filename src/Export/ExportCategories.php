@@ -54,6 +54,10 @@ class ExportCategories implements ExportInterface
         $criteria->addAssociation('customFields');
         $criteria->addAssociation('media');
         $criteria->addAssociation('seoUrls');
+        $criteria->addAssociation('cmsPage.sections');
+        $criteria->addAssociation('cmsPage.sections.blocks');
+        $criteria->addAssociation('cmsPage.sections.blocks.slots');
+        $criteria->addAssociation('slotConfig');
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
         }

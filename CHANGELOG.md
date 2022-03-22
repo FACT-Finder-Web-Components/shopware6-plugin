@@ -1,6 +1,10 @@
 # Changelog
+## [Unreleased]
+### Add 
+ - Export
+  - Added new field provider `Omikron\FactFinder\Shopware6\Export\Field\Layout` applicable to CMS Export
+  
 ## [v3.0.1] - 2022.03.10
-
 ### Fix
  - `Omikron\FactFinder\Shopware6\Subscriber\CategoryView`
   - fix category path is not encoded correctly 
