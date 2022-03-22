@@ -45,7 +45,7 @@ class Deeplink implements FieldInterface, EventSubscriberInterface
         if (!$url) {
             $this->seoUrlUpdater->update($getSeoUrlRouteName($entity), [$entity->getId()]);
             $seoUrls = call_user_func($this->fetchCallback);
-            return $formUrl((string) safeGetByName($seoUrls, 'seoPathInfo'));
+            return $formUrl((string) safeGetByName($seoUrls)('seoPathInfo'));
         }
         return $formUrl($url->getSeoPathInfo());
     }
