@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Internal\Utils;
 
-use Closure;
-
-function safeGetByName(?array $collection): Closure
+/**
+ * @param array|null $collection
+ * @param string     $name
+ *
+ * @return mixed|null
+ */
+function safeGetByName(?array $collection, string $name)
 {
-    return fn (string $name): ?string => isset($collection[$name]) ? (string) $collection[$name] : null;
+    return $collection[$name] ?? null;
 }
 
 function flatMap(callable $fnc, array $arr, array ...$arrays): array
@@ -16,6 +20,12 @@ function flatMap(callable $fnc, array $arr, array ...$arrays): array
     return array_merge([], ...array_map($fnc, $arr, ...$arrays));
 }
 
+/**
+ * @param array|null $collection
+ * @param null       $default
+ *
+ * @return false|mixed|null
+ */
 function first(?array $collection, $default = null)
 {
     return empty($collection) ? $default : reset($collection);
