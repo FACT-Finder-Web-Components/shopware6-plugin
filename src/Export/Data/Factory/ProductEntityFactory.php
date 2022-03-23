@@ -46,6 +46,7 @@ class ProductEntityFactory implements FactoryInterface
      */
     public function createEntities(Entity $entity, string $producedType = ProductEntity::class): iterable
     {
+        //@todo use spread operator?
         $fields = array_merge($this->fieldsProvider->getFields(get_class($entity), $this->currencyFieldsProvider->getCurrencyFields()));
         $parent = new $producedType($entity, $fields);
         if ($entity->getChildCount()) {
