@@ -28,9 +28,7 @@ class BrandEntity implements ExportEntityInterface
 
     public function toArray(): array
     {
-        return array_reduce($this->brandFields, function (array $fields, FieldInterface $field): array {
-            return $fields + [$field->getName() => $field->getValue($this->brand)];
-        }, [
+        return array_reduce($this->brandFields, fn (array $fields, FieldInterface $field): array => $fields + [$field->getName() => $field->getValue($this->brand)], [
             'Name'              => (string) $this->brand->getName(),
             'Deeplink'          => (string) $this->brand->getLink(),
         ]);

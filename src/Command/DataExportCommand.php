@@ -102,7 +102,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         return array_merge($this->getBaseTypeEntityMap(), $this->container->getParameter('factfinder.data_export.entity_type_map'));
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setName('factfinder:data:export');
         $this->setDescription('Allows to export feed for different data types');

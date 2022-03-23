@@ -52,6 +52,7 @@ class Deeplink implements FieldInterface, EventSubscriberInterface
 
     public function onUrlUpdated(SeoUrlUpdateEvent $event): void
     {
+        //@todo second argument could be removed?
         $this->fetchCallback = fn (): array => first($event->getSeoUrls(), []);
     }
 
