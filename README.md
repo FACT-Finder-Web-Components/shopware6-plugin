@@ -39,6 +39,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
         - [Generic Entity Factory](#generic-entity-factory) 
     - [Extending Specific Web Component Template](#extending-specific-web-component-template)
     - [Split ASN on Category Page](#split-asn-on-category-page)
+    - [Set custom Field Roles](#set-custom-field-roles)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -510,6 +511,25 @@ In that case we  do not use `splice` method but `slice` which does not mutate th
 **Note:** Dom Updated listener can be empty. ASN groups from the second ASN are also present in first, so there is no need to merge them together.
 **Note:** Since all ASN groups are available in first ASN, the Filter Cloud can be used.
    
+### Set custom Field Roles
+If you don't plan to use feed offered by the module, or you want some of the essential column to have different name than the default you must remember to adjust the field roles used by the FACT-Finder® and the Web Components.
+
+Default field roles are defined as array of Symfony Configuration Parameters in  `services.xml` file`
+
+    <parameter key="factfinder.field_roles" type="collection">  
+     <parameter key="brand">Manufacturer</parameter>  
+     <parameter key="deeplink">Deeplink</parameter>  
+     <parameter key="description">Description</parameter>  
+     <parameter key="ean">EAN</parameter>  
+     <parameter key="displayProductNumber">ProductNumber</parameter>  
+     <parameter key="imageUrl">ImageUrl</parameter>  
+     <parameter key="masterArticleNumber">Master</parameter>  
+     <parameter key="price">Price</parameter>  
+     <parameter key="productName">Name</parameter>  
+     <parameter key="trackingProductNumber">ProductNumber</parameter>  
+    </parameter>
+
+In order to override these parameters defined by a module, you have to redefine them in your application `services.xml`. Parameters defined there take precedence over the defaults, defined in the module   
 ## Contribute
 
 We welcome contribution! For more information, click [here](.github/CONTRIBUTING.md)
