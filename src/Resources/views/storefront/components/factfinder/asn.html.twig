@@ -16,6 +16,16 @@
       unresolved
       subscribe="{{ subscribe ? 'true' : 'false' }}"
       topic="{{ topic|default('asn') }}">
+
+      {% block component_factfinder_asn_group_custom %}
+        {% for group in customGroups %}
+          {% sw_include group.template ignore missing with {
+            cssClass: group.cssClass,
+            groupName: group.groupName
+          } %}
+        {% endfor %}
+      {% endblock %}
+
       {% block component_factfinder_asn_group %}
         <ff-asn-group class="filter-panel-item dropdown {% if vertical %} ffw-asn-group-vertical btn-block {% endif %}"
                       disable-auto-expand>

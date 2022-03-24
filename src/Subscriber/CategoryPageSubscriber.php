@@ -63,7 +63,12 @@ class CategoryPageSubscriber implements EventSubscriberInterface
                 'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
             ] + ($searchImmediate ? ['category-page' => $this->prepareCategoryPath($category)] : []);
 
-        $event->getPage()->getExtension('factfinder')->assign(['communication' => $communication]);
+        $event->getPage()->getExtension('factfinder')->assign(
+            [
+                'communication'         => $communication,
+                'categoryPathFieldName' => "{$this->fieldName}ROOT"
+            ]
+        );
     }
 
     private function prepareCategoryPath(CategoryEntity $categoryEntity): string

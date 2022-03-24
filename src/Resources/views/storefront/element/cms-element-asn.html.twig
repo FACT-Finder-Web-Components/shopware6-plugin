@@ -2,10 +2,16 @@
   {% set config = element.config %}
   {% set id = config.id.value|default(element.id) %}
   {% set topic = config.topic.value|default('asn') %}
-
   {% sw_include '@Parent/storefront/components/factfinder/asn.html.twig' with {
     vertical: config.vertical.value,
     subscribe: config.subscribe.value,
+    customGroups: [
+      {
+        groupName : page.extensions.factfinder.categoryPathFieldName,
+        cssClass: 'd-none',
+        template: '@Parent/storefront/components/factfinder/asn-group.html.twig'
+      }
+    ],
     filterCloud: config.filterCloud.value,
     filterCloudBlacklist: config.filterCloudBlacklist.value,
     filterCloudWhitelist: config.filterCloudWhitelist.value,
