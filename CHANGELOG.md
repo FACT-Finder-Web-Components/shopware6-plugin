@@ -1,5 +1,5 @@
 # Changelog
-## [Unreleased]
+## [v3.1.0] - 2022.03.28
 ### Add 
  - Export
   - Added new field provider `Omikron\FactFinder\Shopware6\Export\Field\Layout` applicable to CMS Export
@@ -143,6 +143,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v3.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.1.0
 [v3.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.0.0
 [v2.2.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.2.2
 [v2.2.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v2.2.1
