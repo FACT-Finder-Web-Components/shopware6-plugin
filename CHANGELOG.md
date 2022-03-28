@@ -1,5 +1,5 @@
 # Changelog
-## UNRELEASED
+## [Unreleased]
 ### Add 
  - Export
   - Added new field provider `Omikron\FactFinder\Shopware6\Export\Field\Layout` applicable to CMS Export
@@ -9,6 +9,10 @@
   - hide `<ff-asn-group>` responsible for rendering category filters as this breaks the Web Components navigation mode.
    User should navigate between categories using shop main navigation
  
+### Fix
+ - Category, SearchResult
+  - fix `ff-asn-group` does not collapse if user clicks outside it or on another `ff-asn-group`
+    
 ## [v3.0.1] - 2022.03.10
 ### Fix
  - `Omikron\FactFinder\Shopware6\Subscriber\CategoryView`
