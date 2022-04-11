@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix
+ - Export
+  - fix ImageUrl has not been exported for variants
+    
 ## [v3.1.0] - 2022.03.28
 ### Add 
  - Export
