@@ -37,7 +37,7 @@
             <parameter key="trackingProductNumber">ProductNumber</parameter>
         </parameter>
         <parameter key="factfinder.export.associations" type="collection">
-            <parameter key="variant_cover">children.cover</parameter>
+            <parameter key="variant_cover">children.media</parameter>
         </parameter>
         <parameter key="factfinder.navigation.category_path_field_name" type="string">CategoryPath</parameter>
         <parameter key="factfinder.category_page.add_params" type="collection"></parameter>
