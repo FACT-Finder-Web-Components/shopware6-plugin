@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Omikron\FactFinder\Shopware6\Export\Data;
+namespace spec\Omikron\FactFinder\Shopware6\Export;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

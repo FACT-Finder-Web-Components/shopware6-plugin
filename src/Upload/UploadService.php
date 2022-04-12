@@ -33,9 +33,8 @@ class UploadService
     public function upload($fileHandle): void
     {
         $connection     = $this->filesystemFactory->factory($this->config());
-        $salesChannelId = $this->salesChannelService->getSalesChannelContext()->getSalesChannel()->getId();
-
-        if (!$connection->putStream($this->config->getUploadFileName($salesChannelId), $fileHandle)) {
+        /* @todo v4: inject naming strategy to file. Do not rely on file metadata */
+        if (!$connection->putStream(basename(stream_get_meta_data($fileHandle)['uri']), $fileHandle)) {
             throw new Exception('Failed to upload file');
         }
     }

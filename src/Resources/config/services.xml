@@ -113,5 +113,6 @@
         <service id="Omikron\FactFinder\Shopware6\Export\ExportBrands">
             <argument type="service" id="product_manufacturer.repository" />
         </service>
+        <service id="Omikron\FactFinder\Shopware6\Config\Communication" public="true"/>
     </services>
 </container>

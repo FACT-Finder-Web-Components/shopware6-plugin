@@ -31,6 +31,13 @@ class FtpConfig extends BaseConfig
         return (string) $this->config('rootDir');
     }
 
+    /**
+     * @param string|null $salesChannelId
+     *
+     * @return string
+     *
+     * @deprecated
+     */
     public function getUploadFileName(?string $salesChannelId = null): string
     {
         return sprintf('export.%s.csv', $this->config('channel', $salesChannelId));
@@ -38,7 +45,7 @@ class FtpConfig extends BaseConfig
 
     public function getProtocol(): string
     {
-        return (string) $this->config('protocol');
+        return (string) $this->config('protocol') ?: 'ftp';
     }
 
     public function getPrivateKeyFile(): string

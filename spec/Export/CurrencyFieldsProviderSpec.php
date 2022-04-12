@@ -1,6 +1,8 @@
 <?php
 
-namespace spec\Omikron\FactFinder\Shopware6\Export\Data;
+declare(strict_types=1);
+
+namespace spec\Omikron\FactFinder\Shopware6\Export;
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\Field\PriceCurrency;
@@ -16,7 +18,7 @@ class CurrencyFieldsProviderSpec extends ObjectBehavior
     public function let(EntityRepositoryInterface $currencyRepository, ExportSettings $exportSettings)
     {
         $exportSettings->isMultiCurrencyPriceExportEnable()->willReturn(true);
-        $this->beConstructedWith($currencyRepository, $exportSettings);
+        $this->beConstructedWith($currencyRepository, $exportSettings, new NumberFormatter());
     }
 
     public function it_will_return_currency_list_if_no_cache_available(EntityRepositoryInterface $currencyRepository, EntitySearchResult $entitySearchResult, ExportSettings $exportSettings)
