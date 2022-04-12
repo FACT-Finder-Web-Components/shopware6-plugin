@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
+use Omikron\FactFinder\Shopware6\Export\ChannelTypeNamingStrategy;
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
@@ -62,6 +63,8 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     private EntityRepositoryInterface $languageRepository;
     private CurrencyFieldsProvider $currencyFieldsProvider;
     private FieldsProvider $fieldProviders;
+
+    /** @@todo v4 remove this reference */
     private $file;
 
     public function __construct(
@@ -152,7 +155,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $feedColumns      = $this->getFeedColumns($exportType, $entityFQN);
 
         $needFile = $saveFile || $uploadFeed;
-        $output   = $needFile ? new CsvFile($this->createFile($exportType, $uploadFeed)) : new ConsoleOutput($output);
+        $output   = $needFile ? new CsvFile($this->createFile($exportType, $context->getSalesChannelId())) : new ConsoleOutput($output);
         $feedService->generate($output, $feedColumns);
 
         if ($uploadFeed) {
@@ -189,7 +192,12 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     {
         $base   = (array) $this->container->getParameter(sprintf('factfinder.export.%s.columns.base', $exportType));
         $fields = $this->fieldProviders->getFields($entityFqn);
-        return array_values(array_unique(array_merge($base, array_map([$this, 'getFieldName'], $fields))));
+        return array_values(
+            array_unique(
+                array_merge(
+                    $base,
+                    array_map([$this, 'getFieldName'], $fields),
+                    $exportType === self::PRODUCTS_EXPORT_TYPE ? $this->currencyFieldsProvider->getCurrencyFields() : [])));
     }
 
     private function getFieldName(FieldInterface $field): string
@@ -215,18 +223,14 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     /**
      * @param string $exportType
-     * @param bool   $uploadFeed
+     * @param string $salesChannelId
      *
      * @return false|resource
      *
      * @throws \Exception
      */
-    private function createFile(string $exportType, bool $uploadFeed)
+    private function createFile(string $exportType, string $salesChannelId)
     {
-        if ($uploadFeed) {
-            return $this->file;
-        }
-
         $dir = $this->container->getParameter('kernel.project_dir') . '/var/factfinder';
 
         if (!is_dir($dir)) {
@@ -237,7 +241,9 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             throw new \Exception('Directory ' . $dir . ' is not writable. Aborting');
         }
 
-        $filename   = $dir . DIRECTORY_SEPARATOR . sprintf('export.%s.csv', $exportType);
+        /** @todo v4 refactor this */
+        $channelId  = $this->container->get('Omikron\FactFinder\Shopware6\Config\Communication')->getChannel($salesChannelId);
+        $filename   = $dir . DIRECTORY_SEPARATOR . (new ChannelTypeNamingStrategy())->createFeedFileName($exportType, $channelId);
         $this->file = fopen($filename, 'w+');
 
         return $this->file;

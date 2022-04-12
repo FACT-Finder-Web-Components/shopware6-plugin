@@ -3,6 +3,7 @@
 ### Fix
  - Export
   - fix ImageUrl has not been exported for variants
+  - fix uploaded feed file does not contain type of feed in its name which cause feeds of different type overrides each other  
     
 ## [v3.1.0] - 2022.03.28
 ### Add 
