@@ -69,6 +69,9 @@
         <service id="Omikron\FactFinder\Communication\Resource\Import" lazy="true">
             <factory service="Omikron\FactFinder\Communication\Resource\AdapterFactory" method="getImportAdapter" />
         </service>
+        <service id="Omikron\FactFinder\Communication\Resource\Search" lazy="true">
+            <factory service="Omikron\FactFinder\Communication\Resource\AdapterFactory" method="getSearchAdapter" />
+        </service>
         <service id="Omikron\FactFinder\Communication\Client\ClientBuilder">
             <configurator service="Omikron\FactFinder\Shopware6\Communication\ClientBuilderConfigurator" method="configure" />
         </service>
@@ -106,6 +109,7 @@
             <tag name="factfinder.export.variant_field"/>
         </service>
         <service id="Omikron\FactFinder\Shopware6\Api\UiFeedExportController" />
+        <service id="Omikron\FactFinder\Shopware6\Api\UpdateFieldRolesController" />
 
         <service id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler">
             <tag name="messenger.message_handler" />
@@ -114,5 +118,6 @@
             <argument type="service" id="product_manufacturer.repository" />
         </service>
         <service id="Omikron\FactFinder\Shopware6\Config\Communication" public="true"/>
+        <service id="Omikron\FactFinder\Shopware6\Config\FieldRoles" public="true"/>
     </services>
 </container>

@@ -12,11 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ConfigurationSubscriber implements EventSubscriberInterface
 {
     private Communication $config;
-
     private array $fieldRoles;
-
     private array $communicationParameters;
-
     private array $addParams;
 
     public function __construct(
@@ -56,7 +53,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         }
 
         $event->getPage()->addExtension('factfinder', new ArrayEntity([
-            'field_roles'   => $this->fieldRoles,
+            'field_roles'   => $this->config->getFieldRoles($salesChannelId) ?? $this->fieldRoles,
             'communication' => $communication + $this->communicationParameters,
         ]));
     }

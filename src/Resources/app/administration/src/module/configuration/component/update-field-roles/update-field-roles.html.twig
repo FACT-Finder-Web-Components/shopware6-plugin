@@ -1,0 +1,8 @@
+<sw-button-process
+  variant="primary"
+  :isLoading="isLoading"
+  :disabled="isLoading"
+  :processSuccess="isSaveSuccessful"
+  @click="onClick">
+  {{ $tc('configuration.updateFieldRoles.update') }}
+</sw-button-process>

@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Add
+ - Configuration
+  - Add new Update Field Roles functionality. More information in documentation
+
 ## [v3.1.1] - 2022.04.15
 ### Fix
  - Export

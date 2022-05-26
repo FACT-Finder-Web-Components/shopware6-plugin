@@ -48,6 +48,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $salesChannelContext->getSalesChannel()->willReturn($salesChannel);
         $salesChannel->getId()->willReturn('main_sales_channel');
         $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
+        $communication->getFieldRoles(Argument::any())->willReturn([]);
         $event->getRequest()->willReturn($request);
         $request->get('_route')->willReturn('factfinder');
         $request->getLocale()->willReturn('en');

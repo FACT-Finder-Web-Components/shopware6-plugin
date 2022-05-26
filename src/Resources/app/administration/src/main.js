@@ -9,9 +9,16 @@ import './module/sw-cms/elements/campaigns';
 import './module/sw-cms/elements/shared/shared.scss';
 import './module/sw-cms/blocks/shared/shared.scss';
 import './module/ui-feed-export';
+import './module/configuration';
+import './init/field-roles-service.init';
 
-import deDE from './module/sw-cms/snippet/de-DE.json';
-import enGB from './module/sw-cms/snippet/en-GB.json';
+import deDECms from './module/sw-cms/snippet/de-DE.json';
+import enGBCms from './module/sw-cms/snippet/en-GB.json';
 
-Shopware.Locale.extend('de-DE', deDE);
-Shopware.Locale.extend('en-GB', enGB);
+import deDEConfig from './module/configuration/snippet/de-DE.json';
+import enGBConfig from './module/configuration/snippet/en-GB.json';
+
+Shopware.Locale.extend('de-DE', deDEConfig);
+Shopware.Locale.extend('de-DE', deDECms);
+Shopware.Locale.extend('en-GB', enGBConfig);
+Shopware.Locale.extend('en-GB', enGBCms);

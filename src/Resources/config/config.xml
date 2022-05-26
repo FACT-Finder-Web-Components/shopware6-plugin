@@ -32,6 +32,10 @@
             <label lang="de-DE">Passwort</label>
             <required>true</required>
         </input-field>
+
+        <component name="update-field-roles">
+            <name>fieldRoles</name>
+        </component>
     </card>
 
     <card>

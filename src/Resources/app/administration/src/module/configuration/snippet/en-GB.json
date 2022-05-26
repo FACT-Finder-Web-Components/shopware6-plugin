@@ -1,0 +1,8 @@
+{
+  "configuration": {
+    "updateFieldRoles": {
+      "update": "Update Field Roles",
+      "successMessage": "Updated Field Roles successfully. Please check if values are correct"
+    }
+  }
+}

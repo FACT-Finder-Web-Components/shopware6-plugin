@@ -23,4 +23,9 @@ class Communication extends BaseConfig
             (string) $this->config('password'),
         ];
     }
+
+    public function getFieldRoles(?string $salesChannelId): array
+    {
+        return (array) $this->config('fieldRoles', $salesChannelId);
+    }
 }
