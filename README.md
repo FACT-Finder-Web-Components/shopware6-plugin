@@ -11,6 +11,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - [Installation](#installation)
 - [Activating the Module](#activating-the-module)
 - [Main Settings](#main-settings)
+    - [Update Field Roles](#update-field-roles)
 - [Export Settings](#export-settings)
     - [Price Columns Format](#price-columns-format)
 - [Upload Settings](#upload-settings)
@@ -87,6 +88,14 @@ store cache in order the new applied configuration to start working.
 * Username
 * Password  
   **Note:** Module supports FACT-Finder® NG only.
+
+#### Update Field Roles
+This functionality offers a way to download field roles configured in FACT-Finder®.
+Please use this if you don't use feed offered by the plugin or for some reason you have changed the column names.
+You can find more information about what Field Roles are in (Web Components documentation)[https://web-components.fact-finder.de/documentation/4.x/field-roles]
+**Note:**
+ Updating process is ran for all sales channels, no need to run it separately for each of them
+
 
 ### Export Settings
 
