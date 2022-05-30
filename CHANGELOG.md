@@ -1,9 +1,12 @@
 # Changelog
-## Unreleased
+## [v3.2.0] - 2022.05.30
 ### Add
  - Configuration
   - Add new Update Field Roles functionality. More information in documentation
 
+### Change
+ - upgrade Web Components to version [4.0.10](https://github.com/FACT-Finder-Web-Components/ff-web-components/releases/tag/4.0.10)
+ 
 ## [v3.1.1] - 2022.04.15
 ### Fix
  - Export
@@ -155,6 +158,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v3.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.2.0
 [v3.1.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.1.1
 [v3.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.1.0
 [v3.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.0.0
