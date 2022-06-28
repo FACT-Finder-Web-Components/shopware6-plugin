@@ -6,7 +6,7 @@
 
     <sw-container v-if="element.config.enableAdvisorCampaign.value">
       <sw-text-field
-        label="Advisor Campaign Name"
+        label="Name"
         placeholder="Advisor Campaign Name"
         v-tooltip="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
         v-model="element.config.advisorCampaignName.value">
@@ -18,14 +18,45 @@
 
     <sw-container v-if="element.config.enableFeedbackCampaign.value">
       <sw-text-field
-        label="Feedback Campaign Label"
+        label="Label"
         placeholder="Feedback Campaign Label"
         v-tooltip="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
         v-model="element.config.feedbackCampaignLabel.value">
       </sw-text-field>
+
+      <sw-select-field label="Feedback Campaign Flag"
+                       v-model="element.config.feedbackCampaignFlag.value">
+        <option v-for="(flag, index) in campaignFlags"
+                :key="index"
+                :value="flag"
+                :selected="element.config.feedbackCampaignFlag.value === flag">
+          {{ flag }}
+        </option>
+      </sw-select-field>
     </sw-container>
 
     <sw-switch-field label="Redirect Campaign" v-model="element.config.enableRedirectCampaign.value">
     </sw-switch-field>
+
+
+    <sw-switch-field label="Pushed Products" v-model="element.config.enablePushedProducts.value">
+    </sw-switch-field>
+    <sw-container v-if="element.config.enablePushedProducts.value">
+      <sw-select-field label="Pushed Products Flag"
+                       v-model="element.config.pushedProductsFlag.value">
+        <option v-for="(flag, index) in campaignFlags"
+                :key="index"
+                :value="flag"
+                :selected="element.config.pushedProductsFlag.value === flag">
+          {{ flag }}
+        </option>
+      </sw-select-field>
+      <sw-text-field
+        label="Name"
+        placeholder="Pushed Products Campaign Name"
+        v-tooltip="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
+        v-model="element.config.pushedProductsName.value">
+      </sw-text-field>
+    </sw-container>
   </div>
 {% endblock %}

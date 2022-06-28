@@ -1,4 +1,20 @@
 # Changelog
+## Unreleased
+### Add
+ - Page Builder
+  - add ff-campaign-pushed-products support to the campaigns block
+  - add flag configuration for ff-campaign-feedbacktext
+ - SearchResult Page
+  - add ff-campaign-pushed-products to default template
+  
+### Change
+ - src/Resources/views/storefront/components/factfinder/campaign-pushed-products.html.twig
+  - template takes new argument recordListTemplate set by default to src/Resources/views/storefront/components/factfinder/record-list.html.twig  
+   
+### Fix
+ - Page Builder
+  - fix enableCampaignFeedbackText,enableCampaignAdvisor and enableCampaignRedirect are enabled by default but does not show their configuration  
+  
 ## [v3.2.0] - 2022.05.30
 ### Add
  - Configuration
