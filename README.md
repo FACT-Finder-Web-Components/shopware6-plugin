@@ -157,6 +157,7 @@ is two CMS blocks offered:
     * ff-campaign-feedbacktext
     * ff-campaign-advisor
     * ff-campaign-redirect
+    * ff-campaign-pushed-products
 
 ![Page Builder CMS Blocks](docs/assets/page-builder-cms-blocks.png "Page Builder CMS Blocks")
 ![Page Builder CMS Preview](docs/assets/page-builder-listing.png "Page Builder CMS Preview")
@@ -194,8 +195,16 @@ FACT-Finder® response, hence they will not render any HTML.
 * Advisor Campaign - Renders `ff-campaign-advisor` element
 * Advisor Campaign Name - Adds `label` attribute to `ff-campaign-advisor`.
 * Feedback Campaign - Renders `ff-campaign-feedbacktext` element
+* Feedback Campaign Label - Bind the campaign element to a FACT-Finder campaign with a given label, making it reacting only to it.
+* Feedback Campaign Flag - Set a flag making the campaign element reacts to FACT-Finder campaign of the specific type
+* Feedback Campaign - Renders `ff-campaign-feedbacktext` element
 * Advisor Campaign Name - Adds `label` attribute to `ff-campaign-feedbacktext`.
 * Redirect Campaign - Renders `ff-campaign-redirect` element
+* Pushed Products - Renders `ff-campaign-pushed-products` element
+* Pushed Products Flag - Set a flag making the campaign element reacts to FACT-Finder campaign of the specific type
+
+** Note **
+You can find more information about campaigns related elements and their configuration in Web Components [documentation](https://web-components.fact-finder.de/api/4.x/ff-campaign#tab=api)
 
 ### Blocks and Elements Templates
 
