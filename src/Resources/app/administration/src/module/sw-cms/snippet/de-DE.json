@@ -3,19 +3,22 @@
     "blocks": {
       "commerce": {
         "factfinderWebComponentsListing": {
-          "label": "FACTFinder Web Components Search Result"
+          "label": "Typical collection of Web Components that implements search result page "
         },
         "factfinderWebComponentsCampaigns": {
-          "label": "FACTFinder Web Components Campaigns"
+          "label": "FACT-Finder® Web Components Campaigns"
         },
         "factfinderWebComponentsFilters": {
-          "label": "FACTFinder Web Components Filters"
-        }
+          "label": "FACT-Finder® Web Components Filters"
+        },
+        "factfinderWebComponentsRecordList": {
+          "label": "FACT-Finder® Web Components Record List"
+        },
       }
     },
     "elements": {
       "recordList": {
-        "label": "ff-record-list",
+        "label": "FACT-Finder® Web Components ff-record-list element",
         "config": {
           "callbackArg": "Name of argument which will be available inside the callback scope",
           "callback": "callback to the subscribed topic. It is recommended to have only one callback per topic, per page.",
@@ -24,9 +27,8 @@
         }
       },
       "asn": {
-        "label": "ff-asn",
         "asn": {
-          "label": "ff-asn",
+          "label": "FACT-Finder® Web Components ff-asn element",
           "config": {
             "callbackArg": "Name of argument which will be available inside the callback scope",
             "callback": "callback to the subscribed topic. It is recommended to have only one callback per topic, per page.",
@@ -37,13 +39,13 @@
           }
         },
         "sortbox": {
-          "label": "ff-sortbox"
+          "label": "FACT-Finder® Web Components ff-sortbox element"
         },
         "paging": {
-          "label": "ff-paging"
+          "label": "FACT-Finder® Web Components ff-paging element"
         },
         "campaigns": {
-          "label": "campaigns",
+          "label": "FACT-Finder® Web Components campaigns elements collection",
           "config": {
             "leaveFreeIfNotSpecified": "Leave this value free if you want page to accept all campaigns matching the criteria"
           }

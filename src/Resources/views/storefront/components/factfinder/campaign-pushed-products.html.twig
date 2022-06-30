@@ -1,5 +1,6 @@
 {% block component_factfinder_campaign_pushed_products %}
-  <ff-campaign-pushed-products {{ flag }} unresolved>
-    {% sw_include '@Parent/storefront/components/factfinder/record-list-slider.html.twig' %}
+  {% set recordListTemplate = recordListTemplate|default('@Parent/storefront/components/factfinder/record-list.html.twig') %}
+  <ff-campaign-pushed-products {% if flag !== 'None' %} {{ flag }}  {% endif %} name="{{ name }}" unresolved>
+    {% sw_include recordListTemplate %}
   </ff-campaign-pushed-products>
 {% endblock %}

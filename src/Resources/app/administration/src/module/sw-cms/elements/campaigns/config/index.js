@@ -11,6 +11,12 @@ Shopware.Component.register('sw-cms-el-config-campaigns', {
         this.createdComponent();
     },
 
+    data() {
+        return {
+            campaignFlags: ['None','is-product-campaign', 'is-landing-page-campaign'],
+        };
+    },
+
     methods: {
         createdComponent() {
             this.initElementConfig('campaigns');

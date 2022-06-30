@@ -8,6 +8,9 @@
     {% sw_include '@Parent/storefront/components/factfinder/similar-products.html.twig' %}
     {% sw_include '@Parent/storefront/components/factfinder/campaign-product.html.twig' %}
     {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig' with { flag: 'is-product-campaign' } %}
-    {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' with { flag: 'is-product-campaign' } %}
+    {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' with {
+      recordListTemplate: '@Parent/storefront/components/factfinder/record-list-slider.html.twig',
+      flag: 'is-product-campaign'
+    } %}
   </div>
 {% endblock %}

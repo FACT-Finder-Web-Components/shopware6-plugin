@@ -4,11 +4,20 @@
     {% sw_include '@Parent/storefront/components/factfinder/campaign-advisor.html.twig' with { name: config.advisorCampaignName.value} %}
   {% endif %}
   {% if config.enableFeedbackCampaign.value %}
-    {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig'  with { label: config.feedbackCampaignLabel.value} %}
+    {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig'  with {
+      label: config.feedbackCampaignLabel.value,
+      flag: config.feedbackCampaignFlag.value
+    } %}
   {% endif %}
 
   {% if config.enableRedirectCampaign.value %}
     {% sw_include '@Parent/storefront/components/factfinder/campaign-redirect.html.twig' %}
   {% endif %}
 
+  {% if config.enablePushedProducts.value %}
+    {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' with {
+      name: config.pushedProductsName.value,
+      flag: config.pushedProductsFlag.value
+    } %}
+  {% endif %}
 {% endblock %}
