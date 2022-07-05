@@ -33,8 +33,10 @@
               </button>
             {% endblock %}
 
-            <div id="filter-panel-wrapper" class="filter-panel-wrapper" data-offcanvas-filter-content="true">
-              {% sw_include '@Parent/storefront/components/factfinder/asn.html.twig' with { subscribe: true, filterCloud: true } %}
+            <div id="filtersOrigin" class="filter-panel-wrapper">
+              <div id="filter-panel-wrapper" data-offcanvas-filter-content="true">
+                {% sw_include '@Parent/storefront/components/factfinder/asn.html.twig' with { subscribe: true, filterCloud: true } %}
+              </div>
             </div>
           </div>
         </div>

@@ -14,7 +14,9 @@
 ### Fix
  - Page Builder
   - fix enableCampaignFeedbackText,enableCampaignAdvisor and enableCampaignRedirect are enabled by default but does not show their configuration  
-  
+ - SearchResult Page, Category Page
+  - fix filters are not showing off on mobile mode
+     
 ## [v3.2.0] - 2022.05.30
 ### Add
  - Configuration
