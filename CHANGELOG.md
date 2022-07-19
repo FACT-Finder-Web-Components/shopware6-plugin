@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Add
+- SearchResult Page, Category Page
+  - add facet name to the `ff-filter-cloud` template
+
 ## [v3.3.0] - 2022.07.06
 ### Add
  - Page Builder
