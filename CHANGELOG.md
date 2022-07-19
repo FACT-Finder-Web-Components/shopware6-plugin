@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Add
+- SearchResult Page
+  - add facet label to the chosen filter value 
+
 ## [v3.3.0] - 2022.07.06
 ### Add
  - Page Builder
