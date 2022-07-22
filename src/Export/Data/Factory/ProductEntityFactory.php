@@ -26,10 +26,10 @@ class ProductEntityFactory implements FactoryInterface
         CurrencyFieldsProvider $currencyFieldsProvider,
         Traversable $variantFields
     ) {
-        $this->propertyFormatter      = $propertyFormatter;
-        $this->fieldsProvider         = $fieldsProviders;
-        $this->variantFields          = $variantFields;
-        $this->currencyFieldsProvider = $currencyFieldsProvider;
+        $this->propertyFormatter               = $propertyFormatter;
+        $this->fieldsProvider                  = $fieldsProviders;
+        $this->variantFields                   = $variantFields;
+        $this->currencyFieldsProvider          = $currencyFieldsProvider;
     }
 
     public function handle(Entity $entity): bool
@@ -41,7 +41,7 @@ class ProductEntityFactory implements FactoryInterface
      * @param Entity $entity
      * @param string $producedType
      *
-     * @return iterable
+     * @return ProductEntity[]|iterable
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function createEntities(Entity $entity, string $producedType = ProductEntity::class): iterable

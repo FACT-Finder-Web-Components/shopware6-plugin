@@ -10,7 +10,7 @@ use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use function array_map as map;
 
-class VariantEntity implements ExportEntityInterface
+class VariantEntity implements ExportEntityInterface, ProductEntityInterface
 {
     private Product $product;
     private array $parentData;
@@ -34,6 +34,11 @@ class VariantEntity implements ExportEntityInterface
     public function getId(): string
     {
         return $this->product->getId();
+    }
+
+    public function getProductNumber(): string
+    {
+        return $this->product->getProductNumber();
     }
 
     public function toArray(): array

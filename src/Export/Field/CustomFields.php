@@ -66,12 +66,35 @@ class CustomFields implements FieldInterface
         return $this->getFieldValue($entity);
     }
 
+    public function getValueAsKeyValueArray(Entity $entity): array
+    {
+        return array_reduce(
+            $this->getFieldValueAsArray($entity),
+            function(array $carriedValues, string $customFieldValue) {
+                $separatorPosition = strpos($customFieldValue, '=');
+                $key = substr($customFieldValue, 0, $separatorPosition);
+                $value = substr($customFieldValue, $separatorPosition + 1, strlen($customFieldValue));
+                $carriedValues[$key] = $value;
+
+                return $carriedValues;
+            },
+            []
+        );
+    }
+
     public function getCompatibleEntityTypes(): array
     {
         return [SalesChannelProductEntity::class, CategoryEntity::class];
     }
 
-    public function getFieldValue(Entity $entity): string
+    private function getFieldValue(Entity $entity): string
+    {
+        $value = $this->getFieldValueAsArray($entity);
+
+        return $value ? '|' . implode('|', $value) . '|' : '';
+    }
+
+    private function getFieldValueAsArray(Entity $entity): array
     {
         $fields        = $this->getFields($entity);
         $usedLocale    = $this->findLanguage($this->salesChannelService->getSalesChannelContext()->getSalesChannel()->getLanguageId())->getLocale()->getCode();
@@ -83,9 +106,7 @@ class CustomFields implements FieldInterface
             array_values($fields)
         );
 
-        $value = map([$this->propertyFormatter, 'format'], array_keys($translatedFields), array_values($translatedFields));
-
-        return $value ? '|' . implode('|', $value) . '|' : '';
+        return map([$this->propertyFormatter, 'format'], array_keys($translatedFields), array_values($translatedFields));
     }
 
     /**
