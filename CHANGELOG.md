@@ -3,6 +3,8 @@
 ### Add
 - SearchResult Page, Category Page
   - add facet name to the `ff-filter-cloud` template
+- SearchResult Page
+  - Add "You search for" feature 
 
 ## [v3.3.0] - 2022.07.06
 ### Add
