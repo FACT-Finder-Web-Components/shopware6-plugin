@@ -1,8 +1,7 @@
 {% sw_extends '@Parent/storefront/components/factfinder/record-list.html.twig' %}
 {% block component_factfinder_record %}
 <div class="cms-element-product-slider">
-  <div data-product-slider="true" class="base-slider product-slider" id="productCampaignSlider"
-       data-product-slider-options='{"productboxMinWidth":"300px","slider":{"gutter":30,"autoplayButtonOutput":false,"nav":false,"mouseDrag":false,"controls":true,"autoplay":false}}'>
+  <div class="base-slider product-slider" data-product-slider-options="{{ recordListSliderOptions|json_encode }}" data-origin="{{ origin }}">
     <div class="product-slider-container" data-product-slider-container="true">
       <ff-record>
         <div class="product-slider-item">
@@ -53,4 +52,12 @@
     </div>
   </div>
 </div>
+<script>
+  document.querySelector('{{ origin }} ff-record-list').addEventListener('dom-updated', function(e) {
+    const sliderPlugin = window.PluginManager.getPlugin('ProductSlider');
+    if (sliderPlugin) {
+      new (sliderPlugin.get('class'))(document.querySelector('[data-origin="{{ origin }}"]'), {}, 'ProductSlider')
+    }
+  });
+</script>
 {% endblock %}
