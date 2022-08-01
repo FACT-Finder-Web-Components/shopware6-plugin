@@ -8,7 +8,7 @@
     },
     "search": {
       "headlineBefore": "Your search for:",
-      "headlineAfter": "{{resultCount}} results!"
+      "headlineAfter": "produced {{resultCount}} results!"
     },
     "recommendation": {
       "label": "Recommendations"
