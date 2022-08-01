@@ -7,7 +7,8 @@
       "Products": "Recommended Products"
     },
     "search": {
-      "headline": "Your search produced {{resultCount}} results!"
+      "headlineBefore": "Your search for:",
+      "headlineAfter": "produced {{resultCount}} results!"
     },
     "recommendation": {
       "label": "Recommendations"

@@ -10,7 +10,13 @@
       {% block page_search_headline %}
         <h1 class="search-headline">
           {% block page_search_headline_text %}
-            {{ 'ff.search.headline'|trans|sw_sanitize }}
+            <ff-template scope="result" unresolved>
+              {{ 'ff.search.headlineBefore'|trans|sw_sanitize }}
+            </ff-template>
+            <ff-breadcrumb-trail unresolved></ff-breadcrumb-trail>
+            <ff-template scope="result" unresolved>
+              {{ 'ff.search.headlineAfter'|trans|sw_sanitize }}
+            </ff-template>
           {% endblock %}
         </h1>
       {% endblock %}
