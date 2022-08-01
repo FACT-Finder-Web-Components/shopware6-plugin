@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v3.3.1] - 2022.08.01
 ### Improve
  - Product Detail Page
   - Initialize sliders that display similar, recommendation or campaign products only after they are fully rendered 
@@ -7,6 +7,8 @@
   - add facet name to the `ff-filter-cloud` template
 - SearchResult Page
   - Add "You search for" feature 
+- ff-communication
+ - added a block that wraps the element, that allows extending in child blocks
 
 ## [v3.3.0] - 2022.07.06
 ### Add
@@ -185,6 +187,9 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v3.3.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.3.1
+[v3.3.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.3.0
+[v3.2.3]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.2.3
 [v3.2.3]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.2.3
 [v3.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.2.0
 [v3.1.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.1.1
