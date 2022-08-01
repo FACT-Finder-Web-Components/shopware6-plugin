@@ -3,8 +3,10 @@
     <div class="row mt-5">
       <div class="col-12">
         <div class="h3">{{ "ff.similarProducts.label"|trans|sw_sanitize }}</div>
-        {% sw_include '@Parent/storefront/components/factfinder/record-list-slider.html.twig' %}
+        {% sw_include '@Parent/storefront/components/factfinder/record-list-slider.html.twig' with {origin: 'ff-similar-products'}  %}
       </div>
     </div>
   </ff-similar-products>
+  <script>
+  </script>
 {% endblock %}

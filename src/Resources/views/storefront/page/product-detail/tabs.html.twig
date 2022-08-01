@@ -2,6 +2,18 @@
 {% set product_number = page.product.productNumber %}
 
 {% block page_product_detail_tabs_inner %}
+  {% set recordListSliderOptions  = {
+    productboxMinWidth: '300px',
+    slider: {
+      gutter: 30,
+      autoplayButtonOutput: false,
+      nav: false,
+      mouseDrag: false,
+      controls: true,
+      autoplay: false,
+      rewind: false,
+    }
+  } %}
   {{ parent() }}
   <div class="container">
     {% sw_include '@Parent/storefront/components/factfinder/recommendation.html.twig' %}
@@ -10,6 +22,7 @@
     {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig' with { flag: 'is-product-campaign' } %}
     {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' with {
       recordListTemplate: '@Parent/storefront/components/factfinder/record-list-slider.html.twig',
+      origin: 'ff-campaign-pushed-products',
       flag: 'is-product-campaign'
     } %}
   </div>
