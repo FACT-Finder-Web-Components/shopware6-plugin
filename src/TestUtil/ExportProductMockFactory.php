@@ -18,7 +18,7 @@ class ExportProductMockFactory
 
     public function create(ProductEntity $product, $data = []): ExportProductEntity
     {
-        $entity = new ExportProductEntity($this->salesChannelProductMockFactory->create($product), []);
+        $entity = new ExportProductEntity($this->salesChannelProductMockFactory->create($product), [], []);
         $entity->setFilterAttributes($data['filterAttributes'] ?? '');
 
         return $entity;

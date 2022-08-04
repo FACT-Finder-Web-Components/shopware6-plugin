@@ -48,7 +48,7 @@ class ProductEntityFactory implements FactoryInterface
     {
         //@todo use spread operator?
         $fields = array_merge($this->fieldsProvider->getFields(get_class($entity), $this->currencyFieldsProvider->getCurrencyFields()));
-        $parent = new $producedType($entity, $fields);
+        $parent = new $producedType($entity, $fields, new \ArrayIterator());
         if ($entity->getChildCount()) {
             yield from $entity->getChildren()->map(fn (
                 SalesChannelProductEntity $child) => new VariantEntity($child, $parent->toArray(), $this->propertyFormatter, iterator_to_array($this->variantFields)));

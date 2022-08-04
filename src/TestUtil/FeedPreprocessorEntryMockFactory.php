@@ -19,6 +19,7 @@ class FeedPreprocessorEntryMockFactory
         $feedPreprocessorEntry->setParentProductNumber($product->getParent()->getProductNumber());
         $feedPreprocessorEntry->setVariationKey($data['variationKey'] ?? '');
         $feedPreprocessorEntry->setFilterAttributes($data['filterAttributes'] ?? '');
+        $feedPreprocessorEntry->setCustomFields($data['customFields'] ?? '');
         $feedPreprocessorEntry->setLanguageId($data['languageId'] ?? (new Context(new SystemSource()))->getLanguageId());
         $feedPreprocessorEntry->setAdditionalCache($data['additionalCache'] ?? []);
 

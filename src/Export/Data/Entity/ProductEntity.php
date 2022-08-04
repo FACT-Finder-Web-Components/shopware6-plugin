@@ -73,7 +73,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 
     public function toArray(): array
     {
-        $cachedProductFieldNames = array_map(fn(FieldInterface $field) => $field->getName(), iterator_to_array($this->cachedProductFields));
+        $cachedProductFieldNames = array_map(fn(FieldInterface $field) => $field->getName(), iterator_to_array(new \ArrayIterator($this->cachedProductFields)));
         $fields = array_filter($this->productFields, fn (FieldInterface $productField) => !in_array($productField->getName(), $cachedProductFieldNames));
 
         return array_reduce($fields, fn (array $fields, FieldInterface $field): array => $fields + [$field->getName() => $field->getValue($this->product)], [
