@@ -50,11 +50,7 @@ class FeedPreprocessorEntryPersister
                 'additionalCache'     => $entry->getAdditionalCache()
             ];
 
-            try {
-                $this->entryRepository->create([$entryData], $context);
-            } catch (\Throwable $e) {
-                //@todo implement me
-            }
+            $this->entryRepository->create([$entryData], $context);
         }
     }
 }
