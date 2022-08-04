@@ -27,7 +27,6 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     private FeedPreprocessorEntryMockFactory $feedPreprocessorEntryMockFactory;
     private ExportProductMockFactory $exportProductMockFactory;
     private SalesChannelProductMockFactory $salesChannelProductMockFactory;
-    private Collaborator $decoratedFactory;
     private Collaborator $feedPreprocessorReader;
     private array $cachedFields = [];
 
@@ -40,7 +39,6 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         $this->feedPreprocessorEntryMockFactory = new FeedPreprocessorEntryMockFactory();
         $this->exportProductMockFactory = new ExportProductMockFactory();
         $this->salesChannelProductMockFactory = new SalesChannelProductMockFactory();
-        $this->decoratedFactory = $decoratedFactory;
         $this->feedPreprocessorReader = $feedPreprocessorReader;
         $this->beConstructedWith($decoratedFactory,  new FieldsProvider(new \ArrayIterator()), $feedPreprocessorReader, $this->cachedFields);
     }
@@ -108,28 +106,142 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         );
     }
 
-    /**
-     * @var ProductEntity[] $expectedVariants
-     * @return FeedPreprocessorEntry[]
-     */
-    private function getFeedPreprocessorEntries(ProductEntity $parent, array $variantsData): array
+    public function it_should_create_entities_with_proper_custom_fields_for_each_display_group()
     {
-        return array_reduce(
-            $variantsData,
-            fn(array $acc, array $variantData): array => $acc + [$variantData['productNumber'] => $this->feedPreprocessorEntryMockFactory->create($this->variantMockFactory->create($parent, $variantData), ['filterAttributes' => $variantData['filterAttributes']])],
-            []
+        $this->validateExportedCustomFields(
+            [
+                [md5('size'), 'true'],
+                [md5('color'), 'false'],
+                [md5('material'), 'false']
+            ],
+            [
+                'SW100.1' => [
+                    'filterAttributes' => 'material=cotton|material=linen|color=red|color=green|size=S',
+                    'customFields' => '|shape=rectangle|pattern=dots|shape=square|shape=triangle|pattern=stripes|',
+                ],
+                'SW100.8' => [
+                    'filterAttributes' => 'material=cotton|material=linen|color=red|color=green|size=M',
+                    'customFields' => '|shape=triangle|pattern=patterned|pattern=dots|shape=rectangle|pattern=stripes|shape=circle|',
+                ],
+            ],
+            [
+                '|pattern=dots|pattern=stripes|shape=rectangle|shape=square|shape=triangle|',
+                '|pattern=dots|pattern=patterned|pattern=stripes|shape=circle|shape=rectangle|shape=triangle|',
+            ]
+        );
+        $this->validateExportedCustomFields(
+            [
+                [md5('size'), 'false'],
+                [md5('color'), 'true'],
+                [md5('material'), 'false']
+            ],
+            [
+                'SW100.1' => [
+                    'filterAttributes' => 'size=S|size=M|material=cotton|material=linen|color=green',
+                    'customFields' => '|shape=triangle|pattern=patterned|pattern=dots|shape=square|pattern=stripes|'
+                ],
+                'SW100.8' => [
+                    'filterAttributes' => 'size=S|size=M|material=cotton|material=linen|color=red',
+                    'customFields' => '|shape=rectangle|pattern=dots|pattern=stripes|shape=circle|'
+                ],
+            ],
+            [
+                '|pattern=dots|pattern=patterned|pattern=stripes|shape=square|shape=triangle|',
+                '|pattern=dots|pattern=stripes|shape=circle|shape=rectangle|',
+            ]
+        );
+        $this->validateExportedCustomFields(
+            [
+                [md5('size'), 'false'],
+                [md5('color'), 'true'],
+                [md5('material'), 'true']
+            ],
+            [
+                'SW100.1' => [
+                    'filterAttributes' => 'size=S|size=M|material=cotton|color=green',
+                    'customFields' => '|shape=triangle|pattern=dots|pattern=stripes|',
+                ],
+                'SW100.3' => [
+                    'filterAttributes' => 'size=S|size=M|color=green|material=linen',
+                    'customFields' => '|shape=triangle|pattern=patterned|shape=square|pattern=dots|',
+                ],
+                'SW100.6' => [
+                    'filterAttributes' => 'size=S|size=M|material=cotton|color=red',
+                    'customFields' => '|shape=rectangle|pattern=dots|pattern=stripes|',
+                ],
+                'SW100.8' => [
+                    'filterAttributes' => 'size=S|size=M|color=red|material=linen',
+                    'customFields' => '|shape=rectangle|pattern=dots|shape=circle|pattern=stripes|',
+                ],
+            ],
+            [
+                '|pattern=dots|pattern=stripes|shape=triangle|',
+                '|pattern=dots|pattern=patterned|shape=square|shape=triangle|',
+                '|pattern=dots|pattern=stripes|shape=rectangle|',
+                '|pattern=dots|pattern=stripes|shape=circle|shape=rectangle|',
+            ]
+        );
+        $this->validateExportedCustomFields(
+            [
+                [md5('size'), 'true'],
+                [md5('color'), 'true'],
+                [md5('material'), 'true']
+            ],
+            [
+                'SW100.1' => [
+                    'filterAttributes' => '|size=S|material=cotton|color=green',
+                    'customFields' => '|shape=triangle|pattern=stripes|',
+                ],
+                'SW100.2' => [
+                    'filterAttributes' => '|material=cotton|color=green|size=M',
+                    'customFields' => '|shape=triangle|pattern=dots|',
+                ],
+                'SW100.3' => [
+                    'filterAttributes' => '|size=S|color=green|material=linen',
+                    'customFields' => '|shape=square|pattern=dots|',
+                ],
+                'SW100.4' => [
+                    'filterAttributes' => '|color=green|size=M|material=linen',
+                    'customFields' => '|shape=triangle|pattern=patterned|',
+                ],
+                'SW100.5' => [
+                    'filterAttributes' => '|size=S|material=cotton|color=red',
+                    'customFields' => '|shape=rectangle|pattern=dots|',
+                ],
+                'SW100.6' => [
+                    'filterAttributes' => '|material=cotton|color=red|size=M',
+                    'customFields' => '|shape=rectangle|pattern=stripes|',
+                ],
+                'SW100.7' => [
+                    'filterAttributes' => '|size=S|color=red|material=linen',
+                    'customFields' => '|shape=rectangle|pattern=dots|',
+                ],
+                'SW100.8' => [
+                    'filterAttributes' => '|color=red|size=M|material=linen',
+                    'customFields' => '|shape=circle|pattern=stripes|',
+                ],
+            ],
+            [
+                '|pattern=stripes|shape=triangle|',
+                '|pattern=dots|shape=triangle|',
+                '|pattern=dots|shape=square|',
+                '|pattern=patterned|shape=triangle|',
+                '|pattern=dots|shape=rectangle|',
+                '|pattern=stripes|shape=rectangle|',
+                '|pattern=dots|shape=rectangle|',
+                '|pattern=stripes|shape=circle|',
+            ]
         );
     }
 
-    public function it_should_create_entities_with_proper_custom_fields_for_each_display_group()
-    {
+    private function validateExportedCustomFields(
+        array $groupConfigurationConfig,
+        array $feedPreprocessorReaderData,
+        array $expectedValues
+    ): void {
         // Given
         $productEntity = $this->productMockFactory->create();
-        $productEntity->setConfiguratorGroupConfig(ProductMockFactory::getGroupConfigurationConfig([
-            [md5('size'), 'true'],
-            [md5('color'), 'false'],
-            [md5('material'), 'false']
-        ]));
+        $productEntity->setConfiguratorGroupConfig(ProductMockFactory::getGroupConfigurationConfig($groupConfigurationConfig));
         $customFieldsData = [
             'SW100.1' => ['shape' => 'triangle', 'pattern' => 'stripes'],
             'SW100.2' => ['shape' => 'triangle', 'pattern' => 'dots'],
@@ -140,40 +252,49 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
             'SW100.7' => ['shape' => 'rectangle', 'pattern' => 'dots'],
             'SW100.8' => ['shape' => 'circle', 'pattern' => 'stripes'],
         ];
-        $customFieldsValues = [
-            'SW100.1' => '|shape=triangle|pattern=stripes|',
-            'SW100.2' => '|shape=triangle|pattern=dots|',
-            'SW100.3' => '|shape=square|pattern=dots|',
-            'SW100.4' => '|shape=triangle|pattern=patterned|',
-            'SW100.5' => '|shape=rectangle|pattern=dots|',
-            'SW100.6' => '|shape=rectangle|pattern=stripes|',
-            'SW100.7' => '|shape=rectangle|pattern=dots|',
-            'SW100.8' => '|shape=circle|pattern=stripes|',
+        $variantsData = [
+            'SW100.1' => ['productNumber' => 'SW100.1', 'size' => 'S', 'color' => 'green', 'material' => 'cotton'],
+            'SW100.2' => ['productNumber' => 'SW100.2', 'size' => 'M', 'color' => 'green', 'material' => 'cotton'],
+            'SW100.3' => ['productNumber' => 'SW100.3', 'size' => 'S', 'color' => 'green', 'material' => 'linen'],
+            'SW100.4' => ['productNumber' => 'SW100.4', 'size' => 'M', 'color' => 'green', 'material' => 'linen'],
+            'SW100.5' => ['productNumber' => 'SW100.5', 'size' => 'S', 'color' => 'red', 'material' => 'cotton'],
+            'SW100.6' => ['productNumber' => 'SW100.6', 'size' => 'M', 'color' => 'red', 'material' => 'cotton'],
+            'SW100.7' => ['productNumber' => 'SW100.7', 'size' => 'S', 'color' => 'red', 'material' => 'linen'],
+            'SW100.8' => ['productNumber' => 'SW100.8', 'size' => 'M', 'color' => 'red', 'material' => 'linen'],
         ];
-        $variants = [
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.1', 'size' => 'S', 'color' => 'green', 'material' => 'cotton', 'customFields' => $customFieldsData['SW100.1']]),
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.2', 'size' => 'M', 'color' => 'green', 'material' => 'cotton', 'customFields' => $customFieldsData['SW100.2']]),
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.3', 'size' => 'S', 'color' => 'green', 'material' => 'linen', 'customFields' => $customFieldsData['SW100.3']]),
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.4', 'size' => 'M', 'color' => 'green', 'material' => 'linen', 'customFields' => $customFieldsData['SW100.4']]),
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.5', 'size' => 'S', 'color' => 'red', 'material' => 'cotton', 'customFields' => $customFieldsData['SW100.5']]),
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.6', 'size' => 'M', 'color' => 'red', 'material' => 'cotton', 'customFields' => $customFieldsData['SW100.6']]),
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.7', 'size' => 'S', 'color' => 'red', 'material' => 'linen', 'customFields' => $customFieldsData['SW100.7']]),
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.8', 'size' => 'M', 'color' => 'red', 'material' => 'linen', 'customFields' => $customFieldsData['SW100.8']]),
-        ];
-        $productEntity->setChildren(new ProductCollection(array_reduce($variants, fn(array $carriedVariants, ProductEntity $product): array => $carriedVariants + [$product->getId() => $product], [])));
+        $variants = array_map(fn (array $variantData) => $this->variantMockFactory->create($productEntity, $variantData), $variantsData);
+        array_map(fn (ProductEntity $variant) => $variant->setCustomFields($customFieldsData[$variant->getProductNumber()]), $variants);
+        $productEntity->setChildren(new ProductCollection(array_reduce($variants, fn(array $carriedVariants, ProductEntity $product): array => $carriedVariants + [$product->getId() => $this->salesChannelProductMockFactory->create($product)], [])));
 
         // Expect
-//        $this->feedPreprocessorReader->read($productEntity->getProductNumber())->willReturn($this->getFeedPreprocessorEntries([
-//            $variants['SW100.1'],
-//            $variants['SW100.5'],
-//            $variants['SW100.7'],
-//            $variants['SW100.10'],
-//            $variants['SW100.13'],
-//            $variants['SW100.16'],
-//        ], $variantsData));
+        $this->feedPreprocessorReader->read($productEntity->getProductNumber())->willReturn(
+            $this->getFeedPreprocessorEntries(
+                $productEntity,
+                array_map(fn(string $productNumber, array $data) => $variantsData[$productNumber] + $feedPreprocessorReaderData[$productNumber], array_keys($feedPreprocessorReaderData), array_values($feedPreprocessorReaderData))
+            )
+        );
 
+        /** @var ExportProductEntity[] $entities */
         $entities = iterator_to_array($this->createEntities($productEntity)->getWrappedObject());
 
+        foreach ($expectedValues as $key => $expectedValue) {
+            $gluedCustomFields = explode('|', trim($entities[$key]->getCustomFields(), '|'));
+            sort($gluedCustomFields);
+            $gluedCustomFields = sprintf('|%s|', implode('|', $gluedCustomFields));
+            Assert::assertEquals($expectedValue, $gluedCustomFields);
+        }
     }
 
+    /**
+     * @var ProductEntity[] $expectedVariants
+     * @return FeedPreprocessorEntry[]
+     */
+    private function getFeedPreprocessorEntries(ProductEntity $parent, array $variantsData): array
+    {
+        return array_reduce(
+            $variantsData,
+            fn(array $acc, array $variantData): array => $acc + [$variantData['productNumber'] => $this->feedPreprocessorEntryMockFactory->create($this->variantMockFactory->create($parent, $variantData), ['filterAttributes' => $variantData['filterAttributes'], 'customFields' => $variantData['customFields']])],
+            []
+        );
+    }
 }

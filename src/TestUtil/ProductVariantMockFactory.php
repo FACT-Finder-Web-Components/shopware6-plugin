@@ -35,7 +35,6 @@ class ProductVariantMockFactory
                 [md5('material'), md5($material), 'material', $material],
             ]
         ));
-        $variant->setCustomFields($data['customFields'] ?? []);
 
         return $variant;
     }
