@@ -9,14 +9,15 @@ use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProdu
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface;
 use Omikron\FactFinder\Shopware6\Export\FeedPreprocessorEntry;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
-use Omikron\FactFinder\Shopware6\TestUtil\FeedPreprocessorEntryMockFactory;
 use Omikron\FactFinder\Shopware6\TestUtil\ExportProductMockFactory;
+use Omikron\FactFinder\Shopware6\TestUtil\FeedPreprocessorEntryMockFactory;
 use Omikron\FactFinder\Shopware6\TestUtil\ProductMockFactory;
 use Omikron\FactFinder\Shopware6\TestUtil\ProductVariantMockFactory;
 use Omikron\FactFinder\Shopware6\TestUtil\SalesChannelProductMockFactory;
 use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
 use PHPUnit\Framework\Assert;
+use Prophecy\Argument;
 use Shopware\Core\Content\Product\ProductCollection;
 use Shopware\Core\Content\Product\ProductEntity;
 
@@ -27,6 +28,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     private FeedPreprocessorEntryMockFactory $feedPreprocessorEntryMockFactory;
     private ExportProductMockFactory $exportProductMockFactory;
     private SalesChannelProductMockFactory $salesChannelProductMockFactory;
+    private Collaborator $decoratedFactory;
     private Collaborator $feedPreprocessorReader;
     private array $cachedFields = [];
 
@@ -40,7 +42,21 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         $this->exportProductMockFactory = new ExportProductMockFactory();
         $this->salesChannelProductMockFactory = new SalesChannelProductMockFactory();
         $this->feedPreprocessorReader = $feedPreprocessorReader;
+        $this->decoratedFactory = $decoratedFactory;
         $this->beConstructedWith($decoratedFactory,  new FieldsProvider(new \ArrayIterator()), $feedPreprocessorReader, $this->cachedFields);
+    }
+
+    public function it_should_handle_entities_without_cache_using_fallback_from_decorated_factory(): void
+    {
+        // Given
+        $productEntity = $this->productMockFactory->create();
+
+        // Expect
+        $this->feedPreprocessorReader->read($productEntity->getProductNumber())->willReturn([]);
+        $this->decoratedFactory->createEntities($productEntity, Argument::any())->willYield(['fallback_data']);
+
+        // When
+        $this->createEntities($productEntity)->shouldYield(['fallback_data']);
     }
 
     public function it_should_create_entities_for_variants_that_should_be_visible(): void
@@ -84,7 +100,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
             $this->exportProductMockFactory->create($variants['SW100.13'], ['filterAttributes' => $filterAttributes['SW100.13']]),
             $this->exportProductMockFactory->create($variants['SW100.16'], ['filterAttributes' => $filterAttributes['SW100.16']]),
         ];
-        $productEntity->setChildren(new ProductCollection(array_reduce($variants, fn(array $carriedVariants, ProductEntity $product): array => $carriedVariants + [$product->getId() => $this->salesChannelProductMockFactory->create($product)], [])));
+        $productEntity->setChildren($this->getProductCollection($variants));
 
         // Expect
         $this->feedPreprocessorReader->read($productEntity->getProductNumber())->willReturn($this->getFeedPreprocessorEntries($productEntity, [
@@ -264,7 +280,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         ];
         $variants = array_map(fn (array $variantData) => $this->variantMockFactory->create($productEntity, $variantData), $variantsData);
         array_map(fn (ProductEntity $variant) => $variant->setCustomFields($customFieldsData[$variant->getProductNumber()]), $variants);
-        $productEntity->setChildren(new ProductCollection(array_reduce($variants, fn(array $carriedVariants, ProductEntity $product): array => $carriedVariants + [$product->getId() => $this->salesChannelProductMockFactory->create($product)], [])));
+        $productEntity->setChildren($this->getProductCollection($variants));
 
         // Expect
         $this->feedPreprocessorReader->read($productEntity->getProductNumber())->willReturn(
@@ -296,5 +312,19 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
             fn(array $acc, array $variantData): array => $acc + [$variantData['productNumber'] => $this->feedPreprocessorEntryMockFactory->create($this->variantMockFactory->create($parent, $variantData), ['filterAttributes' => $variantData['filterAttributes'], 'customFields' => $variantData['customFields'] ?? ''])],
             []
         );
+    }
+
+    /**
+     * @param ProductEntity[] $variants
+     */
+    private function getProductCollection(array $variants): ProductCollection
+    {
+        return new ProductCollection(
+            array_reduce(
+                $variants,
+                fn(array $carriedVariants, ProductEntity $product): array =>
+                    $carriedVariants + [$product->getId() => $this->salesChannelProductMockFactory->create($product)],
+                []
+            ));
     }
 }
