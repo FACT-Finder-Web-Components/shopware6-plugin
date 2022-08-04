@@ -293,7 +293,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     {
         return array_reduce(
             $variantsData,
-            fn(array $acc, array $variantData): array => $acc + [$variantData['productNumber'] => $this->feedPreprocessorEntryMockFactory->create($this->variantMockFactory->create($parent, $variantData), ['filterAttributes' => $variantData['filterAttributes'], 'customFields' => $variantData['customFields']])],
+            fn(array $acc, array $variantData): array => $acc + [$variantData['productNumber'] => $this->feedPreprocessorEntryMockFactory->create($this->variantMockFactory->create($parent, $variantData), ['filterAttributes' => $variantData['filterAttributes'], 'customFields' => $variantData['customFields'] ?? ''])],
             []
         );
     }
