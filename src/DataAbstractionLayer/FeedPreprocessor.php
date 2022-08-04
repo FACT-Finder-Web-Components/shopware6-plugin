@@ -50,10 +50,11 @@ class FeedPreprocessor
         $entries = [];
         $customFields = [];
 
+        $visibleGroupIds = $this->extractVisibleGroupIds($product);
+
         /** @var \Shopware\Core\Content\Product\ProductEntity $child */
         foreach ($product->getChildren() as $child) {
             //fetch storefront presentation config for each variant
-            $visibleGroupIds = $this->extractVisibleGroupIds($product);
             $shouldGroupBeVisible = fn(string $groupId): bool => in_array($groupId, $visibleGroupIds);
             $variationKeyParts = [];
 
@@ -104,8 +105,7 @@ class FeedPreprocessor
             $customFields
         ): void {
             $variationKey = $entry->getVariationKey();
-            $gluedFilters = implode('|', [$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]);
-            $entry->setFilterAttributes($gluedFilters);
+            $entry->setFilterAttributes(implode('|', [$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]));
             $entry->setCustomFields(sprintf('|%s|', implode('|', array_unique($customFields[$variationKey]))));
 
             $this->eventDispatcher->dispatch(new FeedPreprocessorEntryBeforeCreate($entry, $this->context));
@@ -117,13 +117,15 @@ class FeedPreprocessor
     private function extractVisibleGroupIds(ProductEntity $product): array
     {
         $configuratorGroupConfig = $product->getConfiguratorGroupConfig();
+        $hasMainVariant = (bool) $product->getMainVariantId();
+
         if (!$configuratorGroupConfig) {
             return [];
         }
         return array_reduce(
             array_filter($product->getConfiguratorGroupConfig(),
                 fn(
-                    array $groupConfig): bool => (bool)safeGetByName($groupConfig, 'expressionForListings')),
+                    array $groupConfig): bool => !$hasMainVariant && (bool) safeGetByName($groupConfig, 'expressionForListings')),
             fn(
                 array $result,
                 array $groupConfig): array => array_merge($result, [safeGetByName($groupConfig, 'id')]), []
