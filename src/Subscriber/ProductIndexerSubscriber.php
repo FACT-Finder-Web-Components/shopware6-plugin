@@ -53,7 +53,6 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
             while ($products = $iterator->fetch()) {
                 foreach ($products as $product) {
                     $this->entryPersister->deleteAllProductEntries($product->getProductNumber(), $context);
-                    $this->feedPreprocessor->setContext($context);
                     $entries = $this->feedPreprocessor->createEntries($product, $context);
                     $this->entryPersister->insertProductEntries($entries, $context);
                 }

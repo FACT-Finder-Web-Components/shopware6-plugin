@@ -27,12 +27,13 @@ class FeedPreprocessorSpec extends ObjectBehavior
     private ProductMockFactory $productMockFactory;
     private ProductVariantMockFactory $variantMockFactory;
     private Collaborator $customFields;
+    private Context $context;
 
     function let(EventDispatcherInterface $eventDispatcher, ExportCustomFields $customFields)
     {
         $eventDispatcher->dispatch(Argument::any())->willReturn(new Event());
         $this->beConstructedWith(new PropertyFormatter(new TextFilter()), $eventDispatcher, $customFields);
-        $this->setContext(new Context(new SystemSource()));
+        $this->context = new Context(new SystemSource());
         $this->productMockFactory = new ProductMockFactory();
         $this->variantMockFactory = new ProductVariantMockFactory();
         $this->customFields = $customFields;
@@ -71,7 +72,7 @@ class FeedPreprocessorSpec extends ObjectBehavior
                 => $carriedVariants + [$product->getId() => $product], [])));
 
         /** @var Subject $entries */
-        $entries = $this->createEntries($productEntity);
+        $entries = $this->createEntries($productEntity, $this->context);
 
         $entries->shouldBeArray();
         //3 colors * 2 materials = 6 combinations
@@ -178,7 +179,7 @@ class FeedPreprocessorSpec extends ObjectBehavior
                 => $carriedVariants + [$product->getId() => $product], [])));
 
         /** @var Subject $entries */
-        $entries = $this->createEntries($productEntity);
+        $entries = $this->createEntries($productEntity, $this->context);
         $entries->shouldBeArray();
         //only one entry should be producted
         $entries->shouldHaveCount(1);
@@ -248,7 +249,7 @@ class FeedPreprocessorSpec extends ObjectBehavior
         }
 
         // When
-        $entries = $this->createEntries($productEntity);
+        $entries = $this->createEntries($productEntity, $this->context);
 
         // Then
         $entries = array_values($entries->getWrappedObject());

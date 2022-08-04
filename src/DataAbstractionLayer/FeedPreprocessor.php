@@ -18,7 +18,6 @@ use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class FeedPreprocessor
 {
-    private ?Context $context = null;
     private PropertyFormatter $propertyFormatter;
     private EventDispatcherInterface $eventDispatcher;
     private ExportCustomFields $customFields;
@@ -27,22 +26,16 @@ class FeedPreprocessor
         PropertyFormatter        $propertyFormatter,
         EventDispatcherInterface $eventDispatcher,
         ExportCustomFields       $customFields
-    )
-    {
+    ) {
         $this->propertyFormatter = $propertyFormatter;
         $this->eventDispatcher = $eventDispatcher;
         $this->customFields = $customFields;
     }
 
-    public function setContext(?Context $context): void
-    {
-        $this->context = $context;
-    }
-
     /**
      * @return FeedPreprocessorEntry[]
      */
-    public function createEntries(ProductEntity $product): array
+    public function createEntries(ProductEntity $product, Context $context): array
     {
         $filtersFromNotVisibleVariants = [];
         $filtersFromVisibleVariants = [];
@@ -88,7 +81,7 @@ class FeedPreprocessor
                 ->setProductNumber($child->getProductNumber())
                 ->setVariationKey($variationKey)
                 ->setParentProductNumber($product->getProductNumber())
-                ->setLanguageId($this->context->getLanguageId())
+                ->setLanguageId($context->getLanguageId())
                 ->setAdditionalCache([]);
 
             //collect all possible ready to be exported expressions from group that should not be visible
@@ -100,6 +93,7 @@ class FeedPreprocessor
         }
 
         array_walk($entries, function (FeedPreprocessorEntry $entry) use (
+            $context,
             $filtersFromVisibleVariants,
             $filtersFromNotVisibleVariants,
             $customFields
@@ -108,7 +102,7 @@ class FeedPreprocessor
             $entry->setFilterAttributes(implode('|', [$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]));
             $entry->setCustomFields(sprintf('|%s|', implode('|', array_unique($customFields[$variationKey]))));
 
-            $this->eventDispatcher->dispatch(new FeedPreprocessorEntryBeforeCreate($entry, $this->context));
+            $this->eventDispatcher->dispatch(new FeedPreprocessorEntryBeforeCreate($entry, $context));
         });
 
         return $entries;
