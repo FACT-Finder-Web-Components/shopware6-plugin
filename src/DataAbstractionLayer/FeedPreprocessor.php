@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\DataAbstractionLayer;
 
-use Omikron\FactFinder\Shopware6\Events\FeedPreprocessorEntryBeforeCreate;
-use Omikron\FactFinder\Shopware6\Export\FeedPreprocessorEntry;
 use Omikron\FactFinder\Shopware6\Export\Field\CustomFields as ExportCustomFields;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\ProductEntity;
@@ -32,9 +30,6 @@ class FeedPreprocessor
         $this->customFields = $customFields;
     }
 
-    /**
-     * @return FeedPreprocessorEntry[]
-     */
     public function createEntries(ProductEntity $product, Context $context): array
     {
         $filtersFromNotVisibleVariants = [];
@@ -76,15 +71,15 @@ class FeedPreprocessor
 
             //store variant data to prevent iterating them again later
 
-            $entries[$variationKey] = (new FeedPreprocessorEntry())
-                ->setId(Uuid::randomHex())
-                ->setProductNumber($child->getProductNumber())
-                ->setVariationKey($variationKey)
-                ->setParentProductNumber($product->getProductNumber())
-                ->setLanguageId($context->getLanguageId())
-                ->setAdditionalCache([]);
+            $entries[$variationKey] = [
+                'id' => Uuid::randomHex(),
+                'productNumber' => $child->getProductNumber(),
+                'variationKey' => $variationKey,
+                'parentProductNumber' => $product->getProductNumber(),
+                'languageId' => Uuid::fromHexToBytes($context->getLanguageId()),
+                'additionalCache' => []
+            ];
 
-            //collect all possible ready to be exported expressions from group that should not be visible
             $filtersFromNotVisibleVariants[$variationKey] = implode('|', flatMap(fn(
                 array $groupOptions) => array_values($groupOptions), array_values($notVisibleGroups)));
 
@@ -92,18 +87,13 @@ class FeedPreprocessor
                 PropertyGroupOptionEntity $option): string => in_array($option->getGroupId(), $visibleGroupIds) ? call_user_func($this->propertyFormatter, $option) : '')));
         }
 
-        array_walk($entries, function (FeedPreprocessorEntry $entry) use (
-            $context,
-            $filtersFromVisibleVariants,
-            $filtersFromNotVisibleVariants,
-            $customFields
-        ): void {
-            $variationKey = $entry->getVariationKey();
-            $entry->setFilterAttributes(implode('|', [$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]));
-            $entry->setCustomFields(sprintf('|%s|', implode('|', array_unique($customFields[$variationKey]))));
+        $entries = array_map(function (array $entry) use ($filtersFromVisibleVariants, $filtersFromNotVisibleVariants, $customFields) {
+            $variationKey = $entry['variationKey'];
+            $entry['filterAttributes'] = implode('|', [$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]);
+            $entry['customFields'] = sprintf('|%s|', implode('|', array_unique($customFields[$variationKey])));
 
-            $this->eventDispatcher->dispatch(new FeedPreprocessorEntryBeforeCreate($entry, $context));
-        });
+            return $entry;
+        }, $entries);
 
         return $entries;
     }

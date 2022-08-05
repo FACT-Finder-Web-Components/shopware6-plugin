@@ -155,8 +155,8 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         $feedColumns      = $this->getFeedColumns($exportType, $entityFQN);
 
         $needFile = $saveFile || $uploadFeed;
-        $output   = $needFile ? new CsvFile($this->createFile($exportType, $context->getSalesChannelId())) : new ConsoleOutput($output);
-        $feedService->generate($output, $feedColumns);
+        $out   = $needFile ? new CsvFile($this->createFile($exportType, $context->getSalesChannelId())) : new ConsoleOutput($output);
+        $feedService->generate($out, $feedColumns);
 
         if ($uploadFeed) {
             $this->uploadService->upload($this->file);

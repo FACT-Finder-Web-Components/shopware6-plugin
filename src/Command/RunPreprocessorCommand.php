@@ -48,7 +48,7 @@ class RunPreprocessorCommand extends Command
 
     protected function configure()
     {
-        $this->setName('factfinder:preprocessor:run');
+        $this->setName('factfinder:data:preprocess');
         $this->setDescription('Run the Feed preprocessor');
         $this->addArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel language');
         $this->addArgument(self::SALES_CHANNEL_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel');
@@ -58,15 +58,17 @@ class RunPreprocessorCommand extends Command
     {
         $salesChannel = $this->getSalesChannel($input->getArgument(self::SALES_CHANNEL_ARGUMENT));
         $language     = $this->getLanguage($input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT));
-        $context      = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
-
+        $saleschannelContext = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
+        $context = $saleschannelContext->getContext();
+        $start = microtime(true);
         /** @var ProductEntity $product */
-        foreach ($this->exportProducts->getByContext($context) as $product) {
-            $this->entryPersister->deleteAllProductEntries($product->getProductNumber(), $context->getContext());
-            $this->feedPreprocessor->setContext($context->getContext());
-            $this->feedPreprocessor->createEntries($product);
+        foreach ($this->exportProducts->getByContext($saleschannelContext) as $product) {
+            $this->entryPersister->deleteAllProductEntries($product->getProductNumber(),$context);
+            $this->entryPersister->insertProductEntries($this->feedPreprocessor->createEntries($product, $context), $context);
         };
-
+        $end = microtime(true);
+        $execution_time = ($end - $start);
+        $output->writeln($execution_time);
         return 0;
     }
 

@@ -39,18 +39,6 @@ class FeedPreprocessorEntryPersister
      */
     public function insertProductEntries(array $entries, Context $context): void
     {
-        foreach ($entries as $entry) {
-            $entryData = [
-                'languageId'          => Uuid::fromHexToBytes($entry->getLanguageId()),
-                'productNumber'       => $entry->getProductNumber(),
-                'parentProductNumber' => $entry->getParentProductNumber(),
-                'variationKey'        => $entry->getVariationKey(),
-                'filterAttributes'    => $entry->getFilterAttributes(),
-                'customFields'        => $entry->getCustomFields(),
-                'additionalCache'     => $entry->getAdditionalCache()
-            ];
-
-            $this->entryRepository->create([$entryData], $context);
-        }
+        $this->entryRepository->create(array_values($entries), $context);
     }
 }

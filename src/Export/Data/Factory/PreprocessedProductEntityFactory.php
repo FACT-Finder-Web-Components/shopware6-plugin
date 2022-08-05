@@ -43,11 +43,11 @@ class PreprocessedProductEntityFactory implements FactoryInterface
      */
     public function createEntities(Entity $entity, string $producedType = ExportProductEntity::class): iterable
     {
-        if ($this->exportSettings->isExportCacheEnable() === false) {
-            yield from $this->decoratedFactory->createEntities($entity, $producedType);
-
-            return;
-        }
+//        if ($this->exportSettings->isExportCacheEnable() === false) {
+//            yield from $this->decoratedFactory->createEntities($entity, $producedType);
+//
+//            return;
+//        }
 
         $preprocessedFeeds = $this->feedPreprocessorReader->read($entity->getProductNumber());
 
