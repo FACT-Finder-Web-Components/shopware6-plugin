@@ -24,7 +24,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         FieldsProvider $fieldsProviders,
         ExportSettings $exportSettings,
         FeedPreprocessorEntryReader $feedPreprocessorReader,
-        iterable $cachedFields
+        \Traversable $cachedFields
     ) {
         $this->decoratedFactory = $decoratedFactory;
         $this->fieldsProviders = $fieldsProviders;
@@ -43,11 +43,11 @@ class PreprocessedProductEntityFactory implements FactoryInterface
      */
     public function createEntities(Entity $entity, string $producedType = ExportProductEntity::class): iterable
     {
-//        if ($this->exportSettings->isExportCacheEnable() === false) {
-//            yield from $this->decoratedFactory->createEntities($entity, $producedType);
-//
-//            return;
-//        }
+        if ($this->exportSettings->isExportCacheEnable() === false) {
+            yield from $this->decoratedFactory->createEntities($entity, $producedType);
+
+            return;
+        }
 
         $preprocessedFeeds = $this->feedPreprocessorReader->read($entity->getProductNumber());
 
@@ -66,7 +66,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
                 $variant = new ExportProductEntity($child, $fields, $this->cachedFields);
                 $variant->setFilterAttributes($feeds->getFilterAttributes());
                 $variant->setCustomFields($feeds->getCustomFields());
-                $variant->setAdditionalCache($feeds->getAdditionalCache());
+                $variant->setAdditionalCache(new \ArrayIterator($feeds->getAdditionalCache()));
                 yield $variant;
             }
         }

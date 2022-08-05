@@ -31,7 +31,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     private SalesChannelProductMockFactory $salesChannelProductMockFactory;
     private Collaborator $decoratedFactory;
     private Collaborator $feedPreprocessorReader;
-    private array $cachedFields = [];
+    private \Traversable $cachedFields;
 
     function let(
         FactoryInterface $decoratedFactory,
@@ -45,6 +45,8 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         $this->salesChannelProductMockFactory = new SalesChannelProductMockFactory();
         $this->feedPreprocessorReader = $feedPreprocessorReader;
         $this->decoratedFactory = $decoratedFactory;
+        $this->cachedFields = new \ArrayIterator();
+        $exportSettings->isExportCacheEnable()->willReturn(true);
         $this->beConstructedWith($decoratedFactory,  new FieldsProvider(new \ArrayIterator()), $exportSettings, $feedPreprocessorReader, $this->cachedFields);
     }
 

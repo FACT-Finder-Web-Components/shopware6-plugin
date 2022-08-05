@@ -13,7 +13,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
     private Product $product;
     private string $filterAttributes = '';
     private string $customFields = '';
-    private array $additionalCache = [];
+    private \Traversable $additionalCache;
 
     /** @var FieldInterface[] */
     private iterable $productFields;
@@ -24,7 +24,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
     public function __construct(
         Product $product,
         iterable $productFields,
-        iterable $cachedProductFields
+        \Traversable $cachedProductFields
     ) {
         $this->product             = $product;
         $this->productFields       = $productFields;
@@ -46,7 +46,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         return $this->filterAttributes;
     }
 
-    public function getAdditionalCache(): array
+    public function getAdditionalCache(): \Traversable
     {
         return $this->additionalCache;
     }
@@ -56,7 +56,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         $this->filterAttributes = $filterAttributes;
     }
 
-    public function setAdditionalCache(array $additionalCache): void
+    public function setAdditionalCache(\Traversable $additionalCache): void
     {
         $this->additionalCache = $additionalCache;
     }
@@ -73,7 +73,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 
     public function toArray(): array
     {
-        $cachedProductFieldNames = array_map(fn(FieldInterface $field) => $field->getName(), iterator_to_array(new \ArrayIterator($this->cachedProductFields)));
+        $cachedProductFieldNames = array_map(fn(FieldInterface $field) => $field->getName(), iterator_to_array($this->cachedProductFields));
         $fields = array_filter($this->productFields, fn (FieldInterface $productField) => !in_array($productField->getName(), $cachedProductFieldNames));
 
         return array_reduce($fields, fn (array $fields, FieldInterface $field): array => $fields + [$field->getName() => $field->getValue($this->product)], [
