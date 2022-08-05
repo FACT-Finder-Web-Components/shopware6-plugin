@@ -41,6 +41,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Extending Specific Web Component Template](#extending-specific-web-component-template)
     - [Split ASN on Category Page](#split-asn-on-category-page)
     - [Set custom Field Roles](#set-custom-field-roles)
+    - [Adding custom Export Cache Subscriber](#adding-custom-export-cache-subscriber)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -108,6 +109,10 @@ You can find more information about what Field Roles are in (Web Components docu
   default, all custom fields are being exported.
 * Export prices for all Currencies - if disabled, export will contain only one column `Price`. If enabled, all product
   price will be exported in all currency configured for a given sales channel.
+* Enable export cache - if enabled export time will be shorter. Option is connected with `Storefron presentation` - 
+  it means that each `Product listing` will be cached. During building cache `FeedPreprocessorEntryBeforeCreate` 
+  event is triggered, so you can easily hook to it if you would like to cache some additional data. You can find more 
+  details about implementation [here](#adding-custom-export-cache-subscriber).
 
 #### Price Columns Format
 
@@ -548,6 +553,33 @@ Default field roles are defined as array of Symfony Configuration Parameters in 
     </parameter>
 
 In order to override these parameters defined by a module, you have to redefine them in your application `services.xml`. Parameters defined there take precedence over the defaults, defined in the module   
+
+### Adding custom Export Cache Subscriber
+
+```php
+
+use Omikron\FactFinder\Shopware6\Events\FeedPreprocessorEntryBeforeCreate;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class FeedPreprocessorEntryBeforeCreateSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents()
+    {
+        return [FeedPreprocessorEntryBeforeCreate::class => 'onCreateEntries'];
+    }
+
+    public function onCreateEntries(FeedPreprocessorEntryBeforeCreate $event)
+    {
+        $event->getEntry()->setAdditionalCache([
+            'some_data' => 'cache1',
+            'some_data2' => 'cache2',
+        ]);
+    }
+}
+
+```
+
+
 ## Contribute
 
 We welcome contribution! For more information, click [here](.github/CONTRIBUTING.md)
