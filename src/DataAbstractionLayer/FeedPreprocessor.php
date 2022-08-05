@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\DataAbstractionLayer;
 
+use Omikron\FactFinder\Shopware6\Events\FeedPreprocessorEntryBeforeCreate;
 use Omikron\FactFinder\Shopware6\Export\Field\CustomFields as ExportCustomFields;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\ProductEntity;
@@ -87,26 +88,15 @@ class FeedPreprocessor
                 PropertyGroupOptionEntity $option): string => in_array($option->getGroupId(), $visibleGroupIds) ? call_user_func($this->propertyFormatter, $option) : '')));
         }
 
-        $entries = array_map(function (array $entry) use ($filtersFromVisibleVariants, $filtersFromNotVisibleVariants, $customFields) {
+        return array_map(function (array $entry) use ($filtersFromVisibleVariants, $filtersFromNotVisibleVariants, $customFields, $context) {
             $variationKey = $entry['variationKey'];
             $entry['filterAttributes'] = implode('|', [$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]);
-            $entry['customFields'] = $this->getCustomFields($customFields, $variationKey);
+            $entry['customFields'] = sprintf('|%s|', implode('|', array_unique($customFields[$variationKey])));
+            $event = new FeedPreprocessorEntryBeforeCreate($entry, $context);
+            $this->eventDispatcher->dispatch($event);
 
-            return $entry;
+            return $event->getEntry();
         }, $entries);
-
-        return $entries;
-    }
-
-    private function getCustomFields(array $customFields, string $variationKey): string
-    {
-        $customFields = sprintf('|%s|', implode('|', array_unique($customFields[$variationKey])));
-
-        if ($customFields === '||') {
-            return '';
-        }
-
-        return $customFields;
     }
 
     private function extractVisibleGroupIds(ProductEntity $product): array

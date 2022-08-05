@@ -49,25 +49,25 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             return;
         }
 
-        $preprocessedFeeds = $this->feedPreprocessorReader->read($entity->getProductNumber());
+        $preprocessedEntries = $this->feedPreprocessorReader->read($entity->getProductNumber());
 
-        if ($preprocessedFeeds === []) {
+        if ($preprocessedEntries === []) {
             yield from $this->decoratedFactory->createEntities($entity, $producedType);
 
             return;
         }
 
-        $fields = $this->fieldsProviders->getFields(get_class($entity));
+        $fields = $this->fieldsProviders->getFields(ExportProductEntity::class);
 
         foreach ($entity->getChildren() as $child) {
-            $feeds = $preprocessedFeeds[$child->getProductNumber()] ?? null;
+            $cache = $preprocessedFeeds[$child->getProductNumber()] ?? null;
 
-            if (isset($feeds)) {
-                $variant = new ExportProductEntity($child, $fields, $this->cachedFields);
-                $variant->setFilterAttributes($feeds->getFilterAttributes());
-                $variant->setCustomFields($feeds->getCustomFields());
-                $variant->setAdditionalCache(new \ArrayIterator($feeds->getAdditionalCache()));
-                yield $variant;
+            if (isset($cache)) {
+                $exportProduct = new ExportProductEntity($child, $fields, $this->cachedFields);
+                $exportProduct->setFilterAttributes($cache->getFilterAttributes());
+                $exportProduct->setCustomFields($cache->getCustomFields());
+                $exportProduct->setAdditionalCache(new \ArrayIterator($cache->getAdditionalCache()));
+                yield $exportProduct;
             }
         }
     }

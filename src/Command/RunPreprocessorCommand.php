@@ -48,7 +48,7 @@ class RunPreprocessorCommand extends Command
 
     protected function configure()
     {
-        $this->setName('factfinder:data:preprocess');
+        $this->setName('factfinder:data:pre-process');
         $this->setDescription('Run the Feed preprocessor');
         $this->addArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel language');
         $this->addArgument(self::SALES_CHANNEL_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel');
