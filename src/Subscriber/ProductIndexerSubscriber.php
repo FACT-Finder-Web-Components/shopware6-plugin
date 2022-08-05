@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
+use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessor;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryPersister;
 use Shopware\Core\Content\Product\Events\ProductIndexerEvent;
@@ -25,17 +26,20 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
     private EntityRepositoryInterface $languageRepository;
     private FeedPreprocessor $feedPreprocessor;
     private FeedPreprocessorEntryPersister  $entryPersister;
+    private ExportSettings $exportSettings;
 
     public function __construct(
         EntityRepositoryInterface      $productRepository,
         EntityRepositoryInterface      $languageRepository,
         FeedPreprocessor               $feedPreprocessor,
-        FeedPreprocessorEntryPersister $feedPreprocessorEntryPersister
+        FeedPreprocessorEntryPersister $feedPreprocessorEntryPersister,
+        ExportSettings                 $exportSettings
     ) {
         $this->productRepository  = $productRepository;
         $this->languageRepository = $languageRepository;
         $this->feedPreprocessor   = $feedPreprocessor;
         $this->entryPersister     = $feedPreprocessorEntryPersister;
+        $this->exportSettings     = $exportSettings;
     }
 
     public static function getSubscribedEvents()
@@ -45,6 +49,10 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
 
     public function processVariantsToExport(ProductIndexerEvent $event): void
     {
+        if ($this->exportSettings->isExportCacheEnable() === false) {
+            return;
+        }
+
         $languages = $this->fetchLanguages();
         foreach ($languages as $language) {
             $context  = $this->createLanguageContext($event, $language);

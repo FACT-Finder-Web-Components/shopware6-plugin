@@ -21,6 +21,11 @@ class ExportSettings extends BaseConfig
         return (bool) $this->config('currencyPriceExport');
     }
 
+    public function isExportCacheEnable(): bool
+    {
+        return (bool) $this->config('enableExportCache');
+    }
+
     private function toArray(?array $value): array
     {
         return (array) $value;

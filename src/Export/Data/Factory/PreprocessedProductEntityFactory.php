@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
+use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryReader;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
@@ -14,17 +15,20 @@ class PreprocessedProductEntityFactory implements FactoryInterface
 {
     private FactoryInterface $decoratedFactory;
     private FieldsProvider $fieldsProviders;
+    private ExportSettings $exportSettings;
     private FeedPreprocessorEntryReader $feedPreprocessorReader;
     private iterable $cachedFields;
 
     public function __construct(
         FactoryInterface $decoratedFactory,
         FieldsProvider $fieldsProviders,
+        ExportSettings $exportSettings,
         FeedPreprocessorEntryReader $feedPreprocessorReader,
         iterable $cachedFields
     ) {
         $this->decoratedFactory = $decoratedFactory;
         $this->fieldsProviders = $fieldsProviders;
+        $this->exportSettings = $exportSettings;
         $this->feedPreprocessorReader = $feedPreprocessorReader;
         $this->cachedFields = $cachedFields;
     }
@@ -39,6 +43,12 @@ class PreprocessedProductEntityFactory implements FactoryInterface
      */
     public function createEntities(Entity $entity, string $producedType = ExportProductEntity::class): iterable
     {
+        if ($this->exportSettings->isExportCacheEnable() === false) {
+            yield from $this->decoratedFactory->createEntities($entity, $producedType);
+
+            return;
+        }
+
         $preprocessedFeeds = $this->feedPreprocessorReader->read($entity->getProductNumber());
 
         if ($preprocessedFeeds === []) {
