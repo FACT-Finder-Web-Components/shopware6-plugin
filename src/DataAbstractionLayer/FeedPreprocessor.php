@@ -90,12 +90,23 @@ class FeedPreprocessor
         $entries = array_map(function (array $entry) use ($filtersFromVisibleVariants, $filtersFromNotVisibleVariants, $customFields) {
             $variationKey = $entry['variationKey'];
             $entry['filterAttributes'] = implode('|', [$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]);
-            $entry['customFields'] = sprintf('|%s|', implode('|', array_unique($customFields[$variationKey])));
+            $entry['customFields'] = $this->getCustomFields($customFields, $variationKey);
 
             return $entry;
         }, $entries);
 
         return $entries;
+    }
+
+    private function getCustomFields(array $customFields, string $variationKey): string
+    {
+        $customFields = sprintf('|%s|', implode('|', array_unique($customFields[$variationKey])));
+
+        if ($customFields === '||') {
+            return '';
+        }
+
+        return $customFields;
     }
 
     private function extractVisibleGroupIds(ProductEntity $product): array

@@ -91,6 +91,29 @@ class FeedPreprocessorSpec extends ObjectBehavior
         );
     }
 
+    function it_should_create_entries_with_empty_string_in_custom_fields_when_custom_fields_not_set()
+    {
+        // Given
+        $productEntity = $this->productMockFactory->create();
+        $productEntity->setMainVariantId('SW100');
+        $variant = $this->variantMockFactory->create(
+            $productEntity,
+            ['productNumber' => 'SW100.1', 'size' => 'S', 'color' => 'red', 'material' => 'cotton', 'customFields' => '']
+        );
+        $productEntity->setChildren(new ProductCollection([$variant]));
+
+        // Expect
+        $this->customFields->getValue($variant)->willReturn('');
+
+        // When
+        $entries = $this->createEntries($productEntity, $this->context);
+        $entries->shouldBeArray();
+        $entries->shouldHaveCount(1);
+
+        // Then
+        Assert::assertEquals('', array_values($entries->getWrappedObject())[0]['customFields']);
+    }
+
     function it_should_create_entries_with_proper_custom_fields_for_each_display_group()
     {
         $this->validateCustomFields(
