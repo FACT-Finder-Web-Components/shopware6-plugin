@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace spec\Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
+use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryReader;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface;
@@ -34,7 +35,8 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
 
     function let(
         FactoryInterface $decoratedFactory,
-        FeedPreprocessorEntryReader $feedPreprocessorReader
+        FeedPreprocessorEntryReader $feedPreprocessorReader,
+        ExportSettings $exportSettings
     ) {
         $this->productMockFactory = new ProductMockFactory();
         $this->variantMockFactory = new ProductVariantMockFactory();
@@ -43,7 +45,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         $this->salesChannelProductMockFactory = new SalesChannelProductMockFactory();
         $this->feedPreprocessorReader = $feedPreprocessorReader;
         $this->decoratedFactory = $decoratedFactory;
-        $this->beConstructedWith($decoratedFactory,  new FieldsProvider(new \ArrayIterator()), $feedPreprocessorReader, $this->cachedFields);
+        $this->beConstructedWith($decoratedFactory,  new FieldsProvider(new \ArrayIterator()), $exportSettings, $feedPreprocessorReader, $this->cachedFields);
     }
 
     public function it_should_handle_entities_without_cache_using_fallback_from_decorated_factory(): void

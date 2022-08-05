@@ -195,8 +195,8 @@ class FeedPreprocessorSpec extends ObjectBehavior
     {
         $expected = count($filters);
         $isContainingFilter = fn(string $filter): callable
-            => fn(FeedPreprocessorEntry $entry): bool
-                => strpos($entry->getFilterAttributes(), $filter) !== false;
+            => fn(array $entry): bool
+                => strpos($entry['filterAttributes'], $filter) !== false;
 
         $match = array_reduce($filters, fn (int $score, string $filter)
             => $score + (int) array_filter($entries, $isContainingFilter($filter)), 0);
@@ -255,7 +255,7 @@ class FeedPreprocessorSpec extends ObjectBehavior
         $entries = array_values($entries->getWrappedObject());
 
         foreach ($expectedValues as $key => $expectedValue) {
-            $gluedCustomFields = explode('|', trim($entries[$key]->getCustomFields(), '|'));
+            $gluedCustomFields = explode('|', trim($entries[$key]['customFields'], '|'));
             sort($gluedCustomFields);
             $gluedCustomFields = sprintf('|%s|', implode('|', $gluedCustomFields));
             Assert::assertEquals($expectedValue, $gluedCustomFields);
