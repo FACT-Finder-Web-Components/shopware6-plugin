@@ -570,10 +570,12 @@ class FeedPreprocessorEntryBeforeCreateSubscriber implements EventSubscriberInte
 
     public function onCreateEntries(FeedPreprocessorEntryBeforeCreate $event)
     {
-        $event->getEntry()['additionalCache'] = [
+        $entry = $event->getEntry();
+        $entry['additionalCache'] = [
             'some_data' => 'cache1',
             'some_data2' => 'cache2',
         ];
+        $event->setEntry($entry);
     }
 }
 
