@@ -53,7 +53,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         }
 
         $event->getPage()->addExtension('factfinder', new ArrayEntity([
-            'field_roles'   => $this->config->getFieldRoles($salesChannelId) ?? $this->fieldRoles,
+            'field_roles'   => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
             'communication' => $communication + $this->communicationParameters,
         ]));
     }
