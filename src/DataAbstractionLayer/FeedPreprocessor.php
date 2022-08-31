@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\DataAbstractionLayer;
 
 use Omikron\FactFinder\Shopware6\Events\FeedPreprocessorEntryBeforeCreate;
+use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\Export\Field\CustomFields as ExportCustomFields;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\ProductEntity;
@@ -20,15 +21,18 @@ class FeedPreprocessor
     private PropertyFormatter $propertyFormatter;
     private EventDispatcherInterface $eventDispatcher;
     private ExportCustomFields $customFields;
+    private CategoryPath $categoryFieldGenerator;
 
     public function __construct(
         PropertyFormatter        $propertyFormatter,
         EventDispatcherInterface $eventDispatcher,
-        ExportCustomFields       $customFields
+        ExportCustomFields       $customFields,
+        CategoryPath             $categoryFieldGenerator
     ) {
         $this->propertyFormatter = $propertyFormatter;
         $this->eventDispatcher = $eventDispatcher;
         $this->customFields = $customFields;
+        $this->categoryFieldGenerator = $categoryFieldGenerator;
     }
 
     public function createEntries(ProductEntity $product, Context $context): array
@@ -38,6 +42,23 @@ class FeedPreprocessor
         $notVisibleGroups = [];
         $entries = [];
         $customFields = [];
+
+        if ($product->getChildCount() === 0) {
+            $customFields = explode('|', trim($this->customFields->getValue($product), '|'));
+
+            return [
+                [
+                    'id' => Uuid::randomHex(),
+                    'productNumber' => $product->getProductNumber(),
+                    'variationKey' => '',
+                    'parentProductNumber' => $product->getProductNumber(),
+                    'languageId' => Uuid::fromHexToBytes($context->getLanguageId()),
+                    'filterAttributes' => '||',
+                    'customFields' => sprintf('|%s|', implode('|', array_unique($customFields))),
+                    'additionalCache' => ['CategoryPath' => $this->categoryFieldGenerator->getValue($product)],
+                ]
+            ];
+        }
 
         $visibleGroupIds = $this->extractVisibleGroupIds($product);
 
