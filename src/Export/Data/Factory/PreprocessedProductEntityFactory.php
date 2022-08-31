@@ -57,7 +57,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             return;
         }
 
-        $fields = $this->fieldsProviders->getFields(ExportProductEntity::class);
+        $fields = $this->fieldsProviders->getFields(SalesChannelProductEntity::class);
 
         foreach ($entity->getChildren() as $child) {
             $cache = $preprocessedFeeds[$child->getProductNumber()] ?? null;

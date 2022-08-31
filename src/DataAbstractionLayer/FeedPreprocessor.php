@@ -49,7 +49,7 @@ class FeedPreprocessor
 
             //loop over the options to collect those, that should be aggregated in exported products
             foreach ($child->getOptions() as $option) {
-                if ($shouldGroupBeVisible($option->getGroupId())) {
+                if ($shouldGroupBeVisible($option->getGroupId()) || $visibleGroupIds === []) {
                     /**
                      * if a given option should be presented on storefront, we store its id
                      * This is used later to collect only unique combination of product variants

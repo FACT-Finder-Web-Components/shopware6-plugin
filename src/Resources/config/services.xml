@@ -140,5 +140,9 @@
                  decorates="Omikron\FactFinder\Shopware6\Export\Data\Factory\ProductEntityFactory">
             <argument type="service" id="Omikron\FactFinder\Shopware6\Export\Data\Factory\PreprocessedProductEntityFactory.inner"/>
         </service>
+
+        <service id="Omikron\FactFinder\Shopware6\Subscriber\FeedPreprocessorEntrySubscriber">
+            <argument type="service" id="product.repository"/>
+        </service>
     </services>
 </container>
