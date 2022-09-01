@@ -48,7 +48,7 @@ class FeedPreprocessor
                 'variationKey' => '',
                 'parentProductNumber' => $product->getProductNumber(),
                 'languageId' => Uuid::fromHexToBytes($context->getLanguageId()),
-                'filterAttributes' => '||',
+                'filterAttributes' => '',
                 'customFields' => sprintf('|%s|', implode('|', array_unique($customFields))),
             ];
             $event = new FeedPreprocessorEntryBeforeCreate($entry, $context);
@@ -109,6 +109,7 @@ class FeedPreprocessor
         return array_map(function (array $entry) use ($filtersFromVisibleVariants, $filtersFromNotVisibleVariants, $customFields, $context) {
             $variationKey = $entry['variationKey'];
             $entry['filterAttributes'] = implode('|', [$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]);
+            $entry['filterAttributes'] = trim($entry['filterAttributes'], '|');
             $entry['customFields'] = sprintf('|%s|', implode('|', array_unique($customFields[$variationKey])));
             $event = new FeedPreprocessorEntryBeforeCreate($entry, $context);
             $this->eventDispatcher->dispatch($event);
