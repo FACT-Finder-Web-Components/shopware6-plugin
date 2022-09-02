@@ -14,7 +14,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
     private Product $product;
     private string $filterAttributes = '';
     private string $customFields = '';
-    private \Traversable $additionalCache;
+    private iterable $additionalCache = [];
 
     /** @var FieldInterface[] */
     private iterable $productFields;
@@ -47,7 +47,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         return $this->filterAttributes;
     }
 
-    public function getAdditionalCache(): \Traversable
+    public function getAdditionalCache(): iterable
     {
         return $this->additionalCache;
     }
@@ -57,7 +57,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         $this->filterAttributes = $filterAttributes;
     }
 
-    public function setAdditionalCache(\Traversable $additionalCache): void
+    public function setAdditionalCache(iterable $additionalCache): void
     {
         $this->additionalCache = $additionalCache;
     }
