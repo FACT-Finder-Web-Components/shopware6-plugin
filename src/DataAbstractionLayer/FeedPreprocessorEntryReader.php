@@ -36,7 +36,7 @@ class FeedPreprocessorEntryReader
 
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('parentProductNumber', $productNumber));
-        $criteria->addFilter(new EqualsFilter('languageId', $languageId));
+//        $criteria->addFilter(new EqualsFilter('languageId', $languageId));
         $preprocessedFeeds = $this->feedPreprocessorEntryRepository->search($criteria, $context)->getElements();
 
         return array_reduce($preprocessedFeeds, function (array $acc, FeedPreprocessorEntry $preprocessedFeed) {

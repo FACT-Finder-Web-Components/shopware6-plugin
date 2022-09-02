@@ -60,7 +60,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         $fields = $this->fieldsProviders->getFields(SalesChannelProductEntity::class);
 
         foreach ($entity->getChildren() as $child) {
-            $cache = $preprocessedFeeds[$child->getProductNumber()] ?? null;
+            $cache = $preprocessedEntries[$child->getProductNumber()] ?? null;
 
             if (isset($cache)) {
                 $exportProduct = new ExportProductEntity($child, $fields, $this->cachedFields);
