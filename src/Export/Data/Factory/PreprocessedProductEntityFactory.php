@@ -8,11 +8,13 @@ use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryReader;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
+use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class PreprocessedProductEntityFactory implements FactoryInterface
 {
+    private SalesChannelService $channelService;
     private FactoryInterface $decoratedFactory;
     private FieldsProvider $fieldsProviders;
     private ExportSettings $exportSettings;
@@ -20,12 +22,14 @@ class PreprocessedProductEntityFactory implements FactoryInterface
     private iterable $cachedFields;
 
     public function __construct(
+        SalesChannelService $channelService,
         FactoryInterface $decoratedFactory,
         FieldsProvider $fieldsProviders,
         ExportSettings $exportSettings,
         FeedPreprocessorEntryReader $feedPreprocessorReader,
         \Traversable $cachedFields
     ) {
+        $this->channelService = $channelService;
         $this->decoratedFactory = $decoratedFactory;
         $this->fieldsProviders = $fieldsProviders;
         $this->exportSettings = $exportSettings;
@@ -49,7 +53,10 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             return;
         }
 
-        $preprocessedEntries = $this->feedPreprocessorReader->read($entity->getProductNumber());
+        $preprocessedEntries = $this->feedPreprocessorReader->read(
+            $entity->getProductNumber(),
+            $this->channelService->getSalesChannelContext()->getLanguageId()
+        );
 
         if ($preprocessedEntries === []) {
             yield from $this->decoratedFactory->createEntities($entity, $producedType);

@@ -23,10 +23,6 @@ class FeedPreprocessorEntryPersister
     {
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('parentProductNumber', $productNumber));
-        $a = $this->entryRepository->search($criteria, $context)->getElements();
-
-        $criteria = new Criteria();
-        $criteria->addFilter(new EqualsFilter('parentProductNumber', $productNumber));
         $ids = array_map(fn(
             string $id): array => ['id' => $id], $this->entryRepository->searchIds($criteria, $context)->getIds());
 

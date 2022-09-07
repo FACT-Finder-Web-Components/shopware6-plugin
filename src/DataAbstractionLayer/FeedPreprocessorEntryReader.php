@@ -9,6 +9,7 @@ use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\Uuid\Uuid;
 
 class FeedPreprocessorEntryReader
 {
@@ -26,17 +27,16 @@ class FeedPreprocessorEntryReader
     /**
      * @return FeedPreprocessorEntry[]
      */
-    public function read(string $productNumber, string $languageId = ''): array
+    public function read(string $productNumber, ?string $languageId): array
     {
         $context = $this->channelService->getSalesChannelContext()->getContext();
-
-        if ($languageId === '') {
-            $languageId = $context->getLanguageId();
-        }
-
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('parentProductNumber', $productNumber));
-//        $criteria->addFilter(new EqualsFilter('languageId', $languageId));
+
+        if ($languageId) {
+            $criteria->addFilter(new EqualsFilter('languageId', Uuid::fromHexToBytes($context->getLanguageId())));
+        }
+
         $preprocessedFeeds = $this->feedPreprocessorEntryRepository->search($criteria, $context)->getElements();
 
         return array_reduce($preprocessedFeeds, function (array $acc, FeedPreprocessorEntry $preprocessedFeed) {
