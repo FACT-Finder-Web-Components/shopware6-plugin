@@ -22,8 +22,8 @@ class PreprocessedProductEntityFactory implements FactoryInterface
     private iterable $cachedFields;
 
     public function __construct(
-        SalesChannelService $channelService,
         FactoryInterface $decoratedFactory,
+        SalesChannelService $channelService,
         FieldsProvider $fieldsProviders,
         ExportSettings $exportSettings,
         FeedPreprocessorEntryReader $feedPreprocessorReader,
