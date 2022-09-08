@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\DataAbstractionLayer;
 
 use Omikron\FactFinder\Shopware6\Events\FeedPreprocessorEntryBeforeCreate;
-use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\Export\Field\CustomFields as ExportCustomFields;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\ProductEntity;
@@ -41,16 +40,8 @@ class FeedPreprocessor
         $customFields = [];
 
         if ($product->getChildCount() === 0) {
-            $customFields = explode('|', trim($this->customFields->getValue($product), '|'));
-            $entry =                 [
-                'id' => Uuid::randomHex(),
-                'productNumber' => $product->getProductNumber(),
-                'variationKey' => '',
-                'parentProductNumber' => $product->getProductNumber(),
-                'languageId' => Uuid::fromHexToBytes($context->getLanguageId()),
-                'filterAttributes' => '',
-                'customFields' => sprintf('|%s|', implode('|', array_unique($customFields))),
-            ];
+            $customFields = explode('|', $this->customFields->getValue($product));
+            $entry = $this->formEntry($product, $context, implode('|', array_unique($customFields)));
             $event = new FeedPreprocessorEntryBeforeCreate($entry, $context);
             $this->eventDispatcher->dispatch($event);
 
@@ -82,22 +73,14 @@ class FeedPreprocessor
             //collect all variants that should be visible used variation key created in a loop before
             $variationKey = implode('-', $variationKeyParts);
 
-            $childCustomFields = explode('|', trim($this->customFields->getValue($child), '|'));
+            $childCustomFields = explode('|', $this->customFields->getValue($child));
 
             foreach ($childCustomFields as $childCustomField) {
                 $customFields[$variationKey][] = $childCustomField;
             }
 
             //store variant data to prevent iterating them again later
-
-            $entries[$variationKey] = [
-                'id' => Uuid::randomHex(),
-                'productNumber' => $child->getProductNumber(),
-                'variationKey' => $variationKey,
-                'parentProductNumber' => $product->getProductNumber(),
-                'languageId' => Uuid::fromHexToBytes($context->getLanguageId()),
-                'additionalCache' => []
-            ];
+            $entries[$variationKey] = $this->formEntry($product, $context, $variationKey);
 
             $filtersFromNotVisibleVariants[$variationKey] = implode('|', flatMap(fn(
                 array $groupOptions) => array_values($groupOptions), array_values($notVisibleGroups)));
@@ -108,9 +91,9 @@ class FeedPreprocessor
 
         return array_map(function (array $entry) use ($filtersFromVisibleVariants, $filtersFromNotVisibleVariants, $customFields, $context) {
             $variationKey = $entry['variationKey'];
-            $entry['filterAttributes'] = implode('|', [$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]);
-            $entry['filterAttributes'] = trim($entry['filterAttributes'], '|');
-            $entry['customFields'] = sprintf('|%s|', implode('|', array_unique($customFields[$variationKey])));
+            $filters = implode('|', array_filter([$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]));
+            $entry['filterAttributes'] = $filters ? "|$filters|" : '';
+            $entry['customFields'] = array_filter($customFields[$variationKey]) ? '|' . implode('|', array_unique($customFields[$variationKey])) . '|' : '';
             $event = new FeedPreprocessorEntryBeforeCreate($entry, $context);
             $this->eventDispatcher->dispatch($event);
 
@@ -134,5 +117,23 @@ class FeedPreprocessor
                 array $result,
                 array $groupConfig): array => array_merge($result, [safeGetByName($groupConfig, 'id')]), []
         );
+    }
+
+    private function formEntry(
+        ProductEntity $product,
+        Context $context,
+        ?string $variationKey = '',
+        ?array $customFields = null,
+        ?array $filterAttributes = null
+    ): array {
+        return [
+            'id' => Uuid::randomHex(),
+            'productNumber' => $product->getProductNumber(),
+            'variationKey' => $variationKey,
+            'parentProductNumber' => $product->getProductNumber(),
+            'languageId' => Uuid::fromHexToBytes($context->getLanguageId()),
+            'filterAttributes' => $filterAttributes ? "|$filterAttributes|" : '',
+            'customFields' => $customFields ?  "|$customFields|" : ''
+        ];
     }
 }

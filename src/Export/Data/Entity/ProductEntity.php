@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
-use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
+use Traversable;
 
 class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 {
     private Product $product;
     private string $filterAttributes = '';
     private string $customFields = '';
-    private iterable $additionalCache = [];
+    private Traversable $additionalCache;
 
     /** @var FieldInterface[] */
     private iterable $productFields;
@@ -24,8 +25,8 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 
     public function __construct(
         Product $product,
-        iterable $productFields,
-        \Traversable $cachedProductFields
+        Traversable $productFields,
+        Traversable $cachedProductFields
     ) {
         $this->product             = $product;
         $this->productFields       = $productFields;
@@ -47,9 +48,9 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         return $this->filterAttributes;
     }
 
-    public function getAdditionalCache(): iterable
+    public function getAdditionalCache(string $key): ?string
     {
-        return $this->additionalCache;
+        return safeGetByName(iterator_to_array($this->additionalCache), $key);
     }
 
     public function setFilterAttributes(string $filterAttributes): void
@@ -57,7 +58,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         $this->filterAttributes = $filterAttributes;
     }
 
-    public function setAdditionalCache(iterable $additionalCache): void
+    public function setAdditionalCache(Traversable $additionalCache): void
     {
         $this->additionalCache = $additionalCache;
     }
@@ -84,14 +85,10 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
             'CustomFields'     => $this->getCustomFields(),
         ];
 
-        if (isset($this->getAdditionalCache()['CategoryPath']) && $this->getAdditionalCache()['CategoryPath'] !== '') {
-            $fields = array_filter($fields, fn (FieldInterface $productField) => !$productField instanceof CategoryPath);
-            $defaultFields['CategoryPath'] = $this->getAdditionalCache()['CategoryPath'];
-        }
-
         return array_reduce(
             $fields,
-            fn (array $fields, FieldInterface $field): array => $fields + [$field->getName() => $field->getValue($this->product)],
+            fn (array $fields, FieldInterface $field): array => $fields
+                + [$field->getName() => ($this->getAdditionalCache($field->getName()) ?? $field->getValue($this->product))],
             $defaultFields
         );
     }

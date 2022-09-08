@@ -19,6 +19,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 
 class RunPreprocessorCommand extends Command
 {
@@ -30,13 +32,15 @@ class RunPreprocessorCommand extends Command
     private ExportProducts $exportProducts;
     private SalesChannelService $channelService;
     private EntityRepositoryInterface $languageRepository;
+    private EntityRepositoryInterface $channelRepository;
 
     public function __construct(
         FeedPreprocessor               $feedPreprocessor,
         FeedPreprocessorEntryPersister $feedPreprocessorEntryPersister,
         SalesChannelService            $salesChannelService,
         ExportProducts                 $exportProducts,
-        EntityRepositoryInterface      $languageRepository
+        EntityRepositoryInterface      $languageRepository,
+        EntityRepositoryInterface      $channelRepository
     ) {
         parent::__construct();
         $this->feedPreprocessor   = $feedPreprocessor;
@@ -44,6 +48,7 @@ class RunPreprocessorCommand extends Command
         $this->channelService     = $salesChannelService;
         $this->exportProducts     = $exportProducts;
         $this->languageRepository = $languageRepository;
+        $this->channelRepository  = $channelRepository;
     }
 
     protected function configure()
@@ -56,19 +61,30 @@ class RunPreprocessorCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $salesChannel = $this->getSalesChannel($input->getArgument(self::SALES_CHANNEL_ARGUMENT));
-        $language     = $this->getLanguage($input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT));
-        $saleschannelContext = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
-        $context = $saleschannelContext->getContext();
+        if ($input->isInteractive()) {
+            $helper = $this->getHelper('question');
+            $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
+            $language         = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
+        } else {
+            $salesChannel = $this->getSalesChannel($input->getArgument(self::SALES_CHANNEL_ARGUMENT));
+            $language     = $this->getLanguage($input->getArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT));
+        }
+
+        $salesChannelContext = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
+        $context = $salesChannelContext->getContext();
+
         $start = microtime(true);
         /** @var ProductEntity $product */
-        foreach ($this->exportProducts->getByContext($saleschannelContext) as $product) {
+
+        foreach ($this->exportProducts->getByContext($salesChannelContext) as $product) {
             $this->entryPersister->deleteAllProductEntries($product->getProductNumber(),$context);
             $this->entryPersister->insertProductEntries($this->feedPreprocessor->createEntries($product, $context), $context);
         };
+
         $end = microtime(true);
         $execution_time = ($end - $start);
         $output->writeln($execution_time);
+
         return 0;
     }
 
