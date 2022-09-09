@@ -29,7 +29,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         Traversable $cachedProductFields
     ) {
         $this->product             = $product;
-        $this->productFields       = $productFields;
+        $this->productFields       = iterator_to_array($productFields);
         $this->cachedProductFields = $cachedProductFields;
     }
 

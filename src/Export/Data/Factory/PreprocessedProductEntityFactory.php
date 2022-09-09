@@ -70,7 +70,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             $cache = $preprocessedEntries[$child->getProductNumber()] ?? null;
 
             if (isset($cache)) {
-                $exportProduct = new ExportProductEntity($child, $fields, $this->cachedFields);
+                $exportProduct = new ExportProductEntity($child, new \ArrayIterator($fields), $this->cachedFields);
                 $exportProduct->setFilterAttributes($cache->getFilterAttributes());
                 $exportProduct->setCustomFields($cache->getCustomFields());
                 $exportProduct->setAdditionalCache(new \ArrayIterator($cache->getAdditionalCache()));
