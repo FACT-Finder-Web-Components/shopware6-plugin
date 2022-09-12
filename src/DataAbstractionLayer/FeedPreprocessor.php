@@ -58,7 +58,9 @@ class FeedPreprocessor
 
             //loop over the options to collect those, that should be aggregated in exported products
             foreach ($child->getOptions() as $option) {
-                if ($shouldGroupBeVisible($option->getGroupId()) || $visibleGroupIds === []) {
+                $hasMainVariant = (bool) $product->getMainVariantId();
+
+                if (($shouldGroupBeVisible($option->getGroupId()) || $visibleGroupIds === []) && !$hasMainVariant) {
                     /**
                      * if a given option should be presented on storefront, we store its id
                      * This is used later to collect only unique combination of product variants
@@ -81,6 +83,7 @@ class FeedPreprocessor
 
             //store variant data to prevent iterating them again later
             $entries[$variationKey] = $this->formEntry($product, $context, $variationKey);
+            $entries[$variationKey]['productNumber'] = $child->getProductNumber();
 
             $filtersFromNotVisibleVariants[$variationKey] = implode('|', flatMap(fn(
                 array $groupOptions) => array_values($groupOptions), array_values($notVisibleGroups)));
