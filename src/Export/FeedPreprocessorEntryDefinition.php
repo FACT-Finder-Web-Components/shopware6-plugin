@@ -42,7 +42,7 @@ class FeedPreprocessorEntryDefinition extends EntityDefinition
                 (new StringField('parent_product_number', 'parentProductNumber')),
                 (new StringField('variation_key', 'variationKey')),
                 (new StringField('filter_attributes', 'filterAttributes'))->addFlags(new Required(), new AllowEmptyString()),
-                (new StringField('custom_fields', 'customFields')),
+                (new StringField('custom_fields', 'customFields'))->addFlags(new AllowEmptyString()),
                 (new JsonField('additional_cache', 'additionalCache')),
             ]
         );

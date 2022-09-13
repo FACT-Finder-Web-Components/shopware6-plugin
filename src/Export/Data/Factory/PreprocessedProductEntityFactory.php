@@ -7,6 +7,7 @@ namespace Omikron\FactFinder\Shopware6\Export\Data\Factory;
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryReader;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
+use Omikron\FactFinder\Shopware6\Export\FeedPreprocessorEntry;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
@@ -64,18 +65,42 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             return;
         }
 
-        $fields = $this->fieldsProviders->getFields(SalesChannelProductEntity::class);
+        if ($entity->getChildCount() === 0) {
+            $exportProduct = $this->getExportProduct($entity, $preprocessedEntries);
+
+            if (isset($exportProduct)) {
+                yield $exportProduct;
+            }
+
+            return;
+        }
 
         foreach ($entity->getChildren() as $child) {
-            $cache = $preprocessedEntries[$child->getProductNumber()] ?? null;
+            $exportProduct = $this->getExportProduct($child, $preprocessedEntries);
 
-            if (isset($cache)) {
-                $exportProduct = new ExportProductEntity($child, new \ArrayIterator($fields), $this->cachedFields);
-                $exportProduct->setFilterAttributes($cache->getFilterAttributes());
-                $exportProduct->setCustomFields($cache->getCustomFields());
-                $exportProduct->setAdditionalCache(new \ArrayIterator($cache->getAdditionalCache()));
+            if (isset($exportProduct)) {
                 yield $exportProduct;
             }
         }
+    }
+
+    /**
+     * @param FeedPreprocessorEntry[] $preprocessedEntries
+     */
+    private function getExportProduct(SalesChannelProductEntity $entity, array $preprocessedEntries): ?ExportProductEntity
+    {
+        $fields = $this->fieldsProviders->getFields(SalesChannelProductEntity::class);
+        $cache = $preprocessedEntries[$entity->getProductNumber()] ?? null;
+
+        if (isset($cache)) {
+            $exportProduct = new ExportProductEntity($entity, new \ArrayIterator($fields), $this->cachedFields);
+            $exportProduct->setFilterAttributes($cache->getFilterAttributes());
+            $exportProduct->setCustomFields($cache->getCustomFields());
+            $exportProduct->setAdditionalCache(new \ArrayIterator($cache->getAdditionalCache()));
+
+            return $exportProduct;
+        }
+
+        return null;
     }
 }
