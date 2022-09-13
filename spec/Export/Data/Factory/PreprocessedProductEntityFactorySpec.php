@@ -9,6 +9,7 @@ use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryReade
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface;
 use Omikron\FactFinder\Shopware6\Export\FeedPreprocessorEntry;
+use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\TestUtil\ExportProductMockFactory;
@@ -22,6 +23,7 @@ use PHPUnit\Framework\Assert;
 use Prophecy\Argument;
 use Shopware\Core\Content\Product\ProductCollection;
 use Shopware\Core\Content\Product\ProductEntity;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class PreprocessedProductEntityFactorySpec extends ObjectBehavior
@@ -34,6 +36,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     private Collaborator $exportSettings;
     private Collaborator $decoratedFactory;
     private Collaborator $feedPreprocessorReader;
+    private Collaborator $salesChannelService;
     private \Traversable $cachedFields;
 
     function let(
@@ -56,7 +59,8 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         $this->cachedFields = new \ArrayIterator();
         $exportSettings->isExportCacheEnable()->willReturn(true);
         $this->exportSettings = $exportSettings;
-        $this->beConstructedWith($decoratedFactory, $salesChannelService, new FieldsProvider(new \ArrayIterator()), $this->exportSettings, $this->feedPreprocessorReader, $this->cachedFields);
+        $this->salesChannelService = $salesChannelService;
+        $this->beConstructedWith($this->decoratedFactory, $this->salesChannelService, new FieldsProvider(new \ArrayIterator()), $this->exportSettings, $this->feedPreprocessorReader, $this->cachedFields);
     }
 
     public function it_should_handle_entities_without_cache_using_fallback_from_decorated_factory(): void
@@ -124,6 +128,68 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
             $variantsData['SW100.13'] + ['filterAttributes' => $filterAttributes['SW100.13']],
             $variantsData['SW100.16'] + ['filterAttributes' => $filterAttributes['SW100.16']],
         ]));
+
+        // When
+        $exportedProducts = iterator_to_array($this->createEntities($productEntity)->getWrappedObject());
+
+        // Then
+        Assert::assertEquals(
+            array_values(array_map(fn(ExportProductEntity $variant) => $variant->toArray(), $expectedVariants)),
+            array_values(array_map(fn (ExportProductEntity $product) => $product->toArray(), $exportedProducts))
+        );
+    }
+
+    public function it_should_create_entities_with_cached_category_path(CategoryPath $categoryPathField, FieldsProvider $fieldsProvider)
+    {
+        // Given
+        $categoryPathName = 'CategoryPath';
+        $categoryPathValue = 'Sports/Books%2C+Clothing+%26+Games/Movies%2C+Electronics+%26+Clothing';
+        $this->beConstructedWith($this->decoratedFactory, $this->salesChannelService, $fieldsProvider, $this->exportSettings, $this->feedPreprocessorReader, $this->cachedFields);
+
+        $productEntity = $this->productMockFactory->create();
+        $variantsData = [
+            'SW100.1' => ['productNumber' => 'SW100.1', 'size' => 'S', 'color' => 'red', 'material' => 'cotton'],
+            'SW100.2' => ['productNumber' => 'SW100.2', 'size' => 'M', 'color' => 'blue', 'material' => 'cotton'],
+        ];
+        $variants = array_map(fn (array $variantData) => $this->variantMockFactory->create($productEntity, $variantData), $variantsData);
+        $filterAttributes = [
+            'SW100.1' => 'size=S|size=M|color=red|material=cotton',
+            'SW100.2' => 'size=S|size=M|color=blue|material=cotton',
+        ];
+        $expectedVariants = array_map(function(array $expectedVariantData) use ($filterAttributes, $categoryPathField, $variants, $categoryPathName, $categoryPathValue): ExportProductEntity {
+            $productNumber = $expectedVariantData['productNumber'];
+            $product = $variants[$productNumber];
+            $categoryPathField->getName()->willReturn($categoryPathName);
+            $categoryPathField->getValue($product)->willReturn($categoryPathValue);
+
+            return $this->exportProductMockFactory->create(
+                $product,
+                [
+                    'filterAttributes' => $filterAttributes[$productNumber],
+                    'additionalCache' => [$categoryPathName => $categoryPathValue],
+                    'productFields' => [$categoryPathField->getWrappedObject()],
+                ]
+            );
+        }, $variantsData);
+        $productEntity->setChildren($this->getProductCollection($variants));
+
+        foreach ($variantsData as $variantData) {
+            $productNumber = $variantData['productNumber'];
+            $product = $variants[$productNumber];
+            $categoryPathField->getName()->willReturn($categoryPathName);
+            $fieldsProvider->getFields(SalesChannelProductEntity::class)->willReturn([$categoryPathField]);
+        }
+
+        // Expect
+        $this->feedPreprocessorReader->read($productEntity->getProductNumber(), Argument::any())->willReturn(
+            $this->getFeedPreprocessorEntries(
+                $productEntity,
+                [
+                    $variantsData['SW100.1'] + ['filterAttributes' => $filterAttributes['SW100.1'], 'additionalCache' => ['CategoryPath' => 'Sports/Books%2C+Clothing+%26+Games/Movies%2C+Electronics+%26+Clothing']],
+                    $variantsData['SW100.2'] + ['filterAttributes' => $filterAttributes['SW100.2'], 'additionalCache' => ['CategoryPath' => 'Sports/Books%2C+Clothing+%26+Games/Movies%2C+Electronics+%26+Clothing']],
+                ]
+            )
+        );
 
         // When
         $exportedProducts = iterator_to_array($this->createEntities($productEntity)->getWrappedObject());
@@ -322,7 +388,16 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     {
         return array_reduce(
             $variantsData,
-            fn(array $acc, array $variantData): array => $acc + [$variantData['productNumber'] => $this->feedPreprocessorEntryMockFactory->create($this->variantMockFactory->create($parent, $variantData), ['filterAttributes' => $variantData['filterAttributes'], 'customFields' => $variantData['customFields'] ?? ''])],
+            fn(array $acc, array $variantData): array => $acc + [
+                $variantData['productNumber'] => $this->feedPreprocessorEntryMockFactory->create(
+                    $this->variantMockFactory->create($parent, $variantData),
+                    [
+                        'filterAttributes' => $variantData['filterAttributes'],
+                        'customFields' => $variantData['customFields'] ?? '',
+                        'additionalCache' => $variantData['additionalCache'] ?? []
+                    ]
+                )
+            ],
             []
         );
     }
