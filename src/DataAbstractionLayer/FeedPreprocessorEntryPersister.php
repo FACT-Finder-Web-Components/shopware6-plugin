@@ -8,7 +8,6 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\Framework\Uuid\Uuid;
 
 class FeedPreprocessorEntryPersister
 {
@@ -23,7 +22,7 @@ class FeedPreprocessorEntryPersister
     {
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('parentProductNumber', $productNumber));
-        $ids = array_map(fn(
+        $ids = array_map(fn (
             string $id): array => ['id' => $id], $this->entryRepository->searchIds($criteria, $context)->getIds());
 
         $this->entryRepository->delete($ids, $context);

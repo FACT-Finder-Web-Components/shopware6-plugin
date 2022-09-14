@@ -20,7 +20,7 @@ class FeedPreprocessorEntryReader
         SalesChannelService $channelService,
         EntityRepositoryInterface $feedPreprocessorEntryRepository
     ) {
-        $this->channelService = $channelService;
+        $this->channelService                  = $channelService;
         $this->feedPreprocessorEntryRepository = $feedPreprocessorEntryRepository;
     }
 
@@ -29,7 +29,7 @@ class FeedPreprocessorEntryReader
      */
     public function read(string $productNumber, ?string $languageId): array
     {
-        $context = $this->channelService->getSalesChannelContext()->getContext();
+        $context  = $this->channelService->getSalesChannelContext()->getContext();
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('parentProductNumber', $productNumber));
 

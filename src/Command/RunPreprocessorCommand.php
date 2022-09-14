@@ -73,17 +73,12 @@ class RunPreprocessorCommand extends Command
         $salesChannelContext = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
         $context = $salesChannelContext->getContext();
 
-        $start = microtime(true);
         /** @var ProductEntity $product */
 
         foreach ($this->exportProducts->getByContext($salesChannelContext) as $product) {
             $this->entryPersister->deleteAllProductEntries($product->getProductNumber(),$context);
             $this->entryPersister->insertProductEntries($this->feedPreprocessor->createEntries($product, $context), $context);
         };
-
-        $end = microtime(true);
-        $execution_time = ($end - $start);
-        $output->writeln($execution_time);
 
         return 0;
     }

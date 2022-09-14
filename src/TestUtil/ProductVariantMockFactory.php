@@ -20,9 +20,9 @@ class ProductVariantMockFactory
         ProductEntity $parent,
         array $data = []
     ): ProductEntity {
-        $variant = new ProductEntity();
-        $size = $data['size'] ?? 'S';
-        $color = $data['color'] ?? 'red';
+        $variant  = new ProductEntity();
+        $size     = $data['size'] ?? 'S';
+        $color    = $data['color'] ?? 'red';
         $material = $data['material'] ?? 'cotton';
         $variant->setParent($parent);
         $variant->setProductNumber($data['productNumber'] ?? 'SW100.1');
@@ -41,9 +41,10 @@ class ProductVariantMockFactory
 
     /**
      * $optionsConfig in format
-     *  [['groupId','optionId', 'groupName', 'optionName']]
+     *  [['groupId','optionId', 'groupName', 'optionName']].
      *
      * @param array $optionsConfig
+     *
      * @return PropertyGroupOptionCollection
      */
     public static function createPropertyGroupOptionCollection(array $optionsConfig): PropertyGroupOptionCollection

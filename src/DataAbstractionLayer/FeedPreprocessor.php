@@ -22,27 +22,27 @@ class FeedPreprocessor
     private ExportCustomFields $customFields;
 
     public function __construct(
-        PropertyFormatter        $propertyFormatter,
+        PropertyFormatter $propertyFormatter,
         EventDispatcherInterface $eventDispatcher,
-        ExportCustomFields       $customFields
+        ExportCustomFields $customFields
     ) {
         $this->propertyFormatter = $propertyFormatter;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->customFields = $customFields;
+        $this->eventDispatcher   = $eventDispatcher;
+        $this->customFields      = $customFields;
     }
 
     public function createEntries(ProductEntity $product, Context $context): array
     {
         $filtersFromNotVisibleVariants = [];
-        $filtersFromVisibleVariants = [];
-        $notVisibleGroups = [];
-        $entries = [];
-        $customFields = [];
+        $filtersFromVisibleVariants    = [];
+        $notVisibleGroups              = [];
+        $entries                       = [];
+        $customFields                  = [];
 
         if ($product->getChildCount() === 0) {
             $customFields = explode('|', $this->customFields->getValue($product));
-            $entry = $this->formEntry($product, $context, implode('|', array_unique($customFields)));
-            $event = new FeedPreprocessorEntryBeforeCreate($entry, $context);
+            $entry        = $this->formEntry($product, $context, implode('|', array_unique($customFields)));
+            $event        = new FeedPreprocessorEntryBeforeCreate($entry, $context);
             $this->eventDispatcher->dispatch($event);
 
             return [$event->getEntry()];
@@ -53,15 +53,15 @@ class FeedPreprocessor
         /** @var \Shopware\Core\Content\Product\ProductEntity $child */
         foreach ($product->getChildren() as $child) {
             //fetch storefront presentation config for each variant
-            $shouldGroupBeVisible = fn(string $groupId): bool => in_array($groupId, $visibleGroupIds);
-            $variationKeyParts = [];
+            $shouldGroupBeVisible = fn (string $groupId): bool => in_array($groupId, $visibleGroupIds);
+            $variationKeyParts    = [];
 
             //loop over the options to collect those, that should be aggregated in exported products
             foreach ($child->getOptions() as $option) {
                 $hasMainVariant = (bool) $product->getMainVariantId();
 
                 if (($shouldGroupBeVisible($option->getGroupId()) || $visibleGroupIds === []) && !$hasMainVariant) {
-                    /**
+                    /*
                      * if a given option should be presented on storefront, we store its id
                      * This is used later to collect only unique combination of product variants
                      */
@@ -82,13 +82,13 @@ class FeedPreprocessor
             }
 
             //store variant data to prevent iterating them again later
-            $entries[$variationKey] = $this->formEntry($product, $context, $variationKey);
+            $entries[$variationKey]                  = $this->formEntry($product, $context, $variationKey);
             $entries[$variationKey]['productNumber'] = $child->getProductNumber();
 
-            $filtersFromNotVisibleVariants[$variationKey] = implode('|', flatMap(fn(
+            $filtersFromNotVisibleVariants[$variationKey] = implode('|', flatMap(fn (
                 array $groupOptions) => array_values($groupOptions), array_values($notVisibleGroups)));
 
-            $filtersFromVisibleVariants[$variationKey] = implode('|', array_filter($child->getOptions()->map(fn(
+            $filtersFromVisibleVariants[$variationKey] = implode('|', array_filter($child->getOptions()->map(fn (
                 PropertyGroupOptionEntity $option): string => in_array($option->getGroupId(), $visibleGroupIds) ? call_user_func($this->propertyFormatter, $option) : '')));
         }
 
@@ -107,16 +107,16 @@ class FeedPreprocessor
     private function extractVisibleGroupIds(ProductEntity $product): array
     {
         $configuratorGroupConfig = $product->getConfiguratorGroupConfig();
-        $hasMainVariant = (bool) $product->getMainVariantId();
+        $hasMainVariant          = (bool) $product->getMainVariantId();
 
         if (!$configuratorGroupConfig) {
             return [];
         }
         return array_reduce(
             array_filter($product->getConfiguratorGroupConfig(),
-                fn(
+                fn (
                     array $groupConfig): bool => !$hasMainVariant && (bool) safeGetByName($groupConfig, 'expressionForListings')),
-            fn(
+            fn (
                 array $result,
                 array $groupConfig): array => array_merge($result, [safeGetByName($groupConfig, 'id')]), []
         );
@@ -130,13 +130,13 @@ class FeedPreprocessor
         ?array $filterAttributes = null
     ): array {
         return [
-            'id' => Uuid::randomHex(),
-            'productNumber' => $product->getProductNumber(),
-            'variationKey' => $variationKey,
+            'id'                  => Uuid::randomHex(),
+            'productNumber'       => $product->getProductNumber(),
+            'variationKey'        => $variationKey,
             'parentProductNumber' => $product->getProductNumber(),
-            'languageId' => Uuid::fromHexToBytes($context->getLanguageId()),
-            'filterAttributes' => $filterAttributes ? "|$filterAttributes|" : '',
-            'customFields' => $customFields ?  "|$customFields|" : ''
+            'languageId'          => Uuid::fromHexToBytes($context->getLanguageId()),
+            'filterAttributes'    => $filterAttributes ? "|$filterAttributes|" : '',
+            'customFields'        => $customFields ? "|$customFields|" : '',
         ];
     }
 }

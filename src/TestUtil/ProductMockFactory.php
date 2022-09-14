@@ -18,7 +18,7 @@ class ProductMockFactory
             [
                 [md5('size'), 'false'],
                 [md5('color'), 'true'],
-                [md5('material'), 'true']
+                [md5('material'), 'true'],
             ]
         ));
 
@@ -27,15 +27,16 @@ class ProductMockFactory
 
     /**
      * $groupConfig in format
-     *  [[groupId, true|false]]
+     *  [[groupId, true|false]].
      *
      * @param array $groupsConfig
+     *
      * @return array
      */
     public static function getGroupConfigurationConfig(array $groupsConfig): array
     {
         $row        = '{"id": "%s", "representation": "box", "expressionForListings": %s}';
-        $jsonConfig = array_map(fn(array $groupConfig): array => json_decode(sprintf($row, ...$groupConfig), true), $groupsConfig);
+        $jsonConfig = array_map(fn (array $groupConfig): array => json_decode(sprintf($row, ...$groupConfig), true), $groupsConfig);
 
         return $jsonConfig;
     }

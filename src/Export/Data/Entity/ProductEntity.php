@@ -7,14 +7,14 @@ namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
-use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 use Traversable;
+use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 {
     private Product $product;
     private string $filterAttributes = '';
-    private string $customFields = '';
+    private string $customFields     = '';
     private Traversable $additionalCache;
 
     /** @var FieldInterface[] */
@@ -75,9 +75,9 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 
     public function toArray(): array
     {
-        $cachedProductFieldNames = array_map(fn(FieldInterface $field) => $field->getName(), iterator_to_array($this->cachedProductFields));
-        $fields = array_filter($this->productFields, fn (FieldInterface $productField) => !in_array($productField->getName(), $cachedProductFieldNames));
-        $defaultFields = [
+        $cachedProductFieldNames = array_map(fn (FieldInterface $field) => $field->getName(), iterator_to_array($this->cachedProductFields));
+        $fields                  = array_filter($this->productFields, fn (FieldInterface $productField) => !in_array($productField->getName(), $cachedProductFieldNames));
+        $defaultFields           = [
             'ProductNumber'    => $this->product->getProductNumber(),
             'Master'           => $this->product->getProductNumber(),
             'Name'             => (string) $this->product->getTranslation('name'),
