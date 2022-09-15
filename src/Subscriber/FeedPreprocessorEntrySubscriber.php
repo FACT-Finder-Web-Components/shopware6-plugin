@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
@@ -6,9 +7,9 @@ namespace Omikron\FactFinder\Shopware6\Subscriber;
 use Omikron\FactFinder\Shopware6\Events\FeedPreprocessorEntryBeforeCreate;
 use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use \Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FeedPreprocessorEntrySubscriber implements EventSubscriberInterface
 {
@@ -17,7 +18,7 @@ class FeedPreprocessorEntrySubscriber implements EventSubscriberInterface
 
     public function __construct(
         EntityRepositoryInterface $productRepository,
-        CategoryPath              $categoryPath
+        CategoryPath $categoryPath
     ) {
         $this->productRepository      = $productRepository;
         $this->categoryFieldGenerator = $categoryPath;
@@ -35,8 +36,8 @@ class FeedPreprocessorEntrySubscriber implements EventSubscriberInterface
         $criteria->addFilter(new EqualsFilter('productNumber', $entry['productNumber']));
         $criteria->addAssociation('categories');
         $criteria->addAssociation('categoriesRo');
-        $product      = $this->productRepository->search($criteria, $event->getContext())->first();
-        $categoryPath = $this->categoryFieldGenerator->getValue($product);
+        $product                  = $this->productRepository->search($criteria, $event->getContext())->first();
+        $categoryPath             = $this->categoryFieldGenerator->getValue($product);
         $entry['additionalCache'] = ['CategoryPath' => $categoryPath];
         $event->setEntry($entry);
     }

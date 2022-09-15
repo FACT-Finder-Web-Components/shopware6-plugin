@@ -29,11 +29,11 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
     private ExportSettings $exportSettings;
 
     public function __construct(
-        EntityRepositoryInterface      $productRepository,
-        EntityRepositoryInterface      $languageRepository,
-        FeedPreprocessor               $feedPreprocessor,
+        EntityRepositoryInterface $productRepository,
+        EntityRepositoryInterface $languageRepository,
+        FeedPreprocessor $feedPreprocessor,
         FeedPreprocessorEntryPersister $feedPreprocessorEntryPersister,
-        ExportSettings                 $exportSettings
+        ExportSettings $exportSettings
     ) {
         $this->productRepository  = $productRepository;
         $this->languageRepository = $languageRepository;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Events;
 
-use Omikron\FactFinder\Shopware6\Export\FeedPreprocessorEntry;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Event\ShopwareEvent;
 use Symfony\Contracts\EventDispatcher\Event;
@@ -30,7 +29,7 @@ class FeedPreprocessorEntryBeforeCreate extends Event implements ShopwareEvent
         return $this->context;
     }
 
-    public function setEntry(array $entry) :void
+    public function setEntry(array $entry): void
     {
         $this->entry = $entry;
     }

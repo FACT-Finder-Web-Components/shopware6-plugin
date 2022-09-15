@@ -12,6 +12,7 @@ use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Traversable;
 
 class PreprocessedProductEntityFactory implements FactoryInterface
 {
@@ -28,14 +29,14 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         FieldsProvider $fieldsProviders,
         ExportSettings $exportSettings,
         FeedPreprocessorEntryReader $feedPreprocessorReader,
-        \Traversable $cachedFields
+        Traversable $cachedFields
     ) {
-        $this->channelService = $channelService;
-        $this->decoratedFactory = $decoratedFactory;
-        $this->fieldsProviders = $fieldsProviders;
-        $this->exportSettings = $exportSettings;
+        $this->channelService         = $channelService;
+        $this->decoratedFactory       = $decoratedFactory;
+        $this->fieldsProviders        = $fieldsProviders;
+        $this->exportSettings         = $exportSettings;
         $this->feedPreprocessorReader = $feedPreprocessorReader;
-        $this->cachedFields = $cachedFields;
+        $this->cachedFields           = $cachedFields;
     }
 
     public function handle(Entity $entity): bool
@@ -90,7 +91,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
     private function getExportProduct(SalesChannelProductEntity $entity, array $preprocessedEntries): ?ExportProductEntity
     {
         $fields = $this->fieldsProviders->getFields(SalesChannelProductEntity::class);
-        $cache = $preprocessedEntries[$entity->getProductNumber()] ?? null;
+        $cache  = $preprocessedEntries[$entity->getProductNumber()] ?? null;
 
         if (isset($cache)) {
             $exportProduct = new ExportProductEntity($entity, new \ArrayIterator($fields), $this->cachedFields);

@@ -63,14 +63,16 @@ class CustomFields implements FieldInterface
 
     public function getValue(Entity $entity): string
     {
-        return $this->getFieldValue($entity);
+        $value = $this->getFieldValueAsArray($entity);
+
+        return $value ? '|' . implode('|', $value) . '|' : '';
     }
 
     public function getValueAsKeyValueArray(Entity $entity): array
     {
         return array_reduce(
             $this->getFieldValueAsArray($entity),
-            function(array $carriedValues, string $customFieldValue) {
+            function (array $carriedValues, string $customFieldValue) {
                 $separatorPosition = strpos($customFieldValue, '=');
                 $key = substr($customFieldValue, 0, $separatorPosition);
                 $value = substr($customFieldValue, $separatorPosition + 1, strlen($customFieldValue));
@@ -85,13 +87,6 @@ class CustomFields implements FieldInterface
     public function getCompatibleEntityTypes(): array
     {
         return [SalesChannelProductEntity::class, CategoryEntity::class];
-    }
-
-    private function getFieldValue(Entity $entity): string
-    {
-        $value = $this->getFieldValueAsArray($entity);
-
-        return $value ? '|' . implode('|', $value) . '|' : '';
     }
 
     private function getFieldValueAsArray(Entity $entity): array
