@@ -31,13 +31,16 @@ class FeedPreprocessor
         $this->customFields      = $customFields;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
     public function createEntries(ProductEntity $product, Context $context): array
     {
-        $filtersFromNotVisibleVariants = [];
-        $filtersFromVisibleVariants    = [];
-        $notVisibleGroups              = [];
-        $entries                       = [];
-        $customFields                  = [];
+        $noVisibleVariantsFilters = [];
+        $visibleVariantsFilters   = [];
+        $notVisibleGroups         = [];
+        $entries                  = [];
+        $customFields             = [];
 
         if ($product->getChildCount() === 0) {
             $customFields = explode('|', $this->customFields->getValue($product));
@@ -66,10 +69,12 @@ class FeedPreprocessor
                      * This is used later to collect only unique combination of product variants
                      */
                     $variationKeyParts[] = $option->getId();
-                } else {
-                    //if not then we format the option to a "ready to be exported" expression
-                    $notVisibleGroups[$option->getGroupId()][$option->getId()] = call_user_func($this->propertyFormatter, $option);
+
+                    continue;
                 }
+
+                //if not then we format the option to a "ready to be exported" expression
+                $notVisibleGroups[$option->getGroupId()][$option->getId()] = call_user_func($this->propertyFormatter, $option);
             }
 
             //collect all variants that should be visible used variation key created in a loop before
@@ -85,16 +90,16 @@ class FeedPreprocessor
             $entries[$variationKey]                  = $this->formEntry($product, $context, $variationKey);
             $entries[$variationKey]['productNumber'] = $child->getProductNumber();
 
-            $filtersFromNotVisibleVariants[$variationKey] = implode('|', flatMap(fn (
+            $noVisibleVariantsFilters[$variationKey] = implode('|', flatMap(fn (
                 array $groupOptions) => array_values($groupOptions), array_values($notVisibleGroups)));
 
-            $filtersFromVisibleVariants[$variationKey] = implode('|', array_filter($child->getOptions()->map(fn (
+            $visibleVariantsFilters[$variationKey] = implode('|', array_filter($child->getOptions()->map(fn (
                 PropertyGroupOptionEntity $option): string => in_array($option->getGroupId(), $visibleGroupIds) ? call_user_func($this->propertyFormatter, $option) : '')));
         }
 
-        return array_map(function (array $entry) use ($filtersFromVisibleVariants, $filtersFromNotVisibleVariants, $customFields, $context) {
+        return array_map(function (array $entry) use ($visibleVariantsFilters, $noVisibleVariantsFilters, $customFields, $context) {
             $variationKey = $entry['variationKey'];
-            $filters = implode('|', array_filter([$filtersFromNotVisibleVariants[$variationKey], $filtersFromVisibleVariants[$variationKey]]));
+            $filters = implode('|', array_filter([$noVisibleVariantsFilters[$variationKey], $visibleVariantsFilters[$variationKey]]));
             $entry['filterAttributes'] = $filters ? "|$filters|" : '';
             $entry['customFields'] = array_filter($customFields[$variationKey]) ? '|' . implode('|', array_unique($customFields[$variationKey])) . '|' : '';
             $event = new FeedPreprocessorEntryBeforeCreate($entry, $context);
@@ -122,6 +127,9 @@ class FeedPreprocessor
         );
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
     private function formEntry(
         ProductEntity $product,
         Context $context,

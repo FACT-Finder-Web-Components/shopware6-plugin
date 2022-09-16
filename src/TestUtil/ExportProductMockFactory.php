@@ -10,18 +10,18 @@ use Shopware\Core\Content\Product\ProductEntity;
 
 class ExportProductMockFactory
 {
-    private SalesChannelProductMockFactory $salesChannelProductMockFactory;
+    private SalesChannelProductMockFactory $productMockFactory;
 
     public function __construct()
     {
-        $this->salesChannelProductMockFactory = new SalesChannelProductMockFactory();
+        $this->productMockFactory = new SalesChannelProductMockFactory();
     }
 
     public function create(ProductEntity $product, $data = []): ExportProductEntity
     {
         $productFields       = isset($data['productFields']) ? new ArrayIterator($data['productFields']) : new ArrayIterator();
         $cachedProductFields = isset($data['cachedProductFields']) ? new ArrayIterator($data['cachedProductFields']) : new ArrayIterator();
-        $entity              = new ExportProductEntity($this->salesChannelProductMockFactory->create($product), $productFields, $cachedProductFields);
+        $entity              = new ExportProductEntity($this->productMockFactory->create($product), $productFields, $cachedProductFields);
         $entity->setFilterAttributes($data['filterAttributes'] ?? '');
         $entity->setAdditionalCache(isset($data['additionalCache']) ? new ArrayIterator($data['additionalCache']) : new ArrayIterator());
 

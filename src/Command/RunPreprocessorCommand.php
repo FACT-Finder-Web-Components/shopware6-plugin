@@ -22,6 +22,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.ElseExpression)
+ */
 class RunPreprocessorCommand extends Command
 {
     public const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
@@ -36,7 +40,7 @@ class RunPreprocessorCommand extends Command
 
     public function __construct(
         FeedPreprocessor $feedPreprocessor,
-        FeedPreprocessorEntryPersister $feedPreprocessorEntryPersister,
+        FeedPreprocessorEntryPersister $entryPersister,
         SalesChannelService $salesChannelService,
         ExportProducts $exportProducts,
         EntityRepositoryInterface $languageRepository,
@@ -44,7 +48,7 @@ class RunPreprocessorCommand extends Command
     ) {
         parent::__construct();
         $this->feedPreprocessor   = $feedPreprocessor;
-        $this->entryPersister     = $feedPreprocessorEntryPersister;
+        $this->entryPersister     = $entryPersister;
         $this->channelService     = $salesChannelService;
         $this->exportProducts     = $exportProducts;
         $this->languageRepository = $languageRepository;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
+use ArrayIterator;
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryReader;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
@@ -94,10 +95,10 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         $cache  = $preprocessedEntries[$entity->getProductNumber()] ?? null;
 
         if (isset($cache)) {
-            $exportProduct = new ExportProductEntity($entity, new \ArrayIterator($fields), $this->cachedFields);
+            $exportProduct = new ExportProductEntity($entity, new ArrayIterator($fields), $this->cachedFields);
             $exportProduct->setFilterAttributes($cache->getFilterAttributes());
             $exportProduct->setCustomFields($cache->getCustomFields());
-            $exportProduct->setAdditionalCache(new \ArrayIterator($cache->getAdditionalCache()));
+            $exportProduct->setAdditionalCache(new ArrayIterator($cache->getAdditionalCache()));
 
             return $exportProduct;
         }

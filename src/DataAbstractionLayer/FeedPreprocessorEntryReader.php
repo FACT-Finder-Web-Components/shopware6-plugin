@@ -14,17 +14,18 @@ use Shopware\Core\Framework\Uuid\Uuid;
 class FeedPreprocessorEntryReader
 {
     private SalesChannelService $channelService;
-    private EntityRepositoryInterface $feedPreprocessorEntryRepository;
+    private EntityRepositoryInterface $entryRepository;
 
     public function __construct(
         SalesChannelService $channelService,
-        EntityRepositoryInterface $feedPreprocessorEntryRepository
+        EntityRepositoryInterface $entryRepository
     ) {
         $this->channelService                  = $channelService;
-        $this->feedPreprocessorEntryRepository = $feedPreprocessorEntryRepository;
+        $this->entryRepository = $entryRepository;
     }
 
     /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
      * @return FeedPreprocessorEntry[]
      */
     public function read(string $productNumber, ?string $languageId): array
@@ -37,7 +38,7 @@ class FeedPreprocessorEntryReader
             $criteria->addFilter(new EqualsFilter('languageId', Uuid::fromHexToBytes($context->getLanguageId())));
         }
 
-        $preprocessedFeeds = $this->feedPreprocessorEntryRepository->search($criteria, $context)->getElements();
+        $preprocessedFeeds = $this->entryRepository->search($criteria, $context)->getElements();
 
         return array_reduce($preprocessedFeeds, function (array $acc, FeedPreprocessorEntry $preprocessedFeed) {
             $number = $preprocessedFeed->getProductNumber();

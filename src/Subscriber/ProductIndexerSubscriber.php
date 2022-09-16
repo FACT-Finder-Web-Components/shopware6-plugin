@@ -20,6 +20,9 @@ use Shopware\Core\System\Language\LanguageCollection;
 use Shopware\Core\System\Language\LanguageEntity;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class ProductIndexerSubscriber implements EventSubscriberInterface
 {
     private EntityRepositoryInterface $productRepository;
@@ -32,13 +35,13 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
         EntityRepositoryInterface $productRepository,
         EntityRepositoryInterface $languageRepository,
         FeedPreprocessor $feedPreprocessor,
-        FeedPreprocessorEntryPersister $feedPreprocessorEntryPersister,
+        FeedPreprocessorEntryPersister $entryPersister,
         ExportSettings $exportSettings
     ) {
         $this->productRepository  = $productRepository;
         $this->languageRepository = $languageRepository;
         $this->feedPreprocessor   = $feedPreprocessor;
-        $this->entryPersister     = $feedPreprocessorEntryPersister;
+        $this->entryPersister     = $entryPersister;
         $this->exportSettings     = $exportSettings;
     }
 
@@ -88,6 +91,9 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
         return new RepositoryIterator($this->productRepository, $context, $criteria);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
     private function fetchLanguages(): array
     {
         $criteria = new Criteria();

@@ -7,6 +7,9 @@ namespace Omikron\FactFinder\Shopware6\TestUtil;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Framework\Uuid\Uuid;
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class ProductMockFactory
 {
     public function create(array $data = []): ProductEntity

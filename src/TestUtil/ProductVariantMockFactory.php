@@ -14,6 +14,9 @@ use Shopware\Core\Content\Property\Aggregate\PropertyGroupTranslation\PropertyGr
 use Shopware\Core\Content\Property\PropertyGroupEntity;
 use Shopware\Core\Framework\Uuid\Uuid;
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class ProductVariantMockFactory
 {
     public function create(

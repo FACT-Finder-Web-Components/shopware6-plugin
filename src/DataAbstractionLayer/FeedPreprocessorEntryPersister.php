@@ -13,9 +13,9 @@ class FeedPreprocessorEntryPersister
 {
     private EntityRepositoryInterface $entryRepository;
 
-    public function __construct(EntityRepositoryInterface $feedPreprocessorEntryRepository)
+    public function __construct(EntityRepositoryInterface $entryRepository)
     {
-        $this->entryRepository = $feedPreprocessorEntryRepository;
+        $this->entryRepository = $entryRepository;
     }
 
     public function deleteAllProductEntries(string $productNumber, Context $context): void
