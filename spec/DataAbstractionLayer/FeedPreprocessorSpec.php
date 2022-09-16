@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Omikron\FactFinder\Shopware6\DataAbstractionLayer;
 
-use Omikron\FactFinder\Shopware6\Export\FeedPreprocessorEntry;
 use Omikron\FactFinder\Shopware6\Export\Field\CustomFields as ExportCustomFields;
 use Omikron\FactFinder\Shopware6\Export\Filter\TextFilter;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
