@@ -73,9 +73,9 @@ class CustomFields implements FieldInterface
         return array_reduce(
             $this->getFieldValueAsArray($entity),
             function (array $carriedValues, string $customFieldValue) {
-                $separatorPosition = strpos($customFieldValue, '=');
-                $key = substr($customFieldValue, 0, $separatorPosition);
-                $value = substr($customFieldValue, $separatorPosition + 1, strlen($customFieldValue));
+                $separatorPosition   = strpos($customFieldValue, '=');
+                $key                 = substr($customFieldValue, 0, $separatorPosition);
+                $value               = substr($customFieldValue, $separatorPosition + 1, strlen($customFieldValue));
                 $carriedValues[$key] = $value;
 
                 return $carriedValues;
@@ -127,7 +127,7 @@ class CustomFields implements FieldInterface
 
                 //select types not necessarily must have 'options', entity selectors don't have it
                 if ($customField->getType() === CustomFieldTypes::SELECT && isset($config['options'])) {
-                    $options               = array_filter($config['options'], fn (
+                    $options = array_filter($config['options'], fn (
                         array $option): bool => is_array($storedValue) ? in_array($option['value'], $storedValue) : $option['value'] === $storedValue);
                     $translatedOptionValue = $formatManyValues(map($formatLabel, $options));
                 }

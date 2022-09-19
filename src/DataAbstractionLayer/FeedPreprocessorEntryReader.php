@@ -20,12 +20,13 @@ class FeedPreprocessorEntryReader
         SalesChannelService $channelService,
         EntityRepositoryInterface $entryRepository
     ) {
-        $this->channelService                  = $channelService;
+        $this->channelService  = $channelService;
         $this->entryRepository = $entryRepository;
     }
 
     /**
      * @SuppressWarnings(PHPMD.StaticAccess)
+     *
      * @return FeedPreprocessorEntry[]
      */
     public function read(string $productNumber, ?string $languageId): array
