@@ -14,6 +14,7 @@ use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 {
     private Product $product;
+    private ?Product $parent = null;
     private string $filterAttributes = '';
     private string $customFields     = '';
     private Traversable $additionalCache;
@@ -75,13 +76,19 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         $this->customFields = $customFields;
     }
 
+    public function setParent(?Product $parent): void
+    {
+        $this->parent = $parent;
+    }
+
     public function toArray(): array
     {
         $cachedProductFieldNames = array_map(fn (FieldInterface $field) => $field->getName(), iterator_to_array($this->cachedProductFields));
         $fields                  = array_filter($this->productFields, fn (FieldInterface $productField) => !in_array($productField->getName(), $cachedProductFieldNames));
+        $isVariant               = $this->product->getId() !== $this->product->getParentId() && isset($this->parent);
         $defaultFields           = [
             'ProductNumber'    => $this->product->getProductNumber(),
-            'Master'           => $this->product->getProductNumber(),
+            'Master'           => $isVariant ? $this->parent->getProductNumber() : $this->product->getProductNumber(),
             'Name'             => (string) $this->product->getTranslation('name'),
             'FilterAttributes' => $this->getFilterAttributes(),
             'CustomFields'     => $this->getCustomFields(),
@@ -89,7 +96,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 
         return array_reduce(
             $fields,
-            fn (array $fields, FieldInterface $field): array => $fields + [$field->getName() => ($this->getAdditionalCache($field->getName()) ?? $field->getValue($this->product))],
+            fn (array $fields, FieldInterface $field): array => $fields + [$field->getName() => ($this->getAdditionalCache($field->getName()) ?? $field->getValue($isVariant ? $this->parent : $this->product))],
             $defaultFields
         );
     }
