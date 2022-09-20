@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
+use ArrayIterator;
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
@@ -31,6 +32,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         $this->product             = $product;
         $this->productFields       = iterator_to_array($productFields);
         $this->cachedProductFields = $cachedProductFields;
+        $this->additionalCache     = new ArrayIterator();
     }
 
     public function getId(): string
@@ -87,8 +89,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 
         return array_reduce(
             $fields,
-            fn (array $fields, FieldInterface $field): array => $fields
-                + [$field->getName() => ($this->getAdditionalCache($field->getName()) ?? $field->getValue($this->product))],
+            fn (array $fields, FieldInterface $field): array => $fields + [$field->getName() => ($this->getAdditionalCache($field->getName()) ?? $field->getValue($this->product))],
             $defaultFields
         );
     }

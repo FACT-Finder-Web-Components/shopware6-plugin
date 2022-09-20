@@ -101,7 +101,7 @@ class FeedPreprocessor
             $variationKey = $entry['variationKey'];
             $filters = implode('|', array_filter([$noVisibleVariantsFilters[$variationKey], $visibleVariantsFilters[$variationKey]]));
             $entry['filterAttributes'] = $filters ? "|$filters|" : '';
-            $entry['customFields'] = array_filter($customFields[$variationKey]) ? '|' . implode('|', array_unique($customFields[$variationKey])) . '|' : '';
+            $entry['customFields'] = array_filter($customFields[$variationKey]) ? sprintf('|%s|', trim(implode('|', array_unique($customFields[$variationKey])), '|')) : '';
             $event = new FeedPreprocessorEntryBeforeCreate($entry, $context);
             $this->eventDispatcher->dispatch($event);
 

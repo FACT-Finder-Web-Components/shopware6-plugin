@@ -6,6 +6,8 @@ namespace Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
 use ArrayIterator;
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
+use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessor;
+use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryPersister;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryReader;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
 use Omikron\FactFinder\Shopware6\Export\FeedPreprocessorEntry;
@@ -22,6 +24,8 @@ class PreprocessedProductEntityFactory implements FactoryInterface
     private FieldsProvider $fieldsProviders;
     private ExportSettings $exportSettings;
     private FeedPreprocessorEntryReader $feedPreprocessorReader;
+    private FeedPreprocessorEntryPersister $entryPersister;
+    private FeedPreprocessor $feedPreprocessor;
     private iterable $cachedFields;
 
     public function __construct(
@@ -30,6 +34,8 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         FieldsProvider $fieldsProviders,
         ExportSettings $exportSettings,
         FeedPreprocessorEntryReader $feedPreprocessorReader,
+        FeedPreprocessorEntryPersister $entryPersister,
+        FeedPreprocessor $feedPreprocessor,
         Traversable $cachedFields
     ) {
         $this->channelService         = $channelService;
@@ -37,6 +43,8 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         $this->fieldsProviders        = $fieldsProviders;
         $this->exportSettings         = $exportSettings;
         $this->feedPreprocessorReader = $feedPreprocessorReader;
+        $this->entryPersister         = $entryPersister;
+        $this->feedPreprocessor       = $feedPreprocessor;
         $this->cachedFields           = $cachedFields;
     }
 
@@ -56,12 +64,16 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             return;
         }
 
+        $salesChannelcontext = $this->channelService->getSalesChannelContext();
+        $context             = $salesChannelcontext->getContext();
         $preprocessedEntries = $this->feedPreprocessorReader->read(
             $entity->getProductNumber(),
-            $this->channelService->getSalesChannelContext()->getLanguageId()
+            $salesChannelcontext->getLanguageId()
         );
 
         if ($preprocessedEntries === []) {
+            $this->entryPersister->insertProductEntries($this->feedPreprocessor->createEntries($entity, $context), $context);
+
             yield from $this->decoratedFactory->createEntities($entity, $producedType);
 
             return;
