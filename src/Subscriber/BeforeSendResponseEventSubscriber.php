@@ -13,12 +13,16 @@ use Symfony\Component\HttpFoundation\Response;
 class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 {
     const HAS_JUST_LOGGED_IN = 'ff_has_just_logged_in';
+    const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
     const USER_ID_COOKIE = 'ff_user_id';
 
     public static function getSubscribedEvents()
     {
         return [
-            BeforeSendResponseEvent::class => 'hasJustLoggedIn',
+            BeforeSendResponseEvent::class => [
+                ['hasJustLoggedIn'],
+                ['hasJustLoggedOut'],
+            ],
         ];
     }
 
@@ -38,6 +42,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
         if ($response->getContext()->getCustomer() === null) {
             $response->headers->clearCookie(self::USER_ID_COOKIE);
+            $response->headers->clearCookie(self::HAS_JUST_LOGGED_OUT);
         }
 
         if ((bool) $request->cookies->get(self::HAS_JUST_LOGGED_IN, false) === true) {
@@ -50,6 +55,27 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_IN, '1'));
             $response->headers->setCookie($this->getCookie(self::USER_ID_COOKIE, $response->getContext()->getCustomer()->getId()));
             $session->set(self::HAS_JUST_LOGGED_IN, false);
+        }
+    }
+
+    public function hasJustLoggedOut(BeforeSendResponseEvent $event): void
+    {
+        $request = $event->getRequest();
+        $session = $request->getSession();
+        $response = $event->getResponse();
+
+        if (
+            !$response instanceof StorefrontResponse
+            || $request->isXmlHttpRequest()
+            || $response->getStatusCode() >= Response::HTTP_MULTIPLE_CHOICES
+        ) {
+            return;
+        }
+
+        if ($session->get(self::HAS_JUST_LOGGED_OUT, false) === true) {
+            $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_OUT, '1'));
+            $response->headers->clearCookie(self::USER_ID_COOKIE);
+            $session->set(self::HAS_JUST_LOGGED_OUT, false);
         }
     }
 
