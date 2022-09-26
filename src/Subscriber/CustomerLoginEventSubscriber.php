@@ -27,6 +27,6 @@ class CustomerLoginEventSubscriber implements EventSubscriberInterface
     public function hasJustLoggedIn(CustomerLoginEvent $event): void
     {
         $session = $this->requestStack->getMainRequest()->getSession();
-        $session->set('ff_has_just_logged_in', true);
+        $session->set(BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN, true);
     }
 }

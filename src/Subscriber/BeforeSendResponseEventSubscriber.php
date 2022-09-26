@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 {
+    const HAS_JUST_LOGGED_IN = 'ff_has_just_logged_in';
+    const USER_ID_COOKIE = 'ff_user_id';
+
     public static function getSubscribedEvents()
     {
         return [
@@ -33,19 +36,28 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ((bool) $request->cookies->get('ff_has_just_logged_in', false) === true) {
-            $response->headers->clearCookie('ff_has_just_logged_in');
+        if ($response->getContext()->getCustomer() === null) {
+            $response->headers->clearCookie(self::USER_ID_COOKIE);
+        }
+
+        if ((bool) $request->cookies->get(self::HAS_JUST_LOGGED_IN, false) === true) {
+            $response->headers->clearCookie(self::HAS_JUST_LOGGED_IN);
 
             return;
         }
 
-        if ($session->get('ff_has_just_logged_in', false) === true) {
-            $cookie = Cookie::create('ff_has_just_logged_in')
-                ->withValue('1')
-                ->withExpires((new \DateTime())->modify('+1 hour')->getTimestamp())
-                ->withHttpOnly(false);
-            $response->headers->setCookie($cookie);
-            $session->set('ff_has_just_logged_in', false);
+        if ($session->get(self::HAS_JUST_LOGGED_IN, false) === true) {
+            $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_IN, '1'));
+            $response->headers->setCookie($this->getCookie(self::USER_ID_COOKIE, $response->getContext()->getCustomer()->getId()));
+            $session->set(self::HAS_JUST_LOGGED_IN, false);
         }
+    }
+
+    private function getCookie(string $name, string $value): Cookie
+    {
+        return Cookie::create($name)
+            ->withValue($value)
+            ->withExpires((new \DateTime())->modify('+1 hour')->getTimestamp())
+            ->withHttpOnly(false);
     }
 }
