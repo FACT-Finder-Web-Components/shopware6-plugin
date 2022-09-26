@@ -28,6 +28,38 @@
           return false;
         });
       });
+
+      document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
+        window.SEND_SEARCH_IMMEDIATE = '{{ page.extensions.factfinder.searchImmediate }}';
+        window.searchImmediate = searchImmediate;
+        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+          const cookieData = cookie.split('=');
+          const [key, value] = cookieData;
+          acc[key] = value;
+
+          return acc;
+        }, {});
+        const hasJustLoggedIn = cookies['ff_has_just_logged_in'];
+        const userId = '{{ context.customer.id }}';
+debugger;
+        if (userId) {
+          console.warn('wk login');
+          // factfinder.communication.sessionManager.setLoginData(userId)
+
+          if (hasJustLoggedIn) {
+            console.warn('Logged in!');
+            // factfinder.communication.Tracking.loginWithConfig();
+          }
+        } else {
+          console.warn('wk logout');
+          // factfinder.communication.sessionManager.clearLoginData();
+        }
+
+        if (window.SEND_SEARCH_IMMEDIATE) {
+          console.warn('searchImmediate');
+          // searchImmediate();
+        }
+      });
     </script>
   {% endblock %}
 

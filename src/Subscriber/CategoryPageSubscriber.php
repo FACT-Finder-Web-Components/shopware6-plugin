@@ -59,12 +59,12 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         }, []);
 
         $communication = [
-                'search-immediate' => $searchImmediate ? 'true' : 'false',
                 'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
             ] + ($searchImmediate ? ['category-page' => $this->prepareCategoryPath($category)] : []);
 
         $event->getPage()->getExtension('factfinder')->assign(
             [
+                'searchImmediate' => $searchImmediate ? 'true' : 'false',
                 'communication'         => $communication,
                 'categoryPathFieldName' => "{$this->fieldName}ROOT",
             ]
