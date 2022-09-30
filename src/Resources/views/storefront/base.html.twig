@@ -39,7 +39,7 @@
         }, {});
 
         if (cookies['ff_user_id']) {
-          factfinder.communication.sessionManager.setLoginData(userId)
+          factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
 
           if (cookies['ff_has_just_logged_in']) {
             factfinder.communication.Tracking.loginWithConfig();
