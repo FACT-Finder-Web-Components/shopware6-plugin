@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 {
-    const HAS_JUST_LOGGED_IN = 'ff_has_just_logged_in';
+    const HAS_JUST_LOGGED_IN  = 'ff_has_just_logged_in';
     const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
-    const USER_ID_COOKIE = 'ff_user_id';
+    const USER_ID_COOKIE      = 'ff_user_id';
 
     public static function getSubscribedEvents()
     {
@@ -28,8 +28,8 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
     public function hasJustLoggedIn(BeforeSendResponseEvent $event): void
     {
-        $request = $event->getRequest();
-        $session = $request->getSession();
+        $request  = $event->getRequest();
+        $session  = $request->getSession();
         $response = $event->getResponse();
 
         if (
@@ -60,8 +60,8 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
     public function hasJustLoggedOut(BeforeSendResponseEvent $event): void
     {
-        $request = $event->getRequest();
-        $session = $request->getSession();
+        $request  = $event->getRequest();
+        $session  = $request->getSession();
         $response = $event->getResponse();
 
         if (

@@ -64,7 +64,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
         $event->getPage()->getExtension('factfinder')->assign(
             [
-                'searchImmediate' => $searchImmediate ? 'true' : 'false',
+                'searchImmediate'       => $searchImmediate ? 'true' : 'false',
                 'communication'         => $communication,
                 'categoryPathFieldName' => "{$this->fieldName}ROOT",
             ]
