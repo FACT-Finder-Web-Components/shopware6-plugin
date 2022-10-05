@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 {
-    const HAS_JUST_LOGGED_IN  = 'ff_has_just_logged_in';
-    const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
-    const USER_ID_COOKIE      = 'ff_user_id';
+    public const HAS_JUST_LOGGED_IN  = 'ff_has_just_logged_in';
+    public const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
+    private const USER_ID            = 'ff_user_id';
 
     public static function getSubscribedEvents()
     {
@@ -41,7 +41,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
         }
 
         if ($response->getContext()->getCustomer() === null) {
-            $response->headers->clearCookie(self::USER_ID_COOKIE);
+            $response->headers->clearCookie(self::USER_ID);
             $response->headers->clearCookie(self::HAS_JUST_LOGGED_OUT);
         }
 
@@ -53,7 +53,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
         if ($session->get(self::HAS_JUST_LOGGED_IN, false) === true) {
             $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_IN, '1'));
-            $response->headers->setCookie($this->getCookie(self::USER_ID_COOKIE, $response->getContext()->getCustomer()->getId()));
+            $response->headers->setCookie($this->getCookie(self::USER_ID, $response->getContext()->getCustomer()->getId()));
             $session->set(self::HAS_JUST_LOGGED_IN, false);
         }
     }
@@ -74,7 +74,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
         if ($session->get(self::HAS_JUST_LOGGED_OUT, false) === true) {
             $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_OUT, '1'));
-            $response->headers->clearCookie(self::USER_ID_COOKIE);
+            $response->headers->clearCookie(self::USER_ID);
             $session->set(self::HAS_JUST_LOGGED_OUT, false);
         }
     }
