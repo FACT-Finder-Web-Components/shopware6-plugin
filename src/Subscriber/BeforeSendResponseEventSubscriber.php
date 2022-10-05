@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
+use DateTime;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
 use Shopware\Storefront\Framework\Routing\StorefrontResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -83,7 +84,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     {
         return Cookie::create($name)
             ->withValue($value)
-            ->withExpires((new \DateTime())->modify('+1 hour')->getTimestamp())
+            ->withExpires((new DateTime())->modify('+1 hour')->getTimestamp())
             ->withHttpOnly(false);
     }
 }
