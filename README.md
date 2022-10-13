@@ -7,7 +7,8 @@ a concise overview of its primary functions. The first chapter *Installation* wa
 installation process. The second chapter *Settings* explains the customisation options in the Showpare backend. The
 final chapter *Exporting Feed* describes how to use provided console command to export the feed.
 
-- [Requirements](#requirements)
+- [System Requirements](#system-requirements)
+- [FACT-Finder® Supported Sections](#fact-finder-supported-sections)
 - [Installation](#installation)
 - [Activating the Module](#activating-the-module)
 - [Main Settings](#main-settings)
@@ -44,10 +45,17 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - [Contribute](#contribute)
 - [License](#license)
 
-## Requirements
+## System Requirements
 
 - Shopware 6.4 or higher
 - PHP version 7.4 or higher
+
+## FACT-Finder® Supported Sections
+
+Version | Compatibility
+------- | --- 
+NG      | ✔️ 
+7.x     | ❌️
 
 ## Installation
 
@@ -86,8 +94,7 @@ store cache in order the new applied configuration to start working.
   endpoint ( `fact-finder` )
 * Channel - Channel you want to serve data from
 * Username
-* Password  
-  **Note:** Module supports FACT-Finder® NG only.
+* Password
 
 #### Update Field Roles
 This functionality offers a way to download field roles configured in FACT-Finder®.
