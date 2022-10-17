@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use DateTime;
+use Exception;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
 use Shopware\Storefront\Framework\Routing\StorefrontResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
@@ -33,11 +35,9 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
         $session  = $request->getSession();
         $response = $event->getResponse();
 
-        if (
-            !$response instanceof StorefrontResponse
-            || $request->isXmlHttpRequest()
-            || $response->getStatusCode() >= Response::HTTP_MULTIPLE_CHOICES
-        ) {
+        try {
+            $this->validateRequest($request, $response);
+        } catch (Exception $e) {
             return;
         }
 
@@ -65,11 +65,9 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
         $session  = $request->getSession();
         $response = $event->getResponse();
 
-        if (
-            !$response instanceof StorefrontResponse
-            || $request->isXmlHttpRequest()
-            || $response->getStatusCode() >= Response::HTTP_MULTIPLE_CHOICES
-        ) {
+        try {
+            $this->validateRequest($request, $response);
+        } catch (Exception $e) {
             return;
         }
 
@@ -80,11 +78,25 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function getCookie(string $name, string $value): Cookie
+    protected function getCookie(string $name, string $value): Cookie
     {
         return Cookie::create($name)
             ->withValue($value)
             ->withExpires((new DateTime())->modify('+1 hour')->getTimestamp())
             ->withHttpOnly(false);
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function validateRequest(Request $request, Response $response): void
+    {
+        if (
+            !$response instanceof StorefrontResponse
+            || $request->isXmlHttpRequest()
+            || $response->getStatusCode() >= Response::HTTP_MULTIPLE_CHOICES
+        ) {
+            throw new Exception('Not supported request');
+        }
     }
 }
