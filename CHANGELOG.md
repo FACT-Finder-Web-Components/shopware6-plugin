@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- Upgrade Web Components version to v4.2.1
+- introduce new way of user login tracking event
 ## [v3.3.1] - 2022.08.01
 ### Improve
  - Product Detail Page
