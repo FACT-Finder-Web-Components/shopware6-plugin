@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace spec\Omikron\FactFinder\Shopware6\Subscriber;
 
+use Omikron\FactFinder\Shopware6\Subscriber\BeforeSendResponseEventSubscriber;
 use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
@@ -26,6 +27,8 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
     /** @var StorefrontResponse|Collaborator */
     private Collaborator $session;
 
+    private array $subscriberMethods;
+
     function let(
         Request $request,
         StorefrontResponse $response,
@@ -40,39 +43,49 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         $event->getRequest()->willReturn($request);
         $event->getResponse()->willReturn($response);
         $this->event = $event;
+        $this->subscriberMethods = array_map(
+            fn (array $subscriberMethod) => $subscriberMethod[0],
+            (new BeforeSendResponseEventSubscriber())->getSubscribedEvents()[BeforeSendResponseEvent::class]
+        );
     }
 
     public function it_should_not_pass_request_validation_when_ajax_request()
     {
-        // Expect & Given
-        $this->request->isXmlHttpRequest()->willReturn(true);
-        $this->response->getStatusCode()->willReturn(200);
+        foreach ($this->subscriberMethods as $subscriberMethod) {
+            // Expect & Given
+            $this->request->isXmlHttpRequest()->willReturn(true);
+            $this->response->getStatusCode()->willReturn(200);
 
-        // When & Then
-        $this->hasCustomerJustLoggedIn($this->event)->shouldReturn(false);
+            // When & Then
+            $this->$subscriberMethod($this->event)->shouldReturn(false);
+        }
     }
 
     public function it_should_not_pass_request_validation_when_unsupported_response_code()
     {
-        // Expect & Given
-        $this->request->isXmlHttpRequest()->willReturn(false);
-        $this->response->getStatusCode()->willReturn(300);
+        foreach ($this->subscriberMethods as $subscriberMethod) {
+            // Expect & Given
+            $this->request->isXmlHttpRequest()->willReturn(false);
+            $this->response->getStatusCode()->willReturn(300);
 
-        // When & Then
-        $this->hasCustomerJustLoggedIn($this->event)->shouldReturn(false);
+            // When & Then
+            $this->$subscriberMethod($this->event)->shouldReturn(false);
+        }
     }
 
     public function it_should_not_pass_request_validation_when_response_is_not_instance_of_storefront_response(
         BeforeSendResponseEvent $event,
         Response $response
     ) {
-        // Expect & Given
-        $this->request->isXmlHttpRequest()->willReturn(false);
-        $this->response->getStatusCode()->willReturn(200);
-        $event->getRequest()->willReturn($this->request);
-        $event->getResponse()->willReturn($response);
+        foreach ($this->subscriberMethods as $subscriberMethod) {
+            // Expect & Given
+            $this->request->isXmlHttpRequest()->willReturn(false);
+            $this->response->getStatusCode()->willReturn(200);
+            $event->getRequest()->willReturn($this->request);
+            $event->getResponse()->willReturn($response);
 
-        // When & Then
-        $this->hasCustomerJustLoggedIn($this->event)->shouldReturn(false);
+            // When & Then
+            $this->$subscriberMethod($this->event)->shouldReturn(false);
+        }
     }
 }
