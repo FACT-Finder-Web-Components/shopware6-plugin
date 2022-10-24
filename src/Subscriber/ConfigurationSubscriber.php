@@ -42,10 +42,8 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             'channel'               => $this->config->getChannel($salesChannelId),
             'version'               => 'ng',
             'api'                   => 'v4',
-            'user-id'               => $customer ? $customer->getId() : null,
             'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
             'currency-country-code' => $event->getRequest()->getLocale(),
-            'search-immediate'      => strpos($event->getRequest()->get('_route'), 'factfinder') ? 'true' : 'false',
         ];
 
         if (!empty($this->addParams)) {
@@ -53,8 +51,10 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         }
 
         $event->getPage()->addExtension('factfinder', new ArrayEntity([
-            'field_roles'   => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
-            'communication' => $communication + $this->communicationParameters,
+            'field_roles'     => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
+            'communication'   => $communication + $this->communicationParameters,
+            'searchImmediate' => strpos($event->getRequest()->get('_route'), 'factfinder') ? 'true' : 'false',
+            'userId'          => $customer ? $customer->getId() : null,
         ]));
     }
 }

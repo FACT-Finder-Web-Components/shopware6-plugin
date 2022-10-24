@@ -37,23 +37,26 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         $this->configure($cmsPageRoute, $categoryPath, $event, $request, $categoryEntity, $navigationPage, $extension, $salesChannelContext, $salesChannelEntity, $categoryRouteResponse);
     }
 
-    public function it_should_not_add_search_immediate_attribute_if_its_disabled_in_category_config(
+    public function it_should_add_category_page_attribute_in_category_config(
         CategoryEntity $categoryEntity,
         ArrayEntity $extension,
         NavigationPageLoadedEvent $event
     ) {
         $categoryEntity->getCustomFields()->willReturn([OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME => false]);
-        $extension->assign(Argument::withEntry('communication', Argument::withEntry('search-immediate', 'true')))->shouldBeCalled();
+        $extension->assign(Argument::withEntry('communication', Argument::withEntry('category-page', Argument::any())))->shouldBeCalled();
         $this->onPageLoaded($event);
     }
 
-    public function it_should_add_search_immediate_attribute_if_its_enabled_in_category_config(
+    public function it_should_not_add_category_page_attribute_in_category_config(
         CategoryEntity $categoryEntity,
         ArrayEntity $extension,
-        NavigationPageLoadedEvent $event
+        NavigationPageLoadedEvent $event,
+        Request $request
     ) {
+        $request->get('_route')->willReturn('frontend.not_home.page');
+        $event->getRequest()->willReturn($request);
         $categoryEntity->getCustomFields()->willReturn([OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME => true]);
-        $extension->assign(Argument::withEntry('communication', Argument::withEntry('search-immediate', 'false')))->shouldBeCalled();
+        $extension->assign(Argument::withEntry('communication', Argument::exact(['add-params' => 'navigation=true'])))->shouldBeCalled();
         $this->onPageLoaded($event);
     }
 
