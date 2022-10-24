@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace spec\Omikron\FactFinder\Shopware6\Subscriber;
 
+use DateTime;
 use Omikron\FactFinder\Shopware6\Subscriber\BeforeSendResponseEventSubscriber;
 use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
+use Prophecy\Argument;
+use Shopware\Core\Checkout\Customer\CustomerEntity;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Framework\Routing\StorefrontResponse;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -26,7 +31,7 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
     /** @var StorefrontResponse|Collaborator */
     private Collaborator $response;
 
-    /** @var StorefrontResponse|Collaborator */
+    /** @var SessionInterface|Collaborator */
     private Collaborator $session;
 
     /** @var ResponseHeaderBag|Collaborator */
@@ -115,5 +120,52 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
 
         // When & Then
         $this->isCustomerLoggedOut($this->event);
+    }
+
+    public function it_should_clear_has_just_logged_in_cookie_when_is_already_set(ParameterBag $cookies)
+    {
+        // Expect & Given
+        $this->request->cookies = $cookies;
+        $cookies->get('ff_has_just_logged_in', Argument::any())->willReturn(true);
+        $this->context->getCustomer()->willReturn(null);
+        $this->headers->clearCookie('ff_has_just_logged_in')->shouldBeCalled();
+
+        // When & Then
+        $this->isHasJustLoggedInCookieSet($this->event);
+    }
+
+    public function it_should_set_has_just_logged_in_cookie_and_user_id_cookie(CustomerEntity $customer)
+    {
+        // Expect & Given
+        $customer->getId()->willReturn('test_id_1');
+        $this->context->getCustomer()->willReturn($customer);
+        $this->session->get('ff_has_just_logged_in', Argument::any())->willReturn(true);
+        $this->headers->setCookie(Cookie::create('ff_has_just_logged_in')
+            ->withValue('1')
+            ->withExpires((new DateTime())->modify('+1 hour')->getTimestamp())
+            ->withHttpOnly(false))->shouldBeCalled();
+        $this->headers->setCookie(Cookie::create('ff_user_id')
+            ->withValue('test_id_1')
+            ->withExpires((new DateTime())->modify('+1 hour')->getTimestamp())
+            ->withHttpOnly(false))->shouldBeCalled();
+        $this->session->set('ff_has_just_logged_in', false)->shouldBeCalled();
+
+        // When & Then
+        $this->hasCustomerJustLoggedIn($this->event);
+    }
+
+    public function it_should_set_has_just_logged_out_cookie()
+    {
+        // Expect & Given
+        $this->session->get('ff_has_just_logged_out', Argument::any())->willReturn(true);
+        $this->headers->setCookie(Cookie::create('ff_has_just_logged_out')
+            ->withValue('1')
+            ->withExpires((new DateTime())->modify('+1 hour')->getTimestamp())
+            ->withHttpOnly(false))->shouldBeCalled();
+        $this->headers->clearCookie('ff_user_id')->shouldBeCalled();
+        $this->session->set('ff_has_just_logged_out', false)->shouldBeCalled();
+
+        // When & Then
+        $this->hasCustomerJustLoggedOut($this->event);
     }
 }
