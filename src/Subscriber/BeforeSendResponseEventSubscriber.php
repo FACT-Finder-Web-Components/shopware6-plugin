@@ -17,7 +17,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 {
     public const HAS_JUST_LOGGED_IN  = 'ff_has_just_logged_in';
     public const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
-    private const USER_ID            = 'ff_user_id';
+    public const USER_ID             = 'ff_user_id';
 
     public static function getSubscribedEvents()
     {
@@ -113,7 +113,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     {
         return Cookie::create($name)
             ->withValue($value)
-            ->withExpires((new DateTime())->modify('+1 hour')->getTimestamp())
+            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
             ->withHttpOnly(false);
     }
 
