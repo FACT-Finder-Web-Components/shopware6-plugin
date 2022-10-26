@@ -10,21 +10,21 @@ use Shopware\Storefront\Framework\Cookie\CookieProviderInterface;
 class CookieProvider implements CookieProviderInterface
 {
     private const HAS_JUST_LOGGED_IN = [
-        'snippet_name' => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
+        'snippet_name'        => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
         'snippet_description' => 'Cookie required for proper working of user login tracking event',
-        'cookie' => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
+        'cookie'              => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
     ];
 
     private const HAS_JUST_LOGGED_OUT = [
-        'snippet_name' => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
+        'snippet_name'        => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
         'snippet_description' => 'Cookie required for proper working of user login tracking event',
-        'cookie' => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
+        'cookie'              => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
     ];
 
     private const USER_ID = [
-        'snippet_name' => BeforeSendResponseEventSubscriber::USER_ID,
+        'snippet_name'        => BeforeSendResponseEventSubscriber::USER_ID,
         'snippet_description' => 'Cookie required for proper working of user login tracking event',
-        'cookie' => BeforeSendResponseEventSubscriber::USER_ID,
+        'cookie'              => BeforeSendResponseEventSubscriber::USER_ID,
     ];
 
     private CookieProviderInterface $originalService;
