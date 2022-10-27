@@ -64,7 +64,7 @@
             <bind key="$categoryPageAddParams">%factfinder.category_page.add_params%</bind>
             <bind key="$configurationAddParams">%factfinder.configuration.add_params%</bind>
             <bind key="$communicationParameters">%factfinder.communication.parameters.base%</bind>
-            <bind key="$feedPreprocessorEntryRepository" type="service" id="factfinder_feed_preprocessor.repository" />
+            <bind key="$entryRepository" type="service" id="factfinder_feed_preprocessor.repository" />
         </defaults>
 
         <service id="Omikron\FactFinder\Communication\Resource\AdapterFactory" />

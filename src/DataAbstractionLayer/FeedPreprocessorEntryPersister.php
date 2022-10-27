@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\DataAbstractionLayer;
 
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 
 class FeedPreprocessorEntryPersister
 {
-    private EntityRepositoryInterface $entryRepository;
+    private EntityRepository $entryRepository;
 
-    public function __construct(EntityRepositoryInterface $entryRepository)
+    public function __construct(EntityRepository $entryRepository)
     {
         $this->entryRepository = $entryRepository;
     }

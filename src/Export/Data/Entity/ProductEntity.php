@@ -14,7 +14,7 @@ use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 {
     private Product $product;
-    private ?Product $parent = null;
+    private ?Product $parent         = null;
     private string $filterAttributes = '';
     private string $customFields     = '';
     private Traversable $additionalCache;

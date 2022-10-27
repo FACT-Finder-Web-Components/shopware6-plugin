@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace spec\Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
+use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessor;
+use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryPersister;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryReader;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface;
@@ -24,6 +26,7 @@ use Prophecy\Argument;
 use Shopware\Core\Content\Product\ProductCollection;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+use Shopware\Core\Framework\Context;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class PreprocessedProductEntityFactorySpec extends ObjectBehavior
@@ -37,16 +40,20 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     private Collaborator $decoratedFactory;
     private Collaborator $feedPreprocessorReader;
     private Collaborator $salesChannelService;
+    private Collaborator $feedPreprocessor;
     private \Traversable $cachedFields;
 
     function let(
         SalesChannelContext $salesChannelContext,
+        Context $context,
         SalesChannelService $salesChannelService,
         FactoryInterface $decoratedFactory,
         FeedPreprocessorEntryReader $feedPreprocessorReader,
-        ExportSettings $exportSettings
+        ExportSettings $exportSettings,
+        FeedPreprocessorEntryPersister $entryPersister,
+        FeedPreprocessor $feedPreprocessor
     ) {
-        $salesChannelContext->getContext()->willReturn($salesChannelContext);
+        $salesChannelContext->getContext()->willReturn($context);
         $salesChannelContext->getLanguageId()->willReturn('');
         $salesChannelService->getSalesChannelContext()->willReturn($salesChannelContext);
         $this->productMockFactory = new ProductMockFactory();
@@ -60,7 +67,17 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         $exportSettings->isExportCacheEnable()->willReturn(true);
         $this->exportSettings = $exportSettings;
         $this->salesChannelService = $salesChannelService;
-        $this->beConstructedWith($this->decoratedFactory, $this->salesChannelService, new FieldsProvider(new \ArrayIterator()), $this->exportSettings, $this->feedPreprocessorReader, $this->cachedFields);
+        $this->feedPreprocessor = $feedPreprocessor;
+        $this->beConstructedWith(
+            $this->decoratedFactory,
+            $this->salesChannelService,
+            new FieldsProvider(new \ArrayIterator()),
+            $this->exportSettings,
+            $this->feedPreprocessorReader,
+            $entryPersister,
+            $this->feedPreprocessor,
+            $this->cachedFields
+        );
     }
 
     public function it_should_handle_entities_without_cache_using_fallback_from_decorated_factory(): void
@@ -70,6 +87,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
 
         // Expect
         $this->feedPreprocessorReader->read($productEntity->getProductNumber(), Argument::any())->willReturn([]);
+        $this->feedPreprocessor->createEntries($productEntity, Argument::any())->willReturn(['fallback_data']);
         $this->decoratedFactory->createEntities($productEntity, Argument::any())->willYield(['fallback_data']);
 
         // When
