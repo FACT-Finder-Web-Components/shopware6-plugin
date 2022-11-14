@@ -16,6 +16,14 @@
             <parameter key="Keywords">Keywords</parameter>
             <parameter key="MetaTitle">MetaTitle</parameter>
         </parameter>
+        <parameter key="factfinder.export.category.columns.base" type="collection">
+            <parameter key="Id">Id</parameter>
+            <parameter key="Name">Name</parameter>
+            <parameter key="CategoryPath">CategoryPath</parameter>
+            <parameter key="sourceField">sourceField</parameter>
+            <parameter key="parentCategory">parentCategory</parameter>
+            <parameter key="Deeplink">Deeplink</parameter>
+        </parameter>
         <parameter key="factfinder.export.brands.columns.base" type="collection">
             <parameter key="Name">Name</parameter>
             <parameter key="Deeplink">Deeplink</parameter>
@@ -93,6 +101,10 @@
 
         <service id="Omikron\FactFinder\Shopware6\Subscriber\CategoryPageSubscriber">
             <argument type="service" id="Shopware\Core\Content\Category\SalesChannel\CategoryRoute"/>
+        </service>
+
+        <service id="Omikron\FactFinder\Shopware6\Export\ExportCmsPages">
+            <argument type="service" id="sales_channel.category.repository" />
         </service>
 
         <service id="Omikron\FactFinder\Shopware6\Export\ExportCategories">
