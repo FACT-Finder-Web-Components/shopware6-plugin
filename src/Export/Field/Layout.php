@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity;
 use Omikron\FactFinder\Shopware6\Export\Filter\TextFilter;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Cms\Aggregate\CmsBlock\CmsBlockEntity;
@@ -56,7 +57,7 @@ class Layout implements FieldInterface
 
     public function getCompatibleEntityTypes(): array
     {
-        return [CategoryEntity::class];
+        return [CmsPageEntity::class];
     }
 
     private function toValues(?EntityCollection $collection): array

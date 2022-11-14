@@ -13,7 +13,6 @@ use Shopware\Core\Content\Seo\SeoUrl\SeoUrlCollection;
 use Shopware\Core\Content\Seo\SeoUrl\SeoUrlEntity;
 use Shopware\Core\Content\Seo\SeoUrlUpdater;
 use Shopware\Storefront\Framework\Seo\SeoUrlRoute\NavigationPageSeoUrlRoute as CategoryRoute;
-use Shopware\Storefront\Framework\Seo\SeoUrlRoute\ProductPageSeoUrlRoute as ProductRoute;
 
 class DeeplinkSpec extends ObjectBehavior
 {
@@ -46,7 +45,7 @@ class DeeplinkSpec extends ObjectBehavior
         $category->getId()->willReturn(2);
 
         $this->onUrlUpdated(new SeoUrlUpdateEvent([0 => ['seoPathInfo' => '/some-seo-url-link']]));
-        $seoUrlUpdater->update(ProductRoute::ROUTE_NAME, ['1'])->shouldBeCalled();
+        $seoUrlUpdater->update(CategoryRoute::ROUTE_NAME, ['1'])->shouldBeCalled();
         $seoUrlUpdater->update(CategoryRoute::ROUTE_NAME, ['2'])->shouldBeCalled();
 
         $this->getValue($product);

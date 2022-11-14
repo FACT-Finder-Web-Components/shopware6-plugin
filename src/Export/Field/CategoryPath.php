@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\CategoryEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
+use Shopware\Core\Content\Category\CategoryCollection;
 use Shopware\Core\Content\Category\CategoryEntity as Category;
+use Shopware\Core\Content\Category\CategoryEntity as ShopwareCategoryEntity;
 use Shopware\Core\Content\Category\Service\CategoryBreadcrumbBuilder;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 
@@ -34,12 +37,12 @@ class CategoryPath implements FieldInterface
 
     public function getValue(Entity $entity): string
     {
-        return implode('|', $entity->getCategories()->fmap($this->createPath($this->channelService->getSalesChannelContext()->getSalesChannel())));
+        return implode('|', $this->getCategories($entity)->fmap($this->createPath($this->channelService->getSalesChannelContext()->getSalesChannel())));
     }
 
     public function getCompatibleEntityTypes(): array
     {
-        return [SalesChannelProductEntity::class];
+        return [ProductEntity::class, CategoryEntity::class];
     }
 
     private function createPath(SalesChannelEntity $salesChannel): callable
@@ -50,5 +53,14 @@ class CategoryPath implements FieldInterface
                 ? implode('/', array_map('urlencode', $breadcrumb))
                 : '';
         };
+    }
+
+    private function getCategories(Entity $entity): CategoryCollection
+    {
+        if ($entity instanceof ShopwareCategoryEntity) {
+            return new CategoryCollection([$entity]);
+        }
+
+        return $entity->getCategories();
     }
 }

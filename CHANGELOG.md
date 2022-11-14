@@ -1,5 +1,58 @@
 # Changelog
 ## Unreleased
+### BREAKING
+- `Omikron\FactFinder\Shopware6\Command\DataExportCommand.php`
+    - change output from method `getBaseTypeEntityMap`. 
+
+- `Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity.php`
+    - rename class name from `CategoryEntity` to `CmsPageEntity`
+
+- `Omikron\FactFinder\Shopware6\Export\Field\Brand.php`
+    - change output from method `getCompatibleEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\Field\CategoryPath.php`
+    - change output from method `getCompatibleEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\Field\CustomFields.php`
+    - change output from method `getCompatibleEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\Field\Deeplink.php`
+    - change output from method `getCompatibleEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\Field\Description.php`
+    - change output from method `getCompatibleEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\Field\FilterAttributes.php`
+    - change output from method `getCompatibleKEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\Field\ImageUrl.php`
+    - change output from method `getCompatibleEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\Field\Layout.php`
+    - change output from method `getCompatibleEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\Field\Price.php`
+    - change output from method `getCompatibleEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\Field\PriceCurrency.php`
+    - change output from method `getCompatibleEntityTypes`.
+
+- `Omikron\FactFinder\Shopware6\Export\ExportBrands.php`
+    - remove method `getCoveredEntityType`.
+
+- `Omikron\FactFinder\Shopware6\Export\ExportCmsPages.php`
+    - rename class name from `ExportCategories` to `ExportCmsPages`
+    - change output from method `getProducedExportEntityType`.
+    - remove method `getCoveredEntityType`.
+
+- `Omikron\FactFinder\Shopware6\Export\ExportInterface.php`
+    - remove method `getCoveredEntityType`.
+
+- `Omikron\FactFinder\Shopware6\Export\ExportProducts.php`
+    - remove method `getCoveredEntityType`.
+
+### Add
+ - category export feed for category, enrich category suggestion with deeplinks
 ### Change
 - extended the cookie consent manager with cookies added in release [v3.3.2](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.3.2)
 

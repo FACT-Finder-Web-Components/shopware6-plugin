@@ -7,12 +7,12 @@ namespace Omikron\FactFinder\Shopware6\Export\Field;
 use InvalidArgumentException;
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\CustomFieldsService;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Shopware\Core\Content\Category\CategoryEntity;
-use Shopware\Core\Content\Category\CategoryEntity as Category;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
@@ -68,7 +68,7 @@ class CustomFields implements FieldInterface
 
     public function getCompatibleEntityTypes(): array
     {
-        return [SalesChannelProductEntity::class, CategoryEntity::class];
+        return [ProductEntity::class, CmsPageEntity::class];
     }
 
     public function getFieldValue(Entity $entity): string
@@ -136,7 +136,7 @@ class CustomFields implements FieldInterface
             }
         }
 
-        if ($entity instanceof Category) {
+        if ($entity instanceof CategoryEntity) {
             unset($customFields[OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME]);
         }
 

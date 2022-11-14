@@ -30,11 +30,11 @@ class FeedFactory
         $this->exporters        = iterator_to_array($exporters);
     }
 
-    public function create(SalesChannelContext $context, string $exportType): Feed
+    public function create(SalesChannelContext $context, string $createdType): Feed
     {
-        $exporter = first(array_filter(($this->exporters), fn (ExportInterface $exp): bool => $exp->getCoveredEntityType() === $exportType));
+        $exporter = first(array_filter(($this->exporters), fn (ExportInterface $exp): bool => $exp->getProducedExportEntityType() === $createdType));
         if (!$exporter instanceof ExportInterface) {
-            throw new InvalidArgumentException(sprintf('There is no exporter for given type: %s', $exportType));
+            throw new InvalidArgumentException(sprintf('There is no exporter for given type: %s', $createdType));
         }
 
         return new Feed($context, $exporter, $this->compositeFactory, $this->filter);

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Closure;
-use Shopware\Core\Content\Category\CategoryEntity;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as ProductEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\CategoryEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Shopware\Core\Content\Seo\Event\SeoUrlUpdateEvent;
 use Shopware\Core\Content\Seo\SeoUrlUpdater;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
@@ -58,6 +59,6 @@ class Deeplink implements FieldInterface, EventSubscriberInterface
 
     public function getCompatibleEntityTypes(): array
     {
-        return [ProductEntity::class, CategoryEntity::class];
+        return [ProductEntity::class, CmsPageEntity::class, CategoryEntity::class];
     }
 }
