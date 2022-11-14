@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
-use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as Product;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
@@ -42,7 +42,7 @@ class FilterAttributes implements FieldInterface
 
     public function getCompatibleEntityTypes(): array
     {
-        return [ProductEntity::class];
+        return [Product::class];
     }
 
     private function applyPropertyGroupsFilter(Product $product): array

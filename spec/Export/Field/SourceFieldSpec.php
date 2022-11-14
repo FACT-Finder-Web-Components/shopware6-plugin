@@ -22,18 +22,15 @@ class SourceFieldSpec extends ObjectBehavior
         $this->shouldHaveType(FieldInterface::class);
     }
 
-    public function it_should_export_configured_category_path_name()
-    {
-        $this->getName()->shouldReturn($this->configuredFieldName);
-    }
-
-    public function it_should_export_empty_string_if_category_has_no_parent(Category $category)
-    {
-        $this->getValue($category)->shouldReturn("");
-    }
-
-    public function it_should_return_name_written_in_lower_case()
+    function it_has_a_name()
     {
         $this->getName()->shouldReturn('sourceField');
+    }
+
+    function it_it_should_export_configured_field_name(Category $category)
+    {
+        $this->beConstructedWith($this->configuredFieldName);
+
+        $this->getValue($category)->shouldReturn($this->configuredFieldName);
     }
 }

@@ -6,7 +6,7 @@ use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use PhpSpec\ObjectBehavior;
 use Shopware\Core\Content\Product\ProductCollection;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as Product;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 
 class FilterAttributesSpec extends ObjectBehavior
