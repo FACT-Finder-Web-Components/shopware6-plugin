@@ -33,6 +33,6 @@ class GenericEntityFactory implements FactoryInterface
 
     public function createEntities(Entity $entity, string $producedType): iterable
     {
-        yield new $producedType($entity, $this->fieldsProvider->getFields(get_class($entity)));
+        yield new $producedType($entity, $this->fieldsProvider->getFields($producedType));
     }
 }

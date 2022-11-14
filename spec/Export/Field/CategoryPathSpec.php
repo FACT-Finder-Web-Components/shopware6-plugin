@@ -64,6 +64,37 @@ class CategoryPathSpec extends ObjectBehavior
         $this->getValue($product)->shouldReturn('Category1-1/Category1-2/Category1-3|Category2-1/Category2-2');
     }
 
+    function it_should_create_correct_path_for_category(
+        CategoryBreadcrumbBuilder $breadcrumbBuilder,
+        SalesChannelService $salesChannelService,
+        SalesChannelContext $channelContext
+    ) {
+        $breadcrumbBuilder->build(Argument::which('getId', 'id3'), Argument::type(SalesChannelEntity::class), 'home')->willReturn(
+            [
+                'id1' => 'Category1-1',
+                'id2' => 'Category1-2',
+                'id3' => 'Category1-3',
+            ]);
+        $channelContext->getSalesChannel()->willReturn($this->getSalesChannel('home'));
+        $salesChannelService->getSalesChannelContext()->willReturn($channelContext);
+        $category = new CategoryEntity();
+        $category->setUniqueIdentifier('Category1-3');
+        $category->setId('id3');
+        $category->setPath('|home|id1|id2|');
+        $category->setTranslated([
+            'name' => 'Category1-3',
+            'breadcrumb' => [
+                'home' => 'Home',
+                'id1'  => 'Category1-2',
+                'id2'  => 'Category1-2',
+                'id3'  => 'Category1-3',
+            ],
+        ]);
+
+        $this->getValue($category)->shouldReturn('Category1-1/Category1-2/Category1-3');
+    }
+
+
     function it_should_filter_out_categories_from_not_active_sales_channel(
         Product $product,
         CategoryBreadcrumbBuilder $breadcrumbBuilder,

@@ -7,6 +7,10 @@ namespace Omikron\FactFinder\Shopware6\Command;
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
 use Omikron\FactFinder\Shopware6\Export\ChannelTypeNamingStrategy;
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\BrandEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\CategoryEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Omikron\FactFinder\Shopware6\Export\FeedFactory;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
@@ -14,9 +18,6 @@ use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Omikron\FactFinder\Shopware6\Export\Stream\ConsoleOutput;
 use Omikron\FactFinder\Shopware6\Export\Stream\CsvFile;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
-use Shopware\Core\Content\Category\CategoryEntity;
-use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
@@ -49,11 +50,12 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     public const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
     public const EXPORT_TYPE_ARGUMENT            = 'export_type';
 
-    private const UPLOAD_FEED_OPTION              = 'upload';
-    private const PUSH_IMPORT_OPTION              = 'import';
-    private const PRODUCTS_EXPORT_TYPE            = 'products';
-    private const CMS_EXPORT_TYPE                 = 'cms';
-    private const BRANDS_EXPORT_TYPE              = 'brands';
+    private const UPLOAD_FEED_OPTION     = 'upload';
+    private const PUSH_IMPORT_OPTION     = 'import';
+    private const PRODUCTS_EXPORT_TYPE   = 'products';
+    private const CMS_EXPORT_TYPE        = 'cms';
+    private const CATEGORIES_EXPORT_TYPE = 'category';
+    private const BRANDS_EXPORT_TYPE     = 'brands';
 
     private SalesChannelService $channelService;
     private EntityRepositoryInterface $channelRepository;
@@ -94,9 +96,10 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     public function getBaseTypeEntityMap(): array
     {
         return [
-            self::PRODUCTS_EXPORT_TYPE => SalesChannelProductEntity::class,
-            self::BRANDS_EXPORT_TYPE   => ProductManufacturerEntity::class,
-            self::CMS_EXPORT_TYPE      => CategoryEntity::class,
+            self::PRODUCTS_EXPORT_TYPE   => ProductEntity::class,
+            self::BRANDS_EXPORT_TYPE     => BrandEntity::class,
+            self::CMS_EXPORT_TYPE        => CmsPageEntity::class,
+            self::CATEGORIES_EXPORT_TYPE => CategoryEntity::class,
         ];
     }
 
@@ -150,9 +153,9 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         }
 
         $context          = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
-        $entityFQN        = $this->getEntityFqnByType($exportType);
-        $feedService      = $this->feedFactory->create($context, $entityFQN);
-        $feedColumns      = $this->getFeedColumns($exportType, $entityFQN);
+        $entityClass      = $this->getExportedEntityClass($exportType);
+        $feedService      = $this->feedFactory->create($context, $entityClass);
+        $feedColumns      = $this->getFeedColumns($exportType, $entityClass);
 
         $needFile = $saveFile || $uploadFeed;
         $output   = $needFile ? new CsvFile($this->createFile($exportType, $context->getSalesChannelId())) : new ConsoleOutput($output);
@@ -188,10 +191,10 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         )->first();
     }
 
-    private function getFeedColumns(string $exportType, string $entityFqn): array
+    private function getFeedColumns(string $exportType, string $entityClass): array
     {
         $base   = (array) $this->container->getParameter(sprintf('factfinder.export.%s.columns.base', $exportType));
-        $fields = $this->fieldProviders->getFields($entityFqn);
+        $fields = $this->fieldProviders->getFields($entityClass);
         return array_values(
             array_unique(
                 array_merge(
@@ -210,7 +213,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         return (new ChoiceQuestion($question, $choices, $defaultValue))->setErrorMessage($errorMessage);
     }
 
-    private function getEntityFqnByType(string $exportType): string
+    private function getExportedEntityClass(string $exportType): string
     {
         $entityTypeMap = $this->getTypeEntityMap();
 

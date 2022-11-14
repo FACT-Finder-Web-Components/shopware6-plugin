@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Shopware\Core\Content\Category\CategoryEntity;
-use Shopware\Core\Content\Product\Aggregate\ProductManufacturer\ProductManufacturerEntity;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\BrandEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class ImageUrl implements FieldInterface
@@ -23,7 +23,7 @@ class ImageUrl implements FieldInterface
 
     public function getCompatibleEntityTypes(): array
     {
-        return [SalesChannelProductEntity::class, CategoryEntity::class, ProductManufacturerEntity::class];
+        return [ProductEntity::class, CmsPageEntity::class, BrandEntity::class];
     }
 
     private function checkAndReturnMediaUrlOrEmptyString(?Entity $entity = null): string

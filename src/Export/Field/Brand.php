@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class Brand implements FieldInterface
@@ -21,6 +21,6 @@ class Brand implements FieldInterface
 
     public function getCompatibleEntityTypes(): array
     {
-        return [SalesChannelProductEntity::class];
+        return [ProductEntity::class];
     }
 }
