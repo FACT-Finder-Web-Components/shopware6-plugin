@@ -18,7 +18,7 @@ class ParentCategory implements FieldInterface
         SalesChannelService $channelService,
         CategoryBreadcrumbBuilder $breadcrumbBuilder
     ) {
-        $this->channelService = $channelService;
+        $this->channelService    = $channelService;
         $this->breadcrumbBuilder = $breadcrumbBuilder;
     }
 
@@ -30,7 +30,7 @@ class ParentCategory implements FieldInterface
     public function getValue(Entity $entity): string
     {
         $salesChannel = $this->channelService->getSalesChannelContext()->getSalesChannel();
-        $breadcrumbs = $this->breadcrumbBuilder->build($entity, $salesChannel, $salesChannel->getNavigationCategoryId()) ?? [];
+        $breadcrumbs  = $this->breadcrumbBuilder->build($entity, $salesChannel, $salesChannel->getNavigationCategoryId()) ?? [];
         array_pop($breadcrumbs);
 
         return implode('/', $breadcrumbs) ?? '';

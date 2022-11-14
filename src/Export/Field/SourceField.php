@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\CategoryEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class SourceField implements FieldInterface
 {
@@ -18,7 +18,7 @@ class SourceField implements FieldInterface
 
     public function getName(): string
     {
-        return "sourceField";
+        return 'sourceField';
     }
 
     public function getValue(Entity $entity): string
@@ -30,5 +30,4 @@ class SourceField implements FieldInterface
     {
         return [CategoryEntity::class];
     }
-
 }

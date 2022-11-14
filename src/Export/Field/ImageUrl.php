@@ -7,7 +7,6 @@ namespace Omikron\FactFinder\Shopware6\Export\Field;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\BrandEntity;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
-use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class ImageUrl implements FieldInterface
