@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- extended the cookie consent manager with cookies added in release [v3.3.2](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.3.2)
+
 ## [v3.3.2] - 2022.10.24
 ### Change
 - Upgrade Web Components version to v4.2.2

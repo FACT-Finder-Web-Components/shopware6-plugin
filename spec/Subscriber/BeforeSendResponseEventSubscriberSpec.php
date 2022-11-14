@@ -142,11 +142,11 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         $this->session->get('ff_has_just_logged_in', Argument::any())->willReturn(true);
         $this->headers->setCookie(Cookie::create('ff_has_just_logged_in')
             ->withValue('1')
-            ->withExpires((new DateTime())->modify('+1 hour')->getTimestamp())
+            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
             ->withHttpOnly(false))->shouldBeCalled();
         $this->headers->setCookie(Cookie::create('ff_user_id')
             ->withValue('test_id_1')
-            ->withExpires((new DateTime())->modify('+1 hour')->getTimestamp())
+            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
             ->withHttpOnly(false))->shouldBeCalled();
         $this->session->set('ff_has_just_logged_in', false)->shouldBeCalled();
 
@@ -160,7 +160,7 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         $this->session->get('ff_has_just_logged_out', Argument::any())->willReturn(true);
         $this->headers->setCookie(Cookie::create('ff_has_just_logged_out')
             ->withValue('1')
-            ->withExpires((new DateTime())->modify('+1 hour')->getTimestamp())
+            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
             ->withHttpOnly(false))->shouldBeCalled();
         $this->headers->clearCookie('ff_user_id')->shouldBeCalled();
         $this->session->set('ff_has_just_logged_out', false)->shouldBeCalled();
