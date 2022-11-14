@@ -6,8 +6,8 @@ namespace Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
+use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
