@@ -51,15 +51,16 @@
 - `Omikron\FactFinder\Shopware6\Export\ExportProducts.php`
     - remove method `getCoveredEntityType`.
 
+### Change
+- Upgrade Web Components version to v4.2.3
+- extended the cookie consent manager with cookies added in release [v3.3.2](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.3.2)
+
 ### Add
  - category export feed for category, enrich category suggestion with deeplinks
 
 ### Fix
  - ff-communication
    - add configuration parameters when error page 404
-
-### Change
-- extended the cookie consent manager with cookies added in release [v3.3.2](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.3.2)
 
 ## [v3.3.2] - 2022.10.24
 ### Change
