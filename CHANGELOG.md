@@ -61,6 +61,7 @@
 ### Fix
  - ff-communication
    - add configuration parameters when error page 404
+ - removed `query` parameter from pages different than search result
 
 ## [v3.3.2] - 2022.10.24
 ### Change
