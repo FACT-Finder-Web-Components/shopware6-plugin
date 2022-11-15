@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
+use Shopware\Core\Framework\Event\ShopwareSalesChannelEvent;
 use Shopware\Core\Framework\Struct\ArrayEntity;
+use Shopware\Storefront\Event\StorefrontRenderEvent;
 use Shopware\Storefront\Page\GenericPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -30,10 +32,13 @@ class ConfigurationSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [GenericPageLoadedEvent::class => 'onPageLoaded'];
+        return [
+            GenericPageLoadedEvent::class => 'onPageLoaded',
+            StorefrontRenderEvent::class  => 'onPageLoaded',
+        ];
     }
 
-    public function onPageLoaded(GenericPageLoadedEvent $event): void
+    public function onPageLoaded(ShopwareSalesChannelEvent $event): void
     {
         $customer       = $event->getSalesChannelContext()->getCustomer();
         $salesChannelId = $event->getSalesChannelContext()->getSalesChannel()->getId();
@@ -50,10 +55,11 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             $communication['add-params'] = implode(',', $this->addParams);
         }
 
-        $event->getPage()->addExtension('factfinder', new ArrayEntity([
+        $page = method_exists($event, 'getPage') ? $event->getPage() : $event->getParameters()['page'];
+        $page->addExtension('factfinder', new ArrayEntity([
             'field_roles'     => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
             'communication'   => $communication + $this->communicationParameters,
-            'searchImmediate' => strpos($event->getRequest()->get('_route'), 'factfinder') ? 'true' : 'false',
+            'searchImmediate' => strpos($event->getRequest()->get('_route') ?? '', 'factfinder') ? 'true' : 'false',
             'userId'          => $customer ? $customer->getId() : null,
         ]));
     }
