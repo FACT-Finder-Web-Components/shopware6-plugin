@@ -53,6 +53,11 @@
 
 ### Add
  - category export feed for category, enrich category suggestion with deeplinks
+
+### Fix
+ - ff-communication
+   - add configuration parameters when error page 404
+
 ### Change
 - extended the cookie consent manager with cookies added in release [v3.3.2](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.3.2)
 
