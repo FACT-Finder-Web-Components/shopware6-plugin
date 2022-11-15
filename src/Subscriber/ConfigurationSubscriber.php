@@ -34,7 +34,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     {
         return [
             GenericPageLoadedEvent::class => 'onPageLoaded',
-            StorefrontRenderEvent::class => 'onPageLoaded',
+            StorefrontRenderEvent::class  => 'onPageLoaded',
         ];
     }
 
