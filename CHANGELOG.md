@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix error during SDK activation
+
 ## [v4.0.0] - 2022.11.15
 ### BREAKING
 - `Omikron\FactFinder\Shopware6\Command\DataExportCommand.php`

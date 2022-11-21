@@ -35,6 +35,10 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     {
         $response = $event->getResponse();
 
+        if (method_exists($response, 'getContext') === false) {
+            return false;
+        }
+
         try {
             $this->validateRequest($event->getRequest(), $response);
 
@@ -70,8 +74,18 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     public function hasCustomerJustLoggedIn(BeforeSendResponseEvent $event): bool
     {
         $request  = $event->getRequest();
-        $session  = $request->getSession();
+
+        try {
+            $session  = $request->getSession();
+        } catch (Exception $e) {
+            return false;
+        }
+
         $response = $event->getResponse();
+
+        if (method_exists($response, 'getContext') === false) {
+            return false;
+        }
 
         try {
             $this->validateRequest($request, $response);
