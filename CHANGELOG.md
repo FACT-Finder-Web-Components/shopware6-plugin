@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.0.1] - 2022.11.21
 ### Fix
 - Fix error during SDK activation
 
@@ -259,6 +259,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.1
 [v4.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.0
 [v3.3.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.3.2
 [v3.3.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v3.3.1
