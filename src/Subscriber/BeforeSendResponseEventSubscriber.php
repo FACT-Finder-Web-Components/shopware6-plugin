@@ -35,7 +35,10 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     {
         $response = $event->getResponse();
 
-        if (method_exists($response, 'getContext') === false) {
+        if (
+            method_exists($response, 'getContext') === false
+            || $response->getContext() === null
+        ) {
             return false;
         }
 
@@ -83,7 +86,10 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
         $response = $event->getResponse();
 
-        if (method_exists($response, 'getContext') === false) {
+        if (
+            method_exists($response, 'getContext') === false
+            || $response->getContext() === null
+        ) {
             return false;
         }
 
