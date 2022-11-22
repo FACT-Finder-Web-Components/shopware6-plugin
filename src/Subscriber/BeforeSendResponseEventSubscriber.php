@@ -35,7 +35,10 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     {
         $response = $event->getResponse();
 
-        if (method_exists($response, 'getContext') === false) {
+        if (
+            method_exists($response, 'getContext') === false
+            || $response->getContext() === null
+        ) {
             return false;
         }
 
@@ -76,14 +79,17 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
         $request  = $event->getRequest();
 
         try {
-            $session  = $request->getSession();
+            $session = $request->getSession();
         } catch (Exception $e) {
             return false;
         }
 
         $response = $event->getResponse();
 
-        if (method_exists($response, 'getContext') === false) {
+        if (
+            method_exists($response, 'getContext') === false
+            || $response->getContext() === null
+        ) {
             return false;
         }
 
@@ -105,8 +111,13 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     public function hasCustomerJustLoggedOut(BeforeSendResponseEvent $event): bool
     {
         $request  = $event->getRequest();
-        $session  = $request->getSession();
         $response = $event->getResponse();
+
+        try {
+            $session = $request->getSession();
+        } catch (Exception $e) {
+            return false;
+        }
 
         try {
             $this->validateRequest($request, $response);

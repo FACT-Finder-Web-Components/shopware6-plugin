@@ -56,11 +56,14 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         }
 
         $page = method_exists($event, 'getPage') ? $event->getPage() : $event->getParameters()['page'];
-        $page->addExtension('factfinder', new ArrayEntity([
-            'field_roles'     => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
-            'communication'   => $communication + $this->communicationParameters,
-            'searchImmediate' => strpos($event->getRequest()->get('_route') ?? '', 'factfinder') ? 'true' : 'false',
-            'userId'          => $customer ? $customer->getId() : null,
-        ]));
+
+        if ($page->hasExtension('factfinder') === false) {
+            $page->addExtension('factfinder', new ArrayEntity([
+                'field_roles'     => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
+                'communication'   => $communication + $this->communicationParameters,
+                'searchImmediate' => strpos($event->getRequest()->get('_route') ?? '', 'factfinder') ? 'true' : 'false',
+                'userId'          => $customer ? $customer->getId() : null,
+            ]));
+        }
     }
 }
