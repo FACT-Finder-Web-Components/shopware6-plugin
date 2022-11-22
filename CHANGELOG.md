@@ -1,4 +1,10 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix error during SDK activation
+- Category
+    - Fix search-immediate behaviour on Category Page
+
 ## [v4.0.1] - 2022.11.21
 ### Fix
 - Fix error during SDK activation
