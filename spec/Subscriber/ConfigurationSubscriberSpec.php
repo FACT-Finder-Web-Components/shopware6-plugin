@@ -55,6 +55,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $request->getLocale()->willReturn('en');
         $event->getPage()->willReturn($page);
 
+        $page->hasExtension('factfinder')->willReturn(false);
         $page->addExtension(
             'factfinder',
             new LogicalAndToken(
