@@ -63,6 +63,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'communication'   => $communication + $this->communicationParameters,
                 'searchImmediate' => strpos($event->getRequest()->get('_route') ?? '', 'factfinder') ? 'true' : 'false',
                 'userId'          => $customer ? $customer->getId() : null,
+                'ssr'             => $this->config->isSsrActive(),
             ]));
         }
     }

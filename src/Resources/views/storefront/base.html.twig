@@ -12,6 +12,16 @@
 {% endblock %}
 
 {% block base_body_script %}
+  {% if page.extensions.factfinder.ssr == 'ssr' %}
+    <script>
+      document.addEventListener('WebComponentsReady', function (event) {
+        const searchResult = {FF_SEARCH_RESULT};
+        factfinder.communication.EventAggregator.currentSearchResult = searchResult;
+        factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
+      });
+    </script>
+  {% endif %}
+
   {% block base_script_factfinder_search_redirect %}
     <script>
       document.addEventListener('before-search', function (event) {
