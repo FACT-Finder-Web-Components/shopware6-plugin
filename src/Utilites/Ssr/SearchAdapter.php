@@ -26,7 +26,7 @@ class SearchAdapter
         $this->priceFormatter = $priceFormatter;
     }
 
-    public function search(string $query, bool $navigationRequest): array
+    public function search(string $paramString, bool $navigationRequest): array
     {
         $client = $this->clientBuilder
             ->withServerUrl($this->config->getServerUrl())
@@ -34,7 +34,7 @@ class SearchAdapter
             ->withVersion($this->config->getVersion())
             ->build();
 
-        $endpoint = $this->createEndpoint($query, $navigationRequest);
+        $endpoint = $this->createEndpoint($paramString, $navigationRequest);
         $response = $client->request('GET', $endpoint);
 
         if (!$response) {
@@ -49,11 +49,11 @@ class SearchAdapter
         return json_decode((string) $response->getBody(), true);
     }
 
-    private function createEndpoint(string $query, bool $navigationRequest)
+    private function createEndpoint(string $paramString, bool $navigationRequest)
     {
         $channel  = $this->config->getChannel();
         $endpoint = $navigationRequest ? 'navigation' : 'search';
 
-        return "rest/v4/{$endpoint}/{$channel}?query={$query}";
+        return "rest/v4/{$endpoint}/{$channel}?{$paramString}";
     }
 }

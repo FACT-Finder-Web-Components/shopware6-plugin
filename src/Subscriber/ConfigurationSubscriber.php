@@ -79,7 +79,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             return false;
         }
 
-        $route = $event->getRequest()->get('_route');
+        $route = $event->getRequest()->get('_route', '');
 
         return $this->isSearchPage($route);
     }

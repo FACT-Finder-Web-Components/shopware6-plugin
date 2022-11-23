@@ -51,9 +51,10 @@ class ResultController extends StorefrontController
             $searchAdapter,
             $response->getContent(),
         );
+        $query = $request->query->get('query', '');
         $response->setContent(
             $recordList->getContent(
-                $request->query->get('query', '')
+                $query !== '' ? sprintf('query=%s', $query) : ''
             )
         );
 

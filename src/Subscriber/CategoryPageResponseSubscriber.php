@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
+use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
@@ -14,11 +15,14 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
 {
     private SearchAdapter $searchAdapter;
     private Environment $twig;
+    private Communication $config;
 
     public function __construct(
+        Communication $config,
         SearchAdapter $searchAdapter,
         Environment $twig
     ) {
+        $this->config = $config;
         $this->searchAdapter = $searchAdapter;
         $this->twig = $twig;
     }
@@ -33,8 +37,13 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
     public function onPageRendered(BeforeSendResponseEvent $event)
     {
         $request = $event->getRequest();
+        $categoryPath = $request->attributes->get('categoryPath', '');
 
-        if ($request->attributes->get('isCategoryPage', false)) {
+        if (
+            $this->config->isSsrActive() === false
+            || $request->isXmlHttpRequest()
+            || $categoryPath === ''
+        ) {
             return;
         }
 
@@ -46,7 +55,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         );
         $response->setContent(
             $recordList->getContent(
-                $request->query->get('query'),
+                $categoryPath,
                 true
             )
         );

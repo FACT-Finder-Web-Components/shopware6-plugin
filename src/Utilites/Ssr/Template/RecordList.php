@@ -29,10 +29,10 @@ class RecordList
     }
 
     public function getContent(
-        string $query,
+        string $paramString,
         bool $isNavigationRequest = false
     ) {
-        $results = $this->searchAdapter->search($query, $isNavigationRequest);
+        $results = $this->searchAdapter->search($paramString, $isNavigationRequest);
         $template = $this->twig->createTemplate($this->template);
         $recordsContent = array_reduce(
             $results['records'] ?? [],
