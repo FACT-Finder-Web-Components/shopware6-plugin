@@ -14,26 +14,25 @@ class RecordList
 
     private Environment $twig;
     private SearchAdapter $searchAdapter;
-    private string $query;
     private string $content;
     private string $template;
 
     public function __construct(
         Environment $twig,
         SearchAdapter $searchAdapter,
-        string $query,
         string $content
     ) {
         $this->twig = $twig;
         $this->searchAdapter = $searchAdapter;
-        $this->query = $query;
         $this->content = $content;
         $this->setTemplateString();
     }
 
-    public function getContent()
-    {
-        $results = $this->searchAdapter->search($this->query, false);
+    public function getContent(
+        string $query,
+        bool $isNavigationRequest = false
+    ) {
+        $results = $this->searchAdapter->search($query, $isNavigationRequest);
         $template = $this->twig->createTemplate($this->template);
         $recordsContent = array_reduce(
             $results['records'] ?? [],

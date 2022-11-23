@@ -62,6 +62,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
                 'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
             ] + ($searchImmediate ? ['category-page' => $this->prepareCategoryPath($category)] : []);
 
+        $event->getRequest()->attributes->set('isCategoryPage', true);
         $event->getPage()->getExtension('factfinder')->assign(
             [
                 'communication'         => $communication,

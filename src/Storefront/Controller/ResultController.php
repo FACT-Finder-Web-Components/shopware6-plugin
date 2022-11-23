@@ -8,7 +8,6 @@ use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
-use Shopware\Core\System\Currency\CurrencyFormatter;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Shopware\Storefront\Page\GenericPageLoader;
@@ -50,10 +49,13 @@ class ResultController extends StorefrontController
         $recordList = new RecordList(
             $this->container->get('twig'),
             $searchAdapter,
-            $request->query->get('query'),
             $response->getContent(),
         );
-        $response->setContent($recordList->getContent());
+        $response->setContent(
+            $recordList->getContent(
+                $request->query->get('query', '')
+            )
+        );
 
         return $response;
     }
