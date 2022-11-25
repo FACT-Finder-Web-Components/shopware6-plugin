@@ -7,7 +7,8 @@
     infiniteScrolling: config.infiniteScrolling.value,
     infiniteDebounceDelay: config.infiniteDebounceDelay.value,
     class: 'row cms-listing-row',
-    id: id
+    id: id,
+    ssr: page.extensions.factfinder.ssr
   } %}
 
   {% sw_include '@Parent/storefront/components/factfinder/with-callbacks.html.twig' with {
