@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
+use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Shopware\Core\Content\Category\CategoryEntity;
@@ -16,7 +17,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 {
     private AbstractCategoryRoute $cmsPageRoute;
 
-    private CategoryPath $categoryPath;
+    private Communication $config;
 
     private string $fieldName;
 
@@ -24,12 +25,12 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
     public function __construct(
         AbstractCategoryRoute $cmsPageRoute,
-        CategoryPath $categoryPath,
+        Communication $config,
         string $categoryPathFieldName,
         array $categoryPageAddParams = []
     ) {
         $this->cmsPageRoute = $cmsPageRoute;
-        $this->categoryPath = $categoryPath;
+        $this->config = $config;
         $this->fieldName    = $categoryPathFieldName;
         $this->addParams    = $categoryPageAddParams;
     }
@@ -47,7 +48,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
         $disableImmediate = safeGetByName($category->getCustomFields(), OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $route === 'frontend.home.page';
-        $searchImmediate  = !$isHome && !$disableImmediate;
+        $searchImmediate  = $this->config->isSsrActive() === false && !$isHome && !$disableImmediate;
 
         $baseAddParams = array_filter(explode(',', (string) safeGetByName($event->getPage()->getExtension('factfinder')->get('communication'), 'add-params')));
         /**
