@@ -28,6 +28,9 @@ class RecordList
         $this->setTemplateString();
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
     public function getContent(
         string $paramString,
         bool $isNavigationRequest = false
@@ -46,11 +49,7 @@ class RecordList
 
         $this->content = str_replace('{FF_SEARCH_RESULT}', json_encode($results) ?: '', $this->content);
 
-        return preg_replace_callback(
-            self::SSR_RECORD_PATTERN,
-            fn (array $match) => $recordsContent,
-            $this->content
-        );
+        return preg_replace(self::SSR_RECORD_PATTERN, $recordsContent, $this->content);
     }
 
     private function setTemplateString(): void
