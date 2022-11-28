@@ -28,7 +28,7 @@ class ResultController extends StorefrontController
         GenericPageLoader $pageLoader
     ) {
         $this->pageLoader = $pageLoader;
-        $this->config = $config;
+        $this->config     = $config;
     }
 
     /**
@@ -39,7 +39,7 @@ class ResultController extends StorefrontController
         SalesChannelContext $context,
         SearchAdapter $searchAdapter
     ): Response {
-        $page = $this->pageLoader->load($request, $context);
+        $page     = $this->pageLoader->load($request, $context);
         $response = $this->renderStorefront('@Parent/storefront/page/factfinder/result.html.twig', ['page' => $page]);
 
         if ($this->config->isSsrActive() === false) {

@@ -22,9 +22,9 @@ class RecordList
         SearchAdapter $searchAdapter,
         string $content
     ) {
-        $this->twig = $twig;
+        $this->twig          = $twig;
         $this->searchAdapter = $searchAdapter;
-        $this->content = $content;
+        $this->content       = $content;
         $this->setTemplateString();
     }
 
@@ -32,8 +32,8 @@ class RecordList
         string $paramString,
         bool $isNavigationRequest = false
     ) {
-        $results = $this->searchAdapter->search($paramString, $isNavigationRequest);
-        $template = $this->twig->createTemplate($this->template);
+        $results        = $this->searchAdapter->search($paramString, $isNavigationRequest);
+        $template       = $this->twig->createTemplate($this->template);
         $recordsContent = array_reduce(
             $results['records'] ?? [],
             fn (string $carry, array $record) => sprintf(

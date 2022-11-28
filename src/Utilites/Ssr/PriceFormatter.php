@@ -34,11 +34,11 @@ class PriceFormatter
     protected function price(string $priceField): callable
     {
         return function (array $record) use ($priceField): array {
-            $price = $record['masterValues'][$priceField];
+            $price            = $record['masterValues'][$priceField];
             $record['record'] = [
                     '__ORIG_PRICE__' => $price,
-                    $priceField      => $this->getFormattedPrice($price)
-                ] + $record['masterValues'];
+                    $priceField      => $this->getFormattedPrice($price),
+            ] + $record['masterValues'];
 
             return $record;
         };

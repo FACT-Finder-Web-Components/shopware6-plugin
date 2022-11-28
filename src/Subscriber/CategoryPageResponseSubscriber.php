@@ -22,9 +22,9 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         SearchAdapter $searchAdapter,
         Environment $twig
     ) {
-        $this->config = $config;
+        $this->config        = $config;
         $this->searchAdapter = $searchAdapter;
-        $this->twig = $twig;
+        $this->twig          = $twig;
     }
 
     public static function getSubscribedEvents()
@@ -34,9 +34,9 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onPageRendered(BeforeSendResponseEvent $event)
+    public function onPageRendered(BeforeSendResponseEvent $event): void
     {
-        $request = $event->getRequest();
+        $request      = $event->getRequest();
         $categoryPath = $request->attributes->get('categoryPath', '');
 
         if (
@@ -47,7 +47,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $response = $event->getResponse();
+        $response   = $event->getResponse();
         $recordList = new RecordList(
             $this->twig,
             $this->searchAdapter,
