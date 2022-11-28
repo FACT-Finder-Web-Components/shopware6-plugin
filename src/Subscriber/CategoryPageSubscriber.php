@@ -29,7 +29,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         array $categoryPageAddParams = []
     ) {
         $this->cmsPageRoute = $cmsPageRoute;
-        $this->config = $config;
+        $this->config       = $config;
         $this->fieldName    = $categoryPathFieldName;
         $this->addParams    = $categoryPageAddParams;
     }
@@ -43,7 +43,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
     {
         $navigationId = $event->getRequest()->get('navigationId', $event->getSalesChannelContext()->getSalesChannel()->getNavigationCategoryId());
         $category     = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
-        $route = $event->getRequest()->get('_route');
+        $route        = $event->getRequest()->get('_route');
 
         $disableImmediate = safeGetByName($category->getCustomFields(), OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $route === 'frontend.home.page';
@@ -59,7 +59,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
             return $acc + [$key => $value];
         }, []);
 
-        $categoryPath = $this->prepareCategoryPath($category);
+        $categoryPath  = $this->prepareCategoryPath($category);
         $communication = [
                 'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
             ] + ($searchImmediate ? ['category-page' => $categoryPath] : []);
