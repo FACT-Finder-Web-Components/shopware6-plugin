@@ -1,4 +1,8 @@
 # Changelog
+## [v4.0.3] - 2022.11.29
+### Add
+- Server-Side Rendering (SSR)
+
 ## [v4.0.2] - 2022.11.22
 ### Fix
 - Fix error during SDK activation
@@ -265,6 +269,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.0.3]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.3
 [v4.0.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.2
 [v4.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.1
 [v4.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.0
