@@ -33,6 +33,12 @@
             <required>true</required>
         </input-field>
 
+        <input-field type="bool">
+            <name>useSsr</name>
+            <label>Use server-side rendering?</label>
+            <label lang="de-DE">Use server-side rendering?</label>
+        </input-field>
+
         <component name="update-field-roles">
             <name>fieldRoles</name>
         </component>

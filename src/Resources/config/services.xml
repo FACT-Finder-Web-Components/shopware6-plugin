@@ -137,5 +137,7 @@
             <argument type="service"
                       id="Omikron\FactFinder\Shopware6\Cookie\CookieProvider.inner" />
         </service>
+        <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\PriceFormatter" />
+        <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter" />
     </services>
 </container>

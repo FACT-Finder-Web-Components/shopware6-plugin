@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace spec\Omikron\FactFinder\Shopware6\Subscriber;
 
+use Omikron\FactFinder\Communication\Version;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -38,7 +39,6 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         CustomerEntity         $customer,
         CurrencyEntity         $currency,
         Request                $request,
-        Struct                 $extension,
         Page                   $page
     ) {
         $event->getSalesChannelContext()->willReturn($salesChannelContext);
@@ -48,11 +48,14 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $currency->getIsoCode()->willReturn('EUR');
         $salesChannelContext->getSalesChannel()->willReturn($salesChannel);
         $salesChannel->getId()->willReturn('main_sales_channel');
+        $communication->getVersion()->willReturn(Version::NG);
+        $communication->isSsrActive()->willReturn(false);
         $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
         $communication->getFieldRoles(Argument::any())->willReturn([]);
         $event->getRequest()->willReturn($request);
-        $request->get('_route')->willReturn('factfinder');
+        $request->get('_route', Argument::any())->willReturn('factfinder');
         $request->getLocale()->willReturn('en');
+        $request->isXmlHttpRequest()->willReturn(false);
         $event->getPage()->willReturn($page);
 
         $page->hasExtension('factfinder')->willReturn(false);
@@ -88,9 +91,12 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $salesChannel->getId()->willReturn('main_sales_channel');
         $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
         $communication->getFieldRoles(Argument::any())->willReturn([]);
+        $communication->getVersion()->willReturn(Version::NG);
+        $communication->isSsrActive()->willReturn(false);
         $event->getRequest()->willReturn($request);
-        $request->get('_route')->willReturn('factfinder');
+        $request->get('_route', Argument::any())->willReturn('factfinder');
         $request->getLocale()->willReturn('en');
+        $request->isXmlHttpRequest()->willReturn(false);
         $event->getParameters()->willReturn(['page' => $page]);
 
         $page->hasExtension('factfinder')->willReturn(false);

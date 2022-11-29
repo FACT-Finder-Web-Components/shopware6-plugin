@@ -14,7 +14,8 @@
     "shopware/core": "^6.4",
     "shopware/storefront": "^6.4",
     "league/flysystem-sftp": "1.0.22",
-    "php": "^7.4 || ^8.0"
+    "php": "^7.4 || ^8.0",
+    "ext-json": "*"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "3.1",

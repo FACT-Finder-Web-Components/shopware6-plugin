@@ -45,7 +45,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         $communication  = [
             'url'                   => $this->config->getServerUrl(),
             'channel'               => $this->config->getChannel($salesChannelId),
-            'version'               => 'ng',
+            'version'               => $this->config->getVersion(),
             'api'                   => 'v4',
             'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
             'currency-country-code' => $event->getRequest()->getLocale(),
@@ -61,9 +61,31 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             $page->addExtension('factfinder', new ArrayEntity([
                 'field_roles'     => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
                 'communication'   => $communication + $this->communicationParameters,
-                'searchImmediate' => strpos($event->getRequest()->get('_route') ?? '', 'factfinder') ? 'true' : 'false',
+                'searchImmediate' => $this->isSearchImmediate($event) ? 'true' : 'false',
                 'userId'          => $customer ? $customer->getId() : null,
+                'ssr'             => $this->config->isSsrActive(),
             ]));
         }
+    }
+
+    private function isSearchImmediate(ShopwareSalesChannelEvent $event): bool
+    {
+        $request = $event->getRequest();
+
+        if (
+            $this->config->isSsrActive()
+            || $request->isXmlHttpRequest()
+        ) {
+            return false;
+        }
+
+        $route = $event->getRequest()->get('_route', '');
+
+        return $this->isSearchPage($route);
+    }
+
+    private function isSearchPage(string $route): bool
+    {
+        return strpos($route ?? '', 'factfinder') !== false;
     }
 }

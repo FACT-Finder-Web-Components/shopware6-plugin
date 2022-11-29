@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Config;
 
+use Omikron\FactFinder\Communication\Version;
+
 class Communication extends BaseConfig
 {
     public function getServerUrl(): string
@@ -24,8 +26,18 @@ class Communication extends BaseConfig
         ];
     }
 
+    public function isSsrActive(): bool
+    {
+        return (bool) $this->config('useSsr');
+    }
+
     public function getFieldRoles(?string $salesChannelId): array
     {
         return (array) $this->config('fieldRoles', $salesChannelId);
+    }
+
+    public function getVersion(): string
+    {
+        return Version::NG;
     }
 }

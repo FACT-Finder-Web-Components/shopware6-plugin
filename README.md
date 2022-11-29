@@ -169,6 +169,12 @@ is two CMS blocks offered:
 ![Page Builder CMS Blocks](docs/assets/page-builder-cms-blocks.png "Page Builder CMS Blocks")
 ![Page Builder CMS Preview](docs/assets/page-builder-listing.png "Page Builder CMS Preview")
 
+Offered Cms Blocks and Elements are designed to work on pages of type `LandingPage`.
+There is a type `CategoryPage` but the builtin validation will not allow saving that prepared page, unless it contains at least one default Product Listing Block.
+The block `FACTFinder Web Components Listing` is unfortunately not taken into account.
+
+All elements are available under the category `Commerce`
+
 ### Element Settings
 
 Each of the element of given block contains dedicated configuration which allows to configure them without necessity of adding hardcoded values in the templates.
@@ -210,7 +216,7 @@ FACT-Finder® response, hence they will not render any HTML.
 * Pushed Products - Renders `ff-campaign-pushed-products` element
 * Pushed Products Flag - Set a flag making the campaign element reacts to FACT-Finder campaign of the specific type
 
-** Note **
+**Note:**
 You can find more information about campaigns related elements and their configuration in Web Components [documentation](https://web-components.fact-finder.de/api/4.x/ff-campaign#tab=api)
 
 ### Blocks and Elements Templates
@@ -228,11 +234,6 @@ Once the page layout is done, you need to assign layout to selected categories.
 
 We strongly recommend not creating many layouts as currently there's still only few possibilities offered anyway.
 Future development will bring more blocks and elements will be provided here.
-
-**Note:**
-Offered Cms Blocks and Elements are designed to work on pages of type `LandingPage`.
-There is a type `CategoryPage` but the builtin validation will not allow saving that prepared page, unless it contains at least one default Product Listing Block.
-The block `FACTFinder Web Components Listing` is unfortunately not taken into account.
 
 ## Exporting Feeds
 
