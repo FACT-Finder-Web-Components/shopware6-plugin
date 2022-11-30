@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Add option to switch between Api Version
+
 ## [v4.0.4] - 2022.12.02
 ### Fix
 - Fix problem with missing page in ConfigurationSubscriber
@@ -273,7 +277,6 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
-[v4.0.4]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.4
 [v4.0.3]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.3
 [v4.0.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.2
 [v4.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.1

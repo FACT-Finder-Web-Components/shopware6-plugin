@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "omikron/factfinder-communication-sdk": "^0.9.0",
+    "omikron/factfinder-communication-sdk": "^0.9.5",
     "shopware/core": "^6.4",
     "shopware/storefront": "^6.4",
     "league/flysystem-sftp": "1.0.22",
