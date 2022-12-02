@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix problem with missing page in ConfigurationSubscriber
+
 ## [v4.0.3] - 2022.11.29
 ### Add
 - Server-Side Rendering (SSR)

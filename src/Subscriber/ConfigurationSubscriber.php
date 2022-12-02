@@ -55,7 +55,11 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             $communication['add-params'] = implode(',', $this->addParams);
         }
 
-        $page = method_exists($event, 'getPage') ? $event->getPage() : $event->getParameters()['page'];
+        try {
+            $page = $this->getPage($event);
+        } catch (\Exception $e) {
+            return;
+        }
 
         if ($page->hasExtension('factfinder') === false) {
             $page->addExtension('factfinder', new ArrayEntity([
@@ -66,6 +70,19 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'ssr'             => $this->config->isSsrActive(),
             ]));
         }
+    }
+
+    private function getPage(ShopwareSalesChannelEvent $event)
+    {
+        if (method_exists($event, 'getPage')) {
+            return $event->getPage();
+        }
+
+        if (isset($event->getParameters()['page'])) {
+            return $event->getParameters()['page'];
+        }
+
+        throw new \Exception(sprintf('Unable to get page from event %s.', get_class($event)));
     }
 
     private function isSearchImmediate(ShopwareSalesChannelEvent $event): bool
