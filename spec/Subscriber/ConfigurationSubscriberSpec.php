@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace spec\Omikron\FactFinder\Shopware6\Subscriber;
 
+use Exception;
 use Omikron\FactFinder\Communication\Version;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use PhpSpec\ObjectBehavior;
@@ -110,5 +111,34 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
             ))->shouldBeCalled();
 
         $this->onPageLoaded($event);
+    }
+
+    function it_will_throw_exception_when_event_does_not_have_page(
+        Communication          $communication,
+        StorefrontRenderEvent  $event,
+        SalesChannelContext    $salesChannelContext,
+        SalesChannelEntity     $salesChannel,
+        CustomerEntity         $customer,
+        CurrencyEntity         $currency,
+        Request                $request
+    ) {
+        $event->getSalesChannelContext()->willReturn($salesChannelContext);
+        $salesChannelContext->getCustomer()->willReturn($customer);
+        $customer->getId()->willReturn(1);
+        $salesChannelContext->getCurrency()->willReturn($currency);
+        $currency->getIsoCode()->willReturn('EUR');
+        $salesChannelContext->getSalesChannel()->willReturn($salesChannel);
+        $salesChannel->getId()->willReturn('main_sales_channel');
+        $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
+        $communication->getFieldRoles(Argument::any())->willReturn([]);
+        $communication->getVersion()->willReturn(Version::NG);
+        $communication->isSsrActive()->willReturn(false);
+        $event->getRequest()->willReturn($request);
+        $request->get('_route', Argument::any())->willReturn('factfinder');
+        $request->getLocale()->willReturn('en');
+        $request->isXmlHttpRequest()->willReturn(false);
+        $event->getParameters()->willReturn([]);
+        $this->onPageLoaded($event);
+        $this->shouldThrow(new Exception(sprintf('Unable to get page from event %s.', get_class($event->getWrappedObject()))));
     }
 }

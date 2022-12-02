@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
+use Exception;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Shopware\Core\Framework\Event\ShopwareSalesChannelEvent;
 use Shopware\Core\Framework\Struct\ArrayEntity;
 use Shopware\Storefront\Event\StorefrontRenderEvent;
 use Shopware\Storefront\Page\GenericPageLoadedEvent;
+use Shopware\Storefront\Page\Page;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConfigurationSubscriber implements EventSubscriberInterface
@@ -55,7 +57,11 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             $communication['add-params'] = implode(',', $this->addParams);
         }
 
-        $page = method_exists($event, 'getPage') ? $event->getPage() : $event->getParameters()['page'];
+        try {
+            $page = $this->getPage($event);
+        } catch (\Exception $e) {
+            return;
+        }
 
         if ($page->hasExtension('factfinder') === false) {
             $page->addExtension('factfinder', new ArrayEntity([
@@ -66,6 +72,21 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'ssr'             => $this->config->isSsrActive(),
             ]));
         }
+    }
+
+    private function getPage(ShopwareSalesChannelEvent $event): Page
+    {
+        if (method_exists($event, 'getPage')) {
+            return $event->getPage();
+        }
+
+        $parameters = method_exists($event, 'getParameters') && is_array($event->getParameters()) ? $event->getParameters() : [];
+
+        if (isset($parameters['page'])) {
+            return $parameters['page'];
+        }
+
+        throw new Exception(sprintf('Unable to get page from event %s.', get_class($event)));
     }
 
     private function isSearchImmediate(ShopwareSalesChannelEvent $event): bool
