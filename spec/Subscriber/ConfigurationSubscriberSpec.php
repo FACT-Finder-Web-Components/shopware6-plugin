@@ -50,6 +50,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $salesChannelContext->getSalesChannel()->willReturn($salesChannel);
         $salesChannel->getId()->willReturn('main_sales_channel');
         $communication->getVersion()->willReturn(Version::NG);
+        $communication->getApiVersion()->willReturn('v5');
         $communication->isSsrActive()->willReturn(false);
         $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
         $communication->getFieldRoles(Argument::any())->willReturn([]);
@@ -93,6 +94,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
         $communication->getFieldRoles(Argument::any())->willReturn([]);
         $communication->getVersion()->willReturn(Version::NG);
+        $communication->getApiVersion()->willReturn('v5');
         $communication->isSsrActive()->willReturn(false);
         $event->getRequest()->willReturn($request);
         $request->get('_route', Argument::any())->willReturn('factfinder');
@@ -132,6 +134,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
         $communication->getFieldRoles(Argument::any())->willReturn([]);
         $communication->getVersion()->willReturn(Version::NG);
+        $communication->getApiVersion()->willReturn('v5');
         $communication->isSsrActive()->willReturn(false);
         $event->getRequest()->willReturn($request);
         $request->get('_route', Argument::any())->willReturn('factfinder');
