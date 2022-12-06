@@ -11,7 +11,6 @@ use Shopware\Core\Framework\Struct\ArrayEntity;
 use Shopware\Core\Framework\Struct\Struct;
 use Shopware\Storefront\Event\StorefrontRenderEvent;
 use Shopware\Storefront\Page\GenericPageLoadedEvent;
-use Shopware\Storefront\Page\Page;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConfigurationSubscriber implements EventSubscriberInterface
