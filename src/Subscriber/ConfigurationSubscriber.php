@@ -8,6 +8,7 @@ use Exception;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Shopware\Core\Framework\Event\ShopwareSalesChannelEvent;
 use Shopware\Core\Framework\Struct\ArrayEntity;
+use Shopware\Core\Framework\Struct\Struct;
 use Shopware\Storefront\Event\StorefrontRenderEvent;
 use Shopware\Storefront\Page\GenericPageLoadedEvent;
 use Shopware\Storefront\Page\Page;
@@ -75,7 +76,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function getPage(ShopwareSalesChannelEvent $event): Page
+    private function getPage(ShopwareSalesChannelEvent $event): Struct
     {
         if (method_exists($event, 'getPage')) {
             return $event->getPage();
@@ -83,7 +84,10 @@ class ConfigurationSubscriber implements EventSubscriberInterface
 
         $parameters = method_exists($event, 'getParameters') && is_array($event->getParameters()) ? $event->getParameters() : [];
 
-        if (isset($parameters['page'])) {
+        if (
+            isset($parameters['page'])
+            && $parameters['page'] instanceof Struct
+        ) {
             return $parameters['page'];
         }
 
