@@ -40,4 +40,9 @@ class Communication extends BaseConfig
     {
         return Version::NG;
     }
+
+    public function getApiVersion(): string
+    {
+        return (string) $this->config('apiVersion') ?? 'v4';
+    }
 }

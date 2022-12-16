@@ -51,9 +51,10 @@ class SearchAdapter
 
     private function createEndpoint(string $paramString, bool $navigationRequest)
     {
-        $channel  = $this->config->getChannel();
-        $endpoint = $navigationRequest ? 'navigation' : 'search';
+        $apiVersion  = $this->config->getApiVersion();
+        $channel     = $this->config->getChannel();
+        $endpoint    = $navigationRequest ? 'navigation' : 'search';
 
-        return "rest/v4/{$endpoint}/{$channel}?{$paramString}";
+        return "rest/{$apiVersion}/{$endpoint}/{$channel}?{$paramString}";
     }
 }

@@ -33,6 +33,24 @@
             <required>true</required>
         </input-field>
 
+        <input-field type="single-select">
+            <name>apiVersion</name>
+            <options>
+                <option>
+                    <id>v4</id>
+                    <name>v4</name>
+                </option>
+                <option>
+                    <id>v5</id>
+                    <name>v5</name>
+                </option>
+            </options>
+            <defaultValue>v4</defaultValue>
+            <label>Api Version</label>
+            <label lang="de-DE">Api Version</label>
+            <required>true</required>
+        </input-field>
+
         <input-field type="bool">
             <name>useSsr</name>
             <label>Use server-side rendering?</label>
