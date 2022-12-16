@@ -37,6 +37,10 @@ class CategoryPath implements FieldInterface
 
     public function getValue(Entity $entity): string
     {
+        if ($entity->getCategories($entity) === null) {
+            return '';
+        }
+
         return implode('|', $this->getCategories($entity)->fmap($this->createPath($this->channelService->getSalesChannelContext()->getSalesChannel())));
     }
 

@@ -81,6 +81,11 @@
             <name>currencyPriceExport</name>
             <label>Export Prices for all Currencies</label>
         </input-field>
+
+        <input-field type="checkbox">
+            <name>enableExportCache</name>
+            <label>Enable export cache (decrease export time)</label>
+        </input-field>
     </card>
 
     <card>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
+use ArrayIterator;
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\VariantEntity;
@@ -41,14 +42,14 @@ class ProductEntityFactory implements FactoryInterface
      * @param Entity $entity
      * @param string $producedType
      *
-     * @return iterable
+     * @return ProductEntity[]|iterable
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function createEntities(Entity $entity, string $producedType = ProductEntity::class): iterable
     {
         //@todo use spread operator?
         $fields = array_merge($this->fieldsProvider->getFields($producedType), $this->currencyFieldsProvider->getCurrencyFields());
-        $parent = new $producedType($entity, $fields);
+        $parent = new $producedType($entity, new ArrayIterator($fields), new ArrayIterator());
         if ($entity->getChildCount()) {
             yield from $entity->getChildren()->map(fn (
                 SalesChannelProductEntity $child) => new VariantEntity($child, $parent->toArray(), $this->propertyFormatter, iterator_to_array($this->variantFields)));

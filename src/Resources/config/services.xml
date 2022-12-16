@@ -66,11 +66,13 @@
             <bind key="$customFieldRepository" type="service" id="custom_field.repository" />
             <bind key="$languageRepository" type="service" id="language.repository"/>
             <bind key="$variantFields" type="tagged_iterator" tag="factfinder.export.variant_field" />
+            <bind key="$cachedFields" type="tagged_iterator" tag="factfinder.export.cached_product_entity" />
             <bind key="$categoryPathFieldName">%factfinder.navigation.category_path_field_name%</bind>
             <bind key="$customAssociations">%factfinder.export.associations%</bind>
             <bind key="$categoryPageAddParams">%factfinder.category_page.add_params%</bind>
             <bind key="$configurationAddParams">%factfinder.configuration.add_params%</bind>
             <bind key="$communicationParameters">%factfinder.communication.parameters.base%</bind>
+            <bind key="$entryRepository" type="service" id="factfinder_feed_preprocessor.repository" />
         </defaults>
 
         <service id="Omikron\FactFinder\Shopware6\Communication\AdapterFactory" />
@@ -95,7 +97,7 @@
         </instanceof>
 
         <prototype namespace="Omikron\FactFinder\Shopware6\"
-                   resource="../../{Command,Communication,Config,Data,Export,Resources,Storefront,Subscriber,Upload,Service}"
+                   resource="../../{Command,Communication,Config,Data,Export,Resources,Storefront,Subscriber,Upload,Service,DataAbstractionLayer}"
                    exclude="../../Export/Field/{PriceCurrency}.php"
         />
 
@@ -116,9 +118,13 @@
 
         <service id="Omikron\FactFinder\Shopware6\Export\Field\CustomFields">
             <tag name="factfinder.export.variant_field"/>
+            <tag name="factfinder.export.cached_product_entity"/>
         </service>
         <service id="Omikron\FactFinder\Shopware6\Export\Field\ImageUrl">
             <tag name="factfinder.export.variant_field"/>
+        </service>
+        <service id="Omikron\FactFinder\Shopware6\Export\Field\FilterAttributes">
+            <tag name="factfinder.export.cached_product_entity"/>
         </service>
         <service id="Omikron\FactFinder\Shopware6\Api\UiFeedExportController" />
         <service id="Omikron\FactFinder\Shopware6\Api\UpdateFieldRolesController" />
@@ -139,5 +145,24 @@
         </service>
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\PriceFormatter" />
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter" />
+
+        <service id="Omikron\FactFinder\Shopware6\Export\FeedPreprocessorEntryDefinition">
+            <tag name="shopware.entity.definition" entity="factfinder_feed_preprocessor" /></service>
+
+        <service id="Omikron\FactFinder\Shopware6\Subscriber\ProductIndexerSubscriber">
+            <argument type="service" id="product.repository"/>
+            <argument type="service" id="language.repository"/>
+            <argument type="service" id="Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessor"/>
+            <argument type="service" id="Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryPersister"/>
+        </service>
+
+        <service id="Omikron\FactFinder\Shopware6\Export\Data\Factory\PreprocessedProductEntityFactory"
+                 decorates="Omikron\FactFinder\Shopware6\Export\Data\Factory\ProductEntityFactory">
+            <argument type="service" id="Omikron\FactFinder\Shopware6\Export\Data\Factory\PreprocessedProductEntityFactory.inner"/>
+        </service>
+
+        <service id="Omikron\FactFinder\Shopware6\Subscriber\FeedPreprocessorEntrySubscriber">
+            <argument type="service" id="product.repository"/>
+        </service>
     </services>
 </container>
