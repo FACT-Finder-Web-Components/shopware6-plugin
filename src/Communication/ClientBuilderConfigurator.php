@@ -20,6 +20,9 @@ class ClientBuilderConfigurator
     public function configure(ClientBuilder $clientBuilder): void
     {
         $clientBuilder->withCredentials(new Credentials(...$this->config->getCredentials()));
-        $clientBuilder->withServerUrl($this->config->getServerUrl());
+
+        if ($this->config->getServerUrl() !== '') {
+            $clientBuilder->withServerUrl($this->config->getServerUrl());
+        }
     }
 }
