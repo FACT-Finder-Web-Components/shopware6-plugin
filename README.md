@@ -95,6 +95,8 @@ store cache in order the new applied configuration to start working.
 * Channel - Channel you want to serve data from
 * Username
 * Password
+* API Version - Used FACT-Finder® api version   
+  **Note:** Module supports FACT-Finder® api version `v4` and `v5`. By selecting the wrong api version you may cause the Web Components to be unable to communicate with FACT-Finder®
 
 #### Update Field Roles
 This functionality offers a way to download field roles configured in FACT-Finder®.
