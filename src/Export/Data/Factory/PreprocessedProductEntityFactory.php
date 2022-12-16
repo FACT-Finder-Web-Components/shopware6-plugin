@@ -13,6 +13,7 @@ use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProdu
 use Omikron\FactFinder\Shopware6\Export\FeedPreprocessorEntry;
 use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
+use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Traversable;
@@ -101,7 +102,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
     /**
      * @param FeedPreprocessorEntry[] $preprocessedEntries
      */
-    private function getExportProduct(SalesChannelProductEntity $entity, SalesChannelProductEntity $parent, array $preprocessedEntries): ?ExportProductEntity
+    private function getExportProduct(SalesChannelProductEntity $entity, ProductEntity $parent, array $preprocessedEntries): ?ExportProductEntity
     {
         $fields = $this->fieldsProviders->getFields(SalesChannelProductEntity::class);
         $cache  = $preprocessedEntries[$entity->getProductNumber()] ?? null;

@@ -128,12 +128,12 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
             'SW100.16' => 'size=S|size=M|size=L|color=green|material=linen',
         ];
         $expectedVariants = [
-            $this->exportProductMockFactory->create($variants['SW100.1'], ['filterAttributes' => $filterAttributes['SW100.1']]),
-            $this->exportProductMockFactory->create($variants['SW100.5'], ['filterAttributes' => $filterAttributes['SW100.5']]),
-            $this->exportProductMockFactory->create($variants['SW100.7'], ['filterAttributes' => $filterAttributes['SW100.7']]),
-            $this->exportProductMockFactory->create($variants['SW100.10'], ['filterAttributes' => $filterAttributes['SW100.10']]),
-            $this->exportProductMockFactory->create($variants['SW100.13'], ['filterAttributes' => $filterAttributes['SW100.13']]),
-            $this->exportProductMockFactory->create($variants['SW100.16'], ['filterAttributes' => $filterAttributes['SW100.16']]),
+            $this->exportProductMockFactory->create($variants['SW100.1'], ['filterAttributes' => $filterAttributes['SW100.1'], 'parent' => $productEntity]),
+            $this->exportProductMockFactory->create($variants['SW100.5'], ['filterAttributes' => $filterAttributes['SW100.5'], 'parent' => $productEntity]),
+            $this->exportProductMockFactory->create($variants['SW100.7'], ['filterAttributes' => $filterAttributes['SW100.7'], 'parent' => $productEntity]),
+            $this->exportProductMockFactory->create($variants['SW100.10'], ['filterAttributes' => $filterAttributes['SW100.10'], 'parent' => $productEntity]),
+            $this->exportProductMockFactory->create($variants['SW100.13'], ['filterAttributes' => $filterAttributes['SW100.13'], 'parent' => $productEntity]),
+            $this->exportProductMockFactory->create($variants['SW100.16'], ['filterAttributes' => $filterAttributes['SW100.16'], 'parent' => $productEntity]),
         ];
         $productEntity->setChildren($this->getProductCollection($variants));
 
@@ -157,12 +157,24 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         );
     }
 
-    public function it_should_create_entities_with_cached_category_path(CategoryPath $categoryPathField, FieldsProvider $fieldsProvider)
-    {
+    public function it_should_create_entities_with_cached_category_path(
+        CategoryPath $categoryPathField,
+        FieldsProvider $fieldsProvider,
+        FeedPreprocessorEntryPersister $entryPersister
+    ) {
         // Given
         $categoryPathName = 'CategoryPath';
         $categoryPathValue = 'Sports/Books%2C+Clothing+%26+Games/Movies%2C+Electronics+%26+Clothing';
-        $this->beConstructedWith($this->decoratedFactory, $this->salesChannelService, $fieldsProvider, $this->exportSettings, $this->feedPreprocessorReader, $this->cachedFields);
+        $this->beConstructedWith(
+            $this->decoratedFactory,
+            $this->salesChannelService,
+            $fieldsProvider,
+            $this->exportSettings,
+            $this->feedPreprocessorReader,
+            $entryPersister,
+            $this->feedPreprocessor,
+            $this->cachedFields
+        );
 
         $productEntity = $this->productMockFactory->create();
         $variantsData = [
@@ -174,7 +186,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
             'SW100.1' => 'size=S|size=M|color=red|material=cotton',
             'SW100.2' => 'size=S|size=M|color=blue|material=cotton',
         ];
-        $expectedVariants = array_map(function(array $expectedVariantData) use ($filterAttributes, $categoryPathField, $variants, $categoryPathName, $categoryPathValue): ExportProductEntity {
+        $expectedVariants = array_map(function(array $expectedVariantData) use ($filterAttributes, $categoryPathField, $variants, $categoryPathName, $categoryPathValue, $productEntity): ExportProductEntity {
             $productNumber = $expectedVariantData['productNumber'];
             $product = $variants[$productNumber];
             $categoryPathField->getName()->willReturn($categoryPathName);
@@ -186,6 +198,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
                     'filterAttributes' => $filterAttributes[$productNumber],
                     'additionalCache' => [$categoryPathName => $categoryPathValue],
                     'productFields' => [$categoryPathField->getWrappedObject()],
+                    'parent' => $productEntity
                 ]
             );
         }, $variantsData);

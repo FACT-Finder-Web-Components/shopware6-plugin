@@ -24,6 +24,7 @@ class ExportProductMockFactory
         $entity              = new ExportProductEntity($this->productMockFactory->create($product), $productFields, $cachedProductFields);
         $entity->setFilterAttributes($data['filterAttributes'] ?? '');
         $entity->setAdditionalCache(isset($data['additionalCache']) ? new ArrayIterator($data['additionalCache']) : new ArrayIterator());
+        $entity->setParent(isset($data['parent']) ? $data['parent'] : null);
 
         return $entity;
     }
