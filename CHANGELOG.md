@@ -3,6 +3,10 @@
 ### Add
 - Add option to switch between Api Version
 
+### Fix
+- ClientBuilderConfigurator
+  - Fix problem with missing server URL when SDK is activated for first time
+
 ## [v4.0.4] - 2022.12.02
 ### Fix
 - Fix problem with missing page in ConfigurationSubscriber
