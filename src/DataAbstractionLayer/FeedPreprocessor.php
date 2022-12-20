@@ -115,16 +115,35 @@ class FeedPreprocessor
         $hasMainVariant          = (bool) $product->getMainVariantId();
 
         if (!$configuratorGroupConfig) {
-            return [];
+            return $this->getVisibleGroupIdsFromChildren($product);
         }
+
         return array_reduce(
-            array_filter($product->getConfiguratorGroupConfig(),
-                fn (
-                    array $groupConfig): bool => !$hasMainVariant && (bool) safeGetByName($groupConfig, 'expressionForListings')),
-            fn (
-                array $result,
-                array $groupConfig): array => array_merge($result, [safeGetByName($groupConfig, 'id')]), []
+            array_filter(
+                $product->getConfiguratorGroupConfig(),
+                fn (array $groupConfig): bool => !$hasMainVariant && (bool) safeGetByName($groupConfig, 'expressionForListings')
+            ),
+            fn (array $result, array $groupConfig): array => array_merge($result, [safeGetByName($groupConfig, 'id')]),
+            []
         );
+    }
+
+    private function getVisibleGroupIdsFromChildren(ProductEntity $product)
+    {
+        $visibleGroupIds = [];
+
+        foreach ($product->getChildren() as $child) {
+            $options = $child->getOptions();
+
+            if (isset($options)) {
+                /** @var PropertyGroupOptionEntity $element */
+                foreach ($options->getElements() as $element) {
+                    $visibleGroupIds[] = $element->getGroupId();
+                }
+            }
+        }
+
+        return array_unique($visibleGroupIds);
     }
 
     /**
