@@ -81,22 +81,34 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         }
 
         if ($entity->getChildCount() === 0) {
-            yield $this->getExportProduct($entity, $entity, $preprocessedEntries);
+            $exportProduct = $this->getExportProduct($entity, $entity, $preprocessedEntries);
+
+            if (isset($exportProduct)) {
+                yield $exportProduct;
+            }
 
             return;
         }
 
         foreach ($entity->getChildren() as $child) {
-            yield $this->getExportProduct($child, $entity, $preprocessedEntries);
+            $exportProduct = $this->getExportProduct($child, $entity, $preprocessedEntries);
+
+            if (isset($exportProduct)) {
+                yield $exportProduct;
+            }
         }
 
-        yield $this->getExportProduct($entity, $entity, []);
+        $exportProduct = $this->getExportProduct($entity, $entity, []);
+
+        if (isset($exportProduct)) {
+            yield $exportProduct;
+        }
     }
 
     /**
      * @param FeedPreprocessorEntry[] $preprocessedEntries
      */
-    private function getExportProduct(SalesChannelProductEntity $entity, ProductEntity $parent, array $preprocessedEntries): ?ExportProductEntity
+    private function getExportProduct(ProductEntity $entity, ProductEntity $parent, array $preprocessedEntries): ?ExportProductEntity
     {
         $fields = $this->fieldsProviders->getFields(ExportProductEntity::class);
         $cache  = $preprocessedEntries[$entity->getProductNumber()] ?? null;
@@ -111,6 +123,10 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             return $exportProduct;
         }
 
-        return new ExportProductEntity($entity, new ArrayIterator($fields), new ArrayIterator());
+        if ($entity === $parent) {
+            return new ExportProductEntity($entity, new ArrayIterator($fields), new ArrayIterator());
+        }
+
+        return null;
     }
 }

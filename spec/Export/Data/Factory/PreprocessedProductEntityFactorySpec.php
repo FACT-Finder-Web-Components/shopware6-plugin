@@ -134,6 +134,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
             $this->exportProductMockFactory->create($variants['SW100.10'], ['filterAttributes' => $filterAttributes['SW100.10'], 'parent' => $productEntity]),
             $this->exportProductMockFactory->create($variants['SW100.13'], ['filterAttributes' => $filterAttributes['SW100.13'], 'parent' => $productEntity]),
             $this->exportProductMockFactory->create($variants['SW100.16'], ['filterAttributes' => $filterAttributes['SW100.16'], 'parent' => $productEntity]),
+            $this->exportProductMockFactory->create($productEntity),
         ];
         $productEntity->setChildren($this->getProductCollection($variants));
 

@@ -14,9 +14,15 @@ class SalesChannelProductMockFactory
         $entity = new SalesChannelProductEntity();
         $entity->setId($product->getId());
         $entity->setProductNumber($product->getProductNumber());
-        $entity->setParent($product->getParent());
         $entity->setParentId($product->getParentId());
-        $entity->setOptions($product->getOptions());
+
+        if ($product->getParent() !== null) {
+            $entity->setOptions($product->getOptions());
+        }
+
+        if ($product->getParent() !== null) {
+            $entity->setParent($product->getParent());
+        }
 
         return $entity;
     }
