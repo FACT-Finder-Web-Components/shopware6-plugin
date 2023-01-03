@@ -63,6 +63,29 @@
     </card>
 
     <card>
+        <title>Advanced Settings</title>
+        <title lang="de-DE">Erweiterte Einstellungen</title>
+
+        <input-field type="single-select">
+            <name>trackingAddToCartCount</name>
+            <options>
+                <option>
+                    <id>count_as_one</id>
+                    <name>track single click as one</name>
+                </option>
+                <option>
+                    <id>count_selected_amount</id>
+                    <name>track single click with selected amount</name>
+                </option>
+            </options>
+            <defaultValue>count_as_one</defaultValue>
+            <label>Scenario how to count single click on "Add to cart" button</label>
+            <label lang="de-DE">Scenario how to count single click on "Add to cart" button</label>
+            <required>true</required>
+        </input-field>
+    </card>
+
+    <card>
         <title>Export Settings</title>
 
         <component name="sw-entity-multi-id-select">

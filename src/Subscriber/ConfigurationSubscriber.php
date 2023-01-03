@@ -65,11 +65,12 @@ class ConfigurationSubscriber implements EventSubscriberInterface
 
         if ($page->hasExtension('factfinder') === false) {
             $page->addExtension('factfinder', new ArrayEntity([
-                'field_roles'     => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
-                'communication'   => $communication + $this->communicationParameters,
-                'searchImmediate' => $this->isSearchImmediate($event) ? 'true' : 'false',
-                'userId'          => $customer ? $customer->getId() : null,
-                'ssr'             => $this->config->isSsrActive(),
+                'field_roles'      => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
+                'communication'    => $communication + $this->communicationParameters,
+                'trackingSettings' => $this->config->getTrackingSettings(),
+                'searchImmediate'  => $this->isSearchImmediate($event) ? 'true' : 'false',
+                'userId'           => $customer ? $customer->getId() : null,
+                'ssr'              => $this->config->isSsrActive(),
             ]));
         }
     }
