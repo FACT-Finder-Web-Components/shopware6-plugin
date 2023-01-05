@@ -1,7 +1,8 @@
 # Changelog
-## Unreleased
+## [v4.1.0] - 2023.01.05
 ### Add
 - Add option to switch between Api Version
+- Add export cache which decrease export time.
 
 ### Fix
 - ClientBuilderConfigurator
@@ -281,6 +282,8 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.1.0
+[v4.0.4]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.4
 [v4.0.3]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.3
 [v4.0.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.2
 [v4.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.1

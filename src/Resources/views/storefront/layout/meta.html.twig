@@ -3,7 +3,7 @@
 {% block layout_head_javascript_tracking %}
   <script>
     document.addEventListener('ffReady', function (e) {
-      e.factfinder.sdk = 'sw6-v4.0.4';
+      e.factfinder.sdk = 'sw6-v4.1.0';
       e.factfinder.communication.fieldRoles = {{ page.extensions.factfinder.field_roles|json_encode|raw }};
     });
   </script>
