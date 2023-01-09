@@ -12,11 +12,29 @@ export default class TrackingPlugin extends Plugin
               .forEach(pluginInstance => pluginInstance.$emitter.subscribe('beforeFormSubmit', this.trackAddToCart.bind(this)));
     }
 
+    getQuantity(data)
+    {
+        if (ffTrackingSettings.addToCart.count === 'count_as_one') {
+            return 1;
+        }
+
+        try {
+            const quantityInput = DomAccessHelper.querySelector(data, '[name$="[quantity]"]');
+
+            return parseInt(quantityInput.value);
+        } catch (e) {
+            return 1;
+        }
+    }
+
     async trackAddToCart(event) {
         const productNumberInput = DomAccessHelper.querySelector(event.target, '[name="product-number"]');
+        const quantity = this.getQuantity(event.target);
+
         if (!productNumberInput) {
             return;
         }
+
         waitForFactFinder().then(factfinder => {
             const trackingHelper = factfinder.communication.Util.trackingHelper;
             factfinder.communication.EventAggregator.addFFEvent({
@@ -34,7 +52,7 @@ export default class TrackingPlugin extends Plugin
                         masterId: getMasterId(product),
                         price: trackingHelper.getPrice(product),
                         title: trackingHelper.getTitle(product),
-                        count: 1,
+                        count: quantity,
                     });
                 },
             });

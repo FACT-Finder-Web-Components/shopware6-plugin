@@ -32,6 +32,7 @@
   {% endblock %}
 
   <script>
+    const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');
 
     document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
       {% if page.extensions.factfinder.ssr == 'ssr' %}
