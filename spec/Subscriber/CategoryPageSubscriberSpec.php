@@ -153,6 +153,13 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         array $addParams = ['param1' =>'navigation=true'] //addParams parameters collections are passed as associative array (see comment src/Subscriber/CategoryPageSubscriber.php:55)
     ) {
         $navigationId = '1';
+        $config->getTrackingSettings()->willReturn(
+            [
+                'addToCart' => [
+                    'count' => 'count_as_one',
+                ],
+            ]
+        );
         $categoryEntity->getCustomFields()->willReturn(null);
         $event->getRequest()->willReturn($request);
         $event->getSalesChannelContext()->willReturn($salesChannelContext);

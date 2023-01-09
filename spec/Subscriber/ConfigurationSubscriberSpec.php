@@ -29,6 +29,13 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $fieldRoles              = [];
         $communicationParameters = [];
         $communication->getServerUrl()->willReturn('https://factfinder.server.com');
+        $communication->getTrackingSettings()->willReturn(
+            [
+                'addToCart' => [
+                    'count' => 'count_as_one',
+                ],
+            ]
+        );
         $this->beConstructedWith($communication, $fieldRoles, $communicationParameters);
     }
 
