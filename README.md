@@ -114,6 +114,14 @@ Without SSR enabled, web crawlers could not have a chance to scan the element re
 
 **Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
 
+## Advanced Settings
+
+![Advanced Settings](docs/assets/advanced-settings.png "Advanced Settings")
+
+This section contains a plugin configuration, which is optional and provides additional features.
+
+* Scenario how to count single click on "Add to cart" button
+
 ### Export Settings
 
 ![Export Settings](docs/assets/export-settings.png "Export Settings")
