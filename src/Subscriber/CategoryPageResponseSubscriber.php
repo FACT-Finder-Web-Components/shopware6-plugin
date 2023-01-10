@@ -51,6 +51,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         $recordList = new RecordList(
             $this->twig,
             $this->searchAdapter,
+            $request->attributes->get('sw-sales-channel-id'),
             $response->getContent(),
         );
         $response->setContent(

@@ -26,15 +26,18 @@ class SearchAdapter
         $this->priceFormatter = $priceFormatter;
     }
 
-    public function search(string $paramString, bool $navigationRequest): array
-    {
+    public function search(
+        string $paramString,
+        bool $navigationRequest,
+        string $salesChannelId
+    ): array {
         $client = $this->clientBuilder
             ->withServerUrl($this->config->getServerUrl())
             ->withCredentials(new Credentials(...$this->config->getCredentials()))
             ->withVersion($this->config->getVersion())
             ->build();
 
-        $endpoint = $this->createEndpoint($paramString, $navigationRequest);
+        $endpoint = $this->createEndpoint($paramString, $navigationRequest, $salesChannelId);
         $response = $client->request('GET', $endpoint);
 
         if (!$response) {
@@ -49,10 +52,10 @@ class SearchAdapter
         return json_decode((string) $response->getBody(), true);
     }
 
-    private function createEndpoint(string $paramString, bool $navigationRequest)
+    private function createEndpoint(string $paramString, bool $navigationRequest, string $salesChannelId)
     {
         $apiVersion  = $this->config->getApiVersion();
-        $channel     = $this->config->getChannel();
+        $channel     = $this->config->getChannel($salesChannelId);
         $endpoint    = $navigationRequest ? 'navigation' : 'search';
 
         return "rest/{$apiVersion}/{$endpoint}/{$channel}?{$paramString}";
