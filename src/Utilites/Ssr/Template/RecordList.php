@@ -14,17 +14,20 @@ class RecordList
 
     private Environment $twig;
     private SearchAdapter $searchAdapter;
+    private string $salesChannelId;
     private string $content;
     private string $template;
 
     public function __construct(
         Environment $twig,
         SearchAdapter $searchAdapter,
+        string $salesChannelId,
         string $content
     ) {
-        $this->twig          = $twig;
-        $this->searchAdapter = $searchAdapter;
-        $this->content       = $content;
+        $this->twig           = $twig;
+        $this->searchAdapter  = $searchAdapter;
+        $this->salesChannelId = $salesChannelId;
+        $this->content        = $content;
         $this->setTemplateString();
     }
 
@@ -35,7 +38,7 @@ class RecordList
         string $paramString,
         bool $isNavigationRequest = false
     ) {
-        $results        = $this->searchAdapter->search($paramString, $isNavigationRequest);
+        $results        = $this->searchAdapter->search($paramString, $isNavigationRequest, $this->salesChannelId);
         $template       = $this->twig->createTemplate($this->template);
         $recordsContent = array_reduce(
             $results['records'] ?? [],

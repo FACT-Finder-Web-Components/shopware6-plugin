@@ -49,6 +49,7 @@ class ResultController extends StorefrontController
         $recordList = new RecordList(
             $this->container->get('twig'),
             $searchAdapter,
+            $context->getSalesChannelId(),
             $response->getContent(),
         );
         $query = $request->query->get('query', '');
