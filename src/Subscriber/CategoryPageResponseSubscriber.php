@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
+use Exception;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
@@ -36,8 +37,13 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
 
     public function onPageRendered(BeforeSendResponseEvent $event): void
     {
-        $request      = $event->getRequest();
-        $categoryPath = $request->attributes->get('categoryPath', '');
+        $request = $event->getRequest();
+
+        try {
+            $categoryPath = $request->getSession()->get(CategoryPageSubscriber::CATEGORY_PATH, '');
+        } catch (Exception $e) {
+            $categoryPath = '';
+        }
 
         if (
             $this->config->isSsrActive() === false
