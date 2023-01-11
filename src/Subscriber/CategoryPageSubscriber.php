@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
+use Exception;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Shopware\Core\Content\Category\CategoryEntity;
@@ -14,6 +15,8 @@ use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class CategoryPageSubscriber implements EventSubscriberInterface
 {
+    public const CATEGORY_PATH  = 'ff_navigation_category_path';
+
     private AbstractCategoryRoute $cmsPageRoute;
 
     private Communication $config;
@@ -64,8 +67,12 @@ class CategoryPageSubscriber implements EventSubscriberInterface
                 'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
             ] + ($searchImmediate ? ['category-page' => $categoryPath] : []);
 
-        if ($route === 'frontend.navigation.page') {
-            $event->getRequest()->attributes->set('categoryPath', $categoryPath);
+        try {
+            if ($route === 'frontend.navigation.page') {
+                $session = $event->getRequest()->getSession();
+                $session->set(self::CATEGORY_PATH, $categoryPath);
+            }
+        } catch (Exception $e) {
         }
 
         $event->getPage()->getExtension('factfinder')->assign(
