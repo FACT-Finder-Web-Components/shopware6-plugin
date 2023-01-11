@@ -37,7 +37,8 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
 
     public function onPageRendered(BeforeSendResponseEvent $event): void
     {
-        $request = $event->getRequest();
+        $request  = $event->getRequest();
+        $response = $event->getResponse();
 
         try {
             $categoryPath = $request->getSession()->get(CategoryPageSubscriber::CATEGORY_PATH, '');
@@ -50,10 +51,11 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             || $request->isXmlHttpRequest()
             || $categoryPath === ''
         ) {
+            $response->setContent(str_replace('{FF_SEARCH_RESULT}', '', $response->getContent()));
+
             return;
         }
 
-        $response   = $event->getResponse();
         $recordList = new RecordList(
             $this->twig,
             $this->searchAdapter,
