@@ -4,28 +4,42 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
-use Exception;
 use Omikron\FactFinder\Shopware6\Config\Communication;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
 class CategoryPageResponseSubscriber implements EventSubscriberInterface
 {
+    private bool $httpCacheEnabled;
+    private EntityRepositoryInterface $categoryRepository;
+    private Communication $config;
     private SearchAdapter $searchAdapter;
     private Environment $twig;
-    private Communication $config;
+    private CategoryPath $categoryPath;
 
     public function __construct(
+        bool $httpCacheEnabled,
+        EntityRepositoryInterface $categoryRepository,
         Communication $config,
         SearchAdapter $searchAdapter,
-        Environment $twig
+        Environment $twig,
+        CategoryPath $categoryPath
     ) {
-        $this->config        = $config;
-        $this->searchAdapter = $searchAdapter;
-        $this->twig          = $twig;
+        $this->httpCacheEnabled   = $httpCacheEnabled;
+        $this->categoryRepository = $categoryRepository;
+        $this->config             = $config;
+        $this->searchAdapter      = $searchAdapter;
+        $this->twig               = $twig;
+        $this->categoryPath       = $categoryPath;
     }
 
     public static function getSubscribedEvents()
@@ -37,14 +51,9 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
 
     public function onPageRendered(BeforeSendResponseEvent $event): void
     {
-        $request  = $event->getRequest();
-        $response = $event->getResponse();
-
-        try {
-            $categoryPath = $request->getSession()->get(CategoryPageSubscriber::CATEGORY_PATH, '');
-        } catch (Exception $e) {
-            $categoryPath = '';
-        }
+        $request      = $event->getRequest();
+        $response     = $event->getResponse();
+        $categoryPath = $this->getCategoryPath($request);
 
         if (
             $this->config->isSsrActive() === false
@@ -68,5 +77,37 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
                 true
             )
         );
+    }
+
+    private function getCategoryPath(Request $request): string
+    {
+        $categoryId = $this->getCategoryId($request);
+
+        if ($categoryId === '') {
+            return '';
+        }
+
+        if ($this->httpCacheEnabled === false) {
+            return $request->attributes->get('categoryPath', '');
+        }
+
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('id', $categoryId));
+        $category = $this->categoryRepository->search($criteria, Context::createDefaultContext())->first();
+
+        return $this->categoryPath->getValue($category);
+    }
+
+    private function getCategoryId(Request $request): string
+    {
+        $uri = $request->attributes->get('resolved-uri');
+        $start = '/navigation/';
+        $pos = strpos($uri, $start);
+
+        if ($pos !== 0) {
+            return '';
+        }
+
+        return trim(substr($uri, strlen($start), strlen($uri)), '/');
     }
 }

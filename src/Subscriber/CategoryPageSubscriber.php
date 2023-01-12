@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
-use Exception;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\OmikronFactFinder;
-use Shopware\Core\Content\Category\CategoryEntity;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
 use Shopware\Core\Content\Category\SalesChannel\AbstractCategoryRoute;
 use Shopware\Storefront\Page\Navigation\NavigationPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,8 +14,6 @@ use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class CategoryPageSubscriber implements EventSubscriberInterface
 {
-    public const CATEGORY_PATH  = 'ff_navigation_category_path';
-
     private AbstractCategoryRoute $cmsPageRoute;
 
     private Communication $config;
@@ -62,17 +59,13 @@ class CategoryPageSubscriber implements EventSubscriberInterface
             return $acc + [$key => $value];
         }, []);
 
-        $categoryPath  = $this->prepareCategoryPath($category);
+        $categoryPath  = (new CategoryPath($this->fieldName))->getValue($category);
         $communication = [
                 'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
             ] + ($searchImmediate ? ['category-page' => $categoryPath] : []);
 
-        try {
-            if ($route === 'frontend.navigation.page') {
-                $session = $event->getRequest()->getSession();
-                $session->set(self::CATEGORY_PATH, $categoryPath);
-            }
-        } catch (Exception $e) {
+        if ($route === 'frontend.navigation.page') {
+            $event->getRequest()->attributes->set('categoryPath', $categoryPath);
         }
 
         $event->getPage()->getExtension('factfinder')->assign(
@@ -83,20 +76,5 @@ class CategoryPageSubscriber implements EventSubscriberInterface
                 'categoryPathFieldName' => "{$this->fieldName}ROOT",
             ]
         );
-    }
-
-    private function prepareCategoryPath(CategoryEntity $categoryEntity): string
-    {
-        $categories   = array_slice($categoryEntity->getBreadcrumb(), 1);
-        $categoryPath = implode('/', array_map(fn ($category): string => $this->encodeCategoryName($category), $categories));
-
-        return sprintf('filter=%s', urlencode($this->fieldName . ':' . $categoryPath));
-    }
-
-    private function encodeCategoryName(string $path): string
-    {
-        //important! do not modify this method
-        return preg_replace('/\+/', '%2B', preg_replace('/\//', '%2F',
-            preg_replace('/%/', '%25', $path)));
     }
 }
