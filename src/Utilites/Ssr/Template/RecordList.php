@@ -5,26 +5,25 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Utilites\Ssr\Template;
 
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
-use Twig\Environment;
 
 class RecordList
 {
     private const RECORD_PATTERN     = '#<ff-record[\s>].*?</ff-record>#s';
     private const SSR_RECORD_PATTERN = '#<ssr-record-template>.*?</ssr-record-template>#s';
 
-    private Environment $twig;
+    private Engine $mustache;
     private SearchAdapter $searchAdapter;
     private string $salesChannelId;
     private string $content;
     private string $template;
 
     public function __construct(
-        Environment $twig,
+        Engine $mustache,
         SearchAdapter $searchAdapter,
         string $salesChannelId,
         string $content
     ) {
-        $this->twig           = $twig;
+        $this->mustache       = $mustache;
         $this->searchAdapter  = $searchAdapter;
         $this->salesChannelId = $salesChannelId;
         $this->content        = $content;
@@ -39,13 +38,12 @@ class RecordList
         bool $isNavigationRequest = false
     ) {
         $results        = $this->searchAdapter->search($paramString, $isNavigationRequest, $this->salesChannelId);
-        $template       = $this->twig->createTemplate($this->template);
         $recordsContent = array_reduce(
             $results['records'] ?? [],
             fn (string $carry, array $record) => sprintf(
                 '%s%s',
                 $carry,
-                $template->render($record)
+                $this->mustache->render($this->template, $record)
             ),
             ''
         );

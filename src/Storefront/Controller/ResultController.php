@@ -6,6 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Storefront\Controller;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -37,7 +38,8 @@ class ResultController extends StorefrontController
     public function result(
         Request $request,
         SalesChannelContext $context,
-        SearchAdapter $searchAdapter
+        SearchAdapter $searchAdapter,
+        Engine $mustache
     ): Response {
         $page     = $this->pageLoader->load($request, $context);
         $response = $this->renderStorefront('@Parent/storefront/page/factfinder/result.html.twig', ['page' => $page]);
@@ -47,7 +49,7 @@ class ResultController extends StorefrontController
         }
 
         $recordList = new RecordList(
-            $this->container->get('twig'),
+            $mustache,
             $searchAdapter,
             $context->getSalesChannelId(),
             $response->getContent(),

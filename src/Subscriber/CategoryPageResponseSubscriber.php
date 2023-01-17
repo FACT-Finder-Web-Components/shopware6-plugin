@@ -7,6 +7,7 @@ namespace Omikron\FactFinder\Shopware6\Subscriber;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
@@ -15,7 +16,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Twig\Environment;
 
 class CategoryPageResponseSubscriber implements EventSubscriberInterface
 {
@@ -23,7 +23,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
     private EntityRepositoryInterface $categoryRepository;
     private Communication $config;
     private SearchAdapter $searchAdapter;
-    private Environment $twig;
+    private Engine $mustache;
     private CategoryPath $categoryPath;
 
     public function __construct(
@@ -31,14 +31,14 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         EntityRepositoryInterface $categoryRepository,
         Communication $config,
         SearchAdapter $searchAdapter,
-        Environment $twig,
+        Engine $mustache,
         CategoryPath $categoryPath
     ) {
         $this->httpCacheEnabled   = $httpCacheEnabled;
         $this->categoryRepository = $categoryRepository;
         $this->config             = $config;
         $this->searchAdapter      = $searchAdapter;
-        $this->twig               = $twig;
+        $this->mustache               = $mustache;
         $this->categoryPath       = $categoryPath;
     }
 
@@ -66,7 +66,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         }
 
         $recordList = new RecordList(
-            $this->twig,
+            $this->mustache,
             $this->searchAdapter,
             $request->attributes->get('sw-sales-channel-id'),
             $response->getContent(),

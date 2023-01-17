@@ -48,8 +48,10 @@
             <parameter key="variant_cover">children.media</parameter>
         </parameter>
         <parameter key="factfinder.navigation.category_path_field_name" type="string">CategoryPath</parameter>
-        <parameter key="factfinder.category_page.add_params" type="collection"></parameter>
-        <parameter key="factfinder.configuration.add_params" type="collection"></parameter>
+        <parameter key="factfinder.category_page.add_params" type="collection">
+        </parameter>
+        <parameter key="factfinder.configuration.add_params" type="collection">
+        </parameter>
         <parameter key="factfinder.data_export.entity_type_map" type="collection">
         </parameter>
     </parameters>
@@ -170,5 +172,15 @@
         <service id="Omikron\FactFinder\Shopware6\Subscriber\FeedPreprocessorEntrySubscriber">
             <argument type="service" id="product.repository"/>
         </service>
+
+        <service id="Mustache_Engine" alias="factfinder.mustache_engine" />
+        <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\StringLoader" />
+        <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Filter" />
+        <service id="Mustache_Loader_StringLoader" alias="factfinder.mustache_loader_string_loader" />
+        <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Loader">
+            <argument type="service" id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\StringLoader"/>
+            <argument type="service" id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Filter"/>
+        </service>
+        <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine" />
     </services>
 </container>
