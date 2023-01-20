@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CustomerLoginEventSubscriber implements EventSubscriberInterface
 {
-    private RequestStack $requestStack;
+    private ?RequestStack $requestStack;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(?RequestStack $requestStack = null)
     {
         $this->requestStack = $requestStack;
     }
@@ -26,7 +26,10 @@ class CustomerLoginEventSubscriber implements EventSubscriberInterface
 
     public function hasJustLoggedIn(): void
     {
-        if ($this->requestStack->getMainRequest() === null) {
+        if (
+            !isset($this->requestStack)
+            || $this->requestStack->getMainRequest() === null
+        ) {
             return;
         }
 
