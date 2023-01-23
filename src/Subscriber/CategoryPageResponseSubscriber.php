@@ -102,7 +102,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
     {
         $uri = $request->attributes->get('resolved-uri');
         $start = '/navigation/';
-        $pos = strpos($uri, $start);
+        $pos = strpos($uri ?? '', $start);
 
         if ($pos !== 0) {
             return '';

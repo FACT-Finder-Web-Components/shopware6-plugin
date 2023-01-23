@@ -43,7 +43,7 @@ class RecordList
             fn (string $carry, array $record) => sprintf(
                 '%s%s',
                 $carry,
-                $this->mustache->render($this->template, $record)
+                $this->mustache->render($this->template, $this->convertRecord($record))
             ),
             ''
         );
@@ -51,6 +51,31 @@ class RecordList
         $this->content = str_replace('{FF_SEARCH_RESULT}', json_encode($results) ?: '', $this->content);
 
         return preg_replace(self::SSR_RECORD_PATTERN, $recordsContent, $this->content);
+    }
+
+    private function convertRecord(array $record): array
+    {
+        $record['masterValues'] = array_merge($record['masterValues'], $this->getVariant($record));
+
+        return $record;
+    }
+
+    private function getVariant($record): array
+    {
+        $variantValues = $record['variantValues'] ?? [];
+
+        if ($variantValues === []) {
+            return [];
+        }
+
+        $keys = array_keys($variantValues);
+        $masterKey = array_filter($keys, fn ($key) => $variantValues[$key]['isMaster'] ?? false === 'true')[0] ?? $keys[0] ?? null;
+
+        if ($masterKey === null) {
+            return [];
+        }
+
+        return $variantValues[$masterKey] ?? [];
     }
 
     private function setTemplateString(): void
