@@ -23,8 +23,13 @@ class FieldRoles
 
     public function getRoles(?string $salesChannelId): array
     {
-        $searchResult = $this->search->search($this->communicationConfig->getChannel($salesChannelId), '*');
-        $fieldRoles   = $searchResult['fieldRoles'] ?? [];
+        try {
+            $searchResult = $this->search->search($this->communicationConfig->getChannel($salesChannelId), '*');
+            $fieldRoles   = $searchResult['fieldRoles'] ?? [];
+        } catch (\Exception $e) {
+            $fieldRoles = [];
+        }
+
         return $this->map($fieldRoles);
     }
 
