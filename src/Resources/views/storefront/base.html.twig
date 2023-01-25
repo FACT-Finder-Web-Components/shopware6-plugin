@@ -37,11 +37,8 @@
     document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
       {% if page.extensions.factfinder.ssr == 'ssr' %}
         const searchResult = {FF_SEARCH_RESULT};
-
-        if (searchResult !== '') {
-          factfinder.communication.EventAggregator.currentSearchResult = searchResult;
-          factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
-        }
+        factfinder.communication.EventAggregator.currentSearchResult = searchResult;
+        factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
       {% endif %}
 
       const cookies = document.cookie.split('; ').reduce((acc, cookie) => {

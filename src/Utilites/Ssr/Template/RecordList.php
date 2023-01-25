@@ -48,7 +48,7 @@ class RecordList
             ''
         );
 
-        $this->content = str_replace('{FF_SEARCH_RESULT}', json_encode($results) ?: '', $this->content);
+        $this->content = str_replace('{FF_SEARCH_RESULT}', json_encode($results) ?: json_encode([]), $this->content);
 
         return preg_replace(self::SSR_RECORD_PATTERN, $recordsContent, $this->content);
     }
