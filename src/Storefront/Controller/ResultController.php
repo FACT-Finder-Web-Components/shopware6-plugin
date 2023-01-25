@@ -54,10 +54,9 @@ class ResultController extends StorefrontController
             $context->getSalesChannelId(),
             $response->getContent(),
         );
-        $query = $request->query->get('query', '');
         $response->setContent(
             $recordList->getContent(
-                $query !== '' ? sprintf('query=%s', $query) : ''
+                (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY)
             )
         );
 
