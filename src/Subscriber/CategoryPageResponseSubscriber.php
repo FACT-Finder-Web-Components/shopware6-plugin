@@ -74,6 +74,11 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         $params = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
 
         if ($params !== '') {
+            if (strpos($params, 'p=') === 0) {
+                $params = 'page=' . substr($params, 2);
+            } else {
+                $params = str_replace('&p=', '&page=', $params);
+            }
             $paramsString = sprintf('%s&%s', $params, $categoryPath);
         }
 
