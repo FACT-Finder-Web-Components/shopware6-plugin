@@ -70,24 +70,27 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             $request->attributes->get('sw-sales-channel-id'),
             $response->getContent(),
         );
-        $paramsString = $categoryPath;
-        $params = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
-
-        if ($params !== '') {
-            if (strpos($params, 'p=') === 0) {
-                $params = 'page=' . substr($params, 2);
-            } else {
-                $params = str_replace('&p=', '&page=', $params);
-            }
-            $paramsString = sprintf('%s&%s', $params, $categoryPath);
-        }
-
         $response->setContent(
             $recordList->getContent(
-                $paramsString,
+                $this->getParamsString($categoryPath),
                 true
             )
         );
+    }
+
+    private function getParamsString(string $categoryPath): string
+    {
+        $params = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
+
+        if ($params === '') {
+            return $categoryPath;
+        }
+
+        $params = strpos($params, 'p=') === 0
+            ? sprintf('page=%s', substr($params, 2))
+            : str_replace('&p=', '&page=', $params);
+
+        return sprintf('%s&%s', $params, $categoryPath);
     }
 
     private function getCategoryPath(Request $request): string
