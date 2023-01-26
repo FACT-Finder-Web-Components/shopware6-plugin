@@ -49,6 +49,7 @@ class ResultController extends StorefrontController
         }
 
         $recordList = new RecordList(
+            $request,
             $mustache,
             $searchAdapter,
             $context->getSalesChannelId(),

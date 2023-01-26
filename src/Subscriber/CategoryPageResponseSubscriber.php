@@ -65,6 +65,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         }
 
         $recordList = new RecordList(
+            $request,
             $this->mustache,
             $this->searchAdapter,
             $request->attributes->get('sw-sales-channel-id'),
@@ -85,10 +86,6 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         if ($params === '') {
             return $categoryPath;
         }
-
-        $params = strpos($params, 'p=') === 0
-            ? sprintf('page=%s', substr($params, 2))
-            : str_replace('&p=', '&page=', $params);
 
         return sprintf('%s&%s', $params, $categoryPath);
     }
