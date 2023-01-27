@@ -98,7 +98,10 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
             if ($session->get(self::HAS_JUST_LOGGED_IN, false) === true) {
                 $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_IN, '1'));
-                $response->headers->setCookie($this->getCookie(self::USER_ID, $response->getContext()->getCustomer()->getId()));
+                $customer = $response->getContext()->getCustomer();
+                if ($customer !== null) {
+                    $response->headers->setCookie($this->getCookie(self::USER_ID, $customer->getId()));
+                }
                 $session->set(self::HAS_JUST_LOGGED_IN, false);
             }
 
