@@ -85,14 +85,15 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
         }
 
         $response = $event->getResponse();
-        $context = $response->getContext();
 
         if (
             method_exists($response, 'getContext') === false
-            || $context === null
+            || $response->getContext() === null
         ) {
             return false;
         }
+
+        $context = $response->getContext();
 
         try {
             $this->validateRequest($request, $response);
