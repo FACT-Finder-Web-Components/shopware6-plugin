@@ -21,6 +21,8 @@
 - SSR
   - BeforeSendResponseEventSubscriber - fix Call to a member function getId() on null
   - solve problem with empty filterAttributes in export
+- Export
+  - Fix problem with not working export from admin panel
 
 ## [v4.1.0] - 2023.01.05
 ### Add
