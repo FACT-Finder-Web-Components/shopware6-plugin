@@ -34,12 +34,12 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         Engine $mustache,
         CategoryPath $categoryPath
     ) {
-        $this->httpCacheEnabled   = $httpCacheEnabled;
-        $this->categoryRepository = $categoryRepository;
-        $this->config             = $config;
-        $this->searchAdapter      = $searchAdapter;
+        $this->httpCacheEnabled       = $httpCacheEnabled;
+        $this->categoryRepository     = $categoryRepository;
+        $this->config                 = $config;
+        $this->searchAdapter          = $searchAdapter;
         $this->mustache               = $mustache;
-        $this->categoryPath       = $categoryPath;
+        $this->categoryPath           = $categoryPath;
     }
 
     public static function getSubscribedEvents()
@@ -111,9 +111,9 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
 
     private function getCategoryId(Request $request): string
     {
-        $uri = $request->attributes->get('resolved-uri');
+        $uri   = $request->attributes->get('resolved-uri');
         $start = '/navigation/';
-        $pos = strpos($uri ?? '', $start);
+        $pos   = strpos($uri ?? '', $start);
 
         if ($pos !== 0) {
             return '';

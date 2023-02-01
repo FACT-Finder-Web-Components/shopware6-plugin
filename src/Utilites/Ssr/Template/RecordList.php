@@ -26,7 +26,7 @@ class RecordList
         string $salesChannelId,
         string $content
     ) {
-        $this->request = $request;
+        $this->request        = $request;
         $this->mustache       = $mustache;
         $this->searchAdapter  = $searchAdapter;
         $this->salesChannelId = $salesChannelId;
@@ -63,13 +63,13 @@ class RecordList
 
     private function setContentWithLinks(array $results, string $paramString): void
     {
-        $nextPage = $results['paging']['nextLink']['number'] ?? null;
+        $nextPage     = $results['paging']['nextLink']['number'] ?? null;
         $previousPage = $results['paging']['previousLink']['number'] ?? null;
-        $nextLink = '';
+        $nextLink     = '';
         $previousLink = '';
-        $pos = strpos($this->request->getUri(), '?');
-        $baseUrl = $pos === false ? $this->request->getUri() : substr($this->request->getUri(), 0, $pos);
-        $params = array_filter(explode('&', $paramString), fn (string $param) => strpos($param, 'page=') !== 0);
+        $pos          = strpos($this->request->getUri(), '?');
+        $baseUrl      = $pos === false ? $this->request->getUri() : substr($this->request->getUri(), 0, $pos);
+        $params       = array_filter(explode('&', $paramString), fn (string $param) => strpos($param, 'page=') !== 0);
 
         if ($previousPage !== null) {
             $previousLink = sprintf('<link rel="prev" href="%s?%s" />', $baseUrl, implode('&', [...$params, sprintf('page=%s', $previousPage)]));

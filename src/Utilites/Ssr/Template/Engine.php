@@ -14,7 +14,7 @@ class Engine
     {
         $this->engine = new Mustache(
             [
-                'loader' => $loader,
+                'loader'           => $loader,
                 'strict_callables' => true,
             ]
         );

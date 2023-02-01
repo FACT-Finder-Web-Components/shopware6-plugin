@@ -42,7 +42,7 @@ class PriceFormatter
     {
         return function (array $record) use ($priceField): array {
             $record = $this->convertRecord($record);
-            $price = $record['masterValues'][$priceField] ?? '';
+            $price  = $record['masterValues'][$priceField] ?? '';
 
             if ($price === '') {
                 $record['record'] = $record['masterValues'];
@@ -89,7 +89,7 @@ class PriceFormatter
             return [];
         }
 
-        $keys = array_keys($variantValues);
+        $keys      = array_keys($variantValues);
         $masterKey = array_filter($keys, fn ($key) => $variantValues[$key]['isMaster'] ?? false === 'true')[0] ?? $keys[0] ?? null;
 
         if ($masterKey === null) {

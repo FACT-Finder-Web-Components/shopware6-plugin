@@ -22,7 +22,7 @@ class Loader implements Mustache_Loader
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function load($name)
     {
