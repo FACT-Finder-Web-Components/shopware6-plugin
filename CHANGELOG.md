@@ -3,6 +3,24 @@
 ### Add
 - Tracking
     - Add option to select scenario when `Add To Cart button` has been clicked
+### Change
+- SSR
+  - read fieldRoles using service and set default configuration as backup
+  - set SalesChannelId
+  - display navigation results when HTTP cache is enabled
+  - Fixed Uncaught TypeError: can't access property "find", t.path is undefined
+  - Replace FF_SEARCH_RESULT with empty string when page don't have to SSR
+  - add support for Mustache template engine
+  - set RequestStack as optional to avid fails for CLI-Commands
+  - combine masterValues with variantValues in search results
+  - prevent error when invalid chanel is set
+  - pass all parameters for category pages and search result
+  - translate query parameter "p" to "page"
+  - add SEO urls and link-rel-prev/next for pagination
+### Fix
+- SSR
+  - BeforeSendResponseEventSubscriber - fix Call to a member function getId() on null
+  - solve problem with empty filterAttributes in export
 
 ## [v4.1.0] - 2023.01.05
 ### Add
