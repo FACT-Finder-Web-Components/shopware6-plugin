@@ -93,12 +93,18 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             return false;
         }
 
+        $context = $response->getContext();
+
         try {
             $this->validateRequest($request, $response);
 
+            if ($context->getCustomer() === null) {
+                return false;
+            }
+
             if ($session->get(self::HAS_JUST_LOGGED_IN, false) === true) {
                 $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_IN, '1'));
-                $response->headers->setCookie($this->getCookie(self::USER_ID, $response->getContext()->getCustomer()->getId()));
+                $response->headers->setCookie($this->getCookie(self::USER_ID, $context->getCustomer()->getId()));
                 $session->set(self::HAS_JUST_LOGGED_IN, false);
             }
 

@@ -6,6 +6,7 @@ namespace spec\Omikron\FactFinder\Shopware6\Storefront\Controller;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
 use Prophecy\Argument;
@@ -48,7 +49,6 @@ class ResultControllerSpec extends ObjectBehavior
         SystemConfigService $systemConfigService,
         Environment $twig,
         SeoUrlPlaceholderHandlerInterface $seoUrlPlaceholderHandler
-
     ) {
         $this->request = $request;
         $this->config = $config;
@@ -75,7 +75,8 @@ class ResultControllerSpec extends ObjectBehavior
 
     public function it_should_return_original_response_content_when_ssr_is_not_active(
         SearchAdapter $searchAdapter,
-        Page $page
+        Page $page,
+        Engine $mustache
     ) {
         $content = 'original content';
         $this->pageLoader->load($this->request, $this->salesChannelContext)->willReturn($page);
@@ -85,7 +86,8 @@ class ResultControllerSpec extends ObjectBehavior
         $response = $this->result(
             $this->request,
             $this->salesChannelContext,
-            $searchAdapter
+            $searchAdapter,
+            $mustache
         );
 
         $response->shouldBeAnInstanceOf(Response::class);

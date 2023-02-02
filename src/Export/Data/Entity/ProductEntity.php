@@ -108,7 +108,10 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 
         return array_reduce(
             $fields,
-            fn (array $fields, FieldInterface $field): array => $fields + [$field->getName() => ($this->getAdditionalCache($field->getName()) ?? $field->getValue($isVariant ? $this->parent : $this->product))],
+            fn (array $fields, FieldInterface $field): array => array_merge(
+                $fields,
+                [$field->getName() => ($this->getAdditionalCache($field->getName()) ?? $field->getValue($isVariant ? $this->parent : $this->product))]
+            ),
             $defaultFields
         );
     }

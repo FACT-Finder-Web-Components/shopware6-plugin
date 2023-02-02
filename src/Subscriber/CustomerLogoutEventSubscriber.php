@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CustomerLogoutEventSubscriber implements EventSubscriberInterface
 {
-    private RequestStack $requestStack;
+    private ?RequestStack $requestStack;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(?RequestStack $requestStack = null)
     {
         $this->requestStack = $requestStack;
     }
@@ -26,6 +26,13 @@ class CustomerLogoutEventSubscriber implements EventSubscriberInterface
 
     public function hasJustLoggedOut(): void
     {
+        if (
+            !isset($this->requestStack)
+            || $this->requestStack->getMainRequest() === null
+        ) {
+            return;
+        }
+
         $session = $this->requestStack->getMainRequest()->getSession();
         $session->set(BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT, true);
     }
