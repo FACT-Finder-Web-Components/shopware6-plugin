@@ -10,7 +10,7 @@
           "label": "Language"
         },
         "button": {
-          "title": "Run Integration"
+          "title": "Create Export"
         },
         "alert_success": {
           "text": "Integration process has been started"

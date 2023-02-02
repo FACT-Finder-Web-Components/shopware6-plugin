@@ -309,8 +309,14 @@ A dedicated form can be found under `Extensions` section
 
 ![Admin Panel Export Form](docs/assets/admin-panel-export-form.png "Admin Panel Export Form")
 Select fields allows you to select sales channel and languague parameter for which an integration shall be run.
+Select export type gives you possibility to create different content of data available in your Shopware instance.
+Export can be done for:
+ - Products
+ - Brands
+ - Cms
+ - Category
 
-`Run Integration` Send a message to a bus which then might be consumed automatically by an admin worker (if enabled)
+`Create Export` Send a message to a bus which then might be consumed automatically by an admin worker (if enabled)
 or by CLI worker. More information about messaging you can find in official Shopware [documentation](https://developer.shopware.com/docs/guides/hosting/infrastructure/message-queue)
 
 

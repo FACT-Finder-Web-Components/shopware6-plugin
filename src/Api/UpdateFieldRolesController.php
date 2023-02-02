@@ -30,7 +30,7 @@ class UpdateFieldRolesController extends AbstractController
     }
 
     /**
-     * @Route("/api/_action/field-roles/update", name="api.action.fact_finder.export_feed", methods={"GET"}, defaults={"XmlHttpRequest"=true})
+     * @Route("/api/_action/field-roles/update", name="api.action.fact_finder.field_roles.update", methods={"GET"}, defaults={"XmlHttpRequest"=true})
      *
      * @return JsonResponse
      *
