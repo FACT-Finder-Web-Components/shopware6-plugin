@@ -54,13 +54,13 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         $request      = $event->getRequest();
         $response     = $event->getResponse();
         $categoryPath = $this->getCategoryPath($request);
-        $response->setContent(str_replace('{FF_SEARCH_RESULT}', json_encode([]), $response->getContent()));
 
         if (
             $this->config->isSsrActive() === false
             || $request->isXmlHttpRequest()
             || $categoryPath === ''
         ) {
+            $response->setContent(str_replace('{FF_SEARCH_RESULT}', json_encode([]), $response->getContent()));
             return;
         }
 
