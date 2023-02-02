@@ -54,6 +54,7 @@
         </parameter>
         <parameter key="factfinder.data_export.entity_type_map" type="collection">
         </parameter>
+        <parameter key="factfinder.ssr.parameters.page_url_param">page</parameter>
     </parameters>
 
     <services>
@@ -76,6 +77,7 @@
             <bind key="$communicationParameters">%factfinder.communication.parameters.base%</bind>
             <bind key="$entryRepository" type="service" id="factfinder_feed_preprocessor.repository" />
             <bind key="$cache" type="service" id="cache.object" />
+            <bind key="$pageUrlParam">%factfinder.ssr.parameters.page_url_param%</bind>
         </defaults>
 
         <service id="Omikron\FactFinder\Shopware6\Communication\AdapterFactory" />
