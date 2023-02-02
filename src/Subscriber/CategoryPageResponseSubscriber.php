@@ -79,6 +79,9 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
     private function getParamsString(string $categoryPath): string
     {
         $params = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
@@ -90,6 +93,9 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         return sprintf('%s&%s', $params, $categoryPath);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
     private function getCategoryPath(Request $request): string
     {
         $categoryId = $this->getCategoryId($request);

@@ -34,6 +34,8 @@ class ResultController extends StorefrontController
 
     /**
      * @Route(path="/factfinder/result", name="frontend.factfinder.result", methods={"GET"})
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function result(
         Request $request,
