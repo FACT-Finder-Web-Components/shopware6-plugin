@@ -1,0 +1,27 @@
+{% block component_factfinder_ssr_paging %}
+  {% if pageCount > 1 %}
+    <noscript>
+      <nav aria-label="pagination" class="pagination-nav">
+        <ul class="pagination">
+
+          {% set lastpage = 0 %}
+          {% for page, pagelink in pages %}
+            {% if ((page > 1) and (currentPage - page > 2)) or ((page < pageCount) and (page - currentPage > 2)) %}
+              {% continue %}
+            {% endif %}
+            {% if page - lastpage > 1 %}
+              <li class="page-item">
+                <span class="page-link">...</span>
+              </li>
+            {% endif %}
+            <li class="page-item{% if page == currentPage %} active{% endif %}">
+              <a class="page-link" href="{{ pagelink }}">{{ loop.index }}</a>
+            </li>
+            {% set lastpage = page %}
+          {% endfor %}
+
+        </ul>
+      </nav>
+    </noscript>
+  {% endif %}
+{% endblock %}

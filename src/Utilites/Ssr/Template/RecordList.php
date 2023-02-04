@@ -5,15 +5,20 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Utilites\Ssr\Template;
 
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
+use Shopware\Core\Framework\Adapter\Twig\TemplateFinderInterface;
 use Shopware\Storefront\Framework\Routing\RequestTransformer;
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Environment;
 
 class RecordList
 {
     private const RECORD_PATTERN     = '#<ff-record[\s>].*?</ff-record>#s';
     private const SSR_RECORD_PATTERN = '#<ssr-record-template>.*?</ssr-record-template>#s';
+    private const SSR_PAGING_PATTERN = '#<ssr-paging>.*?</ssr-paging>#s';
 
     private Request $request;
+    private Environment $twig;
+    private TemplateFinderInterface $templateFinder;
     private Engine $mustache;
     private SearchAdapter $searchAdapter;
     private string $salesChannelId;
@@ -23,6 +28,8 @@ class RecordList
 
     public function __construct(
         Request $request,
+        Environment $twig,
+        TemplateFinderInterface $templateFinder,
         Engine $mustache,
         SearchAdapter $searchAdapter,
         string $salesChannelId,
@@ -30,6 +37,8 @@ class RecordList
         string $pageUrlParam = 'page'
     ) {
         $this->request        = $request;
+        $this->twig           = $twig;
+        $this->templateFinder = $templateFinder;
         $this->mustache       = $mustache;
         $this->searchAdapter  = $searchAdapter;
         $this->salesChannelId = $salesChannelId;
@@ -65,6 +74,7 @@ class RecordList
 
         $this->content = str_replace('{FF_SEARCH_RESULT}', json_encode($results) ?: '{}', $this->content);
         $this->setContentWithLinks($results);
+        $this->setPaging($results);
 
         if ($records === []) {
             return $this->content;
@@ -89,6 +99,25 @@ class RecordList
         }
 
         $this->content = str_replace('</head>', sprintf('%s%s</head>', $previousLink, $nextLink), $this->content);
+    }
+
+    private function setPaging(array $results): void
+    {
+        $currentPage = (int) ($results['paging']['currentPage'] ?? 1);
+        $pageCount = (int) ($results['paging']['pageCount'] ?? 1);
+
+        $twigVars = [
+            'currentPage' => $currentPage,
+            'pageCount' => $pageCount,
+        ];
+        for ($page = 1; $page <= $pageCount; $page++) {
+            $twigVars['pages'][$page] = $this->paginationUrl($page);
+        }
+
+        $template = $this->templateFinder->find('@Storefront/storefront/components/factfinder/ssr-paging.html.twig');
+        $paging = $this->twig->render($template, $twigVars);
+
+        $this->content = preg_replace(self::SSR_PAGING_PATTERN, $paging, $this->content);
     }
 
     private function setTemplateString(): void
