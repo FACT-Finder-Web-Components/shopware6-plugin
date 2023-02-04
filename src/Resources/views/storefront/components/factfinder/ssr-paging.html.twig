@@ -15,7 +15,11 @@
               </li>
             {% endif %}
             <li class="page-item{% if page == currentPage %} active{% endif %}">
-              <a class="page-link" href="{{ pagelink }}">{{ loop.index }}</a>
+              {% if page == currentPage %}
+                <span class="page-link">{{ page }}</span>
+              {% else %}
+                <a class="page-link" href="{{ pagelink }}">{{ page }}</a>
+              {% endif %}
             </li>
             {% set lastpage = page %}
           {% endfor %}
