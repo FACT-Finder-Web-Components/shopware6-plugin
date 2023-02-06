@@ -1,4 +1,14 @@
 # Changelog
+## [v4.1.2] - 2023.02.06
+### Fix
+- Category
+  - add missing attribute `category-page` in `ff-communication` element for Category Page
+### Change
+- SSR
+  - replace FF_SEARCH_RESULT only if no real result will be rendered
+### Add
+- Tracking
+    - Add option to select scenario when `Add To Cart button` has been clicked
 ## [v4.1.1] - 2023.02.02
 ### Add
 - Tracking
@@ -307,6 +317,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.1.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.1.2
 [v4.1.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.1.1
 [v4.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.1.0
 [v4.0.4]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.0.4
