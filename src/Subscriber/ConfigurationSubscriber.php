@@ -118,4 +118,13 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     {
         return strpos($route ?? '', 'factfinder') !== false;
     }
+
+    private function getServerUrl(): string
+    {
+        if ($this->config->isProxyEnabled()) {
+            return $this->urlBuilder->getUrl('', ['_direct' => Router::FRONT_NAME]);
+        }
+
+        return $this->config->getServerUrl();
+    }
 }

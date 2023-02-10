@@ -45,4 +45,9 @@ class Communication extends BaseConfig
     {
         return (string) $this->config('apiVersion') ?? 'v4';
     }
+
+    public function isProxyEnabled(): bool
+    {
+        return (bool) $this->config('useProxy');
+    }
 }
