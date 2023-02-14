@@ -8,9 +8,12 @@ use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Shopware6\Config\Communication;
+use Omikron\FactFinder\Shopware6\Events\BeforeProxyErrorResponseEvent;
+use Omikron\FactFinder\Shopware6\Events\EnrichProxyDataEvent;
 use Psr\Http\Client\ClientExceptionInterface;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Shopware\Storefront\Controller\StorefrontController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +39,8 @@ class ProxyController extends StorefrontController
     public function execute(
         string        $endpoint,
         Request       $request,
-        ClientBuilder $clientBuilder
+        ClientBuilder $clientBuilder,
+        EventDispatcherInterface $eventDispatcher
     ): Response {
         $client = $clientBuilder
             ->withServerUrl($this->config->getServerUrl())
@@ -61,9 +65,16 @@ class ProxyController extends StorefrontController
                     throw new Exception(sprintf('HTTP Method %s is not supported', $method));
             }
 
-            return new JsonResponse(json_decode((string) $response->getBody(), true));
+            $event = new EnrichProxyDataEvent(json_decode((string) $response->getBody(), true));
+            $eventDispatcher->dispatch($event);
+
+            return new JsonResponse($event->getData());
         } catch (ClientExceptionInterface $e) {
-            return new JsonResponse(['message' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+            $response = new JsonResponse(['message' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+            $event = new BeforeProxyErrorResponseEvent($response);
+            $eventDispatcher->dispatch($event);
+
+            return $event->getResponse();
         }
     }
 }
