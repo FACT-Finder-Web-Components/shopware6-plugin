@@ -52,10 +52,10 @@ class ProxyController extends StorefrontController
 
         try {
             switch ($method) {
-                case 'GET':
+                case Request::METHOD_GET:
                     $response = $client->request('GET', sprintf('%s?%s', $endpoint, $query));
                     break;
-                case 'POST':
+                case Request::METHOD_POST:
                     $response = $client->request('POST', $endpoint, [
                         'body'    => $request->getContent(),
                         'headers' => ['Content-Type' => 'application/json'],
