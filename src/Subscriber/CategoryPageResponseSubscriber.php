@@ -60,7 +60,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             || $request->isXmlHttpRequest()
             || $categoryPath === ''
         ) {
-            $response->setContent(str_replace('{FF_SEARCH_RESULT}', json_encode([]), $response->getContent()));
+            $response->setContent(str_replace('{FF_SEARCH_RESULT}', '{}', $response->getContent()));
             return;
         }
 
