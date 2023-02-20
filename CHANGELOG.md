@@ -3,6 +3,9 @@
 ### Fix
 - SSR
   - fixed problem with not visible search results when SSR enabled
+### Change
+- Export
+  - Export only active categories
 
 ## [v4.1.2] - 2023.02.06
 ### Fix

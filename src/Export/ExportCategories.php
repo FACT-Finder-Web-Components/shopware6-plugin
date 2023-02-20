@@ -63,6 +63,7 @@ class ExportCategories implements ExportInterface
                 new EqualsFilter(sprintf('customFields.%s', OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME), false),
             ])
         );
+        $criteria->addFilter(new EqualsFilter('active', true));
 
         return $criteria;
     }
