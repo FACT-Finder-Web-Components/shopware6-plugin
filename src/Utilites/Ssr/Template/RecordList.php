@@ -45,8 +45,9 @@ class RecordList
             ? sprintf('page=%s', substr($paramString, 2))
             : str_replace('&p=', '&page=', $paramString);
         $results        = $this->searchAdapter->search($paramString, $isNavigationRequest, $this->salesChannelId);
+        $records        = $results['records'] ?? [];
         $recordsContent = array_reduce(
-            $results['records'] ?? [],
+            $records,
             fn (string $carry, array $record) => sprintf(
                 '%s%s',
                 $carry,
@@ -55,8 +56,12 @@ class RecordList
             ''
         );
 
-        $this->content = str_replace('{FF_SEARCH_RESULT}', json_encode($results) ?: json_encode([]), $this->content);
+        $this->content = str_replace('{FF_SEARCH_RESULT}', json_encode($results) ?: '{}', $this->content);
         $this->setContentWithLinks($results, $paramString);
+
+        if ($records === []) {
+            return $this->content;
+        }
 
         return preg_replace(self::SSR_RECORD_PATTERN, $recordsContent, $this->content);
     }
