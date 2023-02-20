@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix
+- SSR
+  - fixed problem with not visible search results when SSR enabled
+
 ## [v4.1.2] - 2023.02.06
 ### Fix
 - Category

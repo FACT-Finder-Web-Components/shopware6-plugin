@@ -45,7 +45,7 @@ class RecordList
             ? sprintf('page=%s', substr($paramString, 2))
             : str_replace('&p=', '&page=', $paramString);
         $results        = $this->searchAdapter->search($paramString, $isNavigationRequest, $this->salesChannelId);
-        $records = $results['records'] ?? [];
+        $records        = $results['records'] ?? [];
         $recordsContent = array_reduce(
             $records,
             fn (string $carry, array $record) => sprintf(
