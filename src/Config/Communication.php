@@ -45,13 +45,4 @@ class Communication extends BaseConfig
     {
         return (string) $this->config('apiVersion') ?? 'v4';
     }
-
-    public function getTrackingSettings(): array
-    {
-        return [
-            'addToCart' => [
-                'count' => (string) $this->config('trackingAddToCartCount') ?? 'count_as_one',
-            ],
-        ];
-    }
 }

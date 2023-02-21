@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
+use Omikron\FactFinder\Shopware6\Config\ExtensionConfig;
 use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
 use Shopware\Core\Content\Category\SalesChannel\AbstractCategoryRoute;
@@ -18,6 +19,8 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
     private Communication $config;
 
+    private ExtensionConfig $extensionConfig;
+
     private string $fieldName;
 
     private array $addParams;
@@ -25,13 +28,15 @@ class CategoryPageSubscriber implements EventSubscriberInterface
     public function __construct(
         AbstractCategoryRoute $cmsPageRoute,
         Communication $config,
+        ExtensionConfig $extensionConfig,
         string $categoryPathFieldName,
         array $categoryPageAddParams = []
     ) {
-        $this->cmsPageRoute = $cmsPageRoute;
-        $this->config       = $config;
-        $this->fieldName    = $categoryPathFieldName;
-        $this->addParams    = $categoryPageAddParams;
+        $this->cmsPageRoute    = $cmsPageRoute;
+        $this->config          = $config;
+        $this->extensionConfig = $extensionConfig;
+        $this->fieldName       = $categoryPathFieldName;
+        $this->addParams       = $categoryPageAddParams;
     }
 
     public static function getSubscribedEvents()
@@ -72,7 +77,8 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         $event->getPage()->getExtension('factfinder')->assign(
             [
                 'communication'         => $communication,
-                'trackingSettings'      => $this->config->getTrackingSettings(),
+                'trackingSettings'      => $this->extensionConfig->getTrackingSettings(),
+                'redirectMapping'       => (string) $this->extensionConfig->getRedirectMapping(),
                 'searchImmediate'       => $searchImmediate ? 'true' : 'false',
                 'categoryPathFieldName' => "{$this->fieldName}ROOT",
             ]
