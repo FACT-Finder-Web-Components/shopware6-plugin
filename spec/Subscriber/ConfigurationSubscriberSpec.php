@@ -7,6 +7,8 @@ namespace spec\Omikron\FactFinder\Shopware6\Subscriber;
 use Exception;
 use Omikron\FactFinder\Communication\Version;
 use Omikron\FactFinder\Shopware6\Config\Communication;
+use Omikron\FactFinder\Shopware6\Config\ExtensionConfig;
+use Omikron\FactFinder\Shopware6\Domain\RedirectMapping;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Prophecy\Argument\Token\LogicalAndToken;
@@ -24,19 +26,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ConfigurationSubscriberSpec extends ObjectBehavior
 {
-    function let(Communication $communication)
-    {
+    function let(
+        Communication $communication,
+        ExtensionConfig $extensionConfig
+    ) {
         $fieldRoles              = [];
         $communicationParameters = [];
         $communication->getServerUrl()->willReturn('https://factfinder.server.com');
-        $communication->getTrackingSettings()->willReturn(
+        $extensionConfig->getTrackingSettings()->willReturn(
             [
                 'addToCart' => [
                     'count' => 'count_as_one',
                 ],
             ]
         );
-        $this->beConstructedWith($communication, $fieldRoles, $communicationParameters);
+        $extensionConfig->getRedirectMapping()->willReturn(new RedirectMapping(''));
+        $this->beConstructedWith($communication, $extensionConfig, $fieldRoles, $communicationParameters);
     }
 
     function it_will_return_factfinderchannel_for_specific_sales_channel_id(
