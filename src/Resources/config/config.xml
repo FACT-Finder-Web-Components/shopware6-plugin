@@ -89,7 +89,7 @@
             <label>Redirect mapping for selected queries</label>
             <helpText>Put each pair "query=url" in separate row. If the phrase appears twice, the first one from the top of the list will be taken.</helpText>
             <placeholder>phrase one=/some/special/link/one
-phrase two=/some/special/link/two
+phrase two=https://domain.com/some/special/link/two
             </placeholder>
             <required>false</required>
         </input-field>
