@@ -14,7 +14,18 @@
 {% block base_body_script %}
   {% block base_script_factfinder_search_redirect %}
     <script>
+      const ffRedirectMapping = JSON.parse('{{ page.extensions.factfinder.redirectMapping|raw }}');
+
       document.addEventListener('before-search', function (event) {
+        const query = event.detail.query;
+
+        if (ffRedirectMapping.hasOwnProperty(query)) {
+          event.preventDefault();
+          window.location = ffRedirectMapping[query];
+
+          return;
+        }
+
         if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
           event.preventDefault();
           window.location = '{{ path('frontend.factfinder.result') }}' + factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));

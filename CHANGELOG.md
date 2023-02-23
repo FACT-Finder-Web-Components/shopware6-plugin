@@ -6,6 +6,8 @@
 ### Change
 - Export
   - Export only active categories
+### Add
+- Redirect mapping for selected queries
 
 ## [v4.1.2] - 2023.02.06
 ### Fix

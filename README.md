@@ -121,6 +121,7 @@ Without SSR enabled, web crawlers could not have a chance to scan the element re
 This section contains a plugin configuration, which is optional and provides additional features.
 
 * Scenario how to count single click on "Add to cart" button
+* Redirect mapping for selected queries - put each pair `query=url` in separate row. If the phrase appears twice, the first one from the top of the list will be taken. Url can be relative path `/some/page` or absolute url `https://domain.com/some/page?someParameter=1`. If provided pair has an invalid format then it will be ignored.
 
 ### Export Settings
 
