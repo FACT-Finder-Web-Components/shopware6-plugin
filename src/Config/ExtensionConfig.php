@@ -13,8 +13,10 @@ class ExtensionConfig extends BaseConfig
 {
     private Request $request;
 
-    public function __construct(SystemConfigService $systemConfig, ?RequestStack $requestStack = null)
-    {
+    public function __construct(
+        SystemConfigService $systemConfig,
+        ?RequestStack $requestStack = null
+    ) {
         $this->setRequest($requestStack);
         parent::__construct($systemConfig);
     }
