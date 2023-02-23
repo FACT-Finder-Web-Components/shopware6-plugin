@@ -1,9 +1,10 @@
 # Changelog
-## Unreleased
+## [v4.2.0] - 2023.02.23
 ### Fix
 - SSR
   - fixed problem with not visible search results when SSR enabled
 ### Change
+- Upgrade Web Components version to v4.2.4
 - Export
   - Export only active categories
 ### Add
@@ -327,6 +328,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.0
 [v4.1.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.1.2
 [v4.1.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.1.1
 [v4.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.1.0
