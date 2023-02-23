@@ -15,7 +15,7 @@ class ExtensionConfig extends BaseConfig
 
     public function __construct(SystemConfigService $systemConfig, ?RequestStack $requestStack = null)
     {
-        $this->request = $requestStack ? $requestStack->getCurrentRequest() : new Request();
+        $this->setRequest($requestStack);
         parent::__construct($systemConfig);
     }
 
@@ -36,5 +36,24 @@ class ExtensionConfig extends BaseConfig
                 $this->request->attributes->get('sw-sales-channel-id')
             )
         );
+    }
+
+    private function setRequest(?RequestStack $requestStack = null): void
+    {
+        if ($requestStack === null) {
+            $this->request = new Request();
+
+            return;
+        }
+
+        $currentRequest = $requestStack->getCurrentRequest();
+
+        if ($currentRequest === null) {
+            $this->request = new Request();
+
+            return;
+        }
+
+        $this->request = $currentRequest;
     }
 }
