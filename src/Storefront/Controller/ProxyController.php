@@ -37,8 +37,8 @@ class ProxyController extends StorefrontController
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function execute(
-        string        $endpoint,
-        Request       $request,
+        string $endpoint,
+        Request $request,
         ClientBuilder $clientBuilder,
         EventDispatcherInterface $eventDispatcher
     ): Response {
@@ -47,19 +47,21 @@ class ProxyController extends StorefrontController
             ->withCredentials(new Credentials(...$this->config->getCredentials()))
             ->withVersion($this->config->getVersion())
             ->build();
-        $query = (string)parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
+        $query  = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
         $method = $request->getMethod();
 
         try {
             switch ($method) {
                 case Request::METHOD_GET:
                     $response = $client->request('GET', sprintf('%s?%s', $endpoint, $query));
+
                     break;
                 case Request::METHOD_POST:
                     $response = $client->request('POST', $endpoint, [
                         'body'    => $request->getContent(),
                         'headers' => ['Content-Type' => 'application/json'],
                     ]);
+
                     break;
                 default:
                     throw new Exception(sprintf('HTTP Method %s is not supported', $method));
@@ -71,7 +73,7 @@ class ProxyController extends StorefrontController
             return new JsonResponse($event->getData());
         } catch (ClientExceptionInterface $e) {
             $response = new JsonResponse(['message' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-            $event = new BeforeProxyErrorResponseEvent($response);
+            $event    = new BeforeProxyErrorResponseEvent($response);
             $eventDispatcher->dispatch($event);
 
             return $event->getResponse();
