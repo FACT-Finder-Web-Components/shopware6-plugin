@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Proxy
+
 ## [v4.2.0] - 2023.02.23
 ### Fix
 - SSR
