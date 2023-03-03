@@ -66,6 +66,13 @@
         <title>Advanced Settings</title>
         <title lang="de-DE">Erweiterte Einstellungen</title>
 
+        <input-field type="bool">
+            <name>useProxy</name>
+            <label>Use Proxy?</label>
+            <label lang="de-DE">Use Proxy?</label>
+            <helpText>Using Proxy allows you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more info.</helpText>
+        </input-field>
+
         <input-field type="single-select">
             <name>trackingAddToCartCount</name>
             <options>

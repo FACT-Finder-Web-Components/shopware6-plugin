@@ -43,6 +43,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Split ASN on Category Page](#split-asn-on-category-page)
     - [Set custom Field Roles](#set-custom-field-roles)
     - [Adding custom Export Cache Subscriber](#adding-custom-export-cache-subscriber)
+    - [Enrich data received from FACT-Finder in ProxyController](#enrich-data-received-from-fact-finder-in-proxycontroller)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -120,6 +121,11 @@ Without SSR enabled, web crawlers could not have a chance to scan the element re
 
 This section contains a plugin configuration, which is optional and provides additional features.
 
+* Use Proxy? - By enabling this, once a search query is sent, it does not immediately reach FACT-Finder, but is handed off to a specific controller
+`src/Storefront/Controller/ProxyController.php` which hands the request to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend view. You can use `EnrichProxyDataEvent` to enrich data received from FACT-Finder. You can find more
+  details about implementation [here](#enrich-data-received-from-fact-finder-in-proxycontroller).
+
+    Note: Sending each request to FACT-Finder instance trough Shopware, you lose on performance as each request need to be handled first by HTTP server and then, by Shopware itself. This additional traffic could be easily avoided by not activating this feature if there's no clear reason to use it.
 * Scenario how to count single click on "Add to cart" button
 * Redirect mapping for selected queries - put each pair `query=url` in separate row. If the phrase appears twice, the first one from the top of the list will be taken. Url can be relative path `/some/page` or absolute url `https://domain.com/some/page?someParameter=1`. If provided pair has an invalid format then it will be ignored.
 
@@ -608,6 +614,33 @@ class FeedPreprocessorEntryBeforeCreateSubscriber implements EventSubscriberInte
             'some_data2' => 'cache2',
         ];
         $event->setEntry($entry);
+    }
+}
+
+```
+
+### Enrich data received from FACT-Finder in ProxyController
+
+```php
+
+use Omikron\FactFinder\Shopware6\Events\EnrichProxyDataEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class EnrichProxyDataEventSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents()
+    {
+        return [EnrichProxyDataEvent::class => 'enrichData'];
+    }
+
+    public function enrichData(EnrichProxyDataEvent $event)
+    {
+        $data = $event->getData();
+        $data['example_data'] = [
+            'some_data' => 'data_1',
+            'some_data2' => 'data_2',
+        ];
+        $event->setData($data);
     }
 }
 
