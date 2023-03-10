@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Fix
+- Category
+  - Fix sorting - removed redundant parameters `order` and `name`
+
 ## [v4.2.0] - 2023.02.23
 ### Fix
 - SSR
