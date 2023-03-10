@@ -3,6 +3,8 @@
 ### Fix
 - Category
   - Fix sorting - removed redundant parameters `order` and `name`
+### Change
+- Upgrade Web Components version to v4.2.5
 
 ## [v4.2.0] - 2023.02.23
 ### Fix
