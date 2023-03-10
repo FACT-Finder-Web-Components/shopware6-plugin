@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.2.1] - 2023.03.10
 ### Fix
 - Category
   - Fix sorting - removed redundant parameters `order` and `name`
@@ -335,6 +335,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.2.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.1
 [v4.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.0
 [v4.1.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.1.2
 [v4.1.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.1.1
