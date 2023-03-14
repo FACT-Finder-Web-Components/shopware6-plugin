@@ -11,7 +11,6 @@ use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Events\BeforeProxyErrorResponseEvent;
 use Omikron\FactFinder\Shopware6\Events\EnrichProxyDataEvent;
 use Psr\Http\Client\ClientExceptionInterface;
-use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Shopware\Storefront\Controller\StorefrontController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteScope(scopes={"storefront"})
+ * @Route(defaults={"_routeScope"={"storefront"}})
  */
 class ProxyController extends StorefrontController
 {
@@ -32,7 +31,13 @@ class ProxyController extends StorefrontController
     }
 
     /**
-     * @Route(path="/fact-finder/proxy/{endpoint}", name="frontend.factfinder.proxy.execute", methods={"GET", "POST"}, requirements={"endpoint"=".*"})
+     * @Route(
+     *     path="/fact-finder/proxy/{endpoint}",
+     *     name="frontend.factfinder.proxy.execute",
+     *     methods={"GET", "POST"},
+     *     requirements={"endpoint"=".*"},
+     *     defaults={"csrf_protected"=false}
+     * )
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
