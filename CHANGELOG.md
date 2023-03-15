@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Proxy
+
 ## [v4.2.1] - 2023.03.10
 ### Fix
 - Category

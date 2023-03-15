@@ -1,0 +1,26 @@
+{
+  "totalHits": 3,
+  "hits": [
+    {
+      "masterValues": {
+        "Master": "6237eeb757e2485ca589c30457f09493",
+        "Name": "\"Durable Wool Bag\""
+      },
+      "id": "6237eeb757e2485ca589c30457f09493"
+    },
+    {
+      "masterValues": {
+        "Master": "0636632e55a1411987c8a289a05e5f0d",
+        "Name": "\"Incredible Aluminum Bag of Scones\""
+      },
+      "id": "0636632e55a1411987c8a289a05e5f0d"
+    },
+    {
+      "masterValues": {
+        "Master": "a3b45c47356f4fc29579538fc4cc2c6b",
+        "Name": "\"Rustic Iron Her Majesty’s Little Black Handbag\""
+      },
+      "id": "a3b45c47356f4fc29579538fc4cc2c6b"
+    }
+  ]
+}
