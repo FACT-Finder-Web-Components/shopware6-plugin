@@ -2,6 +2,9 @@
 ## Unreleased
 ### Add
 - Proxy
+### Fix
+- Tracking
+  - Fix tracking when `Add To Cart` button has been clicked
 
 ## [v4.2.1] - 2023.03.10
 ### Fix
