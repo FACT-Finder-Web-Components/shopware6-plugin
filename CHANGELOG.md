@@ -2,6 +2,8 @@
 ## Unreleased
 ### Add
 - Proxy
+### Change
+- Upgrade Web Components version to v4.2.6
 ### Fix
 - Tracking
   - Fix tracking when `Add To Cart` button has been clicked
