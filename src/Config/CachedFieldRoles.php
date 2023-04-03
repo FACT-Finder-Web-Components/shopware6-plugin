@@ -14,13 +14,13 @@ class CachedFieldRoles implements FieldRolesInterface
     public function __construct(FieldRolesInterface $decorated, AdapterInterface $cache)
     {
         $this->decorated = $decorated;
-        $this->cache = $cache;
+        $this->cache     = $cache;
     }
 
     public function getRoles(?string $salesChannelId): array
     {
         $cacheKey = $this->getCacheKey($salesChannelId);
-        $item = $this->cache->getItem($cacheKey);
+        $item     = $this->cache->getItem($cacheKey);
 
         if ($item->isHit()) {
             return $item->get();
