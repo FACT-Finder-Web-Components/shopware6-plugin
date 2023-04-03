@@ -75,6 +75,7 @@
             <bind key="$configurationAddParams">%factfinder.configuration.add_params%</bind>
             <bind key="$communicationParameters">%factfinder.communication.parameters.base%</bind>
             <bind key="$entryRepository" type="service" id="factfinder_feed_preprocessor.repository" />
+            <bind key="$cache" type="service" id="cache.object" />
         </defaults>
 
         <service id="Omikron\FactFinder\Shopware6\Communication\AdapterFactory" />
@@ -182,5 +183,7 @@
             <argument type="service" id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Filter"/>
         </service>
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine" />
+        <service id="Omikron\FactFinder\Shopware6\Config\FieldRolesInterface"
+                 alias="Omikron\FactFinder\Shopware6\Config\FieldRoles" />
     </services>
 </container>
