@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Utilites\Ssr\Template;
 
-use Omikron\FactFinder\Shopware6\Config\FieldRoles;
+use Omikron\FactFinder\Shopware6\Config\CachedFieldRoles;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 
@@ -14,7 +14,7 @@ class Filter implements FilterInterface
 
     public function __construct(
         SalesChannelService $channelService,
-        FieldRoles $fieldRolesService
+        CachedFieldRoles $fieldRolesService
     ) {
         $context          = $channelService->getSalesChannelContext();
         $this->fieldRoles = $fieldRolesService->getRoles($context->getSalesChannelId());

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Api;
 
 use Exception;
-use Omikron\FactFinder\Shopware6\Config\FieldRoles;
+use Omikron\FactFinder\Shopware6\Config\FieldRolesInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
@@ -20,10 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UpdateFieldRolesController extends AbstractController
 {
-    private FieldRoles $fieldRoles;
+    private FieldRolesInterface $fieldRoles;
     private EntityRepositoryInterface $channelRepository;
 
-    public function __construct(FieldRoles $fieldRolesService, EntityRepositoryInterface $channelRepository)
+    public function __construct(FieldRolesInterface $fieldRolesService, EntityRepositoryInterface $channelRepository)
     {
         $this->fieldRoles        = $fieldRolesService;
         $this->channelRepository = $channelRepository;

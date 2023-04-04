@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Utilites\Ssr;
 
-use Omikron\FactFinder\Shopware6\Config\FieldRoles;
+use Omikron\FactFinder\Shopware6\Config\CachedFieldRoles;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\System\Currency\CurrencyFormatter;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -20,7 +20,7 @@ class PriceFormatter
     public function __construct(
         SalesChannelService $channelService,
         CurrencyFormatter $currencyFormatter,
-        FieldRoles $fieldRolesService,
+        CachedFieldRoles $fieldRolesService,
         array $fieldRoles
     ) {
         $this->channelService    = $channelService;

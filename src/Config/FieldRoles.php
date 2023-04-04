@@ -8,7 +8,7 @@ use Omikron\FactFinder\Communication\Resource\Search;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
-class FieldRoles
+class FieldRoles implements FieldRolesInterface
 {
     private Search $search;
     private Communication $communicationConfig;
