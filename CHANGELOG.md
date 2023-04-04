@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+- SSR
+  - Cache field roles
+
 ## [v4.2.2] - 2023.03.16
 ### Add
 - Proxy
