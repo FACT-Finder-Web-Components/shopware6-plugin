@@ -12,6 +12,7 @@ use Shopware\Core\Framework\Struct\ArrayEntity;
 use Shopware\Core\Framework\Struct\Struct;
 use Shopware\Storefront\Event\StorefrontRenderEvent;
 use Shopware\Storefront\Page\GenericPageLoadedEvent;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -23,8 +24,10 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     private array $fieldRoles;
     private array $communicationParameters;
     private array $addParams;
+    private ParameterBagInterface $params;
 
     public function __construct(
+        ParameterBagInterface $params,
         Communication $config,
         ExtensionConfig $extensionConfig,
         RouterInterface $router,
@@ -38,6 +41,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         $this->fieldRoles              = $fieldRoles;
         $this->communicationParameters = $communicationParameters;
         $this->addParams               = $configurationAddParams;
+        $this->params                  = $params;
     }
 
     public static function getSubscribedEvents()
@@ -80,6 +84,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'searchImmediate'  => $this->isSearchImmediate($event) ? 'true' : 'false',
                 'userId'           => $customer ? $customer->getId() : null,
                 'ssr'              => $this->config->isSsrActive(),
+                'shopwareVersion'  => $this->getShopwareVersion(),
             ]));
         }
     }
@@ -134,5 +139,12 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         }
 
         return $this->config->getServerUrl();
+    }
+
+    private function getShopwareVersion(): int
+    {
+        $version = str_replace('.', '', $this->params->get('kernel.shopware_version'));
+
+        return (int) $version;
     }
 }

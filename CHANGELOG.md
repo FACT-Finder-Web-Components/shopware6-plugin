@@ -1,7 +1,9 @@
 # Changelog
 ## Unreleased
+### Fix
 - SSR
   - Cache field roles
+- fix problem with new map due to SecurityExtension
 
 ## [v4.2.2] - 2023.03.16
 ### Add
