@@ -3,7 +3,7 @@
 {% block base_body_inner %}
   {% block base_body_inner_factfinder_communication %}
     <ff-communication
-      {{ page.extensions.factfinder.communication|default([])|filter(val => val)|map((val, key) => key ~ '="' ~ (val|e('html_attr')) ~ '"')|join(' ')|raw }}
+      {{ page.extensions.factfinder.communication|default([])|filter(val => val)|map((val) => val, (val, key) => key ~ '="' ~ (val|e('html_attr')) ~ '"')|join(' ')|raw }}
       only-search-params="true"
       disable-single-hit-redirect="true"></ff-communication>
   {% endblock %}
