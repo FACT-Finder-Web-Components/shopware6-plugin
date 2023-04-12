@@ -3,7 +3,9 @@
 ### Fix
 - SSR
   - Cache field roles
-- fix problem with new map due to SecurityExtension
+- Fix problem with new map due to SecurityExtension
+- Export
+  - Fix problem with PriceCurrency during export
 
 ## [v4.2.2] - 2023.03.16
 ### Add

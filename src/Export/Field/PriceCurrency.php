@@ -34,4 +34,9 @@ class PriceCurrency extends Price
     {
         return [ProductEntity::class];
     }
+
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }
