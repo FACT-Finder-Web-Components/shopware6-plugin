@@ -20,6 +20,11 @@ class PriceCurrency extends Price
         $this->numberFormatter = $numberFormatter;
     }
 
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
+
     public function getName(): string
     {
         return 'Price_' . $this->currency->getIsoCode();
@@ -33,10 +38,5 @@ class PriceCurrency extends Price
     public function getCompatibleEntityTypes(): array
     {
         return [ProductEntity::class];
-    }
-
-    public function __toString(): string
-    {
-        return $this->getName();
     }
 }
