@@ -22,14 +22,12 @@ use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Shopware\Storefront\Event\StorefrontRenderEvent;
 use Shopware\Storefront\Page\GenericPageLoadedEvent;
 use Shopware\Storefront\Page\Page;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 
 class ConfigurationSubscriberSpec extends ObjectBehavior
 {
     public function let(
-        ParameterBagInterface $params,
         Communication $communication,
         ExtensionConfig $extensionConfig,
         RouterInterface $router
@@ -45,7 +43,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
             ]
         );
         $extensionConfig->getRedirectMapping()->willReturn(new RedirectMapping(''));
-        $this->beConstructedWith($params, $communication, $extensionConfig, $router, $fieldRoles, $communicationParameters);
+        $this->beConstructedWith($communication, $extensionConfig, $router, $fieldRoles, $communicationParameters);
     }
 
     public function it_will_return_factfinderchannel_for_specific_sales_channel_id(
