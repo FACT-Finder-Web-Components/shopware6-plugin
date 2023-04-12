@@ -142,7 +142,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     private function getCommunicationAttributes(array $communicationConfig): array
     {
         return array_map(
-            fn (string $key, string $value) => sprintf('%s="%s" ', $key, $value),
+            fn (string $key, string $value) => sprintf('%s="%s" ', $key, htmlspecialchars($value)),
             array_keys($communicationConfig),
             array_values($communicationConfig)
         );
