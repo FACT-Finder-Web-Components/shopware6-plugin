@@ -82,7 +82,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'searchImmediate'         => $this->isSearchImmediate($event) ? 'true' : 'false',
                 'userId'                  => $customer ? $customer->getId() : null,
                 'ssr'                     => $this->config->isSsrActive(),
-                'communicationAttributes' => $this->getCommunicationAttributes($communicationConfig)
+                'communicationAttributes' => $this->getCommunicationAttributes($communicationConfig),
             ]));
         }
     }
@@ -142,7 +142,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     private function getCommunicationAttributes(array $communicationConfig): array
     {
         return array_map(
-            fn(string $key, string $value) => sprintf('%s="%s" ', $key, $value),
+            fn (string $key, string $value) => sprintf('%s="%s" ', $key, $value),
             array_keys($communicationConfig),
             array_values($communicationConfig)
         );
