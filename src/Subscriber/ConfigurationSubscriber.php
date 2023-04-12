@@ -71,15 +71,18 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $communicationConfig = $communication + $this->communicationParameters;
+
         if ($page->hasExtension('factfinder') === false) {
             $page->addExtension('factfinder', new ArrayEntity([
-                'field_roles'      => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
-                'communication'    => $communication + $this->communicationParameters,
-                'trackingSettings' => $this->extensionConfig->getTrackingSettings(),
-                'redirectMapping'  => (string) $this->extensionConfig->getRedirectMapping(),
-                'searchImmediate'  => $this->isSearchImmediate($event) ? 'true' : 'false',
-                'userId'           => $customer ? $customer->getId() : null,
-                'ssr'              => $this->config->isSsrActive(),
+                'field_roles'             => $this->config->getFieldRoles($salesChannelId) ?: $this->fieldRoles,
+                'communication'           => $communicationConfig,
+                'trackingSettings'        => $this->extensionConfig->getTrackingSettings(),
+                'redirectMapping'         => (string) $this->extensionConfig->getRedirectMapping(),
+                'searchImmediate'         => $this->isSearchImmediate($event) ? 'true' : 'false',
+                'userId'                  => $customer ? $customer->getId() : null,
+                'ssr'                     => $this->config->isSsrActive(),
+                'communicationAttributes' => $this->getCommunicationAttributes($communicationConfig)
             ]));
         }
     }
@@ -134,5 +137,14 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         }
 
         return $this->config->getServerUrl();
+    }
+
+    private function getCommunicationAttributes(array $communicationConfig): array
+    {
+        return array_map(
+            fn(string $key, string $value) => sprintf('%s="%s" ', $key, $value),
+            array_keys($communicationConfig),
+            array_values($communicationConfig)
+        );
     }
 }
