@@ -67,17 +67,17 @@ class ResultController extends StorefrontController
 
     private function parseQueryString(string $queryString): string
     {
-        if ('' === $queryString) {
+        if ($queryString === '') {
             return '';
         }
 
         $queryParams = explode('&', $queryString);
-        $result = array_reduce(
+        $result      = array_reduce(
             $queryParams,
             function (string $carry, string $queryParam) {
                 $result = explode('=', $queryParam);
 
-                return $carry . sprintf('&%s=%s', $result[0], htmlspecialchars($result[1]));
+                return sprintf('%s&%s=%s', $carry, $result[0], htmlspecialchars($result[1]));
             },
             ''
         );
