@@ -6,6 +6,7 @@
 - Fix problem with new map due to SecurityExtension
 - Export
   - Fix problem with PriceCurrency during export
+- Security patch
 
 ## [v4.2.2] - 2023.03.16
 ### Add
