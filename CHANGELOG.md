@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.2.3] - 2023.04.13
 ### Fix
 - SSR
   - Cache field roles
@@ -353,6 +353,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.2.3]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.3
 [v4.2.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.2
 [v4.2.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.1
 [v4.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.0
