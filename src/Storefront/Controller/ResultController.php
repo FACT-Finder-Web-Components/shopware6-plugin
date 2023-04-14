@@ -45,7 +45,7 @@ class ResultController extends StorefrontController
         Environment $twig,
         TemplateFinderInterface $templateFinder,
         Engine $mustache,
-        string $pageUrlParam
+        string $pageUrlParam = 'page'
     ): Response {
         $page     = $this->pageLoader->load($request, $context);
         $response = $this->renderStorefront('@Parent/storefront/page/factfinder/result.html.twig', ['page' => $page]);

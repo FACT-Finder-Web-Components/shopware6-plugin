@@ -76,7 +76,8 @@ class ResultControllerSpec extends ObjectBehavior
     public function it_should_return_original_response_content_when_ssr_is_not_active(
         SearchAdapter $searchAdapter,
         Page $page,
-        Engine $mustache
+        Engine $mustache,
+        TemplateFinder $templateFinder
     ) {
         $content = 'original content';
         $this->pageLoader->load($this->request, $this->salesChannelContext)->willReturn($page);
@@ -87,6 +88,8 @@ class ResultControllerSpec extends ObjectBehavior
             $this->request,
             $this->salesChannelContext,
             $searchAdapter,
+            $this->twig,
+            $templateFinder,
             $mustache
         );
 
