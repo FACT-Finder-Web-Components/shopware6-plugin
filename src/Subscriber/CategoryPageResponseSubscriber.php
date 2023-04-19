@@ -112,7 +112,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         $criteria->addFilter(new EqualsFilter('id', $categoryId));
         $category = $this->categoryRepository->search($criteria, Context::createDefaultContext())->first();
 
-        return $this->categoryPath->getValue($category);
+        return $category !== null ? $this->categoryPath->getValue($category) : '';
     }
 
     private function getCategoryId(Request $request): string
