@@ -1,4 +1,7 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix problem with ff-template in search result page
 ## [v4.2.3] - 2023.04.13
 ### Fix
 - SSR
