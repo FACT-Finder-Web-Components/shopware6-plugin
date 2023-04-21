@@ -435,6 +435,7 @@ The method `getCompatibleEntityTypes` contains an array of Shopware Entity class
 
 ```php
 
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class CustomColumn implements FieldInterface
@@ -451,7 +452,7 @@ class CustomColumn implements FieldInterface
     
     public function getCompatibleEntityTypes(): array
     {
-        return [SalesChannelProductEntity::class];
+        return [ProductEntity::class];
     }
 }
 ```
