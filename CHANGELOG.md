@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fix
 - Fix problem with ff-template in search result page
+- Fix some inaccuracies in read.me file
 ## [v4.2.3] - 2023.04.13
 ### Fix
 - SSR
