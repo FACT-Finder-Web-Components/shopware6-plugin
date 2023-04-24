@@ -414,7 +414,7 @@ information which is relevant for your project and not part of a default Shopwar
 how to extend the feed with additional column.
 
 Start with creating field provider - a class
-implementing `Omikron\FactFinder\Shopware6\Export\FieldFieldInterface` which will be used to export your data.
+implementing `Omikron\FactFinder\Shopware6\Export\FieldInterface` which will be used to export your data.
 
 ```php
 
@@ -435,6 +435,7 @@ The method `getCompatibleEntityTypes` contains an array of Shopware Entity class
 
 ```php
 
+use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 
 class CustomColumn implements FieldInterface
@@ -451,7 +452,7 @@ class CustomColumn implements FieldInterface
     
     public function getCompatibleEntityTypes(): array
     {
-        return [SalesChannelProductEntity::class];
+        return [ProductEntity::class];
     }
 }
 ```
