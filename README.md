@@ -140,10 +140,19 @@ This section contains a plugin configuration, which is optional and provides add
   default, all custom fields are being exported.
 * Export prices for all Currencies - if disabled, export will contain only one column `Price`. If enabled, all product
   price will be exported in all currency configured for a given sales channel.
-* Enable export cache - if enabled export time will be shorter. Option is connected with `Storefron presentation` - 
+* Enable export cache - if enabled export time will be shorter. Option is connected with `Storefront presentation` - 
   it means that each `Product listing` will be cached. During building cache `FeedPreprocessorEntryBeforeCreate` 
   event is triggered, so you can easily hook to it if you would like to cache some additional data. You can find more 
   details about implementation [here](#adding-custom-export-cache-subscriber).
+
+**Note:**  When the Export cache is enabled:
+  - if cache data is empty then - we are building a new export cache and storing it in `factfinder_feed_preprocessor` database table
+  - if cache data already exists then it uses cached data to prepare export
+  - if some product data changes then - the cache for this record is automatically rebuilt after the product save
+  - if rebuilding the whole cache is required then we can use a command:
+```
+php [SHOPWARE_ROOT]/bin/console factfinder:data:pre-process
+```
 
 #### Price Columns Format
 
