@@ -10,6 +10,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
@@ -41,8 +42,8 @@ class FeedPreprocessorEntryDefinition extends EntityDefinition
                 (new StringField('product_number', 'productNumber'))->addFlags(new Required()),
                 (new StringField('parent_product_number', 'parentProductNumber')),
                 (new StringField('variation_key', 'variationKey')),
-                (new StringField('filter_attributes', 'filterAttributes'))->addFlags(new Required(), new AllowEmptyString()),
-                (new StringField('custom_fields', 'customFields'))->addFlags(new AllowEmptyString()),
+                (new LongTextField('filter_attributes', 'filterAttributes'))->addFlags(new Required(), new AllowEmptyString()),
+                (new LongTextField('custom_fields', 'customFields'))->addFlags(new AllowEmptyString()),
                 (new JsonField('additional_cache', 'additionalCache')),
             ]
         );
