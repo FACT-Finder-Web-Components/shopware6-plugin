@@ -12,7 +12,7 @@ use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\Language\LanguageEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
@@ -35,16 +35,16 @@ class RunPreprocessorCommand extends Command
     private FeedPreprocessorEntryPersister $entryPersister;
     private ExportProducts $exportProducts;
     private SalesChannelService $channelService;
-    private EntityRepository $languageRepository;
-    private EntityRepository $channelRepository;
+    private EntityRepositoryInterface $languageRepository;
+    private EntityRepositoryInterface $channelRepository;
 
     public function __construct(
         FeedPreprocessor $feedPreprocessor,
         FeedPreprocessorEntryPersister $entryPersister,
         SalesChannelService $salesChannelService,
         ExportProducts $exportProducts,
-        EntityRepository $languageRepository,
-        EntityRepository $channelRepository
+        EntityRepositoryInterface $languageRepository,
+        EntityRepositoryInterface $channelRepository
     ) {
         parent::__construct();
         $this->feedPreprocessor   = $feedPreprocessor;
