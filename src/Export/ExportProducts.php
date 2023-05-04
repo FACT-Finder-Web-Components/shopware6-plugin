@@ -7,17 +7,17 @@ namespace Omikron\FactFinder\Shopware6\Export;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepository;
+use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepositoryInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class ExportProducts implements ExportInterface
 {
-    private SalesChannelRepository $productRepository;
+    private SalesChannelRepositoryInterface $productRepository;
 
     /** @var string[] */
     private array $customAssociations;
 
-    public function __construct(SalesChannelRepository $productRepository, array $customAssociations)
+    public function __construct(SalesChannelRepositoryInterface $productRepository, array $customAssociations)
     {
         $this->productRepository  = $productRepository;
         $this->customAssociations = $customAssociations;
