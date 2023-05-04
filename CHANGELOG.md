@@ -1,4 +1,7 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix problem with autowire EntityRepository and SalesChannelRepository for Shopware 6.4
 ## [v4.2.4] - 2023.04.26
 ### Fix
 - Fix problem with ff-template in search result page
