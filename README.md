@@ -335,6 +335,12 @@ Export can be done for:
 `Create Export` Send a message to a bus which then might be consumed automatically by an admin worker (if enabled)
 or by CLI worker. More information about messaging you can find in official Shopware [documentation](https://developer.shopware.com/docs/guides/hosting/infrastructure/message-queue)
 
+![Admin Panel Refresh export cache](docs/assets/admin-panel-refresh-cache-export.png "Admin Panel Refresh export cache")
+If you use the export cache feature ([read more](#export-settings)) you could also refresh your export cache by clicking on `Refresh cache Export`
+button. This feature will be useful if:
+ - your export cache is old or incomplete
+ - you did some database changes programmatically
+ - you want to decrease export time (export with cache is faster)
 
 ## Web Components Integration
 

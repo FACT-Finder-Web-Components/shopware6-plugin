@@ -14,6 +14,7 @@ Component.register('ui-feed-export-form', {
             exportTypeValue: null,
             typeSelectOptions: [],
             isCacheDisable: false,
+            isLoadingCache: false,
         }
     },
 
@@ -100,6 +101,7 @@ Component.register('ui-feed-export-form', {
                 });
         },
         refreshExportCache(url) {
+            this.isLoadingCache = true;
             const httpClient = Shopware.Service('syncService').httpClient;
             const basicHeaders = {
                 Authorization: `Bearer ${Shopware.Context.api.authToken.access}`,
@@ -121,6 +123,8 @@ Component.register('ui-feed-export-form', {
                     } else {
                         this.errorRefreshCacheWindow();
                     }
+
+                    this.isLoadingCache = false;
                 });
         }
     }

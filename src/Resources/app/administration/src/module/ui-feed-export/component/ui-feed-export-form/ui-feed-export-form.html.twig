@@ -35,6 +35,8 @@
 
     <sw-button @click="refreshExportCache('_action/fact-finder/refresh-export-cache')"
                v-if="isCacheDisable"
+               :isLoading="isLoadingCache"
+               :disabled="isLoadingCache"
                variant="success"
                block="true"
                size="large"
