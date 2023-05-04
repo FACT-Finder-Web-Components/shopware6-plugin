@@ -22,7 +22,7 @@ class UiFeedExportController extends AbstractController
 {
     private FeedExportHandler $feedExportHandler;
     private DataExportCommand $dataExportCommand;
-    private RefreshExportCacheHandler $refreshExportCacheHandler;
+    private RefreshExportCacheHandler $refreshCacheHandler;
 
     /**
      * UiFeedExportController constructor.
@@ -32,11 +32,11 @@ class UiFeedExportController extends AbstractController
     public function __construct(
         FeedExportHandler $feedExportHandler,
         DataExportCommand $dataExportCommand,
-        RefreshExportCacheHandler $refreshExportCacheHandler
+        RefreshExportCacheHandler $refreshCacheHandler
     ) {
-        $this->feedExportHandler         = $feedExportHandler;
-        $this->dataExportCommand         = $dataExportCommand;
-        $this->refreshExportCacheHandler = $refreshExportCacheHandler;
+        $this->feedExportHandler   = $feedExportHandler;
+        $this->dataExportCommand   = $dataExportCommand;
+        $this->refreshCacheHandler = $refreshCacheHandler;
     }
 
     /**
@@ -80,7 +80,7 @@ class UiFeedExportController extends AbstractController
      */
     public function refreshExportCacheAction(Request $request): JsonResponse
     {
-        $this->refreshExportCacheHandler->handle(new RefreshExportCache(
+        $this->refreshCacheHandler->handle(new RefreshExportCache(
             $request->query->get('salesChannelValue'),
             $request->query->get('salesChannelLanguageValue')
         ));

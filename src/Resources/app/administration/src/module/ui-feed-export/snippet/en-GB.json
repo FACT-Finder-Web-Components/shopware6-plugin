@@ -25,7 +25,7 @@
           "label": "Select export type"
         },
         "refresh_cache_success": {
-          "text": "Refresh cache process has been started"
+          "text": "Export cache has been refreshed"
         },
         "refresh_cache_error": {
           "text": "An error occurred during refresh export cache"
