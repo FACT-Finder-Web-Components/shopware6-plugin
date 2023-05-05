@@ -26,6 +26,8 @@
 
     </sw-container>
     <sw-button @click="getFeedExportFile('_action/fact-finder/generate-feed')"
+               :isLoading="isLoadingExport"
+               :disabled="isLoadingExport"
                variant="success"
                block="true"
                size="large">

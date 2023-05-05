@@ -16,10 +16,13 @@
           "title": "Refresh cache Export"
         },
         "alert_success": {
-          "text": "Integration process has been started"
+          "text": "Export has been generated"
         },
         "alert_error": {
           "text": "An error occurred during integration process"
+        },
+        "alert_not_valid_params": {
+          "text": "Please choose export parameters"
         },
         "refresh_cache_success": {
           "text": "Export cache has been refreshed"

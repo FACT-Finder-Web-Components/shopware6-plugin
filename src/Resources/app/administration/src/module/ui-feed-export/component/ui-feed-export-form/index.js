@@ -15,6 +15,7 @@ Component.register('ui-feed-export-form', {
             typeSelectOptions: [],
             isCacheDisable: false,
             isLoadingCache: false,
+            isLoadingExport: false,
         }
     },
 
@@ -65,6 +66,11 @@ Component.register('ui-feed-export-form', {
                 message: this.$tc('ui-feed-export.component.export_form.alert_error.text')
             })
         },
+        errorNotValidParams() {
+            this.createNotificationError({
+                message: this.$tc('ui-feed-export.component.export_form.alert_not_valid_params.text')
+            })
+        },
         successRefreshCacheWindow() {
             this.createNotificationSuccess({
                 message: this.$tc('ui-feed-export.component.export_form.refresh_cache_success.text')
@@ -75,17 +81,35 @@ Component.register('ui-feed-export-form', {
                 message: this.$tc('ui-feed-export.component.export_form.refresh_cache_error.text')
             })
         },
+        validateParams(params) {
+             if (params.salesChannelValue === null ||
+                 params.salesChannelLanguageValue === null ||
+                 params.exportTypeValue === null ) {
+                 return false;
+             }
+
+             return true;
+        },
         getFeedExportFile(url) {
-            const httpClient = Shopware.Service('syncService').httpClient;
-            const basicHeaders = {
-                Authorization: `Bearer ${Shopware.Context.api.authToken.access}`,
-                'Content-Type': 'application/json'
-            };
             const params = {
                 salesChannelValue: this.salesChannelValue,
                 salesChannelLanguageValue: this.salesChannelLanguageValue,
                 exportTypeValue: this.exportTypeValue
             };
+
+            if (!this.validateParams(params)) {
+                this.errorNotValidParams();
+
+                return;
+            }
+
+            this.isLoadingExport = true;
+            const httpClient = Shopware.Service('syncService').httpClient;
+            const basicHeaders = {
+                Authorization: `Bearer ${Shopware.Context.api.authToken.access}`,
+                'Content-Type': 'application/json'
+            };
+
 
             httpClient
                 .get(url, {
@@ -98,6 +122,8 @@ Component.register('ui-feed-export-form', {
                     } else {
                         this.errorFeedGenerationWindow();
                     }
+
+                    this.isLoadingExport = false;
                 });
         },
         refreshExportCache(url) {
