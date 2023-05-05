@@ -2,6 +2,7 @@
 ## Unreleased
 ### Add
 - Add refresh export cache button
+- Add loader for export button
 ### Fix
 - Fix problem with autowire EntityRepository and SalesChannelRepository for Shopware 6.4
 
