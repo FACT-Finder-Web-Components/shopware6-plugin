@@ -1,13 +1,17 @@
 # Changelog
 ## Unreleased
+### Add
+- Add refresh export cache button
 ### Fix
 - Fix problem with autowire EntityRepository and SalesChannelRepository for Shopware 6.4
+
 ## [v4.2.4] - 2023.04.26
 ### Fix
 - Fix problem with ff-template in search result page
 - Fix some inaccuracies in read.me file
 - Remove deprecations for EntityRepository and SalesChannelRepository
 - Fix type for custom_fields and filter_attributes in FeedPreprocessorEntryDefinition
+
 ## [v4.2.3] - 2023.04.13
 ### Fix
 - SSR

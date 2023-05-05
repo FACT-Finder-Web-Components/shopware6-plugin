@@ -6,7 +6,9 @@ namespace Omikron\FactFinder\Shopware6\Api;
 
 use Omikron\FactFinder\Shopware6\Command\DataExportCommand;
 use Omikron\FactFinder\Shopware6\Message\FeedExport;
+use Omikron\FactFinder\Shopware6\Message\RefreshExportCache;
 use Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler;
+use Omikron\FactFinder\Shopware6\MessageQueue\RefreshExportCacheHandler;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,16 +22,21 @@ class UiFeedExportController extends AbstractController
 {
     private FeedExportHandler $feedExportHandler;
     private DataExportCommand $dataExportCommand;
+    private RefreshExportCacheHandler $refreshCacheHandler;
 
     /**
      * UiFeedExportController constructor.
      *
      * @param FeedExportHandler $feedExportHandler
      */
-    public function __construct(FeedExportHandler $feedExportHandler, DataExportCommand $dataExportCommand)
-    {
-        $this->feedExportHandler = $feedExportHandler;
-        $this->dataExportCommand = $dataExportCommand;
+    public function __construct(
+        FeedExportHandler $feedExportHandler,
+        DataExportCommand $dataExportCommand,
+        RefreshExportCacheHandler $refreshCacheHandler
+    ) {
+        $this->feedExportHandler   = $feedExportHandler;
+        $this->dataExportCommand   = $dataExportCommand;
+        $this->refreshCacheHandler = $refreshCacheHandler;
     }
 
     /**
@@ -60,5 +67,24 @@ class UiFeedExportController extends AbstractController
     public function getTypeEntityMap(): JsonResponse
     {
         return new JsonResponse($this->dataExportCommand->getTypeEntityMap());
+    }
+
+    /**
+     * @Route("/api/_action/fact-finder/refresh-export-cache", name="api.action.fact_finder.refresh-export-cache", methods={"GET"}, defaults={"XmlHttpRequest"=true})
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @throws \Exception
+     */
+    public function refreshExportCacheAction(Request $request): JsonResponse
+    {
+        $this->refreshCacheHandler->handle(new RefreshExportCache(
+            $request->query->get('salesChannelValue'),
+            $request->query->get('salesChannelLanguageValue')
+        ));
+
+        return new JsonResponse();
     }
 }

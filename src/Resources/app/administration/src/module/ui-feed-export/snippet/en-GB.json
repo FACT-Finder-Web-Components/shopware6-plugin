@@ -12,6 +12,9 @@
         "button": {
           "title": "Create Export"
         },
+        "cache_button": {
+          "title": "Refresh cache Export"
+        },
         "alert_success": {
           "text": "Integration process has been started"
         },
@@ -20,6 +23,12 @@
         },
         "export_type": {
           "label": "Select export type"
+        },
+        "refresh_cache_success": {
+          "text": "Export cache has been refreshed"
+        },
+        "refresh_cache_error": {
+          "text": "An error occurred during refresh export cache"
         }
       }
     }

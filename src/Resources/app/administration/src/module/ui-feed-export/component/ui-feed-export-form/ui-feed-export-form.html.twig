@@ -32,5 +32,17 @@
 
       {{ $tc('ui-feed-export.component.export_form.button.title') }}
     </sw-button>
+
+    <sw-button @click="refreshExportCache('_action/fact-finder/refresh-export-cache')"
+               v-if="isCacheDisable"
+               :isLoading="isLoadingCache"
+               :disabled="isLoadingCache"
+               variant="success"
+               block="true"
+               size="large"
+               class="margint10">
+
+      {{ $tc('ui-feed-export.component.export_form.cache_button.title') }}
+    </sw-button>
   </sw-card>
 </sw-card-view>

@@ -140,6 +140,9 @@
         <service id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler">
             <tag name="messenger.message_handler" />
         </service>
+        <service id="Omikron\FactFinder\Shopware6\MessageQueue\RefreshExportCacheHandler">
+            <tag name="messenger.message_handler" />
+        </service>
         <service id="Omikron\FactFinder\Shopware6\Export\ExportBrands">
             <argument type="service" id="product_manufacturer.repository" />
         </service>
