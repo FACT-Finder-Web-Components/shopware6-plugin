@@ -19,9 +19,9 @@
     "cookie": {
       "groupName": "FactFinder",
       "groupDescription": "Cookie required for proper working of user login tracking event",
-      "hasJustLogIn": "User login information",
-      "hasJustLogOut": "User logout information",
-      "userId": "User id information"
+      "hasJustLogIn": "FactFinder user log in information",
+      "hasJustLogOut": "FactFinder user log out information",
+      "userId": "FactFinder user id information"
     }
   }
 }
