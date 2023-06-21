@@ -9,22 +9,23 @@ use Shopware\Storefront\Framework\Cookie\CookieProviderInterface;
 
 class CookieProvider implements CookieProviderInterface
 {
-    private const HAS_JUST_LOGGED_IN = [
-        'snippet_name'        => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
-        'snippet_description' => 'Cookie required for proper working of user login tracking event',
-        'cookie'              => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
-    ];
-
-    private const HAS_JUST_LOGGED_OUT = [
-        'snippet_name'        => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
-        'snippet_description' => 'Cookie required for proper working of user login tracking event',
-        'cookie'              => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
-    ];
-
-    private const USER_ID = [
-        'snippet_name'        => BeforeSendResponseEventSubscriber::USER_ID,
-        'snippet_description' => 'Cookie required for proper working of user login tracking event',
-        'cookie'              => BeforeSendResponseEventSubscriber::USER_ID,
+    private const FF_COOKIE_GROUP = [
+        'snippet_name' => 'ff.cookie.groupName',
+        'snippet_description' => 'ff.cookie.groupDescription',
+        'entries' => [
+            [
+                'snippet_name'        => 'ff.cookie.hasJustLogIn',
+                'cookie'              => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
+            ],
+            [
+                'snippet_name'        =>'ff.cookie.hasJustLogOut',
+                'cookie'              => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
+            ],
+            [
+                'snippet_name'        => 'ff.cookie.userId',
+                'cookie'              => BeforeSendResponseEventSubscriber::USER_ID,
+            ],
+        ],
     ];
 
     private CookieProviderInterface $originalService;
@@ -38,11 +39,7 @@ class CookieProvider implements CookieProviderInterface
     {
         return array_merge(
             $this->originalService->getCookieGroups(),
-            [
-                self::HAS_JUST_LOGGED_IN,
-                self::HAS_JUST_LOGGED_OUT,
-                self::USER_ID,
-            ]
+            [self::FF_COOKIE_GROUP]
         );
     }
 }
