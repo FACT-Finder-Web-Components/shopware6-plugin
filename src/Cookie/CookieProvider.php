@@ -18,7 +18,7 @@ class CookieProvider implements CookieProviderInterface
                 'cookie'       => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
             ],
             [
-                'snippet_name' =>'ff.cookie.hasJustLogOut',
+                'snippet_name' => 'ff.cookie.hasJustLogOut',
                 'cookie'       => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
             ],
             [
