@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.2.6] - 2023.06.22
 ### Change
 - Group 3 FactFinder cookies into one group for Cookie Consent Manager
 - Upgrade Web Components version to v4.2.7
@@ -372,6 +372,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.2.6]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.6
 [v4.2.5]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.5
 [v4.2.4]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.4
 [v4.2.3]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.3
