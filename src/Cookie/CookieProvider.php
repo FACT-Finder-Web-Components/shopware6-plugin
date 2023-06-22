@@ -10,20 +10,20 @@ use Shopware\Storefront\Framework\Cookie\CookieProviderInterface;
 class CookieProvider implements CookieProviderInterface
 {
     private const FF_COOKIE_GROUP = [
-        'snippet_name' => 'ff.cookie.groupName',
-        'snippet_description' => 'ff.cookie.groupDescription',
-        'entries' => [
+        'snippet_name'         => 'ff.cookie.groupName',
+        'snippet_description'  => 'ff.cookie.groupDescription',
+        'entries'              => [
             [
-                'snippet_name'        => 'ff.cookie.hasJustLogIn',
-                'cookie'              => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
+                'snippet_name' => 'ff.cookie.hasJustLogIn',
+                'cookie'       => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN,
             ],
             [
-                'snippet_name'        =>'ff.cookie.hasJustLogOut',
-                'cookie'              => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
+                'snippet_name' =>'ff.cookie.hasJustLogOut',
+                'cookie'       => BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT,
             ],
             [
-                'snippet_name'        => 'ff.cookie.userId',
-                'cookie'              => BeforeSendResponseEventSubscriber::USER_ID,
+                'snippet_name' => 'ff.cookie.userId',
+                'cookie'       => BeforeSendResponseEventSubscriber::USER_ID,
             ],
         ],
     ];
