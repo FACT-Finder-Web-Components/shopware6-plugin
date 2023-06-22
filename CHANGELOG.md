@@ -1,7 +1,8 @@
 # Changelog
 ## Unreleased
-### Add
+### Change
 - Group 3 FactFinder cookies into one group for Cookie Consent Manager
+- Upgrade Web Components version to v4.2.7
 
 ## [v4.2.5] - 2023.05.08
 ### Add
