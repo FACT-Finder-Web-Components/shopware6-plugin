@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Group 3 FactFinder cookies into one group for Cookie Consent Manager
+
 ## [v4.2.5] - 2023.05.08
 ### Add
 - Add refresh export cache button

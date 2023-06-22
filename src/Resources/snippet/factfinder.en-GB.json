@@ -15,6 +15,13 @@
     },
     "similarProducts": {
       "label": "Similar Products"
+    },
+    "cookie": {
+      "groupName": "FactFinder",
+      "groupDescription": "Cookie required for proper working of user login tracking event",
+      "hasJustLogIn": "FactFinder user log in information",
+      "hasJustLogOut": "FactFinder user log out information",
+      "userId": "FactFinder user id information"
     }
   }
 }
