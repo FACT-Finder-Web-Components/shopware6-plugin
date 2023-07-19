@@ -1,4 +1,7 @@
 # Changelog
+## Unreleased
+- Change type to LONGTEXT for column `variation_key` in table `factfinder_feed_preprocessor`
+
 ## [v4.2.6] - 2023.06.22
 ### Change
 - Group 3 FactFinder cookies into one group for Cookie Consent Manager
