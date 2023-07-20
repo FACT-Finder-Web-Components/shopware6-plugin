@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Migration;
 
@@ -23,6 +25,5 @@ SQL;
 
     public function updateDestructive(Connection $connection): void
     {
-        // no destructive
     }
 }
