@@ -23,6 +23,9 @@ SQL;
         $connection->executeStatement($query);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function updateDestructive(Connection $connection): void
     {
     }
