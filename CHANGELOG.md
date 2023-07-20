@@ -1,5 +1,6 @@
 # Changelog
-## Unreleased
+## [v4.2.7] - 2023.07.20
+### Change
 - Change type to LONGTEXT for column `variation_key` in table `factfinder_feed_preprocessor`
 
 ## [v4.2.6] - 2023.06.22
@@ -375,6 +376,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.2.7]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.7
 [v4.2.6]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.6
 [v4.2.5]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.5
 [v4.2.4]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.4
