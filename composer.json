@@ -38,6 +38,13 @@
       "php phpcpd.phar src --exclude src/Command --exclude src/Export/ExportCategories.php --exclude src/Export/ExportCmsPages.php\n"
     ]
   },
+  "config": {
+    "allow-plugins": {
+      "symfony/*": true,
+      "omikron/*": true,
+      "mustache/mustache": true
+    }
+  },
   "extra": {
     "shopware-plugin-class": "Omikron\\FactFinder\\Shopware6\\OmikronFactFinder",
     "plugin-icon": "src/Resources/public/plugin.png",
