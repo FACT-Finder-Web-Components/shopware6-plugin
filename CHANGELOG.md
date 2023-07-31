@@ -1,4 +1,11 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix some deprecations for Shopware v6.5
+### Change
+- Change league/flysystem-sftp to league/flysystem-sftp-v3
+- Upgrade some libraries connected to Shopware 6.5
+
 ## [v4.2.7] - 2023.07.20
 ### Change
 - Change type to LONGTEXT for column `variation_key` in table `factfinder_feed_preprocessor`

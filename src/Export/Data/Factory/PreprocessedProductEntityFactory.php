@@ -98,9 +98,9 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             }
         }
 
-        if ($entity->getConfiguratorGroupConfig()) {
-            return;
-        }
+//        if ($entity->getConfiguratorGroupConfig()) {
+//            return;
+//        }
 
         $exportProduct = $this->getExportProduct($entity, $entity, []);
 
