@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Field;
 
-use Closure;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\CategoryEntity;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
@@ -14,13 +13,14 @@ use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Storefront\Framework\Seo\SeoUrlRoute\NavigationPageSeoUrlRoute as CategoryRoute;
 use Shopware\Storefront\Framework\Seo\SeoUrlRoute\ProductPageSeoUrlRoute as ProductRoute;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 use function Omikron\FactFinder\Shopware6\Internal\Utils\first;
 use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class Deeplink implements FieldInterface, EventSubscriberInterface
 {
     private SeoUrlUpdater $seoUrlUpdater;
-    private Closure $fetchCallback;
+    private \Closure $fetchCallback;
 
     public function __construct(SeoUrlUpdater $seoUrlUpdater)
     {
@@ -57,7 +57,7 @@ class Deeplink implements FieldInterface, EventSubscriberInterface
 
     public function onUrlUpdated(SeoUrlUpdateEvent $event): void
     {
-        //@todo second argument could be removed?
+        // @todo second argument could be removed?
         $this->fetchCallback = fn (): array => first($event->getSeoUrls(), []);
     }
 

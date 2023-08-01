@@ -8,7 +8,6 @@ use Omikron\FactFinder\Shopware6\Export\FieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
-use Traversable;
 
 class GenericEntityFactory implements FactoryInterface
 {
@@ -19,7 +18,7 @@ class GenericEntityFactory implements FactoryInterface
     public function __construct(
         PropertyFormatter $propertyFormatter,
         FieldsProvider $fieldsProviders,
-        Traversable $exportedEntityTypes
+        \Traversable $exportedEntityTypes
     ) {
         $this->propertyFormatter   = $propertyFormatter;
         $this->fieldsProvider      = $fieldsProviders;

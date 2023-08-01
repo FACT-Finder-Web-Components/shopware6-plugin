@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Storefront\Controller;
 
-use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Shopware6\Config\Communication;
@@ -69,7 +68,7 @@ class ProxyController extends StorefrontController
 
                     break;
                 default:
-                    throw new Exception(sprintf('HTTP Method %s is not supported', $method));
+                    throw new \Exception(sprintf('HTTP Method %s is not supported', $method));
             }
 
             $event = new EnrichProxyDataEvent(json_decode((string) $response->getBody(), true));

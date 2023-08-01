@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export;
 
-use InvalidArgumentException;
 use Omikron\FactFinder\Shopware6\Export\Data\Factory\CompositeFactory;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
-use Traversable;
+
 use function Omikron\FactFinder\Shopware6\Internal\Utils\first;
 
 /**
@@ -23,7 +22,7 @@ class FeedFactory
     private FilterInterface $filter;
     private CompositeFactory $compositeFactory;
 
-    public function __construct(Traversable $exporters, FilterInterface $filter, CompositeFactory $compositeFactory)
+    public function __construct(\Traversable $exporters, FilterInterface $filter, CompositeFactory $compositeFactory)
     {
         $this->filter           = $filter;
         $this->compositeFactory = $compositeFactory;
@@ -32,9 +31,9 @@ class FeedFactory
 
     public function create(SalesChannelContext $context, string $createdType): Feed
     {
-        $exporter = first(array_filter(($this->exporters), fn (ExportInterface $exp): bool => $exp->getProducedExportEntityType() === $createdType));
+        $exporter = first(array_filter($this->exporters, fn (ExportInterface $exp): bool => $exp->getProducedExportEntityType() === $createdType));
         if (!$exporter instanceof ExportInterface) {
-            throw new InvalidArgumentException(sprintf('There is no exporter for given type: %s', $createdType));
+            throw new \InvalidArgumentException(sprintf('There is no exporter for given type: %s', $createdType));
         }
 
         return new Feed($context, $exporter, $this->compositeFactory, $this->filter);

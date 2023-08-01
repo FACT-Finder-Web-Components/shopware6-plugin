@@ -12,6 +12,7 @@ use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOp
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 use function Omikron\FactFinder\Shopware6\Internal\Utils\flatMap;
 use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
@@ -55,11 +56,11 @@ class FeedPreprocessor
 
         /** @var \Shopware\Core\Content\Product\ProductEntity $child */
         foreach ($product->getChildren() as $child) {
-            //fetch storefront presentation config for each variant
+            // fetch storefront presentation config for each variant
             $shouldGroupBeVisible = fn (string $groupId): bool => in_array($groupId, $visibleGroupIds);
             $variationKeyParts    = [];
 
-            //loop over the options to collect those, that should be aggregated in exported products
+            // loop over the options to collect those, that should be aggregated in exported products
             foreach ($child->getOptions() as $option) {
                 $hasMainVariant = (bool) $product->getMainVariantId();
 
@@ -73,11 +74,11 @@ class FeedPreprocessor
                     continue;
                 }
 
-                //if not then we format the option to a "ready to be exported" expression
+                // if not then we format the option to a "ready to be exported" expression
                 $notVisibleGroups[$option->getGroupId()][$option->getId()] = call_user_func($this->propertyFormatter, $option);
             }
 
-            //collect all variants that should be visible used variation key created in a loop before
+            // collect all variants that should be visible used variation key created in a loop before
             $variationKey = implode('-', $variationKeyParts);
 
             $childCustomFields = explode('|', $this->customFields->getValue($child));
@@ -86,7 +87,7 @@ class FeedPreprocessor
                 $customFields[$variationKey][] = $childCustomField;
             }
 
-            //store variant data to prevent iterating them again later
+            // store variant data to prevent iterating them again later
             $entries[$variationKey]                  = $this->formEntry($product, $context, $variationKey);
             $entries[$variationKey]['productNumber'] = $child->getProductNumber();
 
@@ -98,11 +99,11 @@ class FeedPreprocessor
         }
 
         return array_map(function (array $entry) use ($visibleVariantsFilters, $noVisibleVariantsFilters, $customFields, $context) {
-            $variationKey = $entry['variationKey'];
-            $filters = implode('|', array_filter([$noVisibleVariantsFilters[$variationKey], $visibleVariantsFilters[$variationKey]]));
+            $variationKey              = $entry['variationKey'];
+            $filters                   = implode('|', array_filter([$noVisibleVariantsFilters[$variationKey], $visibleVariantsFilters[$variationKey]]));
             $entry['filterAttributes'] = $filters ? "|$filters|" : '';
-            $entry['customFields'] = array_filter($customFields[$variationKey]) ? sprintf('|%s|', trim(implode('|', array_unique($customFields[$variationKey])), '|')) : '';
-            $event = new FeedPreprocessorEntryBeforeCreate($entry, $context);
+            $entry['customFields']     = array_filter($customFields[$variationKey]) ? sprintf('|%s|', trim(implode('|', array_unique($customFields[$variationKey])), '|')) : '';
+            $event                     = new FeedPreprocessorEntryBeforeCreate($entry, $context);
             $this->eventDispatcher->dispatch($event);
 
             return $event->getEntry();

@@ -11,6 +11,7 @@ use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
 use Shopware\Core\Content\Category\SalesChannel\AbstractCategoryRoute;
 use Shopware\Storefront\Page\Navigation\NavigationPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class CategoryPageSubscriber implements EventSubscriberInterface

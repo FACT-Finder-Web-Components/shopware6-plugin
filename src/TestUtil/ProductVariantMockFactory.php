@@ -54,7 +54,7 @@ class ProductVariantMockFactory
     {
         $options    = array_reduce($optionsConfig, function (array $carriedOptions, array $optionConfig): array {
             list($groupId, $optionId, $groupName, $optionName) = $optionConfig;
-            $group = new PropertyGroupEntity();
+            $group                                             = new PropertyGroupEntity();
             $group->setId($groupId);
 
             $groupTranslation = new PropertyGroupTranslationEntity();

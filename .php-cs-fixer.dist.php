@@ -43,6 +43,7 @@ return $config
                    'ordered_imports'              => ['imports_order' => ['class', 'function', 'const']],
                    'strict_comparison'            => true,
                    'yoda_style'                   => ['equal' => false, 'identical' => false, 'less_and_greater' => false],
+                   'nullable_type_declaration_for_default_null_value' => false,
                ])
     ->setFinder($finder);
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Api;
 
-use Exception;
 use Omikron\FactFinder\Shopware6\Config\FieldRolesInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
@@ -34,7 +33,7 @@ class UpdateFieldRolesController extends AbstractController
      *
      * @return JsonResponse
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function execute(): JsonResponse
     {

@@ -12,6 +12,7 @@ use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionEntity;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
+
 use function Omikron\FactFinder\Shopware6\Internal\Utils\flatMap;
 use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
