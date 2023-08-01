@@ -9,22 +9,23 @@ use Omikron\FactFinder\Shopware6\Export\Field\PriceCurrency;
 use Omikron\FactFinder\Shopware6\Export\Formatter\NumberFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\System\Currency\CurrencyEntity;
 
 class CurrencyFieldsProviderSpec extends ObjectBehavior
 {
-    public function let(EntityRepositoryInterface $currencyRepository, ExportSettings $exportSettings)
+    public function let(EntityRepository $currencyRepository, ExportSettings $exportSettings)
     {
         $exportSettings->isMultiCurrencyPriceExportEnable()->willReturn(true);
         $this->beConstructedWith($currencyRepository, $exportSettings, new NumberFormatter());
     }
 
-    public function it_will_return_currency_list_if_no_cache_available(EntityRepositoryInterface $currencyRepository, EntitySearchResult $entitySearchResult, ExportSettings $exportSettings)
+    public function it_will_return_currency_list_if_no_cache_available(EntityRepository $currencyRepository, EntitySearchResult $entitySearchResult, ExportSettings $exportSettings)
     {
         $currencyRepository
-            ->search(Argument::cetera())
+            ->search(Argument::cetera(), Context::createDefaultContext())
             ->will($this->mockCurrencyRepository($entitySearchResult));
 
         $priceCurrency = ['test_id' => new PriceCurrency(new CurrencyEntity(), new NumberFormatter())];
@@ -33,10 +34,10 @@ class CurrencyFieldsProviderSpec extends ObjectBehavior
         $this->getCurrencyFields()->shouldReturn($priceCurrency);
     }
 
-    public function it_will_return_currency_list_from_cache(EntityRepositoryInterface $currencyRepository, EntitySearchResult $entitySearchResult)
+    public function it_will_return_currency_list_from_cache(EntityRepository $currencyRepository, EntitySearchResult $entitySearchResult)
     {
         $currencyRepository
-            ->search(Argument::cetera())
+            ->search(Argument::cetera(), Context::createDefaultContext())
             ->will($this->mockCurrencyRepository($entitySearchResult))
             ->shouldBeCalledTimes(1);
 

@@ -23,6 +23,7 @@ use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
 use PHPUnit\Framework\Assert;
 use Prophecy\Argument;
+use Shopware\Core\Content\Product\DataAbstractionLayer\VariantListingConfig;
 use Shopware\Core\Content\Product\ProductCollection;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
@@ -372,7 +373,13 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     ): void {
         // Given
         $productEntity = $this->productMockFactory->create();
-        $productEntity->setConfiguratorGroupConfig(ProductMockFactory::getGroupConfigurationConfig($groupConfigurationConfig));
+        $productEntity->setVariantListingConfig(
+            new VariantListingConfig(
+                null,
+                $productEntity->getId(),
+                ProductMockFactory::getGroupConfigurationConfig($groupConfigurationConfig)
+            )
+        );
         $customFieldsData = [
             'SW100.1' => ['shape' => 'triangle', 'pattern' => 'stripes'],
             'SW100.2' => ['shape' => 'triangle', 'pattern' => 'dots'],

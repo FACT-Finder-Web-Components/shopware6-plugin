@@ -9,19 +9,19 @@ use Omikron\FactFinder\Shopware6\Export\Field\PriceCurrency;
 use Omikron\FactFinder\Shopware6\Export\Formatter\NumberFormatter;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\Currency\CurrencyEntity;
 
 class CurrencyFieldsProvider
 {
-    private EntityRepositoryInterface $currencyRepository;
+    private EntityRepository $currencyRepository;
     private ExportSettings $exportSettings;
     private NumberFormatter $numberFormatter;
     private array $currencyFields = [];
 
     public function __construct(
-        EntityRepositoryInterface $currencyRepository,
+        EntityRepository $currencyRepository,
         ExportSettings $exportSettings,
         NumberFormatter $numberFormatter
     ) {

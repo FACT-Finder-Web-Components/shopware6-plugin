@@ -53,6 +53,8 @@ class PreprocessedProductEntityFactory implements FactoryInterface
     }
 
     /**
+     * @param ProductEntity $entity
+     *
      * @return ExportProductEntity[]|iterable
      */
     public function createEntities(Entity $entity, string $producedType = ExportProductEntity::class): iterable
@@ -96,9 +98,9 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             }
         }
 
-        //        if ($entity->getConfiguratorGroupConfig()) {
-        //            return;
-        //        }
+        if ($entity->getVariantListingConfig()->getConfiguratorGroupConfig()) {
+            return;
+        }
 
         $exportProduct = $this->getExportProduct($entity, $entity, []);
 

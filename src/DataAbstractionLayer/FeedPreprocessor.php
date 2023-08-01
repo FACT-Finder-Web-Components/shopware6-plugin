@@ -62,7 +62,7 @@ class FeedPreprocessor
 
             // loop over the options to collect those, that should be aggregated in exported products
             foreach ($child->getOptions() as $option) {
-                $hasMainVariant = (bool) $product->getMainVariantId();
+                $hasMainVariant = (bool) $product->getVariantListingConfig()->getMainVariantId();
 
                 if (($shouldGroupBeVisible($option->getGroupId()) || $visibleGroupIds === []) && !$hasMainVariant) {
                     /*
@@ -112,8 +112,9 @@ class FeedPreprocessor
 
     private function extractVisibleGroupIds(ProductEntity $product): array
     {
-        $configuratorGroupConfig = $product->getConfiguratorGroupConfig();
-        $hasMainVariant          = (bool) $product->getMainVariantId();
+        //        $configuratorGroupConfig = $product->getConfiguratorGroupConfig();
+        $configuratorGroupConfig = $product->getVariantListingConfig()->getConfiguratorGroupConfig();
+        $hasMainVariant          = (bool) $product->getVariantListingConfig()->getMainVariantId();
 
         if (!$configuratorGroupConfig) {
             return $this->getVisibleGroupIdsFromChildren($product);
@@ -121,7 +122,7 @@ class FeedPreprocessor
 
         return array_reduce(
             array_filter(
-                $product->getConfiguratorGroupConfig(),
+                $product->getVariantListingConfig()->getConfiguratorGroupConfig(),
                 fn (array $groupConfig): bool => !$hasMainVariant && (bool) safeGetByName($groupConfig, 'expressionForListings')
             ),
             fn (array $result, array $groupConfig): array => array_merge($result, [safeGetByName($groupConfig, 'id')]),

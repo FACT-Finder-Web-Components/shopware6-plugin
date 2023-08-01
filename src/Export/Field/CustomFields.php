@@ -16,7 +16,7 @@ use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
@@ -34,8 +34,8 @@ class CustomFields implements FieldInterface
 {
     private PropertyFormatter $propertyFormatter;
     private SalesChannelService $salesChannelService;
-    private EntityRepositoryInterface $customFieldRepository;
-    private EntityRepositoryInterface $languageRepository;
+    private EntityRepository $customFieldRepository;
+    private EntityRepository $languageRepository;
     private ExportSettings $exportSettings;
     private CustomFieldsService $customFieldsService;
     private array $loadedFields = [];
@@ -43,8 +43,8 @@ class CustomFields implements FieldInterface
     public function __construct(
         PropertyFormatter $propertyFormatter,
         SalesChannelService $salesChannelService,
-        EntityRepositoryInterface $customFieldRepository,
-        EntityRepositoryInterface $languageRepository,
+        EntityRepository $customFieldRepository,
+        EntityRepository $languageRepository,
         ExportSettings $exportSettings,
         CustomFieldsService $customFieldsService
     ) {

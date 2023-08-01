@@ -6,16 +6,16 @@ namespace Omikron\FactFinder\Shopware6\Export;
 
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
 
 class CustomFieldsService
 {
-    private EntityRepositoryInterface $customFieldRepository;
+    private EntityRepository $customFieldRepository;
     private array $cachedFields;
 
-    public function __construct(EntityRepositoryInterface $customFieldRepository)
+    public function __construct(EntityRepository $customFieldRepository)
     {
         $this->customFieldRepository = $customFieldRepository;
     }

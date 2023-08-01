@@ -18,7 +18,7 @@ use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
@@ -56,8 +56,8 @@ class CustomFieldsSpec extends ObjectBehavior
     function let(
         SalesChannelService $salesChannelService,
         SalesChannelContext $channelContext,
-        EntityRepositoryInterface $customFieldRepository,
-        EntityRepositoryInterface $languageRepository,
+        EntityRepository $customFieldRepository,
+        EntityRepository $languageRepository,
         ExportSettings $exportSettings,
         CustomFieldsService $customFieldsService,
         Product $product
@@ -90,8 +90,8 @@ class CustomFieldsSpec extends ObjectBehavior
 
     function it_should_join_multiselect_option_values(
         Product $product,
-        EntityRepositoryInterface $customFieldRepository,
-        EntityRepositoryInterface $languageRepository,
+        EntityRepository $customFieldRepository,
+        EntityRepository $languageRepository,
         ExportSettings $exportSettings
     ) {
         $customFieldRepository
@@ -113,7 +113,7 @@ class CustomFieldsSpec extends ObjectBehavior
 
     function it_will_use_default_language_if_none_is_stored_in_context(
         Product $product,
-        EntityRepositoryInterface $customFieldRepository
+        EntityRepository $customFieldRepository
     ) {
         $config = $this->selectFieldConfig;
         unset($config['label']['de-DE']);
@@ -138,7 +138,7 @@ class CustomFieldsSpec extends ObjectBehavior
 
     function it_will_return_label_technical_value_if_no_translation_is_provided(
         Product $product,
-        EntityRepositoryInterface $customFieldRepository
+        EntityRepository $customFieldRepository
     ) {
         $customFieldRepository
             ->search(Argument::cetera())
@@ -163,7 +163,7 @@ class CustomFieldsSpec extends ObjectBehavior
 
     function it_will_skip_disabled_custom_fields(
         Product $product,
-        EntityRepositoryInterface $customFieldRepository, ExportSettings $exportSettings, CustomFieldsService $customFieldsService)
+        EntityRepository $customFieldRepository, ExportSettings $exportSettings, CustomFieldsService $customFieldsService)
     {
         $customFieldRepository
             ->search(Argument::cetera())
@@ -212,7 +212,7 @@ class CustomFieldsSpec extends ObjectBehavior
 
     function it_should_join_multiselect_entity_value(
         Product $product,
-        EntityRepositoryInterface $customFieldRepository
+        EntityRepository $customFieldRepository
     ) {
         $config = $this->selectFieldConfig;
         unset($config['options']);
