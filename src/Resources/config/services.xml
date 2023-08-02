@@ -173,6 +173,10 @@
             <argument type="service" id="Omikron\FactFinder\Shopware6\Export\Data\Factory\PreprocessedProductEntityFactory.inner"/>
         </service>
 
+        <service id="Symfony\Component\DependencyInjection\ContainerInterface">
+            <argument type="service" id="service_container"/>
+        </service>
+
         <service id="Omikron\FactFinder\Shopware6\Subscriber\FeedPreprocessorEntrySubscriber">
             <argument type="service" id="product.repository"/>
         </service>

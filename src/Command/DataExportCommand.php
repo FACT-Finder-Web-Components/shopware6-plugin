@@ -21,7 +21,7 @@ use Omikron\FactFinder\Shopware6\Upload\UploadService;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\Language\LanguageEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
@@ -58,11 +58,11 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     private const BRANDS_EXPORT_TYPE     = 'brands';
 
     private SalesChannelService $channelService;
-    private EntityRepositoryInterface $channelRepository;
+    private EntityRepository $channelRepository;
     private FeedFactory $feedFactory;
     private UploadService $uploadService;
     private PushImportService $pushImportService;
-    private EntityRepositoryInterface $languageRepository;
+    private EntityRepository $languageRepository;
     private CurrencyFieldsProvider $currencyFieldsProvider;
     private FieldsProvider $fieldProviders;
 
@@ -71,11 +71,11 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     public function __construct(
         SalesChannelService $channelService,
-        EntityRepositoryInterface $channelRepository,
+        EntityRepository $channelRepository,
         FeedFactory $feedFactory,
         UploadService $uploadService,
         PushImportService $pushImportService,
-        EntityRepositoryInterface $languageRepository,
+        EntityRepository $languageRepository,
         CurrencyFieldsProvider $currencyFieldsProvider,
         FieldsProvider $fieldProviders,
         ContainerInterface $container
