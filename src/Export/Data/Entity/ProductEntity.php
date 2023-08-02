@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 
-use ArrayIterator;
 use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Content\Product\ProductCollection;
 use Shopware\Core\Content\Product\ProductEntity as Product;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
-use Traversable;
+
 use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class ProductEntity implements ExportEntityInterface, ProductEntityInterface
@@ -19,7 +18,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
     private ?Product $parent         = null;
     private string $filterAttributes = '';
     private string $customFields     = '';
-    private Traversable $additionalCache;
+    private \Traversable $additionalCache;
 
     /** @var FieldInterface[] */
     private iterable $productFields;
@@ -29,13 +28,13 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
 
     public function __construct(
         Product $product,
-        Traversable $productFields,
-        Traversable $cachedProductFields
+        \Traversable $productFields,
+        \Traversable $cachedProductFields
     ) {
         $this->product             = $product;
         $this->productFields       = iterator_to_array($productFields);
         $this->cachedProductFields = $cachedProductFields;
-        $this->additionalCache     = new ArrayIterator();
+        $this->additionalCache     = new \ArrayIterator();
     }
 
     public function getId(): string
@@ -73,7 +72,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         $this->filterAttributes = $filterAttributes;
     }
 
-    public function setAdditionalCache(Traversable $additionalCache): void
+    public function setAdditionalCache(\Traversable $additionalCache): void
     {
         $this->additionalCache = $additionalCache;
     }

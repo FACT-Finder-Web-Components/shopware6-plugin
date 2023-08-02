@@ -28,7 +28,7 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
     private EntityRepositoryInterface $productRepository;
     private EntityRepositoryInterface $languageRepository;
     private FeedPreprocessor $feedPreprocessor;
-    private FeedPreprocessorEntryPersister  $entryPersister;
+    private FeedPreprocessorEntryPersister $entryPersister;
     private ExportSettings $exportSettings;
 
     public function __construct(

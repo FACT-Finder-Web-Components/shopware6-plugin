@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
-use ArrayIterator;
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessor;
 use Omikron\FactFinder\Shopware6\DataAbstractionLayer\FeedPreprocessorEntryPersister;
@@ -16,7 +15,6 @@ use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
-use Traversable;
 
 class PreprocessedProductEntityFactory implements FactoryInterface
 {
@@ -37,7 +35,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         FeedPreprocessorEntryReader $feedPreprocessorReader,
         FeedPreprocessorEntryPersister $entryPersister,
         FeedPreprocessor $feedPreprocessor,
-        Traversable $cachedFields
+        \Traversable $cachedFields
     ) {
         $this->channelService         = $channelService;
         $this->decoratedFactory       = $decoratedFactory;
@@ -55,6 +53,8 @@ class PreprocessedProductEntityFactory implements FactoryInterface
     }
 
     /**
+     * @param ProductEntity $entity
+     *
      * @return ExportProductEntity[]|iterable
      */
     public function createEntities(Entity $entity, string $producedType = ExportProductEntity::class): iterable
@@ -98,7 +98,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
             }
         }
 
-        if ($entity->getConfiguratorGroupConfig()) {
+        if ($entity->getVariantListingConfig()->getConfiguratorGroupConfig()) {
             return;
         }
 
@@ -118,17 +118,17 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         $cache  = $preprocessedEntries[$entity->getProductNumber()] ?? null;
 
         if (isset($cache)) {
-            $exportProduct = new ExportProductEntity($entity, new ArrayIterator($fields), $this->cachedFields);
+            $exportProduct = new ExportProductEntity($entity, new \ArrayIterator($fields), $this->cachedFields);
             $exportProduct->setFilterAttributes($cache->getFilterAttributes());
             $exportProduct->setCustomFields($cache->getCustomFields());
-            $exportProduct->setAdditionalCache(new ArrayIterator($cache->getAdditionalCache()));
+            $exportProduct->setAdditionalCache(new \ArrayIterator($cache->getAdditionalCache()));
             $exportProduct->setParent($parent);
 
             return $exportProduct;
         }
 
         if ($entity === $parent) {
-            return new ExportProductEntity($entity, new ArrayIterator($fields), new ArrayIterator());
+            return new ExportProductEntity($entity, new \ArrayIterator($fields), new \ArrayIterator());
         }
 
         return null;

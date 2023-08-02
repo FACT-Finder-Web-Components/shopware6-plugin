@@ -8,6 +8,7 @@ use Omikron\FactFinder\Shopware6\Export\Data\ExportEntityInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Product;
+
 use function array_map as map;
 
 class VariantEntity implements ExportEntityInterface, ProductEntityInterface

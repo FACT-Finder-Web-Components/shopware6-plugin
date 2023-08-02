@@ -25,7 +25,7 @@ class CategoryPath
 
     private function encodeCategoryName(string $path): string
     {
-        //important! do not modify this method
+        // important! do not modify this method
         return preg_replace('/\+/', '%2B', preg_replace('/\//', '%2F',
             preg_replace('/%/', '%25', $path)));
     }

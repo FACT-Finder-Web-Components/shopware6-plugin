@@ -40,11 +40,11 @@ class FeedPreprocessorEntryDefinition extends EntityDefinition
                 (new IdField('id', 'id'))->addFlags(new Required(), new PrimaryKey()),
                 (new StringField('language_id', 'languageId'))->addFlags(new Required()),
                 (new StringField('product_number', 'productNumber'))->addFlags(new Required()),
-                (new StringField('parent_product_number', 'parentProductNumber')),
-                (new LongTextField('variation_key', 'variationKey')),
+                new StringField('parent_product_number', 'parentProductNumber'),
+                new LongTextField('variation_key', 'variationKey'),
                 (new LongTextField('filter_attributes', 'filterAttributes'))->addFlags(new Required(), new AllowEmptyString()),
                 (new LongTextField('custom_fields', 'customFields'))->addFlags(new AllowEmptyString()),
-                (new JsonField('additional_cache', 'additionalCache')),
+                new JsonField('additional_cache', 'additionalCache'),
             ]
         );
     }

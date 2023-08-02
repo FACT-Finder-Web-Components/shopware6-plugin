@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Domain;
 
-use Exception;
-
 class RedirectMapping
 {
     private string $data;
@@ -64,13 +62,13 @@ class RedirectMapping
     private function validateUrl(string $url): void
     {
         if ($url === '') {
-            throw new Exception('Invalid url - empty string');
+            throw new \Exception('Invalid url - empty string');
         }
 
         if (strpos($url, 'http') === 0 || strpos($url, '/') === 0) {
             return;
         }
 
-        throw new Exception('Invalid url - url should start with "/" or "http"');
+        throw new \Exception('Invalid url - url should start with "/" or "http"');
     }
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
-use DateTime;
-use Exception;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
 use Shopware\Storefront\Framework\Routing\StorefrontResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -51,7 +49,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             }
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -69,7 +67,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             }
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -80,7 +78,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
         try {
             $session = $request->getSession();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -109,7 +107,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             }
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -121,7 +119,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
         try {
             $session = $request->getSession();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -135,7 +133,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             }
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -144,12 +142,12 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     {
         return Cookie::create($name)
             ->withValue($value)
-            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
+            ->withExpires((new \DateTime())->modify('+1 day')->getTimestamp())
             ->withHttpOnly(false);
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     protected function validateRequest(Request $request, Response $response): void
     {
@@ -158,7 +156,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             || $request->isXmlHttpRequest()
             || $response->getStatusCode() >= Response::HTTP_MULTIPLE_CHOICES
         ) {
-            throw new Exception('Not supported request');
+            throw new \Exception('Not supported request');
         }
     }
 }

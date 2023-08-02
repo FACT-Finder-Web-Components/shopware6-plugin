@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export\Data\Factory;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
-use Traversable;
 
 class CompositeFactory implements FactoryInterface
 {
-    private Traversable $exportEntityFactories;
+    private \Traversable $exportEntityFactories;
 
-    public function __construct(Traversable $exportedEntityFactories)
+    public function __construct(\Traversable $exportedEntityFactories)
     {
         $this->exportEntityFactories = $exportedEntityFactories;
     }

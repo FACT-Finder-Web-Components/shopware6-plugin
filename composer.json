@@ -10,18 +10,18 @@
     }
   ],
   "require": {
-    "omikron/factfinder-communication-sdk": "^0.9.5",
-    "shopware/core": "^6.4",
-    "shopware/storefront": "^6.4",
-    "league/flysystem-sftp": "1.0.22",
-    "php": "^7.4 || ^8.0",
+    "omikron/factfinder-communication-sdk": "^0.9.7",
+    "shopware/core": "^6.5",
+    "shopware/storefront": "^6.5",
+    "league/flysystem-sftp-v3": "3.15.0",
+    "php": "^8.1",
     "ext-json": "*",
     "mustache/mustache": "^2.14"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "3.1",
+    "friendsofphp/php-cs-fixer": "^3.22",
     "phpmd/phpmd": "^2.9",
-    "phpspec/phpspec": "^6.2",
+    "phpspec/phpspec": "^7.2",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {
@@ -37,6 +37,13 @@
       "phpmd src text phpmd.xml.dist",
       "php phpcpd.phar src --exclude src/Command --exclude src/Export/ExportCategories.php --exclude src/Export/ExportCmsPages.php\n"
     ]
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/*": true,
+      "omikron/*": true,
+      "mustache/mustache": true
+    }
   },
   "extra": {
     "shopware-plugin-class": "Omikron\\FactFinder\\Shopware6\\OmikronFactFinder",

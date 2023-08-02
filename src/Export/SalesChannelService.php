@@ -7,7 +7,7 @@ namespace Omikron\FactFinder\Shopware6\Export;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\SalesChannel\Context\CachedSalesChannelContextFactory;
@@ -17,13 +17,13 @@ use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 
 class SalesChannelService
 {
-    private EntityRepositoryInterface $channelRepository;
+    private EntityRepository $channelRepository;
     private CachedSalesChannelContextFactory $channelContextFactory;
     private ?SalesChannelContext $cachedSalesChannel = null;
 
     public function __construct(
         CachedSalesChannelContextFactory $channelContextFactory,
-        EntityRepositoryInterface $channelRepository
+        EntityRepository $channelRepository
     ) {
         $this->channelRepository     = $channelRepository;
         $this->channelContextFactory = $channelContextFactory;

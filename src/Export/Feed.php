@@ -11,7 +11,7 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class Feed
 {
-    private SalesChannelContext$context;
+    private SalesChannelContext $context;
     private ExportInterface $exporter;
     private CompositeFactory $compositeFactory;
     private FilterInterface $filter;

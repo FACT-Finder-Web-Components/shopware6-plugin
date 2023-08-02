@@ -7,21 +7,21 @@ use Prophecy\Argument;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
 
 class CustomFieldsServiceSpec extends ObjectBehavior
 {
-    public function let(EntityRepositoryInterface $customFieldRepository) {
+    public function let(EntityRepository $customFieldRepository) {
         $this->beConstructedWith(
             $customFieldRepository
         );
     }
 
     public function it_will_return_custom_field_names_if_no_cache(
-        EntityRepositoryInterface $customFieldRepository
+        EntityRepository $customFieldRepository
     ) {
         $customFieldRepository
            ->search(Argument::cetera())
@@ -33,7 +33,7 @@ class CustomFieldsServiceSpec extends ObjectBehavior
     }
 
     public function it_will_return_custom_field_from_cache(
-        EntityRepositoryInterface $customFieldRepository
+        EntityRepository $customFieldRepository
     ) {
         $customFieldRepository
             ->search(Argument::cetera())

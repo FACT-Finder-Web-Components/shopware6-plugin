@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\TestUtil;
 
+use Shopware\Core\Content\Product\DataAbstractionLayer\VariantListingConfig;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Framework\Uuid\Uuid;
 
@@ -17,13 +18,18 @@ class ProductMockFactory
         $productEntity = new ProductEntity();
         $productEntity->setId($data['id'] ?? Uuid::randomHex());
         $productEntity->setProductNumber($data['productNumber'] ?? 'SW100');
-        $productEntity->setConfiguratorGroupConfig($data['configuratorGroupConfig'] ?? self::getGroupConfigurationConfig(
-            [
-                [md5('size'), 'false'],
-                [md5('color'), 'true'],
-                [md5('material'), 'true'],
-            ]
-        ));
+        $productEntity->setVariantListingConfig(
+            new VariantListingConfig(
+                true,
+                $productEntity->getId(),
+                $data['configuratorGroupConfig'] ?? self::getGroupConfigurationConfig(
+                    [
+                        [md5('size'), 'false'],
+                        [md5('color'), 'true'],
+                        [md5('material'), 'true'],
+                    ]
+                )
+            ));
 
         return $productEntity;
     }
