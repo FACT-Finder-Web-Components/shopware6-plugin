@@ -1,9 +1,11 @@
 # Changelog
 ## Unreleased
 ### BREAKING
-- Fix some deprecations for Shopware v6.5
+- IMPORTANT! Drop Shopware 6.4 compatibility
+- IMPORTANT! Drop PHP 7.4 compatibility
+- Upgrade libraries as required Shopware 6.5
+- Fix deprecations for Shopware v6.5
 - Change league/flysystem-sftp to league/flysystem-sftp-v3
-- Upgrade some libraries connected to Shopware 6.5
 
 ## [v4.2.7] - 2023.07.20
 ### Change
