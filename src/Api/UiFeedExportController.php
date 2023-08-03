@@ -16,27 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteScope(scopes={"api"})
+ * @Route(defaults={"_routeScope"={"api"}})
  */
 class UiFeedExportController extends AbstractController
 {
-    private FeedExportHandler $feedExportHandler;
-    private DataExportCommand $dataExportCommand;
-    private RefreshExportCacheHandler $refreshCacheHandler;
-
-    /**
-     * UiFeedExportController constructor.
-     *
-     * @param FeedExportHandler $feedExportHandler
-     */
     public function __construct(
-        FeedExportHandler $feedExportHandler,
-        DataExportCommand $dataExportCommand,
-        RefreshExportCacheHandler $refreshCacheHandler
+        private FeedExportHandler $feedExportHandler,
+        private DataExportCommand $dataExportCommand,
+        private RefreshExportCacheHandler $refreshCacheHandler
     ) {
-        $this->feedExportHandler   = $feedExportHandler;
-        $this->dataExportCommand   = $dataExportCommand;
-        $this->refreshCacheHandler = $refreshCacheHandler;
     }
 
     /**
@@ -50,7 +38,7 @@ class UiFeedExportController extends AbstractController
      */
     public function generateExportFeedAction(Request $request): JsonResponse
     {
-        $this->feedExportHandler->handle(new FeedExport(
+        $this->feedExportHandler->__invoke(new FeedExport(
             $request->query->get('salesChannelValue'),
             $request->query->get('salesChannelLanguageValue'),
             $request->query->get('exportTypeValue')
@@ -80,7 +68,7 @@ class UiFeedExportController extends AbstractController
      */
     public function refreshExportCacheAction(Request $request): JsonResponse
     {
-        $this->refreshCacheHandler->handle(new RefreshExportCache(
+        $this->refreshCacheHandler->__invoke(new RefreshExportCache(
             $request->query->get('salesChannelValue'),
             $request->query->get('salesChannelLanguageValue')
         ));
