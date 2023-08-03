@@ -12,7 +12,7 @@ use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\RepositoryIterator;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\NandFilter;
@@ -25,15 +25,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ProductIndexerSubscriber implements EventSubscriberInterface
 {
-    private EntityRepositoryInterface $productRepository;
-    private EntityRepositoryInterface $languageRepository;
+    private EntityRepository $productRepository;
+    private EntityRepository $languageRepository;
     private FeedPreprocessor $feedPreprocessor;
     private FeedPreprocessorEntryPersister $entryPersister;
     private ExportSettings $exportSettings;
 
     public function __construct(
-        EntityRepositoryInterface $productRepository,
-        EntityRepositoryInterface $languageRepository,
+        EntityRepository $productRepository,
+        EntityRepository $languageRepository,
         FeedPreprocessor $feedPreprocessor,
         FeedPreprocessorEntryPersister $entryPersister,
         ExportSettings $exportSettings

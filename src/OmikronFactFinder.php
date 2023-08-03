@@ -9,7 +9,7 @@ use Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface;
 use Omikron\FactFinder\Shopware6\Export\ExportInterface;
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Plugin;
@@ -138,14 +138,14 @@ class OmikronFactFinder extends Plugin
 
     private function installCustomFieldsSet(array $data, Context $context): void
     {
-        /** @var EntityRepositoryInterface $customFielSetRepository */
+        /** @var EntityRepository $customFielSetRepository */
         $customFieldSetRepository = $this->container->get('custom_field_set.repository');
         $customFieldSetRepository->create([$data], $context);
     }
 
     private function installCustomField(array $data, Context $context, string $setName): void
     {
-        /** @var EntityRepositoryInterface $customFieldRepository */
+        /** @var EntityRepository $customFieldRepository */
         $customFieldsRepository = $this->container->get('custom_field.repository');
         $customFieldSet         = $this->getCustomFieldSet($setName, $context);
         if (!$customFieldSet) {
@@ -161,7 +161,7 @@ class OmikronFactFinder extends Plugin
      */
     private function fixCMSExportIncludeFieldType(Context $context): void
     {
-        /** @var EntityRepositoryInterface $customFieldRepository */
+        /** @var EntityRepository $customFieldRepository */
         $customFieldRepository = $this->container->get('custom_field.repository');
 
         $field = $this->getCustomField(OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME, $context);

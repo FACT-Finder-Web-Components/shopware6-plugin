@@ -9,17 +9,17 @@ use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter;
-use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepositoryInterface;
+use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepository;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class ExportCategories implements ExportInterface
 {
-    private SalesChannelRepositoryInterface $categoryRepository;
+    private SalesChannelRepository $categoryRepository;
 
     /** @var string[] */
     private array $customAssociations;
 
-    public function __construct(SalesChannelRepositoryInterface $categoryRepository, array $customAssociations)
+    public function __construct(SalesChannelRepository $categoryRepository, array $customAssociations)
     {
         $this->categoryRepository = $categoryRepository;
         $this->customAssociations = $customAssociations;

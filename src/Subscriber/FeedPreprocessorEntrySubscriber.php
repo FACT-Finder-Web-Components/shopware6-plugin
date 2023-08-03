@@ -6,7 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use Omikron\FactFinder\Shopware6\Events\FeedPreprocessorEntryBeforeCreate;
 use Omikron\FactFinder\Shopware6\Export\Field\CategoryPath;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -14,10 +14,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class FeedPreprocessorEntrySubscriber implements EventSubscriberInterface
 {
     private CategoryPath $categoryFieldGenerator;
-    private EntityRepositoryInterface $productRepository;
+    private EntityRepository $productRepository;
 
     public function __construct(
-        EntityRepositoryInterface $productRepository,
+        EntityRepository $productRepository,
         CategoryPath $categoryPath
     ) {
         $this->productRepository      = $productRepository;
