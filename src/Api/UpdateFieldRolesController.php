@@ -7,7 +7,7 @@ namespace Omikron\FactFinder\Shopware6\Api;
 use Omikron\FactFinder\Shopware6\Config\FieldRolesInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,14 +15,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteScope(scopes={"api"})
+ * @Route(defaults={"_routeScope"={"api"}})
  */
 class UpdateFieldRolesController extends AbstractController
 {
     private FieldRolesInterface $fieldRoles;
-    private EntityRepositoryInterface $channelRepository;
+    private EntityRepository $channelRepository;
 
-    public function __construct(FieldRolesInterface $fieldRolesService, EntityRepositoryInterface $channelRepository)
+    public function __construct(FieldRolesInterface $fieldRolesService, EntityRepository $channelRepository)
     {
         $this->fieldRoles        = $fieldRolesService;
         $this->channelRepository = $channelRepository;

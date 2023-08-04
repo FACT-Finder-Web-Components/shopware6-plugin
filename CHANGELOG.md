@@ -6,6 +6,8 @@
 - Upgrade libraries as required Shopware 6.5
 - Fix deprecations for Shopware v6.5
 - Change league/flysystem-sftp to league/flysystem-sftp-v3
+- Add league/flysystem-ftp
+- Rewrite FTP and SFTP connection
 
 ## [v4.2.7] - 2023.07.20
 ### Change

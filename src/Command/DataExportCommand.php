@@ -25,6 +25,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\Language\LanguageEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -42,6 +43,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @SuppressWarnings(PHPMD.ElseExpression)
  * @SuppressWarnings(PHPMD.MissingImport)
  */
+#[AsCommand(name: 'factfinder:data:export')]
 class DataExportCommand extends Command implements ContainerAwareInterface
 {
     use ContainerAwareTrait;

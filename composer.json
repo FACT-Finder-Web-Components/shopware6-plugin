@@ -16,7 +16,8 @@
     "league/flysystem-sftp-v3": "3.15.0",
     "php": "^8.1",
     "ext-json": "*",
-    "mustache/mustache": "^2.14"
+    "mustache/mustache": "^2.14",
+    "league/flysystem-ftp": "^3.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.22",

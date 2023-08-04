@@ -190,14 +190,12 @@ phrase two=https://domain.com/some/special/link/two
             <name>privateKey</name>
             <label>Private Key Content</label>
             <helpText>Put the content of the received key file into the text area. If your authentication method does not require key, please ignore that file</helpText>
-            <required>false</required>
         </input-field>
 
         <input-field type="password">
             <name>keyPassphrase</name>
             <label>Key Passphrase</label>
             <helpText>If your key is not protected with a passphrase, please ignore this field</helpText>
-            <required>false</required>
         </input-field>
     </card>
 
