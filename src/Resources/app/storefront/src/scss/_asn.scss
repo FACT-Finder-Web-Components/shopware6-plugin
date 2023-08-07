@@ -7,12 +7,12 @@ ff-asn {
     max-width: none;
 
     &[opened] .filter-panel-item-toggle {
-      border-color: $custom-select-focus-border-color;
+      border-color: $form-select-focus-border-color;
       outline: 0;
       @if $enable-shadows {
-        box-shadow: $custom-select-box-shadow, $custom-select-focus-box-shadow;
+        box-shadow: $form-select-box-shadow, $form-select-focus-box-shadow;
       } @else {
-        box-shadow: $custom-select-focus-box-shadow;
+        box-shadow: $form-select-focus-box-shadow;
       }
     }
 

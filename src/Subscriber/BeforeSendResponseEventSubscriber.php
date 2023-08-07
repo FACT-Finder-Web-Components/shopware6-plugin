@@ -17,7 +17,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     public const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
     public const USER_ID             = 'ff_user_id';
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             BeforeSendResponseEvent::class => [
