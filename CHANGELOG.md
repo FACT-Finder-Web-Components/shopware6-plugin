@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix save cookies into Shopware Cookie Consent Manager
+
 ## [v4.2.7] - 2023.07.20
 ### Change
 - Change type to LONGTEXT for column `variation_key` in table `factfinder_feed_preprocessor`
