@@ -8,6 +8,8 @@
 - Change league/flysystem-sftp to league/flysystem-sftp-v3
 - Add league/flysystem-ftp
 - Rewrite FTP and SFTP connection
+- Migrate Bootstrap framework from v4 to v5 
+- Remove cache export feature
 
 ## [v4.2.7] - 2023.07.20
 ### Change

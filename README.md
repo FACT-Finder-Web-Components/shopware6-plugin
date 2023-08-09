@@ -2,6 +2,9 @@
 
 [![Build status](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/workflows/build/badge.svg)](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/actions)
 
+**Note:**
+This version of SDK is in testing stage. If you need production ready SDK please use version 4.x
+
 This document helps you to integrate the FACT-Finder® Web Components SDK into your Showpare Shop. In addition, it gives
 a concise overview of its primary functions. The first chapter *Installation* walks you through the suggested
 installation process. The second chapter *Settings* explains the customisation options in the Showpare backend. The
@@ -42,15 +45,16 @@ final chapter *Exporting Feed* describes how to use provided console command to 
     - [Extending Specific Web Component Template](#extending-specific-web-component-template)
     - [Split ASN on Category Page](#split-asn-on-category-page)
     - [Set custom Field Roles](#set-custom-field-roles)
-    - [Adding custom Export Cache Subscriber](#adding-custom-export-cache-subscriber)
     - [Enrich data received from FACT-Finder in ProxyController](#enrich-data-received-from-fact-finder-in-proxycontroller)
 - [Contribute](#contribute)
 - [License](#license)
 
 ## System Requirements
 
-- Shopware 6.4 or higher
-- PHP version 7.4 or higher
+- Shopware 6.5 or higher
+- PHP version 8.1 or higher
+
+For Shopware below version 6.5 please use SDK version 4.x:
 
 ## FACT-Finder® Supported Sections
 
@@ -63,7 +67,7 @@ NG      | ✔️
 
 To install the plugin, open your terminal and run the command:
 
-    composer require omikron/shopware6-factfinder
+    composer require omikron/shopware6-factfinder^5.0
 
 After successfully installation, it will be visible in the extensions list. Depending on the Shopware 6 versions
 the view could be different.
@@ -140,19 +144,7 @@ This section contains a plugin configuration, which is optional and provides add
   default, all custom fields are being exported.
 * Export prices for all Currencies - if disabled, export will contain only one column `Price`. If enabled, all product
   price will be exported in all currency configured for a given sales channel.
-* Enable export cache - if enabled export time will be shorter. Option is connected with `Storefront presentation` - 
-  it means that each `Product listing` will be cached. During building cache `FeedPreprocessorEntryBeforeCreate` 
-  event is triggered, so you can easily hook to it if you would like to cache some additional data. You can find more 
-  details about implementation [here](#adding-custom-export-cache-subscriber).
 
-**Note:**  When the Export cache is enabled:
-  - if cache data is empty then - we are building a new export cache and storing it in `factfinder_feed_preprocessor` database table
-  - if cache data already exists then it uses cached data to prepare export
-  - if some product data changes then - the cache for this record is automatically rebuilt after the product save
-  - if rebuilding the whole cache is required then we can use a command:
-```
-php [SHOPWARE_ROOT]/bin/console factfinder:data:pre-process
-```
 
 #### Price Columns Format
 
@@ -335,12 +327,6 @@ Export can be done for:
 `Create Export` Send a message to a bus which then might be consumed automatically by an admin worker (if enabled)
 or by CLI worker. More information about messaging you can find in official Shopware [documentation](https://developer.shopware.com/docs/guides/hosting/infrastructure/message-queue)
 
-![Admin Panel Refresh export cache](docs/assets/admin-panel-refresh-cache-export.png "Admin Panel Refresh export cache")
-If you use the export cache feature ([read more](#export-settings)) you could also refresh your export cache by clicking on `Refresh cache Export`
-button. This feature will be useful if:
- - your export cache is old or incomplete
- - you did some database changes programmatically
- - you want to decrease export time (export with cache is faster)
 
 ## Web Components Integration
 
@@ -608,32 +594,7 @@ Default field roles are defined as array of Symfony Configuration Parameters in 
 
 In order to override these parameters defined by a module, you have to redefine them in your application `services.xml`. Parameters defined there take precedence over the defaults, defined in the module   
 
-### Adding custom Export Cache Subscriber
 
-```php
-
-use Omikron\FactFinder\Shopware6\Events\FeedPreprocessorEntryBeforeCreate;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
-class FeedPreprocessorEntryBeforeCreateSubscriber implements EventSubscriberInterface
-{
-    public static function getSubscribedEvents()
-    {
-        return [FeedPreprocessorEntryBeforeCreate::class => 'onCreateEntries'];
-    }
-
-    public function onCreateEntries(FeedPreprocessorEntryBeforeCreate $event)
-    {
-        $entry = $event->getEntry();
-        $entry['additionalCache'] = [
-            'some_data' => 'cache1',
-            'some_data2' => 'cache2',
-        ];
-        $event->setEntry($entry);
-    }
-}
-
-```
 
 ### Enrich data received from FACT-Finder in ProxyController
 
