@@ -65,8 +65,8 @@ class RunPreprocessorCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        //Cache export is not support in SDK version 5.x
         $output->writeln('Cache export is not support in SDK version 5.x');
+
         return 0;
 
         if ($input->isInteractive()) {
