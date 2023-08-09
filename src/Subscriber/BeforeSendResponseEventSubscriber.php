@@ -46,8 +46,8 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             $this->validateRequest($event->getRequest(), $response);
 
             if ($response->getContext()->getCustomer() === null) {
-                $response->headers->clearCookie(self::USER_ID);
-                $response->headers->clearCookie(self::HAS_JUST_LOGGED_OUT);
+                $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_OUT, '0'));
+                $response->headers->setCookie($this->getCookie(self::USER_ID, '0'));
             }
 
             return true;
@@ -65,7 +65,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
             $this->validateRequest($request, $response);
 
             if ((bool) $request->cookies->get(self::HAS_JUST_LOGGED_IN, false) === true) {
-                $response->headers->clearCookie(self::HAS_JUST_LOGGED_IN);
+                $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_IN, '0'));
             }
 
             return true;
@@ -130,7 +130,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
             if ($session->get(self::HAS_JUST_LOGGED_OUT, false) === true) {
                 $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_OUT, '1'));
-                $response->headers->clearCookie(self::USER_ID);
+                $response->headers->setCookie($this->getCookie(self::USER_ID, '0'));
                 $session->set(self::HAS_JUST_LOGGED_OUT, false);
             }
 
