@@ -115,8 +115,14 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
     {
         // Expect & Given
         $this->context->getCustomer()->willReturn(null);
-        $this->headers->setCookie('ff_user_id')->shouldBeCalled();
-        $this->headers->setCookie('ff_has_just_logged_out')->shouldBeCalled();
+        $this->headers->setCookie(Cookie::create('ff_has_just_logged_out')
+            ->withValue('0')
+            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
+            ->withHttpOnly(false))->shouldBeCalled();
+        $this->headers->setCookie(Cookie::create('ff_user_id')
+            ->withValue('0')
+            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
+            ->withHttpOnly(false))->shouldBeCalled();
 
         // When & Then
         $this->isCustomerLoggedOut($this->event);
@@ -128,7 +134,10 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         $this->request->cookies = $cookies;
         $cookies->get('ff_has_just_logged_in', Argument::any())->willReturn(true);
         $this->context->getCustomer()->willReturn(null);
-        $this->headers->setCookie('ff_has_just_logged_in')->shouldBeCalled();
+        $this->headers->setCookie(Cookie::create('ff_has_just_logged_in')
+            ->withValue('0')
+            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
+            ->withHttpOnly(false))->shouldBeCalled();
 
         // When & Then
         $this->isHasJustLoggedInCookieSet($this->event);
@@ -162,7 +171,10 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
             ->withValue('1')
             ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
             ->withHttpOnly(false))->shouldBeCalled();
-        $this->headers->setCookie('ff_user_id')->shouldBeCalled();
+        $this->headers->setCookie(Cookie::create('ff_user_id')
+            ->withValue('0')
+            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
+            ->withHttpOnly(false))->shouldBeCalled();
         $this->session->set('ff_has_just_logged_out', false)->shouldBeCalled();
 
         // When & Then

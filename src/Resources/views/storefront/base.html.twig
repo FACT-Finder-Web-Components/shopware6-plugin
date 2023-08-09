@@ -64,16 +64,16 @@
         return acc;
       }, {});
 
-      if (cookies['ff_user_id']) {
+      if (cookies['ff_user_id'] && cookies['ff_user_id'] !== '0') {
         factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
 
-        if (cookies['ff_has_just_logged_in']) {
+        if (cookies['ff_has_just_logged_in'] && cookies['ff_has_just_logged_in'] !== '0') {
           factfinder.communication.Tracking.loginWithConfig();
         }
       } else {
         factfinder.communication.sessionManager.clearLoginData();
 
-        if (cookies['ff_has_just_logged_out']) {
+        if (cookies['ff_has_just_logged_out'] && cookies['ff_has_just_logged_out'] !== '0') {
           factfinder.communication.sessionManager.clearAllSessionData();
         }
       }
