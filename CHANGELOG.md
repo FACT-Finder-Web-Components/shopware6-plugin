@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.2.8] - 2023.08.22
 ### Fix
 - Fix save cookies into Shopware Cookie Consent Manager
 
@@ -380,6 +380,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.2.8]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.8
 [v4.2.7]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.7
 [v4.2.6]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.6
 [v4.2.5]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.5
