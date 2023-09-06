@@ -9,5 +9,5 @@ namespace Omikron\FactFinder\Shopware6\Export\Filter;
  */
 interface FilterInterface
 {
-    public function filterValue(string $value): string;
+    public function filterValue(?string $value): string;
 }

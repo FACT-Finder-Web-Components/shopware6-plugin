@@ -20,8 +20,9 @@ class Filter implements FilterInterface
         $this->fieldRoles = $fieldRolesService->getRoles($context->getSalesChannelId());
     }
 
-    public function filterValue(string $value): string
+    public function filterValue(?string $value): string
     {
+        $value = $value ?? '';
         $value = preg_replace('#data-anchor="([^"]+?)"#', 'href="$1" $0', $value);
         $value = preg_replace('#data-redirect-target="_(blank|self|parent|top)"#', 'target="_$1" $0', $value);
         return preg_replace_callback('#data-image(?:="([^"]+?)")?#', function (array $match): string {
