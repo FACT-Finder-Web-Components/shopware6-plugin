@@ -40,11 +40,30 @@ class RecordList
     public function getContent(
         string $paramString,
         bool $isNavigationRequest = false
-    ) {
+    ): string {
+        $results = $this->searchResults($paramString, $isNavigationRequest);
+
+        return $this->renderResults($results, $paramString);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
+    public function searchResults(
+        string $paramString,
+        bool $isNavigationRequest = false
+    ): array {
         $paramString = strpos($paramString, 'p=') === 0
             ? sprintf('page=%s', substr($paramString, 2))
             : str_replace('&p=', '&page=', $paramString);
-        $results        = $this->searchAdapter->search($paramString, $isNavigationRequest, $this->salesChannelId);
+
+        return $this->searchAdapter->search($paramString, $isNavigationRequest, $this->salesChannelId);
+    }
+
+    public function renderResults(
+        array $results,
+        string $paramString
+    ): string {
         $records        = $results['records'] ?? [];
         $recordsContent = array_reduce(
             $records,
