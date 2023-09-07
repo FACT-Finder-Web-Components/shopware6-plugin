@@ -20,7 +20,7 @@ class CategoryPath
         $categories   = array_slice($categoryEntity->getBreadcrumb(), 1);
         $categoryPath = implode('/', array_map(fn ($category): string => $this->encodeCategoryName($category), $categories));
 
-        return sprintf('filter=%s', urlencode($this->fieldName . ':' . $categoryPath));
+        return $categoryPath !== '' ? sprintf('filter=%s', urlencode($this->fieldName . ':' . $categoryPath)) : '';
     }
 
     private function encodeCategoryName(string $path): string

@@ -1,4 +1,10 @@
 # Changelog
+## Unreleased
+### Fix
+- Error handling for empty category paths
+### Change
+- Separate searching and rendering process for Record List
+
 ## [v4.2.8] - 2023.08.22
 ### Fix
 - Fix save cookies into Shopware Cookie Consent Manager
