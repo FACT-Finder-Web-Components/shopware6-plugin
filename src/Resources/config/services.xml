@@ -137,6 +137,7 @@
         </service>
         <service id="Omikron\FactFinder\Shopware6\Api\UiFeedExportController" />
         <service id="Omikron\FactFinder\Shopware6\Api\UpdateFieldRolesController" />
+        <service id="Omikron\FactFinder\Shopware6\Api\TestConnectionController" />
 
         <service id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler">
             <tag name="messenger.message_handler" />

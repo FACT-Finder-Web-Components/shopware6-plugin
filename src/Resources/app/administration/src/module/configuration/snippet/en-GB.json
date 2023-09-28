@@ -3,6 +3,14 @@
     "updateFieldRoles": {
       "update": "Update Field Roles",
       "successMessage": "Updated Field Roles successfully. Please check if values are correct"
+    },
+    "testConnection": {
+      "success": "Connection successfully established.",
+      "fail": "Connection could not be established.",
+      "helpText": "Please save you current configuration before test connection"
+    },
+    "testApiConnection": {
+      "testConnection": "Test Connection"
     }
   }
 }
