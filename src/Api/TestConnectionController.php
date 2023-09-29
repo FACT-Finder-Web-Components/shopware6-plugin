@@ -19,7 +19,8 @@ class TestConnectionController extends AbstractController
     public function __construct(
         private readonly ClientBuilder $clientBuilder,
         private readonly CommunicationConfig $config
-    ) {}
+    ) {
+    }
 
     /**
      * @Route("/api/_action/test-connection/api", name="api.action.fact_finder.test_api_connection", methods={"GET"}, defaults={"XmlHttpRequest"=true})
