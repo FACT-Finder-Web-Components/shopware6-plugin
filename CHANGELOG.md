@@ -9,7 +9,12 @@
 - Add league/flysystem-ftp
 - Rewrite FTP and SFTP connection
 - Migrate Bootstrap framework from v4 to v5 
+
+### Change
 - Remove cache export feature
+
+### Add
+- Add test API connection button
 
 ## [v4.2.7] - 2023.07.20
 ### Change

@@ -1,0 +1,9 @@
+<sw-button-process
+  class="test-connection-btn"
+  variant="primary"
+  :isLoading="isLoading"
+  :disabled="isLoading"
+  :processSuccess="isSaveSuccessful"
+  @click="onClick">
+  {{ $tc('configuration.testApiConnection.testConnection') }}
+</sw-button-process>
