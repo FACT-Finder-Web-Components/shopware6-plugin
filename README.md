@@ -104,6 +104,7 @@ store cache in order the new applied configuration to start working.
 * API Version - Used FACT-Finder® api version   
   **Note:** Module supports FACT-Finder® api version `v4` and `v5`. By selecting the wrong api version you may cause the Web Components to be unable to communicate with FACT-Finder®
 
+You can check if the above data is correctly set by clicking on the `Test Connection` button. Please save your settings before clicking on button.
 #### Update Field Roles
 This functionality offers a way to download field roles configured in FACT-Finder®.
 Please use this if you don't use feed offered by the plugin or for some reason you have changed the column names.
