@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Upload;
 
 use Exception;
+use League\Flysystem\FilesystemException;
 use Omikron\FactFinder\Shopware6\Config\FtpConfig;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
 use Shopware\Core\Framework\Adapter\Filesystem\FilesystemFactory;
@@ -28,15 +29,13 @@ class UploadService
     /**
      * @param $fileHandle
      *
-     * @throws IOException when failed to upload file
+     * @throws FilesystemException
      */
     public function upload($fileHandle): void
     {
         $connection     = $this->filesystemFactory->factory($this->config());
         /* @todo v4: inject naming strategy to file. Do not rely on file metadata */
-        if (!$connection->putStream(basename(stream_get_meta_data($fileHandle)['uri']), $fileHandle)) {
-            throw new Exception('Failed to upload file');
-        }
+        $connection->writeStream(basename(stream_get_meta_data($fileHandle)['uri']), $fileHandle);
     }
 
     private function config(): array
