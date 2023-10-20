@@ -2,6 +2,7 @@
 ## Unreleased
 ### Add
 - Add test API connection button
+- Add test FTP connection button
 ### Fix
 - Error handling for empty category paths
 ### Change
