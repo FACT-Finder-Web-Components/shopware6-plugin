@@ -60,6 +60,10 @@
         <component name="update-field-roles">
             <name>fieldRoles</name>
         </component>
+
+        <component name="test-api-connection">
+            <name>testApiConnection</name>
+        </component>
     </card>
 
     <card>
