@@ -23,7 +23,7 @@ class TestConnectionController extends AbstractController
     public function __construct(ClientBuilder $clientBuilder, CommunicationConfig $config)
     {
         $this->clientBuilder = $clientBuilder;
-        $this->config = $config;
+        $this->config        = $config;
     }
 
     /**

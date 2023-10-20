@@ -1,5 +1,7 @@
 # Changelog
 ## Unreleased
+### Add
+- Add test API connection button
 ### Fix
 - Error handling for empty category paths
 ### Change
