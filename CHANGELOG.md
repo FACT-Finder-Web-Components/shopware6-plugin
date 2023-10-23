@@ -7,6 +7,7 @@
 - Error handling for empty category paths
 ### Change
 - Separate searching and rendering process for Record List
+- Upgrade Web Components version to v4.2.8
 
 ## [v4.2.8] - 2023.08.22
 ### Fix
