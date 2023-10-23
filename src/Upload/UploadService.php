@@ -28,6 +28,16 @@ class UploadService
         $connection->writeStream(basename(stream_get_meta_data($fileHandle)['uri']), $fileHandle);
     }
 
+    /**
+     * @throws FilesystemException
+     */
+    public function testConnection(): void
+    {
+        $connection = $this->filesystemFactory->factory($this->config());
+        $connection->write('test-connection.txt', 'S/FTP test connection');
+        $connection->delete('test-connection.txt');
+    }
+
     private function config(): array
     {
         return [

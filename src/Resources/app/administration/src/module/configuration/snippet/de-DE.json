@@ -10,6 +10,9 @@
     },
     "testApiConnection": {
       "testConnection": "Test Connection"
+    },
+    "testFtpConnection": {
+      "testConnection": "Test FTP/SFTP Connection"
     }
   }
 }

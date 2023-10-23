@@ -197,6 +197,10 @@ phrase two=https://domain.com/some/special/link/two
             <label>Key Passphrase</label>
             <helpText>If your key is not protected with a passphrase, please ignore this field</helpText>
         </input-field>
+
+        <component name="test-ftp-connection">
+            <name>testApiConnection</name>
+        </component>
     </card>
 
     <card>
