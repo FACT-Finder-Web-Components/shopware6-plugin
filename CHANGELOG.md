@@ -1,10 +1,11 @@
 # Changelog
-## Unreleased
+## [v4.3.0] - 2023.10.23
 ### Add
 - Add test API connection button
 - Add test FTP connection button
 ### Fix
 - Error handling for empty category paths
+- Error handling for usage of TextFilter with null value
 ### Change
 - Separate searching and rendering process for Record List
 - Upgrade Web Components version to v4.2.8
@@ -390,6 +391,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.3.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.3.0
 [v4.2.8]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.8
 [v4.2.7]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.7
 [v4.2.6]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.6
