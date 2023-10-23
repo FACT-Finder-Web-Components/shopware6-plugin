@@ -177,6 +177,8 @@ Following settings are used for uploading already exported feed to a given FTP/S
 * Private Key Content
 * Passphrase
 
+You can check if the above data is correctly set by clicking on the `Test FTP/SFTP Connection` button. Please save your settings before clicking on button.
+
 *Note** Fields "Private Key Content" and "Passphrase" are optional. Use them only if your SFTP server require this method of authentication. 
 
 

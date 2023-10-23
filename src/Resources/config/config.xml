@@ -203,6 +203,10 @@ phrase two=https://domain.com/some/special/link/two
             <helpText>If your key is not protected with a passphrase, please ignore this field</helpText>
             <required>false</required>
         </input-field>
+
+        <component name="test-ftp-connection">
+            <name>testApiConnection</name>
+        </component>
     </card>
 
     <card>
