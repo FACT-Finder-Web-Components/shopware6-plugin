@@ -12,6 +12,7 @@
 
 ### Change
 - Remove cache export feature
+- Upgrade Web Components version to v4.2.8
 
 ### Add
 - Add test API connection button

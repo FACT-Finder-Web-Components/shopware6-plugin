@@ -55,6 +55,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - PHP version 8.1 or higher
 
 For Shopware below version 6.5 please use SDK version 4.x:
+https://github.com/FACT-Finder-Web-Components/shopware6-plugin
 
 ## FACT-Finder® Supported Sections
 
