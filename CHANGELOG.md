@@ -1,9 +1,9 @@
 # Changelog
-## Unreleased
+## [v5.0.0] - 2023.10.24
 ### BREAKING
 - IMPORTANT! Drop Shopware 6.4 compatibility
 - IMPORTANT! Drop PHP 7.4 compatibility
-- Upgrade libraries as required Shopware 6.5
+- Upgrade libraries as required Shopware v6.5
 - Fix deprecations for Shopware v6.5
 - Change league/flysystem-sftp to league/flysystem-sftp-v3
 - Add league/flysystem-ftp
@@ -16,6 +16,7 @@
 
 ### Add
 - Add test API connection button
+- Add test FTP/SFTP connection button
 
 ## [v4.2.7] - 2023.07.20
 ### Change
@@ -394,6 +395,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v5.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.0.0
 [v4.2.7]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.7
 [v4.2.6]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.6
 [v4.2.5]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.5

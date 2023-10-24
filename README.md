@@ -2,9 +2,6 @@
 
 [![Build status](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/workflows/build/badge.svg)](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/actions)
 
-**Note:**
-This version of SDK is in testing stage. If you need production ready SDK please use version 4.x
-
 This document helps you to integrate the FACT-Finder® Web Components SDK into your Showpare Shop. In addition, it gives
 a concise overview of its primary functions. The first chapter *Installation* walks you through the suggested
 installation process. The second chapter *Settings* explains the customisation options in the Showpare backend. The
@@ -54,7 +51,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - Shopware 6.5 or higher
 - PHP version 8.1 or higher
 
-For Shopware below version 6.5 please use SDK version 4.x:
+For Shopware 6.4 please use SDK version 4.x:
 https://github.com/FACT-Finder-Web-Components/shopware6-plugin
 
 ## FACT-Finder® Supported Sections
