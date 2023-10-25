@@ -1,5 +1,6 @@
 # Changelog
 ## Unreleased
+### Change
 - Shopware Cookie Consent Manager improvement
 ## [v4.3.0] - 2023.10.23
 ### Add
