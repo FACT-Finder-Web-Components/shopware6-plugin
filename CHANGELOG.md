@@ -1,7 +1,8 @@
 # Changelog
-## Unreleased
+## [v4.3.1] - 2023.10.26
 ### Change
 - Shopware Cookie Consent Manager improvement
+
 ## [v4.3.0] - 2023.10.23
 ### Add
 - Add test API connection button
@@ -395,6 +396,7 @@
 Initial module release. Includes Web Components v4.0.3
 
 [v4.3.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.3.0
+[v4.3.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.3.1
 [v4.2.8]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.8
 [v4.2.7]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.7
 [v4.2.6]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.6
