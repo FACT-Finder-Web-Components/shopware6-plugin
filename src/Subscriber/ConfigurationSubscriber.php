@@ -57,9 +57,12 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             'channel'               => $this->config->getChannel($salesChannelId),
             'version'               => $this->config->getVersion(),
             'api'                   => $this->config->getApiVersion(),
-            'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
-            'currency-country-code' => $event->getRequest()->getLocale(),
+            'currency-code'         => $event->getSalesChannelContext()->getCurrency()->getIsoCode() ?? '',
+            'currency-country-code' => $event->getRequest()->getLocale() ?? '',
         ];
+
+        //Filter empty items
+        $communication = array_filter($communication);
 
         if (!empty($this->addParams)) {
             $communication['add-params'] = implode(',', $this->addParams);

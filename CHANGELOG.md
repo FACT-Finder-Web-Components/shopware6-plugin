@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Filter empty attributes for ff-communication component
+
 ## [v4.3.1] - 2023.10.26
 ### Change
 - Shopware Cookie Consent Manager improvement
