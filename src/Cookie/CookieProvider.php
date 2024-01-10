@@ -10,7 +10,7 @@ use Shopware\Storefront\Framework\Cookie\CookieProviderInterface;
 class CookieProvider implements CookieProviderInterface
 {
     private const FF_COOKIE_GROUP = [
-        'isRequired' => true,
+        'isRequired'           => true,
         'snippet_name'         => 'ff.cookie.groupName',
         'snippet_description'  => 'ff.cookie.groupDescription',
         'entries'              => [
