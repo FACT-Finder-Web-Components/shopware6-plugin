@@ -2,6 +2,8 @@
 ## Unreleased
 ### Fix
 - Filter empty attributes for ff-communication component
+### Change
+- Set FactFinder cookies as required for Cookie Consent Manager
 
 ## [v4.3.1] - 2023.10.26
 ### Change

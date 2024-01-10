@@ -18,7 +18,7 @@
     },
     "cookie": {
       "groupName": "FactFinder",
-      "groupDescription": "Cookie, das für das ordnungsgemäße Funktionieren des Benutzer-Login-Tracking-Ereignisses erforderlich ist",
+      "groupDescription": "Cookie erforderlich, damit das FactFinder-Plugin ordnungsgemäß funktioniert",
       "hasJustLogIn": "FactFinder Nutzer hat sich gerade angemeldet",
       "hasJustLogOut": "FactFinder Nutzer hat sich gerade abgemeldet",
       "userId": "FactFinder Nutzer ID"
