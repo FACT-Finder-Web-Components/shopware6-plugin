@@ -65,7 +65,7 @@ NG      | ✔️
 
 To install the plugin, open your terminal and run the command:
 
-    composer require omikron/shopware6-factfinder^5.0
+    composer require omikron/shopware6-factfinder
 
 After successfully installation, it will be visible in the extensions list. Depending on the Shopware 6 versions
 the view could be different.

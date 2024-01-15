@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Add reporting for Shopware marketplace
+
 ## [v5.0.0] - 2023.10.24
 ### BREAKING
 - IMPORTANT! Drop Shopware 6.4 compatibility
