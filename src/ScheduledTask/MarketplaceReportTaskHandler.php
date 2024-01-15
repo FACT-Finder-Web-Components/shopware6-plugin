@@ -33,6 +33,9 @@ class MarketplaceReportTaskHandler extends ScheduledTaskHandler
         return [MarketplaceReportTask::class];
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
     public function run(): void
     {
         $customers = $this->customerRepository->search(new Criteria(), Context::createDefaultContext());
