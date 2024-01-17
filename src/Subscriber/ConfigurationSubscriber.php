@@ -19,6 +19,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
 {
     private Communication $config;
     private ExtensionConfig $extensionConfig;
+    private RouterInterface $router;
     private array $fieldRoles;
     private array $communicationParameters;
     private array $addParams;

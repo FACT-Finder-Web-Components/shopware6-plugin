@@ -54,7 +54,7 @@ class FeedPreprocessor
 
         $visibleGroupIds = $this->extractVisibleGroupIds($product);
 
-        /** @var \Shopware\Core\Content\Product\ProductEntity $child */
+        /** @var ProductEntity $child */
         foreach ($product->getChildren() as $child) {
             // fetch storefront presentation config for each variant
             $shouldGroupBeVisible = fn (string $groupId): bool => in_array($groupId, $visibleGroupIds);
