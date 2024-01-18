@@ -23,7 +23,8 @@
     "friendsofphp/php-cs-fixer": "^3.22",
     "phpmd/phpmd": "^2.9",
     "phpspec/phpspec": "^7.2",
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^9.5",
+    "phpstan/phpstan": "^1.10"
   },
   "autoload": {
     "psr-4": {
@@ -33,6 +34,7 @@
   },
   "scripts": {
     "test": [
+      "vendor/bin/phpstan analyse -c phpstan.neon",
       "php-cs-fixer fix --dry-run -v",
       "phpspec run --format=dot",
       "phpmd src text phpmd.xml.dist",
