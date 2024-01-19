@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Omikron\FactFinder\Shopware6\Config;
 
 use PhpSpec\ObjectBehavior;
@@ -7,17 +9,17 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 class CommunicationSpec extends ObjectBehavior
 {
-    function let(SystemConfigService $configService)
+    public function let(SystemConfigService $configService): void
     {
         $this->beConstructedWith($configService);
     }
 
-    function it_should_cast_credentials_to_string()
+    public function it_should_cast_credentials_to_string(): void
     {
         $this->getCredentials()->shouldContainOnlyStrings();
     }
 
-    function it_should_return_factfinder_channel_configured_for_specific_saleschannel(SystemConfigService $configService)
+    public function it_should_return_factfinder_channel_configured_for_specific_saleschannel(SystemConfigService $configService): void
     {
         $configService->get('OmikronFactFinder.config.channel', '1')->willReturn('channel_1');
         $configService->get('OmikronFactFinder.config.channel', '2')->willReturn('channel_2');
@@ -29,9 +31,7 @@ class CommunicationSpec extends ObjectBehavior
     public function getMatchers(): array
     {
         return [
-            'containOnlyStrings' => function ($subject) {
-                return count(array_filter($subject, 'is_string')) === count($subject);
-            },
+            'containOnlyStrings' => fn ($subject) => count(array_filter($subject, 'is_string')) === count($subject),
         ];
     }
 }
