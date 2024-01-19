@@ -11,7 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.ElseExpression)
- * @SuppressWarnings(PHPMD.UnusedFormalParameter)
  */
 class RunPreprocessorCommand extends Command
 {
@@ -29,6 +28,9 @@ class RunPreprocessorCommand extends Command
         $this->setDescription('Run the Feed preprocessor');
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Cache export is not support in SDK version 5.x');
