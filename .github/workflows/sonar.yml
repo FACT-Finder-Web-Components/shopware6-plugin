@@ -1,7 +1,7 @@
 name: sonar
 
 on:
-  push:
+  pull_request:
     branches:
       - release/5.x
 
