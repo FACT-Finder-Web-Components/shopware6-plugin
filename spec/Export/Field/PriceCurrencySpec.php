@@ -13,28 +13,29 @@ use Shopware\Core\System\Currency\CurrencyEntity;
 
 class PriceCurrencySpec extends ObjectBehavior
 {
-    public function let(NumberFormatter $numberFormatter, CurrencyEntity $currencyEntity)
+    public function let(NumberFormatter $numberFormatter, CurrencyEntity $currencyEntity): void
     {
         $this->beConstructedWith($currencyEntity, $numberFormatter);
     }
 
-    public function it_is_a_field()
+    public function it_is_a_field(): void
     {
         $this->shouldHaveType(FieldInterface::class);
     }
 
-    public function it_has_a_name(CurrencyEntity $currencyEntity)
+    public function it_has_a_name(CurrencyEntity $currencyEntity): void
     {
         $currencyEntity->getIsoCode()->willReturn('EUR');
         $this->getName()->shouldReturn('Price_EUR');
     }
 
-    public function it_gets_the_product_price_in_a_given_currency(Product $product, CalculatedPrice $price, NumberFormatter $numberFormatter, CurrencyEntity $currencyEntity)
-    {
+    public function it_gets_the_product_price_in_a_given_currency(
+        Product $product, CalculatedPrice $price, NumberFormatter $numberFormatter, CurrencyEntity $currencyEntity
+    ): void {
         $currencyEntity->getFactor()->willReturn(pi());
         $product->getCalculatedPrice()->willReturn($price);
         $price->getTotalPrice()->willReturn(pi());
-        $numberFormatter->format(pow(pi(),2))->willReturn('9.86');
+        $numberFormatter->format(pi() ** 2)->willReturn('9.86');
         $this->getValue($product)->shouldReturn('9.86');
     }
 }

@@ -32,7 +32,7 @@ class ProxyControllerSpec extends ObjectBehavior
         Communication $config,
         ClientInterface $client,
         ClientBuilder $clientBuilder
-    ) {
+    ): void {
         $serverUrl = 'https://example.fact-finder.de/fact-finder';
         $config->getServerUrl()->willReturn($serverUrl);
         $config->getVersion()->willReturn('ng');
@@ -45,7 +45,7 @@ class ProxyControllerSpec extends ObjectBehavior
         $clientBuilder->withServerUrl(Argument::any())->willReturn($clientBuilder);
         $clientBuilder->withCredentials(Argument::any())->willReturn($clientBuilder);
         $clientBuilder->withVersion(Argument::any())->willReturn($clientBuilder);
-        $this->client = $client;
+        $this->client        = $client;
         $this->clientBuilder = $clientBuilder;
     }
 
@@ -55,10 +55,10 @@ class ProxyControllerSpec extends ObjectBehavior
         EventDispatcherInterface $eventDispatcher,
         EnrichProxyDataEvent $event,
         Stream $stream
-    ) {
+    ): void {
         // Expect & Given
         $request->getMethod()->willReturn(Request::METHOD_GET);
-        $uri = 'rest/v5/search/example_channel?query=bag&sid=123&format=json';
+        $uri                    = 'rest/v5/search/example_channel?query=bag&sid=123&format=json';
         $_SERVER['REQUEST_URI'] = sprintf('/fact-finder/proxy/%s', $uri);
         $this->client->request(Request::METHOD_GET, $uri)->willReturn($response);
         $jsonResponse = file_get_contents(dirname(__DIR__, 2) . '/data/proxy/search-bag.json');
@@ -81,10 +81,10 @@ class ProxyControllerSpec extends ObjectBehavior
         EventDispatcherInterface $eventDispatcher,
         BeforeProxyErrorResponseEvent $event,
         RequestInterface $requestInterface
-    ) {
+    ): void {
         // Expect & Given
         $request->getMethod()->willReturn(Request::METHOD_GET);
-        $uri = 'rest/v5/search/example_channel?query=bag&sid=123&format=json';
+        $uri                    = 'rest/v5/search/example_channel?query=bag&sid=123&format=json';
         $_SERVER['REQUEST_URI'] = sprintf('/fact-finder/proxy/%s', $uri);
         $this->client->request(Request::METHOD_GET, $uri)->willThrow(new ConnectException('Unable to connect with server.', $requestInterface->getWrappedObject()));
         $eventDispatcher->dispatch(Argument::type(BeforeProxyErrorResponseEvent::class))->willReturn($event);

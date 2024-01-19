@@ -49,13 +49,13 @@ class ResultControllerSpec extends ObjectBehavior
         SystemConfigService $systemConfigService,
         Environment $twig,
         SeoUrlPlaceholderHandlerInterface $seoUrlPlaceholderHandler
-    ) {
-        $this->request = $request;
-        $this->config = $config;
-        $this->pageLoader = $pageLoader;
-        $this->container = $container;
-        $this->salesChannelContext = $salesChannelContext;
-        $this->twig = $twig;
+    ): void {
+        $this->request                  = $request;
+        $this->config                   = $config;
+        $this->pageLoader               = $pageLoader;
+        $this->container                = $container;
+        $this->salesChannelContext      = $salesChannelContext;
+        $this->twig                     = $twig;
         $this->seoUrlPlaceholderHandler = $seoUrlPlaceholderHandler;
         $this->beConstructedWith($config, $pageLoader);
         $requestStack->getCurrentRequest()->willReturn($request);
@@ -77,7 +77,7 @@ class ResultControllerSpec extends ObjectBehavior
         SearchAdapter $searchAdapter,
         Page $page,
         Engine $mustache
-    ) {
+    ): void {
         $content = 'original content';
         $this->pageLoader->load($this->request, $this->salesChannelContext)->willReturn($page);
         $this->config->isSsrActive()->willReturn(false);
