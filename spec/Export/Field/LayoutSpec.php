@@ -17,12 +17,12 @@ use Shopware\Core\Content\Cms\CmsPageEntity;
 
 class LayoutSpec extends ObjectBehavior
 {
-    function let(): void
+    public function let(): void
     {
         $this->beConstructedWith(new TextFilter());
     }
 
-    function it_should_strip_html_tags(CategoryEntity $categoryEntity): void
+    public function it_should_strip_html_tags(CategoryEntity $categoryEntity): void
     {
         $cmsPage = new CmsPageEntity();
         $cmsPage->setSections(
@@ -44,7 +44,7 @@ class LayoutSpec extends ObjectBehavior
         $this->getValue($categoryEntity)->shouldReturn('Lorem Ipsum Dolor sit amet');
     }
 
-    function it_should_concatenate_values_from_all_slots_configs(CategoryEntity $categoryEntity): void
+    public function it_should_concatenate_values_from_all_slots_configs(CategoryEntity $categoryEntity): void
     {
         $cmsPage = new CmsPageEntity();
         $cmsPage->setSections(
@@ -75,7 +75,7 @@ class LayoutSpec extends ObjectBehavior
         $this->getValue($categoryEntity)->shouldReturn('I am concatenated');
     }
 
-    function it_should_sort_output_by_position(CategoryEntity $categoryEntity): void
+    public function it_should_sort_output_by_position(CategoryEntity $categoryEntity): void
     {
         $cmsPage = new CmsPageEntity();
         $cmsPage->setSections(
@@ -109,7 +109,7 @@ class LayoutSpec extends ObjectBehavior
         $this->getValue($categoryEntity)->shouldReturn('I am not Yoda');
     }
 
-    function it_should_not_throw_if_section_has_no_blocks(CategoryEntity $categoryEntity)
+    public function it_should_not_throw_if_section_has_no_blocks(CategoryEntity $categoryEntity)
     {
         $cmsPage = new CmsPageEntity();
         $cmsPage->setSections(
@@ -124,13 +124,13 @@ class LayoutSpec extends ObjectBehavior
         $this->getValue($categoryEntity)->shouldReturn('');
     }
 
-    function it_should_not_throw_if_category_has_no_layout_assigned(CategoryEntity $categoryEntity)
+    public function it_should_not_throw_if_category_has_no_layout_assigned(CategoryEntity $categoryEntity)
     {
         $categoryEntity->getCmsPage()->willReturn(null);
         $this->getValue($categoryEntity)->shouldReturn('');
     }
 
-    function it_should_not_throw_if_block_has_no_slots(CategoryEntity $categoryEntity)
+    public function it_should_not_throw_if_block_has_no_slots(CategoryEntity $categoryEntity)
     {
         $cmsPage = new CmsPageEntity();
         $cmsPage->setSections(

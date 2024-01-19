@@ -12,22 +12,22 @@ use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Prod
 
 class PriceSpec extends ObjectBehavior
 {
-    function let(NumberFormatter $numberFormatter)
+    public function let(NumberFormatter $numberFormatter)
     {
         $this->beConstructedWith($numberFormatter);
     }
 
-    function it_is_a_field()
+    public function it_is_a_field()
     {
         $this->shouldHaveType(FieldInterface::class);
     }
 
-    function it_has_a_name()
+    public function it_has_a_name()
     {
         $this->getName()->shouldReturn('Price');
     }
 
-    function it_gets_the_product_price(Product $product, CalculatedPrice $price, NumberFormatter $numberFormatter)
+    public function it_gets_the_product_price(Product $product, CalculatedPrice $price, NumberFormatter $numberFormatter)
     {
         $product->getCalculatedPrice()->willReturn($price);
         $price->getTotalPrice()->willReturn(pi());

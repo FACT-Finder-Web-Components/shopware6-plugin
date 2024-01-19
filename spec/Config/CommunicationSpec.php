@@ -19,7 +19,7 @@ class CommunicationSpec extends ObjectBehavior
         $this->getCredentials()->shouldContainOnlyStrings();
     }
 
-    public function it_should_return_factfinder_channel_configured_for_specific_saleschannel(SystemConfigService $configService): void
+    public function it_should_return_channel_for_specific_saleschannel(SystemConfigService $configService): void
     {
         $configService->get('OmikronFactFinder.config.channel', '1')->willReturn('channel_1');
         $configService->get('OmikronFactFinder.config.channel', '2')->willReturn('channel_2');

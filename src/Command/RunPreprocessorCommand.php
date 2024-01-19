@@ -17,11 +17,6 @@ class RunPreprocessorCommand extends Command
     public const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     public const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function configure(): void
     {
         $this->setName('factfinder:data:pre-process');

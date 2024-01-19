@@ -44,7 +44,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     private Collaborator $feedPreprocessor;
     private \Traversable $cachedFields;
 
-    function let(
+    public function let(
         SalesChannelContext $salesChannelContext,
         Context $context,
         SalesChannelService $salesChannelService,

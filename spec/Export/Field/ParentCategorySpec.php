@@ -22,7 +22,7 @@ class ParentCategorySpec extends ObjectBehavior
     /** @var SalesChannelEntity|Collaborator */
     private Collaborator $salesChannelEntity;
 
-    function let(
+    public function let(
         SalesChannelService $channelService,
         CategoryBreadcrumbBuilder $breadcrumbBuilder,
         SalesChannelContext $salesChannelContext,
