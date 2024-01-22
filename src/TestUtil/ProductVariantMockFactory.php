@@ -33,9 +33,9 @@ class ProductVariantMockFactory
         $variant->setParentId($parent->getId());
         $variant->setOptions($data['options'] ?? self::createPropertyGroupOptionCollection(
             [
-                [md5('size'), md5($size), 'size', $size],
-                [md5('color'), md5($color), 'color', $color],
-                [md5('material'), md5($material), 'material', $material],
+                [hash('sha512', 'size'), hash('sha512', $size), 'size', $size],
+                [hash('sha512', 'color'), hash('sha512', $color), 'color', $color],
+                [hash('sha512', 'material'), hash('sha512', $material), 'material', $material],
             ]
         ));
 
@@ -58,22 +58,22 @@ class ProductVariantMockFactory
             $group->setId($groupId);
 
             $groupTranslation = new PropertyGroupTranslationEntity();
-            $groupTranslation->setPropertyGroupId(md5($groupId));
+            $groupTranslation->setPropertyGroupId(hash('sha512', $groupId));
             $groupTranslation->setName($groupName);
             $groupTranslation->setUniqueIdentifier(Uuid::randomHex());
 
-            $group->setTranslations(new PropertyGroupTranslationCollection([md5($groupName) => $groupTranslation]));
+            $group->setTranslations(new PropertyGroupTranslationCollection([hash('sha512', $groupName) => $groupTranslation]));
             $group->addTranslated('name', $groupName);
 
             $option = new PropertyGroupOptionEntity();
             $option->setId($optionId);
 
             $optionTranslation = new PropertyGroupOptionTranslationEntity();
-            $optionTranslation->setPropertyGroupOptionId(md5($optionName));
+            $optionTranslation->setPropertyGroupOptionId(hash('sha512', $optionName));
             $optionTranslation->setName($optionName);
             $optionTranslation->setUniqueIdentifier(Uuid::randomHex());
 
-            $option->setTranslations(new PropertyGroupOptionTranslationCollection([md5($optionName) => $optionTranslation]));
+            $option->setTranslations(new PropertyGroupOptionTranslationCollection([hash('sha512', $optionName) => $optionTranslation]));
             $option->addTranslated('name', $optionName);
             $option->setGroupId($groupId);
             $option->setGroup($group);

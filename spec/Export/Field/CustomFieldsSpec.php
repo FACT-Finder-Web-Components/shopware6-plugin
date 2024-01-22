@@ -53,7 +53,7 @@ class CustomFieldsSpec extends ObjectBehavior
             ],
     ];
 
-    function let(
+    public function let(
         SalesChannelService $salesChannelService,
         SalesChannelContext $channelContext,
         EntityRepository $customFieldRepository,
@@ -83,12 +83,12 @@ class CustomFieldsSpec extends ObjectBehavior
         );
     }
 
-    function it_is_a_field()
+    public function it_is_a_field()
     {
         $this->shouldBeAnInstanceOf(FieldInterface::class);
     }
 
-    function it_should_join_multiselect_option_values(
+    public function it_should_join_multiselect_option_values(
         Product $product,
         EntityRepository $customFieldRepository,
         EntityRepository $languageRepository,
@@ -111,7 +111,7 @@ class CustomFieldsSpec extends ObjectBehavior
         $this->getValue($product)->shouldReturn('|SelectFieldDE=option1DE#option2DE|');
     }
 
-    function it_will_use_default_language_if_none_is_stored_in_context(
+    public function it_will_use_default_language_if_none_is_stored_in_context(
         Product $product,
         EntityRepository $customFieldRepository
     ) {
@@ -136,7 +136,7 @@ class CustomFieldsSpec extends ObjectBehavior
         $this->getValue($product)->shouldReturn('|SelectFieldEN=option1EN#option2EN|');
     }
 
-    function it_will_return_label_technical_value_if_no_translation_is_provided(
+    public function it_will_return_label_technical_value_if_no_translation_is_provided(
         Product $product,
         EntityRepository $customFieldRepository
     ) {
@@ -161,7 +161,7 @@ class CustomFieldsSpec extends ObjectBehavior
         $this->getValue($product)->shouldReturn('|test-multi-select-field=option1#option2|');
     }
 
-    function it_will_skip_disabled_custom_fields(
+    public function it_will_skip_disabled_custom_fields(
         Product $product,
         EntityRepository $customFieldRepository, ExportSettings $exportSettings, CustomFieldsService $customFieldsService)
     {
@@ -210,7 +210,7 @@ class CustomFieldsSpec extends ObjectBehavior
         $this->getValue($product)->shouldReturn('|Enabled attribute=exported value|');
     }
 
-    function it_should_join_multiselect_entity_value(
+    public function it_should_join_multiselect_entity_value(
         Product $product,
         EntityRepository $customFieldRepository
     ) {

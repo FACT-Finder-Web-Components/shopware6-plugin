@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
@@ -8,18 +10,18 @@ use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Prod
 
 class DescriptionSpec extends ObjectBehavior
 {
-    function it_is_a_field()
+    public function it_is_a_field()
     {
         $this->shouldHaveType(FieldInterface::class);
     }
 
-    function it_should_return_the_description(Product $product)
+    public function it_should_return_the_description(Product $product)
     {
         $product->getTranslation('description')->willReturn('FACT-Finder Web Components');
         $this->getValue($product)->shouldReturn('FACT-Finder Web Components');
     }
 
-    function it_should_not_throw_errors(Product $product)
+    public function it_should_not_throw_errors(Product $product)
     {
         $this->shouldNotThrow()->during('getValue', [$product]);
     }

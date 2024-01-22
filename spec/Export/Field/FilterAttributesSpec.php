@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Config\ExportSettings;
@@ -11,13 +13,13 @@ use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOp
 
 class FilterAttributesSpec extends ObjectBehavior
 {
-    function let(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
+    public function let(PropertyFormatter $propertyFormatter, ExportSettings $exportSettings)
     {
         $exportSettings->getDisabledPropertyGroups()->willReturn([]);
         $this->beConstructedWith($propertyFormatter, $exportSettings);
     }
 
-    function it_does_not_fail_if_product_have_no_properties(
+    public function it_does_not_fail_if_product_have_no_properties(
         Product $product,
         ProductCollection $productCollection,
         PropertyGroupOptionCollection $emptyProperties

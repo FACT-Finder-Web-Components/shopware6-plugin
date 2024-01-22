@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Omikron\FactFinder\Shopware6\Export\Field;
 
 use Omikron\FactFinder\Shopware6\Export\Field\FieldInterface;
@@ -15,7 +17,7 @@ use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 
 class CategoryPathSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         SalesChannelService $salesChannelService,
         SalesChannelContext $channelContext,
         CategoryBreadcrumbBuilder $breadcrumbBuilder
@@ -25,17 +27,17 @@ class CategoryPathSpec extends ObjectBehavior
         $this->beConstructedWith($salesChannelService, $breadcrumbBuilder, 'CategoryPath');
     }
 
-    function it_is_a_field()
+    public function it_is_a_field()
     {
         $this->shouldHaveType(FieldInterface::class);
     }
 
-    function it_has_a_name()
+    public function it_has_a_name()
     {
         $this->getName()->shouldReturn('CategoryPath');
     }
 
-    function it_should_create_correct_path_if_product_is_assigned_to_multiple_categories(
+    public function it_should_create_correct_path_if_product_is_assigned_to_multiple_categories(
         Product $product,
         CategoryBreadcrumbBuilder $breadcrumbBuilder,
         SalesChannelService $salesChannelService,
@@ -64,7 +66,7 @@ class CategoryPathSpec extends ObjectBehavior
         $this->getValue($product)->shouldReturn('Category1-1/Category1-2/Category1-3|Category2-1/Category2-2');
     }
 
-    function it_should_create_correct_path_for_category(
+    public function it_should_create_correct_path_for_category(
         CategoryBreadcrumbBuilder $breadcrumbBuilder,
         SalesChannelService $salesChannelService,
         SalesChannelContext $channelContext
@@ -95,7 +97,7 @@ class CategoryPathSpec extends ObjectBehavior
     }
 
 
-    function it_should_filter_out_categories_from_not_active_sales_channel(
+    public function it_should_filter_out_categories_from_not_active_sales_channel(
         Product $product,
         CategoryBreadcrumbBuilder $breadcrumbBuilder,
         SalesChannelService $salesChannelService,
