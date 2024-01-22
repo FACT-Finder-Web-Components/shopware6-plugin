@@ -11,17 +11,17 @@ use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Prod
 
 class BrandSpec extends ObjectBehavior
 {
-    function it_is_a_field()
+    public function it_is_a_field(): void
     {
         $this->shouldHaveType(FieldInterface::class);
     }
 
-    function it_has_a_name()
+    public function it_has_a_name(): void
     {
         $this->getName()->shouldReturn('Brand');
     }
 
-    function it_does_not_fail_if_the_brand_is_not_present(Product $product, Manufacturer $manufacturer)
+    public function it_does_not_fail_if_the_brand_is_not_present(Product $product, Manufacturer $manufacturer): void
     {
         $this->shouldNotThrow()->during('getValue', [$product]);
         $this->getValue($product)->shouldReturn('');
@@ -35,7 +35,7 @@ class BrandSpec extends ObjectBehavior
         $this->getValue($product)->shouldReturn('ACME Inc.');
     }
 
-    function it_gets_the_value_from_the_manufacturer(Product $product, Manufacturer $manufacturer)
+    public function it_gets_the_value_from_the_manufacturer(Product $product, Manufacturer $manufacturer): void
     {
         $product->getManufacturer()->willReturn($manufacturer);
         $manufacturer->getTranslation('name')->willReturn('FACT-Finder');

@@ -56,9 +56,36 @@ class FeedPreprocessorSpec extends ObjectBehavior
         ];
 
         $variants = [
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.1', 'size' => 'S', 'color' => 'red', 'material' => 'cotton', 'customFields' => $customFieldsData['SW100.1']]),
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.2', 'size' => 'M', 'color' => 'red', 'material' => 'linen', 'customFields' => $customFieldsData['SW100.1']]),
-            $this->variantMockFactory->create($productEntity, ['productNumber' => 'SW100.3', 'size' => 'L', 'color' => 'red', 'material' => 'wool', 'customFields' => $customFieldsData['SW100.1']]),
+            $this->variantMockFactory->create(
+                $productEntity,
+                [
+                    'productNumber' => 'SW100.1',
+                    'size'          => 'S',
+                    'color'         => 'red',
+                    'material'      => 'cotton',
+                    'customFields'  => $customFieldsData['SW100.1'],
+                ]
+            ),
+            $this->variantMockFactory->create(
+                $productEntity,
+                [
+                    'productNumber' => 'SW100.2',
+                    'size'          => 'M',
+                    'color'         => 'red',
+                    'material'      => 'linen',
+                    'customFields'  => $customFieldsData['SW100.1'],
+                ]
+            ),
+            $this->variantMockFactory->create(
+                $productEntity,
+                [
+                    'productNumber' => 'SW100.3',
+                    'size'          => 'L',
+                    'color'         => 'red',
+                    'material'      => 'wool',
+                    'customFields'  => $customFieldsData['SW100.1'],
+                ]
+            ),
         ];
 
         foreach ($variants as $variant) {

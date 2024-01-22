@@ -10,24 +10,24 @@ use Shopware\Core\Content\Category\CategoryEntity as Category;
 
 class SourceFieldSpec extends ObjectBehavior
 {
-    private string $configuredFieldName = "Configured Category Path Field Name";
+    private string $configuredFieldName = 'Configured Category Path Field Name';
 
-    public function let()
+    public function let(): void
     {
         $this->beConstructedWith($this->configuredFieldName);
     }
 
-    public function it_is_a_field()
+    public function it_is_a_field(): void
     {
         $this->shouldHaveType(FieldInterface::class);
     }
 
-    function it_has_a_name()
+    public function it_has_a_name(): void
     {
         $this->getName()->shouldReturn('sourceField');
     }
 
-    function it_it_should_export_configured_field_name(Category $category)
+    public function it_it_should_export_configured_field_name(Category $category): void
     {
         $this->beConstructedWith($this->configuredFieldName);
 
