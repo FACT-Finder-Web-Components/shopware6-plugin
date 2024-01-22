@@ -53,22 +53,22 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         ExportSettings $exportSettings,
         FeedPreprocessorEntryPersister $entryPersister,
         FeedPreprocessor $feedPreprocessor
-    ) {
+    ): void {
         $salesChannelContext->getContext()->willReturn($context);
         $salesChannelContext->getLanguageId()->willReturn('');
         $salesChannelService->getSalesChannelContext()->willReturn($salesChannelContext);
-        $this->productMockFactory = new ProductMockFactory();
-        $this->variantMockFactory = new ProductVariantMockFactory();
+        $this->productMockFactory               = new ProductMockFactory();
+        $this->variantMockFactory               = new ProductVariantMockFactory();
         $this->feedPreprocessorEntryMockFactory = new FeedPreprocessorEntryMockFactory();
-        $this->exportProductMockFactory = new ExportProductMockFactory();
-        $this->salesChannelProductMockFactory = new SalesChannelProductMockFactory();
-        $this->feedPreprocessorReader = $feedPreprocessorReader;
-        $this->decoratedFactory = $decoratedFactory;
-        $this->cachedFields = new \ArrayIterator();
+        $this->exportProductMockFactory         = new ExportProductMockFactory();
+        $this->salesChannelProductMockFactory   = new SalesChannelProductMockFactory();
+        $this->feedPreprocessorReader           = $feedPreprocessorReader;
+        $this->decoratedFactory                 = $decoratedFactory;
+        $this->cachedFields                     = new \ArrayIterator();
         $exportSettings->isExportCacheEnable()->willReturn(true);
-        $this->exportSettings = $exportSettings;
+        $this->exportSettings      = $exportSettings;
         $this->salesChannelService = $salesChannelService;
-        $this->feedPreprocessor = $feedPreprocessor;
+        $this->feedPreprocessor    = $feedPreprocessor;
         $this->beConstructedWith(
             $this->decoratedFactory,
             $this->salesChannelService,
@@ -99,16 +99,16 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     {
         // Given
         $productEntity = $this->productMockFactory->create();
-        $variantsData = [
-            'SW100.1' => ['productNumber' => 'SW100.1', 'size' => 'S', 'color' => 'red', 'material' => 'cotton'],
-            'SW100.2' => ['productNumber' => 'SW100.2', 'size' => 'M', 'color' => 'red', 'material' => 'cotton'],
-            'SW100.3' => ['productNumber' => 'SW100.3', 'size' => 'L', 'color' => 'red', 'material' => 'cotton'],
-            'SW100.4' => ['productNumber' => 'SW100.4', 'size' => 'S', 'color' => 'blue', 'material' => 'cotton'],
-            'SW100.5' => ['productNumber' => 'SW100.5', 'size' => 'M', 'color' => 'blue', 'material' => 'cotton'],
-            'SW100.6' => ['productNumber' => 'SW100.6', 'size' => 'L', 'color' => 'blue', 'material' => 'cotton'],
-            'SW100.7' => ['productNumber' => 'SW100.7', 'size' => 'S', 'color' => 'green', 'material' => 'cotton'],
-            'SW100.8' => ['productNumber' => 'SW100.8', 'size' => 'M', 'color' => 'green', 'material' => 'cotton'],
-            'SW100.9' => ['productNumber' => 'SW100.9', 'size' => 'L', 'color' => 'green', 'material' => 'cotton'],
+        $variantsData  = [
+            'SW100.1'  => ['productNumber' => 'SW100.1', 'size' => 'S', 'color' => 'red', 'material' => 'cotton'],
+            'SW100.2'  => ['productNumber' => 'SW100.2', 'size' => 'M', 'color' => 'red', 'material' => 'cotton'],
+            'SW100.3'  => ['productNumber' => 'SW100.3', 'size' => 'L', 'color' => 'red', 'material' => 'cotton'],
+            'SW100.4'  => ['productNumber' => 'SW100.4', 'size' => 'S', 'color' => 'blue', 'material' => 'cotton'],
+            'SW100.5'  => ['productNumber' => 'SW100.5', 'size' => 'M', 'color' => 'blue', 'material' => 'cotton'],
+            'SW100.6'  => ['productNumber' => 'SW100.6', 'size' => 'L', 'color' => 'blue', 'material' => 'cotton'],
+            'SW100.7'  => ['productNumber' => 'SW100.7', 'size' => 'S', 'color' => 'green', 'material' => 'cotton'],
+            'SW100.8'  => ['productNumber' => 'SW100.8', 'size' => 'M', 'color' => 'green', 'material' => 'cotton'],
+            'SW100.9'  => ['productNumber' => 'SW100.9', 'size' => 'L', 'color' => 'green', 'material' => 'cotton'],
             'SW100.10' => ['productNumber' => 'SW100.10', 'size' => 'S', 'color' => 'red', 'material' => 'linen'],
             'SW100.11' => ['productNumber' => 'SW100.11', 'size' => 'M', 'color' => 'red', 'material' => 'linen'],
             'SW100.12' => ['productNumber' => 'SW100.12', 'size' => 'L', 'color' => 'red', 'material' => 'linen'],
@@ -119,11 +119,11 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
             'SW100.17' => ['productNumber' => 'SW100.17', 'size' => 'M', 'color' => 'green', 'material' => 'linen'],
             'SW100.18' => ['productNumber' => 'SW100.18', 'size' => 'L', 'color' => 'green', 'material' => 'linen'],
         ];
-        $variants = array_map(fn (array $variantData) => $this->variantMockFactory->create($productEntity, $variantData), $variantsData);
+        $variants         = array_map(fn (array $variantData) => $this->variantMockFactory->create($productEntity, $variantData), $variantsData);
         $filterAttributes = [
-            'SW100.1' => 'size=S|size=M|size=L|color=red|material=cotton',
-            'SW100.5' => 'size=S|size=M|size=L|color=blue|material=cotton',
-            'SW100.7' => 'size=S|size=M|size=L|color=green|material=cotton',
+            'SW100.1'  => 'size=S|size=M|size=L|color=red|material=cotton',
+            'SW100.5'  => 'size=S|size=M|size=L|color=blue|material=cotton',
+            'SW100.7'  => 'size=S|size=M|size=L|color=green|material=cotton',
             'SW100.10' => 'size=S|size=M|size=L|color=red|material=linen',
             'SW100.13' => 'size=S|size=M|size=L|color=blue|material=linen',
             'SW100.16' => 'size=S|size=M|size=L|color=green|material=linen',
@@ -153,7 +153,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
 
         // Then
         Assert::assertEquals(
-            array_values(array_map(fn(ExportProductEntity $variant) => $variant->toArray(), $expectedVariants)),
+            array_values(array_map(fn (ExportProductEntity $variant) => $variant->toArray(), $expectedVariants)),
             array_values(array_map(fn (ExportProductEntity $product) => $product->toArray(), $exportedProducts))
         );
     }
@@ -162,9 +162,9 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         CategoryPath $categoryPathField,
         FieldsProvider $fieldsProvider,
         FeedPreprocessorEntryPersister $entryPersister
-    ) {
+    ): void {
         // Given
-        $categoryPathName = 'CategoryPath';
+        $categoryPathName  = 'CategoryPath';
         $categoryPathValue = 'Sports/Books%2C+Clothing+%26+Games/Movies%2C+Electronics+%26+Clothing';
         $this->beConstructedWith(
             $this->decoratedFactory,
@@ -178,18 +178,18 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         );
 
         $productEntity = $this->productMockFactory->create();
-        $variantsData = [
+        $variantsData  = [
             'SW100.1' => ['productNumber' => 'SW100.1', 'size' => 'S', 'color' => 'red', 'material' => 'cotton'],
             'SW100.2' => ['productNumber' => 'SW100.2', 'size' => 'M', 'color' => 'blue', 'material' => 'cotton'],
         ];
-        $variants = array_map(fn (array $variantData) => $this->variantMockFactory->create($productEntity, $variantData), $variantsData);
+        $variants         = array_map(fn (array $variantData) => $this->variantMockFactory->create($productEntity, $variantData), $variantsData);
         $filterAttributes = [
             'SW100.1' => 'size=S|size=M|color=red|material=cotton',
             'SW100.2' => 'size=S|size=M|color=blue|material=cotton',
         ];
-        $expectedVariants = array_map(function(array $expectedVariantData) use ($filterAttributes, $categoryPathField, $variants, $categoryPathName, $categoryPathValue, $productEntity): ExportProductEntity {
+        $expectedVariants = array_map(function (array $expectedVariantData) use ($filterAttributes, $categoryPathField, $variants, $categoryPathName, $categoryPathValue, $productEntity): ExportProductEntity {
             $productNumber = $expectedVariantData['productNumber'];
-            $product = $variants[$productNumber];
+            $product       = $variants[$productNumber];
             $categoryPathField->getName()->willReturn($categoryPathName);
             $categoryPathField->getValue($product)->willReturn($categoryPathValue);
 
@@ -197,9 +197,9 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
                 $product,
                 [
                     'filterAttributes' => $filterAttributes[$productNumber],
-                    'additionalCache' => [$categoryPathName => $categoryPathValue],
-                    'productFields' => [$categoryPathField->getWrappedObject()],
-                    'parent' => $productEntity
+                    'additionalCache'  => [$categoryPathName => $categoryPathValue],
+                    'productFields'    => [$categoryPathField->getWrappedObject()],
+                    'parent'           => $productEntity,
                 ]
             );
         }, $variantsData);
@@ -207,7 +207,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
 
         foreach ($variantsData as $variantData) {
             $productNumber = $variantData['productNumber'];
-            $product = $variants[$productNumber];
+            $product       = $variants[$productNumber];
             $categoryPathField->getName()->willReturn($categoryPathName);
             $fieldsProvider->getFields(SalesChannelProductEntity::class)->willReturn([$categoryPathField]);
         }
@@ -233,27 +233,27 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
 
         // Then
         Assert::assertEquals(
-            array_values(array_map(fn(ExportProductEntity $variant) => $variant->toArray(), $expectedVariants)),
+            array_values(array_map(fn (ExportProductEntity $variant) => $variant->toArray(), $expectedVariants)),
             array_values(array_map(fn (ExportProductEntity $product) => $product->toArray(), $exportedProducts))
         );
     }
 
-    public function it_should_create_entities_with_proper_custom_fields_for_each_display_group()
+    public function it_should_create_entities_with_proper_custom_fields_for_each_display_group(): void
     {
         $this->validateExportedCustomFields(
             [
-                [md5('size'), 'true'],
-                [md5('color'), 'false'],
-                [md5('material'), 'false']
+                [hash('sha512', 'size'), 'true'],
+                [hash('sha512', 'color'), 'false'],
+                [hash('sha512', 'material'), 'false'],
             ],
             [
                 'SW100.1' => [
                     'filterAttributes' => 'material=cotton|material=linen|color=red|color=green|size=S',
-                    'customFields' => '|shape=rectangle|pattern=dots|shape=square|shape=triangle|pattern=stripes|',
+                    'customFields'     => '|shape=rectangle|pattern=dots|shape=square|shape=triangle|pattern=stripes|',
                 ],
                 'SW100.8' => [
                     'filterAttributes' => 'material=cotton|material=linen|color=red|color=green|size=M',
-                    'customFields' => '|shape=triangle|pattern=patterned|pattern=dots|shape=rectangle|pattern=stripes|shape=circle|',
+                    'customFields'     => '|shape=triangle|pattern=patterned|pattern=dots|shape=rectangle|pattern=stripes|shape=circle|',
                 ],
             ],
             [
@@ -263,18 +263,18 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         );
         $this->validateExportedCustomFields(
             [
-                [md5('size'), 'false'],
-                [md5('color'), 'true'],
-                [md5('material'), 'false']
+                [hash('sha512', 'size'), 'false'],
+                [hash('sha512', 'color'), 'true'],
+                [hash('sha512', 'material'), 'false'],
             ],
             [
                 'SW100.1' => [
                     'filterAttributes' => 'size=S|size=M|material=cotton|material=linen|color=green',
-                    'customFields' => '|shape=triangle|pattern=patterned|pattern=dots|shape=square|pattern=stripes|'
+                    'customFields'     => '|shape=triangle|pattern=patterned|pattern=dots|shape=square|pattern=stripes|',
                 ],
                 'SW100.8' => [
                     'filterAttributes' => 'size=S|size=M|material=cotton|material=linen|color=red',
-                    'customFields' => '|shape=rectangle|pattern=dots|pattern=stripes|shape=circle|'
+                    'customFields'     => '|shape=rectangle|pattern=dots|pattern=stripes|shape=circle|',
                 ],
             ],
             [
@@ -284,26 +284,26 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         );
         $this->validateExportedCustomFields(
             [
-                [md5('size'), 'false'],
-                [md5('color'), 'true'],
-                [md5('material'), 'true']
+                [hash('sha512', 'size'), 'false'],
+                [hash('sha512', 'color'), 'true'],
+                [hash('sha512', 'material'), 'true'],
             ],
             [
                 'SW100.1' => [
                     'filterAttributes' => 'size=S|size=M|material=cotton|color=green',
-                    'customFields' => '|shape=triangle|pattern=dots|pattern=stripes|',
+                    'customFields'     => '|shape=triangle|pattern=dots|pattern=stripes|',
                 ],
                 'SW100.3' => [
                     'filterAttributes' => 'size=S|size=M|color=green|material=linen',
-                    'customFields' => '|shape=triangle|pattern=patterned|shape=square|pattern=dots|',
+                    'customFields'     => '|shape=triangle|pattern=patterned|shape=square|pattern=dots|',
                 ],
                 'SW100.6' => [
                     'filterAttributes' => 'size=S|size=M|material=cotton|color=red',
-                    'customFields' => '|shape=rectangle|pattern=dots|pattern=stripes|',
+                    'customFields'     => '|shape=rectangle|pattern=dots|pattern=stripes|',
                 ],
                 'SW100.8' => [
                     'filterAttributes' => 'size=S|size=M|color=red|material=linen',
-                    'customFields' => '|shape=rectangle|pattern=dots|shape=circle|pattern=stripes|',
+                    'customFields'     => '|shape=rectangle|pattern=dots|shape=circle|pattern=stripes|',
                 ],
             ],
             [
@@ -315,42 +315,42 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         );
         $this->validateExportedCustomFields(
             [
-                [md5('size'), 'true'],
-                [md5('color'), 'true'],
-                [md5('material'), 'true']
+                [hash('sha512', 'size'), 'true'],
+                [hash('sha512', 'color'), 'true'],
+                [hash('sha512', 'material'), 'true'],
             ],
             [
                 'SW100.1' => [
                     'filterAttributes' => '|size=S|material=cotton|color=green',
-                    'customFields' => '|shape=triangle|pattern=stripes|',
+                    'customFields'     => '|shape=triangle|pattern=stripes|',
                 ],
                 'SW100.2' => [
                     'filterAttributes' => '|material=cotton|color=green|size=M',
-                    'customFields' => '|shape=triangle|pattern=dots|',
+                    'customFields'     => '|shape=triangle|pattern=dots|',
                 ],
                 'SW100.3' => [
                     'filterAttributes' => '|size=S|color=green|material=linen',
-                    'customFields' => '|shape=square|pattern=dots|',
+                    'customFields'     => '|shape=square|pattern=dots|',
                 ],
                 'SW100.4' => [
                     'filterAttributes' => '|color=green|size=M|material=linen',
-                    'customFields' => '|shape=triangle|pattern=patterned|',
+                    'customFields'     => '|shape=triangle|pattern=patterned|',
                 ],
                 'SW100.5' => [
                     'filterAttributes' => '|size=S|material=cotton|color=red',
-                    'customFields' => '|shape=rectangle|pattern=dots|',
+                    'customFields'     => '|shape=rectangle|pattern=dots|',
                 ],
                 'SW100.6' => [
                     'filterAttributes' => '|material=cotton|color=red|size=M',
-                    'customFields' => '|shape=rectangle|pattern=stripes|',
+                    'customFields'     => '|shape=rectangle|pattern=stripes|',
                 ],
                 'SW100.7' => [
                     'filterAttributes' => '|size=S|color=red|material=linen',
-                    'customFields' => '|shape=rectangle|pattern=dots|',
+                    'customFields'     => '|shape=rectangle|pattern=dots|',
                 ],
                 'SW100.8' => [
                     'filterAttributes' => '|color=red|size=M|material=linen',
-                    'customFields' => '|shape=circle|pattern=stripes|',
+                    'customFields'     => '|shape=circle|pattern=stripes|',
                 ],
             ],
             [
@@ -408,7 +408,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         $this->feedPreprocessorReader->read($productEntity->getProductNumber(), Argument::any())->willReturn(
             $this->getFeedPreprocessorEntries(
                 $productEntity,
-                array_map(fn(string $productNumber, array $data) => $variantsData[$productNumber] + $feedPreprocessorReaderData[$productNumber], array_keys($feedPreprocessorReaderData), array_values($feedPreprocessorReaderData))
+                array_map(fn (string $productNumber, array $data) => $variantsData[$productNumber] + $feedPreprocessorReaderData[$productNumber], array_keys($feedPreprocessorReaderData), array_values($feedPreprocessorReaderData))
             )
         );
 
@@ -424,22 +424,23 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
     }
 
     /**
-     * @var ProductEntity[] $expectedVariants
+     * @var ProductEntity[]
+     *
      * @return FeedPreprocessorEntry[]
      */
     private function getFeedPreprocessorEntries(ProductEntity $parent, array $variantsData): array
     {
         return array_reduce(
             $variantsData,
-            fn(array $acc, array $variantData): array => $acc + [
+            fn (array $acc, array $variantData): array => $acc + [
                 $variantData['productNumber'] => $this->feedPreprocessorEntryMockFactory->create(
                     $this->variantMockFactory->create($parent, $variantData),
                     [
                         'filterAttributes' => $variantData['filterAttributes'],
-                        'customFields' => $variantData['customFields'] ?? '',
-                        'additionalCache' => $variantData['additionalCache'] ?? []
+                        'customFields'     => $variantData['customFields'] ?? '',
+                        'additionalCache'  => $variantData['additionalCache'] ?? [],
                     ]
-                )
+                ),
             ],
             []
         );
@@ -453,8 +454,7 @@ class PreprocessedProductEntityFactorySpec extends ObjectBehavior
         return new ProductCollection(
             array_reduce(
                 $variants,
-                fn(array $carriedVariants, ProductEntity $product): array =>
-                    $carriedVariants + [$product->getId() => $this->salesChannelProductMockFactory->create($product)],
+                fn (array $carriedVariants, ProductEntity $product): array => $carriedVariants + [$product->getId() => $this->salesChannelProductMockFactory->create($product)],
                 []
             ));
     }
