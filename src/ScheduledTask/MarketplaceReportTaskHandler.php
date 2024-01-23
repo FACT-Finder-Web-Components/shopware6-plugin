@@ -6,9 +6,7 @@ namespace Omikron\FactFinder\Shopware6\ScheduledTask;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\MessageQueue\ScheduledTask\ScheduledTaskHandler;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -20,7 +18,6 @@ class MarketplaceReportTaskHandler extends ScheduledTaskHandler
 
     public function __construct(
         EntityRepository $scheduledTaskRepository,
-        private EntityRepository $customerRepository,
         private readonly string $shopwareVersion,
         private readonly ?string $instanceId
     ) {
@@ -38,7 +35,6 @@ class MarketplaceReportTaskHandler extends ScheduledTaskHandler
      */
     public function run(): void
     {
-        $customers = $this->customerRepository->search(new Criteria(), Context::createDefaultContext());
         $now       = new \DateTime();
         $data      = [
             'identifier'      => self::API_IDENTIFIER,
@@ -47,7 +43,7 @@ class MarketplaceReportTaskHandler extends ScheduledTaskHandler
             'shopwareVersion' => $this->shopwareVersion,
             'reportDataKeys'  => [
                 'numberOfSubscriptions' => 0,
-                'numberOfCustomers'     => $customers->getTotal(),
+                'numberOfCustomers'     => 1,
             ],
         ];
         $request = new Request(
