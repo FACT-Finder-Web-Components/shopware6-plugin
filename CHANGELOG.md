@@ -1,6 +1,7 @@
 # Changelog
 ## Unreleased
 ### Add
+- Add reporting for Shopware marketplace
 - Add PHPStan
 ### Change
 - Set FactFinder cookies as required for Cookie Consent Manager
