@@ -3,6 +3,8 @@
 ### Add
 - Add reporting for Shopware marketplace
 - Add PHPStan
+### Change
+- Set FactFinder cookies as required for Cookie Consent Manager
 
 ## [v5.0.0] - 2023.10.24
 ### BREAKING
