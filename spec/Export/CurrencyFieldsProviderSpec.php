@@ -16,14 +16,17 @@ use Shopware\Core\System\Currency\CurrencyEntity;
 
 class CurrencyFieldsProviderSpec extends ObjectBehavior
 {
-    public function let(EntityRepository $currencyRepository, ExportSettings $exportSettings)
+    public function let(EntityRepository $currencyRepository, ExportSettings $exportSettings): void
     {
         $exportSettings->isMultiCurrencyPriceExportEnable()->willReturn(true);
         $this->beConstructedWith($currencyRepository, $exportSettings, new NumberFormatter());
     }
 
-    public function it_will_return_currency_list_if_no_cache_available(EntityRepository $currencyRepository, EntitySearchResult $entitySearchResult, ExportSettings $exportSettings)
-    {
+    public function it_will_return_currency_list_if_no_cache_available(
+        EntityRepository $currencyRepository,
+        EntitySearchResult $entitySearchResult,
+        ExportSettings $exportSettings
+    ): void {
         $currencyRepository
             ->search(Argument::cetera(), Context::createDefaultContext())
             ->will($this->mockCurrencyRepository($entitySearchResult));
@@ -34,8 +37,10 @@ class CurrencyFieldsProviderSpec extends ObjectBehavior
         $this->getCurrencyFields()->shouldReturn($priceCurrency);
     }
 
-    public function it_will_return_currency_list_from_cache(EntityRepository $currencyRepository, EntitySearchResult $entitySearchResult)
-    {
+    public function it_will_return_currency_list_from_cache(
+        EntityRepository $currencyRepository,
+        EntitySearchResult $entitySearchResult
+    ): void {
         $currencyRepository
             ->search(Argument::cetera(), Context::createDefaultContext())
             ->will($this->mockCurrencyRepository($entitySearchResult))

@@ -11,7 +11,7 @@ use Shopware\Core\Content\Property\PropertyGroupEntity as Group;
 
 class PropertyFormatterSpec extends ObjectBehavior
 {
-    function it_casts_values_to_string(FilterInterface $filter, Option $option, Group $group)
+    public function it_casts_values_to_string(FilterInterface $filter, Option $option, Group $group): void
     {
         $this->beConstructedWith($filter);
         $filter->filterValue('')->willReturn('');

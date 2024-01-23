@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Omikron\FactFinder\Shopware6\Subscriber;
 
-use Exception;
 use Omikron\FactFinder\Communication\Version;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\ExtensionConfig;
@@ -31,7 +30,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         Communication $communication,
         ExtensionConfig $extensionConfig,
         RouterInterface $router
-    ) {
+    ): void {
         $fieldRoles              = [];
         $communicationParameters = [];
         $communication->getServerUrl()->willReturn('https://factfinder.server.com');
@@ -47,15 +46,15 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
     }
 
     public function it_will_return_factfinderchannel_for_specific_sales_channel_id(
-        Communication          $communication,
+        Communication $communication,
         GenericPageLoadedEvent $event,
-        SalesChannelContext    $salesChannelContext,
-        SalesChannelEntity     $salesChannel,
-        CustomerEntity         $customer,
-        CurrencyEntity         $currency,
-        Request                $request,
-        Page                   $page
-    ) {
+        SalesChannelContext $salesChannelContext,
+        SalesChannelEntity $salesChannel,
+        CustomerEntity $customer,
+        CurrencyEntity $currency,
+        Request $request,
+        Page $page
+    ): void {
         $event->getSalesChannelContext()->willReturn($salesChannelContext);
         $salesChannelContext->getCustomer()->willReturn($customer);
         $customer->getId()->willReturn(1);
@@ -81,7 +80,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
             new LogicalAndToken(
                 [
                     new TypeToken(ArrayEntity::class),
-                    Argument::withEntry('communication', Argument::withEntry('channel', 'some_ff_channel'))
+                    Argument::withEntry('communication', Argument::withEntry('channel', 'some_ff_channel')),
                 ]
             ))->shouldBeCalled();
 
@@ -89,16 +88,16 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
     }
 
     public function it_will_add_page_extension_for_storefront_render_event(
-        Communication          $communication,
-        StorefrontRenderEvent  $event,
-        SalesChannelContext    $salesChannelContext,
-        SalesChannelEntity     $salesChannel,
-        CustomerEntity         $customer,
-        CurrencyEntity         $currency,
-        Request                $request,
-        Struct                 $extension,
-        Page                   $page
-    ) {
+        Communication $communication,
+        StorefrontRenderEvent $event,
+        SalesChannelContext $salesChannelContext,
+        SalesChannelEntity $salesChannel,
+        CustomerEntity $customer,
+        CurrencyEntity $currency,
+        Request $request,
+        Struct $extension,
+        Page $page
+    ): void {
         $event->getSalesChannelContext()->willReturn($salesChannelContext);
         $salesChannelContext->getCustomer()->willReturn($customer);
         $customer->getId()->willReturn(1);
@@ -124,7 +123,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
             new LogicalAndToken(
                 [
                     new TypeToken(ArrayEntity::class),
-                    Argument::withEntry('communication', Argument::withEntry('channel', 'some_ff_channel'))
+                    Argument::withEntry('communication', Argument::withEntry('channel', 'some_ff_channel')),
                 ]
             ))->shouldBeCalled();
 
@@ -132,14 +131,14 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
     }
 
     public function it_will_throw_exception_when_event_does_not_have_page(
-        Communication          $communication,
-        StorefrontRenderEvent  $event,
-        SalesChannelContext    $salesChannelContext,
-        SalesChannelEntity     $salesChannel,
-        CustomerEntity         $customer,
-        CurrencyEntity         $currency,
-        Request                $request
-    ) {
+        Communication $communication,
+        StorefrontRenderEvent $event,
+        SalesChannelContext $salesChannelContext,
+        SalesChannelEntity $salesChannel,
+        CustomerEntity $customer,
+        CurrencyEntity $currency,
+        Request $request
+    ): void {
         $event->getSalesChannelContext()->willReturn($salesChannelContext);
         $salesChannelContext->getCustomer()->willReturn($customer);
         $customer->getId()->willReturn(1);
@@ -159,6 +158,8 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $request->isXmlHttpRequest()->willReturn(false);
         $event->getParameters()->willReturn([]);
         $this->onPageLoaded($event);
-        $this->shouldThrow(new Exception(sprintf('Unable to get page from event %s.', get_class($event->getWrappedObject()))));
+        $this->shouldThrow(
+            new \Exception(sprintf('Unable to get page from event %s.', get_class($event->getWrappedObject())))
+        );
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Omikron\FactFinder\Shopware6\Subscriber;
 
-use DateTime;
 use Omikron\FactFinder\Shopware6\Subscriber\BeforeSendResponseEventSubscriber;
 use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
@@ -22,6 +21,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
 {
+    private const ONE_DAY_PLUS = '+1 day';
+
     /** @var BeforeSendResponseEvent|Collaborator */
     private Collaborator $event;
 
@@ -42,20 +43,20 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
 
     private array $subscriberMethods;
 
-    function let(
+    public function let(
         Request $request,
         StorefrontResponse $response,
         BeforeSendResponseEvent $event,
         SessionInterface $session,
         ResponseHeaderBag $headers,
         SalesChannelContext $context
-    ) {
-        $this->request = $request;
+    ): void {
+        $this->request  = $request;
         $this->response = $response;
-        $this->session = $session;
-        $this->event = $event;
-        $this->headers = $headers;
-        $this->context = $context;
+        $this->session  = $session;
+        $this->event    = $event;
+        $this->headers  = $headers;
+        $this->context  = $context;
 
         $this->request->getSession()->willReturn($this->session);
         $this->request->isXmlHttpRequest()->willReturn(false);
@@ -73,7 +74,7 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         );
     }
 
-    public function it_should_not_pass_request_validation_when_ajax_request()
+    public function it_should_not_pass_request_validation_when_ajax_request(): void
     {
         foreach ($this->subscriberMethods as $subscriberMethod) {
             // Expect & Given
@@ -85,7 +86,7 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         }
     }
 
-    public function it_should_not_pass_request_validation_when_unsupported_response_code()
+    public function it_should_not_pass_request_validation_when_unsupported_response_code(): void
     {
         foreach ($this->subscriberMethods as $subscriberMethod) {
             // Expect & Given
@@ -100,7 +101,7 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
     public function it_should_not_pass_request_validation_when_response_is_not_instance_of_storefront_response(
         BeforeSendResponseEvent $event,
         Response $symfonyResponse
-    ) {
+    ): void {
         foreach ($this->subscriberMethods as $subscriberMethod) {
             // Expect & Given
             $event->getRequest()->willReturn($this->request);
@@ -111,7 +112,7 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         }
     }
 
-    public function it_should_clear_user_id_cookie_and_has_just_logged_out_cookie_when_customer_logged_out()
+    public function it_should_clear_user_id_cookie_and_has_just_logged_out_cookie_when_customer_logged_out(): void
     {
         // Expect & Given
         $this->context->getCustomer()->willReturn(null);
@@ -122,7 +123,7 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         $this->isCustomerLoggedOut($this->event);
     }
 
-    public function it_should_clear_has_just_logged_in_cookie_when_is_already_set(ParameterBag $cookies)
+    public function it_should_clear_has_just_logged_in_cookie_when_is_already_set(ParameterBag $cookies): void
     {
         // Expect & Given
         $this->request->cookies = $cookies;
@@ -134,7 +135,7 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         $this->isHasJustLoggedInCookieSet($this->event);
     }
 
-    public function it_should_set_has_just_logged_in_cookie_and_user_id_cookie(CustomerEntity $customer)
+    public function it_should_set_has_just_logged_in_cookie_and_user_id_cookie(CustomerEntity $customer): void
     {
         // Expect & Given
         $customer->getId()->willReturn('test_id_1');
@@ -142,11 +143,11 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         $this->session->get('ff_has_just_logged_in', Argument::any())->willReturn(true);
         $this->headers->setCookie(Cookie::create('ff_has_just_logged_in')
             ->withValue('1')
-            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
+            ->withExpires((new \DateTime())->modify(self::ONE_DAY_PLUS)->getTimestamp())
             ->withHttpOnly(false))->shouldBeCalled();
         $this->headers->setCookie(Cookie::create('ff_user_id')
             ->withValue('test_id_1')
-            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
+            ->withExpires((new \DateTime())->modify(self::ONE_DAY_PLUS)->getTimestamp())
             ->withHttpOnly(false))->shouldBeCalled();
         $this->session->set('ff_has_just_logged_in', false)->shouldBeCalled();
 
@@ -154,13 +155,13 @@ class BeforeSendResponseEventSubscriberSpec extends ObjectBehavior
         $this->hasCustomerJustLoggedIn($this->event);
     }
 
-    public function it_should_set_has_just_logged_out_cookie()
+    public function it_should_set_has_just_logged_out_cookie(): void
     {
         // Expect & Given
         $this->session->get('ff_has_just_logged_out', Argument::any())->willReturn(true);
         $this->headers->setCookie(Cookie::create('ff_has_just_logged_out')
             ->withValue('1')
-            ->withExpires((new DateTime())->modify('+1 day')->getTimestamp())
+            ->withExpires((new \DateTime())->modify(self::ONE_DAY_PLUS)->getTimestamp())
             ->withHttpOnly(false))->shouldBeCalled();
         $this->headers->clearCookie('ff_user_id')->shouldBeCalled();
         $this->session->set('ff_has_just_logged_out', false)->shouldBeCalled();

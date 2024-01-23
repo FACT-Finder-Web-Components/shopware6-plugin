@@ -24,9 +24,9 @@ class ProductMockFactory
                 $productEntity->getId(),
                 $data['configuratorGroupConfig'] ?? self::getGroupConfigurationConfig(
                     [
-                        [md5('size'), 'false'],
-                        [md5('color'), 'true'],
-                        [md5('material'), 'true'],
+                        [hash('sha512', 'size'), 'false'],
+                        [hash('sha512', 'color'), 'true'],
+                        [hash('sha512', 'material'), 'true'],
                     ]
                 )
             ));

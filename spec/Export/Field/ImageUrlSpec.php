@@ -14,17 +14,17 @@ use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity as Prod
 
 class ImageUrlSpec extends ObjectBehavior
 {
-    function it_is_a_field()
+    public function it_is_a_field()
     {
         $this->shouldBeAnInstanceOf(FieldInterface::class);
     }
 
-    function it_has_a_name()
+    public function it_has_a_name()
     {
         $this->getName()->shouldReturn('ImageUrl');
     }
 
-    function it_does_not_fail_if_the_image_is_not_present(
+    public function it_does_not_fail_if_the_image_is_not_present(
         Product                $product,
         ProductMediaCollection $mediaCollection,
         ProductMediaEntity     $productMediaEntity,
@@ -41,14 +41,14 @@ class ImageUrlSpec extends ObjectBehavior
         $this->getValue($product)->shouldReturn('/product_image.jpg');
     }
 
-    function it_does_not_fail_if_media_is_not_a_collection(CategoryEntity $category, Media $media)
+    public function it_does_not_fail_if_media_is_not_a_collection(CategoryEntity $category, Media $media)
     {
         $category->getMedia()->willReturn($media);
         $media->getUrl()->willReturn('/category_image.jpg');
         $this->getValue($category)->shouldReturn('/category_image.jpg');
     }
 
-    function it_does_not_fail_if_media_first_is_null(Product $product, ProductMediaCollection $mediaCollection)
+    public function it_does_not_fail_if_media_first_is_null(Product $product, ProductMediaCollection $mediaCollection)
     {
         $product->getMedia()->willReturn($mediaCollection);
         $mediaCollection->first()->willReturn(null);
@@ -56,7 +56,7 @@ class ImageUrlSpec extends ObjectBehavior
         $this->shouldNotThrow()->during('getValue', [$product]);
     }
 
-    function it_does_not_fail_if_media_is_null(Product $product)
+    public function it_does_not_fail_if_media_is_null(Product $product)
     {
         $product->getMedia()->willReturn(null);
 
