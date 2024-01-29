@@ -6,7 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\ExtensionConfig;
-use Omikron\FactFinder\Shopware6\OmikronFactFinder;
+use Omikron\FactFinder\Shopware6\FactFinder;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
 use Shopware\Core\Content\Category\SalesChannel\AbstractCategoryRoute;
 use Shopware\Storefront\Page\Navigation\NavigationPageLoadedEvent;
@@ -51,7 +51,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         $category     = $this->cmsPageRoute->load($navigationId, $event->getRequest(), $event->getSalesChannelContext())->getCategory();
         $route        = $event->getRequest()->get('_route');
 
-        $disableImmediate = safeGetByName($category->getCustomFields(), OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
+        $disableImmediate = safeGetByName($category->getCustomFields(), FactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $route === 'frontend.home.page';
         $isCategory       = !$isHome && !$disableImmediate;
         $searchImmediate  = $this->config->isSsrActive() === false && $isCategory;

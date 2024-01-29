@@ -18,7 +18,7 @@ class FtpConfigSpec extends ObjectBehavior
     {
         $salesChannelId = '1';
         $channel        = 'ff_channel_name';
-        $configService->get('OmikronFactFinder.config.channel', $salesChannelId)->willReturn($channel);
+        $configService->get('FactFinder.config.channel', $salesChannelId)->willReturn($channel);
         $this->getUploadFileName($salesChannelId)->shouldContain($channel);
     }
 }

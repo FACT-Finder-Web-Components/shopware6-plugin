@@ -21,8 +21,8 @@ class CommunicationSpec extends ObjectBehavior
 
     public function it_should_return_channel_for_specific_saleschannel(SystemConfigService $configService): void
     {
-        $configService->get('OmikronFactFinder.config.channel', '1')->willReturn('channel_1');
-        $configService->get('OmikronFactFinder.config.channel', '2')->willReturn('channel_2');
+        $configService->get('FactFinder.config.channel', '1')->willReturn('channel_1');
+        $configService->get('FactFinder.config.channel', '2')->willReturn('channel_2');
 
         $this->getChannel('1')->shouldReturn('channel_1');
         $this->getChannel('2')->shouldReturn('channel_2');

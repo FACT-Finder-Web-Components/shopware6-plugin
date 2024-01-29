@@ -49,7 +49,7 @@
     }
   },
   "extra": {
-    "shopware-plugin-class": "Omikron\\FactFinder\\Shopware6\\OmikronFactFinder",
+    "shopware-plugin-class": "Omikron\\FactFinder\\Shopware6\\FactFinder",
     "plugin-icon": "src/Resources/public/plugin.png",
     "copyright": "(c) by Omikron Data Quality GmbH",
     "label": {

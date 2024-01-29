@@ -36,7 +36,7 @@ class FieldRoles implements FieldRolesInterface
 
     public function update(array $fieldRoles, ?string $salesChannelId): void
     {
-        $this->systemConfig->set('OmikronFactFinder.config.fieldRoles', $fieldRoles, $salesChannelId);
+        $this->systemConfig->set('FactFinder.config.fieldRoles', $fieldRoles, $salesChannelId);
     }
 
     private function map(array $fieldRoles): array

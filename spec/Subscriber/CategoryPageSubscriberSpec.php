@@ -7,7 +7,7 @@ namespace spec\Omikron\FactFinder\Shopware6\Subscriber;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\ExtensionConfig;
 use Omikron\FactFinder\Shopware6\Domain\RedirectMapping;
-use Omikron\FactFinder\Shopware6\OmikronFactFinder;
+use Omikron\FactFinder\Shopware6\FactFinder;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Shopware\Core\Content\Category\CategoryEntity;
@@ -46,7 +46,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         ArrayEntity $extension,
         NavigationPageLoadedEvent $event
     ): void {
-        $categoryEntity->getCustomFields()->willReturn([OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME => false]);
+        $categoryEntity->getCustomFields()->willReturn([FactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME => false]);
         $extension->assign(Argument::withEntry('communication', Argument::withEntry('category-page', Argument::any())))->shouldBeCalled();
         $this->onPageLoaded($event);
     }
@@ -59,7 +59,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
     ): void {
         $request->get('_route')->willReturn('frontend.not_home.page');
         $event->getRequest()->willReturn($request);
-        $categoryEntity->getCustomFields()->willReturn([OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME => true]);
+        $categoryEntity->getCustomFields()->willReturn([FactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME => true]);
         $extension->assign(Argument::withEntry('communication', Argument::exact(['add-params' => 'navigation=true'])))->shouldBeCalled();
         $this->onPageLoaded($event);
     }
