@@ -110,6 +110,11 @@ class FactFinder extends Plugin
         parent::uninstall($uninstallContext);
     }
 
+    public function executeComposerCommands(): bool
+    {
+        return true;
+    }
+
     private function removeModuleData(UninstallContext $uninstallContext): void
     {
         $customFieldSetRepository = $this->container->get('custom_field_set.repository');
