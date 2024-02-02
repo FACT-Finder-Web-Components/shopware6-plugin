@@ -21,7 +21,7 @@ export default class TrackingPlugin extends Plugin
         try {
             const quantityInput = DomAccessHelper.querySelector(data, '[name$="[quantity]"]');
 
-            return parseInt(quantityInput.value);
+            return parseInt(quantityInput.value, 10);
         } catch (e) {
             return 1;
         }

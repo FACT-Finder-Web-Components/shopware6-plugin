@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class OmikronFactFinder extends Plugin
+class FactFinder extends Plugin
 {
     public const FACT_FINDER_CUSTOM_FIELD_SET_NAME          = 'cms_export_include';
     public const CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME       = 'ff_cms_export_include';
@@ -110,6 +110,11 @@ class OmikronFactFinder extends Plugin
         parent::uninstall($uninstallContext);
     }
 
+    public function executeComposerCommands(): bool
+    {
+        return true;
+    }
+
     private function removeModuleData(UninstallContext $uninstallContext): void
     {
         $customFieldSetRepository = $this->container->get('custom_field_set.repository');
@@ -164,7 +169,7 @@ class OmikronFactFinder extends Plugin
         /** @var EntityRepository $customFieldRepository */
         $customFieldRepository = $this->container->get('custom_field.repository');
 
-        $field = $this->getCustomField(OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME, $context);
+        $field = $this->getCustomField(FactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME, $context);
         if ($field instanceof CustomFieldEntity) {
             $customFieldRepository->update(
                 [

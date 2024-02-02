@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export;
 
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\CategoryEntity;
-use Omikron\FactFinder\Shopware6\OmikronFactFinder;
+use Omikron\FactFinder\Shopware6\FactFinder;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter;
@@ -59,8 +59,8 @@ class ExportCategories implements ExportInterface
         $criteria->addFilter(new MultiFilter(
             'OR',
             [
-                new EqualsFilter(sprintf('customFields.%s', OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME), null),
-                new EqualsFilter(sprintf('customFields.%s', OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME), false),
+                new EqualsFilter(sprintf('customFields.%s', FactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME), null),
+                new EqualsFilter(sprintf('customFields.%s', FactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME), false),
             ])
         );
         $criteria->addFilter(new EqualsFilter('active', true));

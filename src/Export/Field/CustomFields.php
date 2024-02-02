@@ -10,7 +10,7 @@ use Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity;
 use Omikron\FactFinder\Shopware6\Export\PropertyFormatter;
 use Omikron\FactFinder\Shopware6\Export\SalesChannelService;
-use Omikron\FactFinder\Shopware6\OmikronFactFinder;
+use Omikron\FactFinder\Shopware6\FactFinder;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
@@ -153,7 +153,7 @@ class CustomFields implements FieldInterface
         }
 
         if ($entity instanceof CategoryEntity) {
-            unset($customFields[OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME]);
+            unset($customFields[FactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME]);
         }
 
         return $customFields;

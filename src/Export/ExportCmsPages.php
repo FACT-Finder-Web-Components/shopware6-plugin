@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Export;
 
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\CmsPageEntity;
-use Omikron\FactFinder\Shopware6\OmikronFactFinder;
+use Omikron\FactFinder\Shopware6\FactFinder;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepository;
@@ -55,7 +55,7 @@ class ExportCmsPages implements ExportInterface
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
         }
-        $criteria->addFilter(new EqualsFilter(sprintf('customFields.%s', OmikronFactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME), true));
+        $criteria->addFilter(new EqualsFilter(sprintf('customFields.%s', FactFinder::CMS_EXPORT_INCLUDE_CUSTOM_FIELD_NAME), true));
 
         return $criteria;
     }

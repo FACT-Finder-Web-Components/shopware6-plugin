@@ -63,7 +63,7 @@ class ResultControllerSpec extends ObjectBehavior
         $this->request->attributes = $attributes;
         $attributes->get(PlatformRequest::ATTRIBUTE_SALES_CHANNEL_CONTEXT_OBJECT)->willReturn($salesChannelContext);
         $attributes->get(RequestTransformer::STOREFRONT_URL)->willReturn('https://shop.com');
-        $templateFinder->find('@Parent/storefront/page/factfinder/result.html.twig')->willReturn('@OmikronFactFinder/storefront/page/factfinder/result.html.twig');
+        $templateFinder->find('@Parent/storefront/page/factfinder/result.html.twig')->willReturn('@FactFinder/storefront/page/factfinder/result.html.twig');
         $this->container->get(TemplateFinder::class)->willReturn($templateFinder);
         $this->container->get('event_dispatcher')->willReturn($nestedEventDispatcher);
         $this->container->get(SystemConfigService::class)->willReturn($systemConfigService);
@@ -81,7 +81,7 @@ class ResultControllerSpec extends ObjectBehavior
         $content = 'original content';
         $this->pageLoader->load($this->request, $this->salesChannelContext)->willReturn($page);
         $this->config->isSsrActive()->willReturn(false);
-        $this->twig->render('@OmikronFactFinder/storefront/page/factfinder/result.html.twig', Argument::any())->willReturn($content);
+        $this->twig->render('@FactFinder/storefront/page/factfinder/result.html.twig', Argument::any())->willReturn($content);
         $this->seoUrlPlaceholderHandler->replace($content, 'https://shop.com', $this->salesChannelContext)->willReturn($content);
         $response = $this->result(
             $this->request,

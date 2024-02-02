@@ -35,8 +35,8 @@ Component.register('ui-feed-export-form', {
     },
     methods: {
          async getPluginConfig() {
-             const config = await this.systemConfigApiService.getValues('OmikronFactFinder.config');
-             this.isCacheDisable = config['OmikronFactFinder.config.enableExportCache'];
+             const config = await this.systemConfigApiService.getValues('FactFinder.config');
+             this.isCacheDisable = config['FactFinder.config.enableExportCache'];
         },
         getExportTypeValues() {
             const httpClient = Shopware.Service('syncService').httpClient;

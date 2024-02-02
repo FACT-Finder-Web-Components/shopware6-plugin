@@ -1,0 +1,6 @@
+projectKey=Shopware-plugin
+serverUrl=http://localhost:9000
+serverVersion=10.3.0.82913
+dashboardUrl=http://localhost:9000/dashboard?id=Shopware-plugin
+ceTaskId=AY0xM6oOAvtNhwcPZM3W
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AY0xM6oOAvtNhwcPZM3W
