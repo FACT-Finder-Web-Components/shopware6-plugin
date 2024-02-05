@@ -19,6 +19,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class CategoryPageResponseSubscriber implements EventSubscriberInterface
 {
     private bool $httpCacheEnabled;
