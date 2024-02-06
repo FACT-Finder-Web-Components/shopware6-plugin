@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Support Fact-Finder redirect campaigns for SSR
+
 ## [v4.3.2] - 2024.01.26
 ### Fix
 - Filter empty attributes for ff-communication component

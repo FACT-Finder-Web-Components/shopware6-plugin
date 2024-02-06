@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Utilites\Ssr\Template;
 
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectCampaignException;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -36,12 +37,19 @@ class RecordList
 
     /**
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     *
+     * @throws DetectRedirectCampaignException
      */
     public function getContent(
         string $paramString,
         bool $isNavigationRequest = false
     ): string {
         $results = $this->searchResults($paramString, $isNavigationRequest);
+
+        // Support redirect campaigns for SSR
+        if ($this->getRedirectCampaign($results)) {
+            throw new DetectRedirectCampaignException($this->getRedirectCampaign($results));
+        }
 
         return $this->renderResults($results, $paramString);
     }
@@ -111,5 +119,16 @@ class RecordList
         preg_match(self::RECORD_PATTERN, $this->content, $match);
 
         $this->template = $match[0] ?? '';
+    }
+
+    private function getRedirectCampaign(array $result): ?string
+    {
+        if (!empty($result['campaigns'])) {
+            $campaign = array_search('REDIRECT', array_column($result['campaigns'], 'flavour'));
+
+            return $result['campaigns'][$campaign]['target']['destination'] ?? null;
+        }
+
+        return null;
     }
 }
