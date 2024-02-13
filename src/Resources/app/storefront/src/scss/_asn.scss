@@ -36,10 +36,6 @@ ff-asn {
         @include box-shadow($dropdown-box-shadow);
       }
     }
-
-    .custom-control-label {
-      display: inline-block;
-    }
   }
 
   &-group-slider {

@@ -6,5 +6,5 @@ namespace Omikron\FactFinder\Shopware6\Export;
 
 interface NamingStrategyInterface
 {
-    public function createFeedFileName(...$parts): string;
+    public function createFeedFileName($exportType, $channelId): string;
 }

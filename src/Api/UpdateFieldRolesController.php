@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Api;
 
 use Omikron\FactFinder\Shopware6\Config\FieldRolesInterface;
+use Psr\Log\LoggerInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
@@ -21,11 +22,16 @@ class UpdateFieldRolesController extends AbstractController
 {
     private FieldRolesInterface $fieldRoles;
     private EntityRepository $channelRepository;
+    private LoggerInterface $factfinderLogger;
 
-    public function __construct(FieldRolesInterface $fieldRolesService, EntityRepository $channelRepository)
-    {
+    public function __construct(
+        FieldRolesInterface $fieldRolesService,
+        EntityRepository $channelRepository,
+        LoggerInterface $factfinderLogger
+    ) {
         $this->fieldRoles        = $fieldRolesService;
         $this->channelRepository = $channelRepository;
+        $this->factfinderLogger = $factfinderLogger;
     }
 
     /**
@@ -37,12 +43,18 @@ class UpdateFieldRolesController extends AbstractController
      */
     public function execute(): JsonResponse
     {
-        foreach ($this->fetchSalesChannels() as $salesChannel) {
-            $fieldRoles = $this->fieldRoles->getRoles($salesChannel->getId());
-            $this->fieldRoles->update($fieldRoles, $salesChannel->getId());
-        }
+        try {
+            foreach ($this->fetchSalesChannels() as $salesChannel) {
+                $fieldRoles = $this->fieldRoles->getRoles($salesChannel->getId());
+                $this->fieldRoles->update($fieldRoles, $salesChannel->getId());
+            }
 
-        return new JsonResponse();
+            return new JsonResponse();
+        } catch (\Exception $e) {
+            $this->factfinderLogger->error($e->getMessage());
+
+            return new JsonResponse(['message' => 'Problem with update fields roles. Check logs for more informations'], 400);
+        }
     }
 
     /**

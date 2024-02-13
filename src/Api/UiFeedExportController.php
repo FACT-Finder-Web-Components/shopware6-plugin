@@ -9,6 +9,7 @@ use Omikron\FactFinder\Shopware6\Message\FeedExport;
 use Omikron\FactFinder\Shopware6\Message\RefreshExportCache;
 use Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler;
 use Omikron\FactFinder\Shopware6\MessageQueue\RefreshExportCacheHandler;
+use Psr\Log\LoggerInterface;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +24,8 @@ class UiFeedExportController extends AbstractController
     public function __construct(
         private FeedExportHandler $feedExportHandler,
         private DataExportCommand $dataExportCommand,
-        private RefreshExportCacheHandler $refreshCacheHandler
+        private RefreshExportCacheHandler $refreshCacheHandler,
+        private LoggerInterface $factfinderLogger
     ) {
     }
 
@@ -38,13 +40,19 @@ class UiFeedExportController extends AbstractController
      */
     public function generateExportFeedAction(Request $request): JsonResponse
     {
-        $this->feedExportHandler->__invoke(new FeedExport(
-            $request->query->get('salesChannelValue'),
-            $request->query->get('salesChannelLanguageValue'),
-            $request->query->get('exportTypeValue')
-        ));
+        try {
+            $this->feedExportHandler->__invoke(new FeedExport(
+                $request->query->get('salesChannelValue'),
+                $request->query->get('salesChannelLanguageValue'),
+                $request->query->get('exportTypeValue')
+            ));
 
-        return new JsonResponse();
+            return new JsonResponse();
+        } catch (\Exception $e) {
+            $this->factfinderLogger->error($e->getMessage());
+
+            return new JsonResponse(['message' => 'Problem with export. Check logs for more informations'], 400);
+        }
     }
 
     /**
@@ -68,11 +76,17 @@ class UiFeedExportController extends AbstractController
      */
     public function refreshExportCacheAction(Request $request): JsonResponse
     {
-        $this->refreshCacheHandler->__invoke(new RefreshExportCache(
-            $request->query->get('salesChannelValue'),
-            $request->query->get('salesChannelLanguageValue')
-        ));
+        try {
+            $this->refreshCacheHandler->__invoke(new RefreshExportCache(
+                $request->query->get('salesChannelValue'),
+                $request->query->get('salesChannelLanguageValue')
+            ));
 
-        return new JsonResponse();
+            return new JsonResponse();
+        } catch (\Exception $e) {
+            $this->factfinderLogger->error($e->getMessage());
+
+            return new JsonResponse(['message' => 'Problem with cache export. Check logs for more informations'], 400);
+        }
     }
 }
