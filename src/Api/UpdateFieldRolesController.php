@@ -31,7 +31,7 @@ class UpdateFieldRolesController extends AbstractController
     ) {
         $this->fieldRoles        = $fieldRolesService;
         $this->channelRepository = $channelRepository;
-        $this->factfinderLogger = $factfinderLogger;
+        $this->factfinderLogger  = $factfinderLogger;
     }
 
     /**

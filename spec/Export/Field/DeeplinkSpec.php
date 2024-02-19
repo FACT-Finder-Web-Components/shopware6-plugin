@@ -30,7 +30,7 @@ class DeeplinkSpec extends ObjectBehavior
     {
         $product->getSeoUrls()->willReturn($this->prepareSeoUrlCollection());
         $this->shouldNotThrow()->during('getValue', [$product]);
-        $this->getValue($product)->shouldReturn('/seo-path-1');
+        $this->getValue($product)->shouldReturn('/shop/public/seo-path-1');
     }
 
     public function it_will_call_indexer_if_no_url_is_available(
@@ -57,7 +57,7 @@ class DeeplinkSpec extends ObjectBehavior
         $product->getId()->willReturn(1);
         $this->onUrlUpdated(new SeoUrlUpdateEvent([0 => ['seoPathInfo' => '/some-seo-url-link']]));
         $product->getSeoUrls()->willReturn(new SeoUrlCollection());
-        $this->getValue($product)->shouldReturn('/some-seo-url-link');
+        $this->getValue($product)->shouldReturn('/shop/public/some-seo-url-link');
     }
 
     private function prepareSeoUrlCollection(): SeoUrlCollection
