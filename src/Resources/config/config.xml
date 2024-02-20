@@ -6,7 +6,7 @@
         <title>Main Settings</title>
         <title lang="de-DE">Grundeinstellungen</title>
 
-        <input-field>
+        <input-field type="url">
             <name>serverUrl</name>
             <label>Server URL</label>
             <label lang="de-DE">Server-URL</label>
@@ -108,7 +108,6 @@
             <placeholder>phrase one=/some/special/link/one
 phrase two=https://domain.com/some/special/link/two
             </placeholder>
-            <required>false</required>
         </input-field>
     </card>
 
@@ -165,12 +164,11 @@ phrase two=https://domain.com/some/special/link/two
             <required>true</required>
         </input-field>
 
-        <input-field>
+        <input-field type="int">
             <name>ftpPort</name>
             <label>Port</label>
             <defaultValue>21</defaultValue>
             <label lang="de-DE">Port</label>
-            <required>false</required>
         </input-field>
 
         <input-field>
@@ -184,7 +182,6 @@ phrase two=https://domain.com/some/special/link/two
             <name>ftpPassword</name>
             <label>Password</label>
             <label lang="de-DE">Passwort</label>
-            <required>false</required>
             <helpText>If your authentication method does not require user password, please ignore that file</helpText>
             <helpText lang="de-DE">Wenn Ihre Authentifizierungsmethode kein Benutzerkennwort erfordert, ignorieren Sie diese Datei bitte</helpText>
         </input-field>
@@ -193,7 +190,6 @@ phrase two=https://domain.com/some/special/link/two
             <name>rootDir</name>
             <label>Root Directory</label>
             <label lang="de-DE"></label>
-            <required>false</required>
         </input-field>
 
         <input-field type="textarea">
