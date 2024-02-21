@@ -6,9 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Api;
 
 use Omikron\FactFinder\Shopware6\Command\DataExportCommand;
 use Omikron\FactFinder\Shopware6\Message\FeedExport;
-use Omikron\FactFinder\Shopware6\Message\RefreshExportCache;
 use Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler;
-use Omikron\FactFinder\Shopware6\MessageQueue\RefreshExportCacheHandler;
 use Psr\Log\LoggerInterface;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +22,6 @@ class UiFeedExportController extends AbstractController
     public function __construct(
         private FeedExportHandler $feedExportHandler,
         private DataExportCommand $dataExportCommand,
-        private RefreshExportCacheHandler $refreshCacheHandler,
         private LoggerInterface $factfinderLogger
     ) {
     }
@@ -63,30 +60,5 @@ class UiFeedExportController extends AbstractController
     public function getTypeEntityMap(): JsonResponse
     {
         return new JsonResponse($this->dataExportCommand->getTypeEntityMap());
-    }
-
-    /**
-     * @Route("/api/_action/fact-finder/refresh-export-cache", name="api.action.fact_finder.refresh-export-cache", methods={"GET"}, defaults={"XmlHttpRequest"=true})
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     *
-     * @throws \Exception
-     */
-    public function refreshExportCacheAction(Request $request): JsonResponse
-    {
-        try {
-            $this->refreshCacheHandler->__invoke(new RefreshExportCache(
-                $request->query->get('salesChannelValue'),
-                $request->query->get('salesChannelLanguageValue')
-            ));
-
-            return new JsonResponse();
-        } catch (\Exception $e) {
-            $this->factfinderLogger->error($e->getMessage());
-
-            return new JsonResponse(['message' => 'Problem with cache export. Check logs for more informations'], 400);
-        }
     }
 }
