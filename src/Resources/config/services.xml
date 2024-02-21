@@ -144,21 +144,12 @@
         <service id="Omikron\FactFinder\Shopware6\Config\Communication" public="true"/>
         <service id="Omikron\FactFinder\Shopware6\Config\FieldRoles" public="true"/>
 
-        <service id="Omikron\FactFinder\Shopware6\Cookie\CookieProvider"
-                 decorates="Shopware\Storefront\Framework\Cookie\CookieProviderInterface">
-            <argument type="service"
-                      id="Omikron\FactFinder\Shopware6\Cookie\CookieProvider.inner" />
-        </service>
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\PriceFormatter" />
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter" />
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath" />
 
         <service id="Symfony\Component\DependencyInjection\ContainerInterface">
             <argument type="service" id="service_container"/>
-        </service>
-
-        <service id="Omikron\FactFinder\Shopware6\Subscriber\FeedPreprocessorEntrySubscriber">
-            <argument type="service" id="product.repository"/>
         </service>
 
         <service id="Mustache_Engine" alias="factfinder.mustache_engine" />
