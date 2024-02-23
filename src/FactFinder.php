@@ -120,11 +120,11 @@ class FactFinder extends Plugin
 
     public function uninstall(UninstallContext $uninstallContext): void
     {
+        parent::uninstall($uninstallContext);
+
         if (!$uninstallContext->keepUserData()) {
             $this->removeModuleData($uninstallContext);
         }
-
-        parent::uninstall($uninstallContext);
     }
 
     public function executeComposerCommands(): bool
