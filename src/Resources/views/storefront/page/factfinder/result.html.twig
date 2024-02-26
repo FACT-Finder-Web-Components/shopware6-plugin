@@ -7,7 +7,7 @@
     {% sw_include '@Parent/storefront/components/factfinder/campaign-advisor.html.twig' %}
     {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' %}
     {% block page_search_headline %}
-      <h1 class="search-headline">
+      <div class="h1 search-headline">
         {% block page_search_headline_text %}
           <ff-template scope="result" unresolved>
             {{ 'ff.search.headlineBefore'|trans|sw_sanitize }}
@@ -17,7 +17,7 @@
             {{ 'ff.search.headlineAfter'|trans|sw_sanitize }}
           </ff-template>
         {% endblock %}
-      </h1>
+      </div>
     {% endblock %}
     <div class="cms-block-container">
       <div class="cms-block-container-row row cms-row">
