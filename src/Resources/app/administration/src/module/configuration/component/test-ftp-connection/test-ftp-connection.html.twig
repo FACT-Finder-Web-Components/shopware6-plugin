@@ -1,9 +1,11 @@
-<sw-button-process
-  class="test-ftp-connection-btn"
-  variant="primary"
-  :isLoading="isLoading"
-  :disabled="isLoading"
-  :processSuccess="isSaveSuccessful"
-  @click="onClick">
-  {{ $tc('configuration.testFtpConnection.testConnection') }}
-</sw-button-process>
+{% block factfinder_module_configuration_test_ftp_connection %}
+  <sw-button-process
+    class="test-ftp-connection-btn"
+    variant="primary"
+    :isLoading="isLoading"
+    :disabled="isLoading"
+    :processSuccess="isSaveSuccessful"
+    @click="onClick">
+    {{ $tc('configuration.testFtpConnection.testConnection') }}
+  </sw-button-process>
+{% endblock %}
