@@ -1,8 +1,10 @@
-<sw-button-process
-  variant="primary"
-  :isLoading="isLoading"
-  :disabled="isLoading"
-  :processSuccess="isSaveSuccessful"
-  @click="onClick">
-  {{ $tc('configuration.updateFieldRoles.update') }}
-</sw-button-process>
+{% block factfinder_module_configuration_update_field_roles %}
+  <sw-button-process
+    variant="primary"
+    :isLoading="isLoading"
+    :disabled="isLoading"
+    :processSuccess="isSaveSuccessful"
+    @click="onClick">
+    {{ $tc('configuration.updateFieldRoles.update') }}
+  </sw-button-process>
+{% endblock %}
