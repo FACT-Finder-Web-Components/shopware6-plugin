@@ -43,24 +43,26 @@
     </script>
   {% endblock %}
 
-  <script>
-    const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');
+  {% block base_script_factfinder_tracking %}
+    <script>
+      const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');
 
-    document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
-      {% if page.extensions.factfinder.ssr == 'ssr' %}
-        const searchResult = {FF_SEARCH_RESULT};
+      document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
+        {% if page.extensions.factfinder.ssr == 'ssr' %}
+          const searchResult = {FF_SEARCH_RESULT};
 
-        if (searchResult.hasOwnProperty('records')) {
-          factfinder.communication.EventAggregator.currentSearchResult = searchResult;
-          factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
+          if (searchResult.hasOwnProperty('records')) {
+            factfinder.communication.EventAggregator.currentSearchResult = searchResult;
+            factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
+          }
+        {% endif %}
+
+        if ({{ page.extensions.factfinder.searchImmediate }}) {
+          searchImmediate();
         }
-      {% endif %}
-
-      if ({{ page.extensions.factfinder.searchImmediate }}) {
-        searchImmediate();
-      }
-    });
-  </script>
+      });
+    </script>
+  {% endblock %}
 
   {{ parent() }}
 {% endblock %}
