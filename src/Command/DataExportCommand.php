@@ -67,8 +67,6 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     private EntityRepository $languageRepository;
     private CurrencyFieldsProvider $currencyFieldsProvider;
     private FieldsProvider $fieldProviders;
-
-    /** @@todo v4 remove this reference */
     private $file;
 
     public function __construct(
@@ -246,7 +244,6 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             throw new \Exception('Directory ' . $dir . ' is not writable. Aborting');
         }
 
-        /** @todo v4 refactor this */
         $channelId  = $this->container->get('Omikron\FactFinder\Shopware6\Config\Communication')->getChannel($salesChannelId);
         $filename   = $dir . DIRECTORY_SEPARATOR . (new ChannelTypeNamingStrategy())->createFeedFileName($exportType, $channelId);
         $this->file = fopen($filename, 'w+');

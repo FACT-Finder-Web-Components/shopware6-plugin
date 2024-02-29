@@ -39,10 +39,6 @@ class Deeplink implements FieldInterface, EventSubscriberInterface
 
     public function getValue(Entity $entity): string
     {
-        if ($entity->getSeoUrls() === null) {
-            return '';
-        }
-
         $url                = $entity->getSeoUrls()->first();
         $getSeoUrlRouteName = fn (Entity $entity) => $entity instanceof ProductEntity ? ProductRoute::ROUTE_NAME : CategoryRoute::ROUTE_NAME;
         $formUrl            = fn (string $url): string => $url ? '/shop/public/' . ltrim($url, '/') : '';
@@ -57,7 +53,6 @@ class Deeplink implements FieldInterface, EventSubscriberInterface
 
     public function onUrlUpdated(SeoUrlUpdateEvent $event): void
     {
-        // @todo second argument could be removed?
         $this->fetchCallback = fn (): array => first($event->getSeoUrls(), []);
     }
 
