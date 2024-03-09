@@ -1,18 +1,19 @@
 {
   "configuration": {
     "updateFieldRoles": {
-      "update": "Update Field Roles"
+      "update": "Feldrollen aktualisieren",
+      "successMessage": "Feldrollen erfolgreich aktualisiert. Bitte prüfen Sie, ob die Werte korrekt sind"
     },
     "testConnection": {
-      "success": "Connection successfully established.",
-      "fail": "Connection could not be established.",
-      "helpText": "Please save you current configuration before test connection"
+      "success": "Verbindung erfolgreich hergestellt.",
+      "fail": "Die Verbindung konnte nicht hergestellt werden.",
+      "helpText": "Bitte speichern Sie Ihre aktuelle Konfiguration, bevor Sie die Verbindung testen"
     },
     "testApiConnection": {
-      "testConnection": "Test Connection"
+      "testConnection": "Testverbindung"
     },
     "testFtpConnection": {
-      "testConnection": "Test FTP/SFTP Connection"
+      "testConnection": "FTP/SFTP Testverbindung "
     }
   }
 }

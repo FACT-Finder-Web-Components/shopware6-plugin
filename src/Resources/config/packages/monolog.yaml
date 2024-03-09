@@ -1,0 +1,9 @@
+monolog:
+    channels: ['factfinder_channel']
+
+    handlers:
+        myPluginLogHandler:
+            type: rotating_file
+            path: "%kernel.logs_dir%/factfinder_%kernel.environment%.log"
+            level: warning
+            channels: [ "factfinder_channel"]

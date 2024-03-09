@@ -6,7 +6,7 @@
         <title>Main Settings</title>
         <title lang="de-DE">Grundeinstellungen</title>
 
-        <input-field>
+        <input-field type="url">
             <name>serverUrl</name>
             <label>Server URL</label>
             <label lang="de-DE">Server-URL</label>
@@ -16,6 +16,7 @@
         <input-field>
             <name>channel</name>
             <label>Channel</label>
+            <label lang="de-DE">Kanal</label>
             <required>true</required>
         </input-field>
 
@@ -46,15 +47,15 @@
                 </option>
             </options>
             <defaultValue>v4</defaultValue>
-            <label>Api Version</label>
-            <label lang="de-DE">Api Version</label>
+            <label>API Version</label>
+            <label lang="de-DE">API-Version</label>
             <required>true</required>
         </input-field>
 
         <input-field type="bool">
             <name>useSsr</name>
             <label>Use server-side rendering?</label>
-            <label lang="de-DE">Use server-side rendering?</label>
+            <label lang="de-DE">Serverseitiges Rendering verwenden?</label>
         </input-field>
 
         <component name="update-field-roles">
@@ -73,8 +74,9 @@
         <input-field type="bool">
             <name>useProxy</name>
             <label>Use Proxy?</label>
-            <label lang="de-DE">Use Proxy?</label>
+            <label lang="de-DE">Proxy verwenden?</label>
             <helpText>Using Proxy allows you to refine the data coming back from FACT-Finder inside the SDK code. Please refer the documentation for more info.</helpText>
+            <helpText lang="de-DE">Mit Proxy können Sie die von FACT-Finder zurückkommenden Daten innerhalb des SDK-Codes verfeinern. Weitere Informationen finden Sie in der Dokumentation.</helpText>
         </input-field>
 
         <input-field type="single-select">
@@ -83,26 +85,29 @@
                 <option>
                     <id>count_as_one</id>
                     <name>track single click as one</name>
+                    <name lang="de-DE">Verfolgen Sie einen einzelnen Klick als einen</name>
                 </option>
                 <option>
                     <id>count_selected_amount</id>
                     <name>track single click with selected amount</name>
+                    <name lang="de-DE">Verfolgen Sie einen einzelnen Klick mit dem ausgewählten Betrag</name>
                 </option>
             </options>
             <defaultValue>count_as_one</defaultValue>
             <label>Scenario how to count single click on "Add to cart" button</label>
-            <label lang="de-DE">Scenario how to count single click on "Add to cart" button</label>
+            <label lang="de-DE">Szenario zum Zählen mit einem Klick auf die Schaltfläche „In den Warenkorb“</label>
             <required>true</required>
         </input-field>
 
         <input-field type="textarea">
             <name>redirectMapping</name>
             <label>Redirect mapping for selected queries</label>
+            <label lang="de-DE">Weiterleitungszuordnung für ausgewählte Abfragen</label>
             <helpText>Put each pair "query=url" in separate row. If the phrase appears twice, the first one from the top of the list will be taken.</helpText>
+            <helpText lang="de-DE">Fügen Sie jedes Paar „query=url“ in eine separate Zeile ein. Wenn die Phrase zweimal vorkommt, wird die erste von oben in der Liste verwendet.</helpText>
             <placeholder>phrase one=/some/special/link/one
-phrase two=https://domain.com/some/special/link/two
+                phrase two=https://domain.com/some/special/link/two
             </placeholder>
-            <required>false</required>
         </input-field>
     </card>
 
@@ -113,17 +118,20 @@ phrase two=https://domain.com/some/special/link/two
             <name>disabledPropertyGroups</name>
             <entity>property_group</entity>
             <label>Select Filter Attributes which should be ignored</label>
+            <label lang="de-DE">Wählen Sie Filterattribute aus, die ignoriert werden sollen</label>
         </component>
 
         <component name="sw-entity-multi-id-select">
             <name>disabledCustomFields</name>
             <entity>custom_field</entity>
             <label>Select Custom Fields which should be ignored</label>
+            <label lang="de-DE">Wählen Sie benutzerdefinierte Felder aus, die ignoriert werden sollen</label>
         </component>
 
         <input-field type="checkbox">
             <name>currencyPriceExport</name>
             <label>Export Prices for all Currencies</label>
+            <label lang="de-DE">Exportpreise für alle Währungen</label>
         </input-field>
 
     </card>
@@ -135,7 +143,7 @@ phrase two=https://domain.com/some/special/link/two
         <input-field type="single-select">
             <name>protocol</name>
             <label>Protocol</label>
-            <label lang="de-DE">Protocol</label>
+            <label lang="de-DE">Protokoll</label>
             <options>
                 <option>
                     <id>ftp</id>
@@ -156,12 +164,11 @@ phrase two=https://domain.com/some/special/link/two
             <required>true</required>
         </input-field>
 
-        <input-field>
+        <input-field type="int">
             <name>ftpPort</name>
             <label>Port</label>
             <defaultValue>21</defaultValue>
             <label lang="de-DE">Port</label>
-            <required>false</required>
         </input-field>
 
         <input-field>
@@ -175,27 +182,30 @@ phrase two=https://domain.com/some/special/link/two
             <name>ftpPassword</name>
             <label>Password</label>
             <label lang="de-DE">Passwort</label>
-            <required>false</required>
             <helpText>If your authentication method does not require user password, please ignore that file</helpText>
+            <helpText lang="de-DE">Wenn Ihre Authentifizierungsmethode kein Benutzerkennwort erfordert, ignorieren Sie diese Datei bitte</helpText>
         </input-field>
 
         <input-field>
             <name>rootDir</name>
             <label>Root Directory</label>
-            <label lang="de-DE">Root</label>
-            <required>false</required>
+            <label lang="de-DE"></label>
         </input-field>
 
         <input-field type="textarea">
             <name>privateKey</name>
             <label>Private Key Content</label>
+            <label lang="de-DE">Inhalt des privaten Schlüssels</label>
             <helpText>Put the content of the received key file into the text area. If your authentication method does not require key, please ignore that file</helpText>
+            <helpText lang="de-DE">Geben Sie den Inhalt der empfangenen Schlüsseldatei in den Textbereich ein. Wenn Ihre Authentifizierungsmethode keinen Schlüssel erfordert, ignorieren Sie diese Datei bitte</helpText>
         </input-field>
 
         <input-field type="password">
             <name>keyPassphrase</name>
             <label>Key Passphrase</label>
+            <label lang="de-DE">Schlüsselpassphrase</label>
             <helpText>If your key is not protected with a passphrase, please ignore this field</helpText>
+            <helpText lang="de-DE">Wenn Ihr Schlüssel nicht durch eine Passphrase geschützt ist, ignorieren Sie dieses Feld bitte</helpText>
         </input-field>
 
         <component name="test-ftp-connection">
@@ -206,7 +216,7 @@ phrase two=https://domain.com/some/special/link/two
     <card>
         <title>Import Settings</title>
         <title lang="de-DE">Import-Konfiguration</title>
-            <input-field type="multi-select">
+        <input-field type="multi-select">
             <name>pushImport</name>
             <label>Enable Automatic Import for</label>
             <label lang="de-DE">Aktivieren Sie den automatischen Import für</label>
