@@ -43,8 +43,8 @@
     "plugin-icon": "src/Resources/public/plugin.png",
     "copyright": "(c) by Omikron Data Quality GmbH",
     "label": {
-      "de-DE": "FACT-Finder® Web Components for Shopware 6",
-      "en-GB": "FACT-Finder® Web Components für Shopware 6"
+      "en-GB": "FACT-Finder® Web Components for Shopware 6",
+      "de-DE": "FACT-Finder® Web Components für Shopware 6"
     }
   }
 }

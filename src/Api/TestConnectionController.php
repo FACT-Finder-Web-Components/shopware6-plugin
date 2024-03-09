@@ -9,6 +9,7 @@ use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Shopware6\Config\Communication as CommunicationConfig;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
+use Psr\Log\LoggerInterface;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,12 +23,18 @@ class TestConnectionController extends AbstractController
     private ClientBuilder $clientBuilder;
     private CommunicationConfig $config;
     private UploadService $uploadService;
+    private LoggerInterface $factfinderLogger;
 
-    public function __construct(ClientBuilder $clientBuilder, CommunicationConfig $config, UploadService $uploadService)
-    {
-        $this->clientBuilder = $clientBuilder;
-        $this->config        = $config;
-        $this->uploadService = $uploadService;
+    public function __construct(
+        ClientBuilder $clientBuilder,
+        CommunicationConfig $config,
+        UploadService $uploadService,
+        LoggerInterface $factfinderLogger
+    ) {
+        $this->clientBuilder    = $clientBuilder;
+        $this->config           = $config;
+        $this->uploadService    = $uploadService;
+        $this->factfinderLogger = $factfinderLogger;
     }
 
     /**
@@ -35,18 +42,19 @@ class TestConnectionController extends AbstractController
      */
     public function testApiConnection(): JsonResponse
     {
-        $client = $this->clientBuilder
-            ->withCredentials(new Credentials(...$this->config->getCredentials()))
-            ->withServerUrl($this->config->getServerUrl())
-            ->withVersion($this->config->getVersion())
-            ->build();
-
         try {
+            $client = $this->clientBuilder
+                ->withCredentials(new Credentials(...$this->config->getCredentials()))
+                ->withServerUrl($this->config->getServerUrl())
+                ->withVersion($this->config->getVersion())
+                ->build();
             $endpoint = $this->createTestEndpoint();
             $client->request('GET', $endpoint);
 
             return new JsonResponse(['message' => 'Connection successfully established'], 200);
         } catch (\Exception $e) {
+            $this->factfinderLogger->error($e->getMessage());
+
             return new JsonResponse(['message' => 'Connection could not be established'], 400);
         }
     }
@@ -61,6 +69,8 @@ class TestConnectionController extends AbstractController
 
             return new JsonResponse(['message' => 'Connection successfully established'], 200);
         } catch (FilesystemException $e) {
+            $this->factfinderLogger->error($e->getMessage());
+
             return new JsonResponse(['message' => "Connection could not be established. Error: {$e->getMessage()}"], 400);
         }
     }
