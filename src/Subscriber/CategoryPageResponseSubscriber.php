@@ -84,7 +84,6 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         } catch (DetectRedirectCampaignException $exception) {
             $event->setResponse(new RedirectResponse($exception->getRedirectUrl()));
         }
-
     }
 
     /**
