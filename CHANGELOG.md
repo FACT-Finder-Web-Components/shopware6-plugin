@@ -8,6 +8,8 @@
 - Add PHPStan
 ### Change
 - Set FactFinder cookies as required for Cookie Consent Manager
+### Fix
+- Support Fact-Finder redirect campaigns for SSR
 
 ## [v5.0.0] - 2023.10.24
 ### BREAKING
