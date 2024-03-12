@@ -19,7 +19,13 @@ use Shopware\Core\Framework\Plugin\Exception\PluginNotInstalledException;
 use Shopware\Core\System\CustomField\Aggregate\CustomFieldSet\CustomFieldSetEntity;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\DelegatingLoader;
+use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\DirectoryLoader;
+use Symfony\Component\DependencyInjection\Loader\GlobFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -37,7 +43,7 @@ class OmikronFactFinder extends Plugin
             'config' => [
                 'label'               => [
                     'en-GB' => 'Include in FACT-Finder® CMS Export',
-                    'de-DE' => 'Include in FACT-Finder® CMS Export',
+                    'de-DE' => 'In FACT-Finder® CMS-Export einbinden',
                 ],
                 'componentName'       => 'sw-field',
                 'customFieldType'     => CustomFieldTypes::SWITCH,
@@ -50,7 +56,7 @@ class OmikronFactFinder extends Plugin
             'config' => [
                 'label'               => [
                     'en-GB' => 'Disable `ff-communication/search-immediate`',
-                    'en-GB' => 'Disable `ff-communication/search-immediate`',
+                    'de-DE' => 'Deaktivieren `ff-communication/search-immediate`',
                 ],
                 'componentName'       => 'sw-field',
                 'customFieldType'     => CustomFieldTypes::SWITCH,
@@ -66,6 +72,17 @@ class OmikronFactFinder extends Plugin
         $container->registerForAutoconfiguration(ExportInterface::class)->addTag('factfinder.export.exporter');
         $container->registerForAutoconfiguration(ExportEntityInterface::class)->addTag('factfinder.export.entity');
         $container->registerForAutoconfiguration(FactoryInterface::class)->addTag('factfinder.export.entity_factory');
+
+        $locator  = new FileLocator('Resources/config');
+        $resolver = new LoaderResolver([
+            new YamlFileLoader($container, $locator),
+            new GlobFileLoader($container, $locator),
+            new DirectoryLoader($container, $locator),
+        ]);
+
+        $configLoader = new DelegatingLoader($resolver);
+        $confDir      = \rtrim($this->getPath(), '/') . '/Resources/config';
+        $configLoader->load($confDir . '/{packages}/*.yaml', 'glob');
     }
 
     public function install(InstallContext $installContext): void
@@ -176,7 +193,7 @@ class OmikronFactFinder extends Plugin
                             'customFieldType' => CustomFieldTypes::SWITCH,
                             'label'           => [
                                 'en-GB' => 'Include in FACT-Finder® CMS Export',
-                                'de-DE' => 'Include in FACT-Finder® CMS Export',
+                                'de-DE' => 'In FACT-Finder® CMS-Export einbinden',
                             ],
                         ],
                     ],

@@ -1,34 +1,37 @@
 {
   "ui-feed-export": {
-    "title": "FACT-Finder® Feed Export",
+    "title": "FACT-Finder® Feed-Export",
     "component": {
       "export_form": {
         "sales_channel": {
-          "label": "Sales Channel"
+          "label": "Verkaufskanal"
         },
         "sales_channel_language": {
-          "label": "Language"
+          "label": "Sprache"
         },
         "button": {
-          "title": "Create Export"
+          "title": "Export erstellen"
         },
         "cache_button": {
-          "title": "Refresh cache Export"
+          "title": "Cache-Export aktualisieren"
         },
         "alert_success": {
-          "text": "Export has been generated"
+          "text": "Der Export wurde generiert"
         },
         "alert_error": {
-          "text": "An error occurred during integration process"
+          "text": "Während des Integrationsprozesses ist ein Fehler aufgetreten"
+        },
+        "export_type": {
+          "label": "Wählen Sie den Exporttyp aus"
         },
         "alert_not_valid_params": {
-          "text": "Please choose export parameters"
+          "text": "Bitte wählen Sie Exportparameter aus"
         },
         "refresh_cache_success": {
-          "text": "Export cache has been refreshed"
+          "text": "Der Export-Cache wurde aktualisiert"
         },
         "refresh_cache_error": {
-          "text": "An error occurred during refresh export cache"
+          "text": "Beim Aktualisieren des Exportcaches ist ein Fehler aufgetreten"
         }
       }
     }

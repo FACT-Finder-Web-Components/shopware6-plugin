@@ -1,5 +1,9 @@
 # Changelog
 ## Unreleased
+### Add
+- Add validation for plugin configuration form
+- Add FactFinder logger
+- Add German translations
 ### Fix
 - Support Fact-Finder redirect campaigns for SSR
 

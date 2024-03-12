@@ -3,16 +3,16 @@
     "blocks": {
       "commerce": {
         "factfinderWebComponentsListing": {
-          "label": "Typical collection of Web Components that implements search result page "
+          "label": "Typische Sammlung von Webkomponenten, die eine Suchergebnisseite implementiert"
         },
         "factfinderWebComponentsCampaigns": {
-          "label": "FACT-Finder® Web Components Campaigns"
+          "label": "FACT-Finder® Web Components Kampagnen"
         },
         "factfinderWebComponentsFilters": {
-          "label": "FACT-Finder® Web Components Filters"
+          "label": "FACT-Finder® Web Components Filter"
         },
         "factfinderWebComponentsRecordList": {
-          "label": "FACT-Finder® Web Components Record List"
+          "label": "FACT-Finder® Web Components Rekordliste"
         }
       }
     },
@@ -20,22 +20,22 @@
       "recordList": {
         "label": "FACT-Finder® Web Components ff-record-list element",
         "config": {
-          "callbackArg": "Name of argument which will be available inside the callback scope",
-          "callback": "callback to the subscribed topic. It is recommended to have only one callback per topic, per page.",
-          "domUpdated": "listener to dom-update event of that element.",
-          "id": "Value will be passed as `id` attribute to element. If not specified, the default CMS element id will be used"
+          "callbackArg": "Name des Arguments, das im Callback-Bereich verfügbar sein wird",
+          "callback": "Rückruf zum abonnierten Thema. Es wird empfohlen, nur einen Rückruf pro Thema und Seite durchzuführen.",
+          "domUpdated": "Listener für das dom-update-Ereignis dieses Elements",
+          "id": "Der Wert wird als „id“-Attribut an das Element übergeben. Wenn nicht angegeben, wird die Standard-CMS-Element-ID verwendet"
         }
       },
       "asn": {
         "asn": {
           "label": "FACT-Finder® Web Components ff-asn element",
           "config": {
-            "callbackArg": "Name of argument which will be available inside the callback scope",
-            "callback": "callback to the subscribed topic. It is recommended to have only one callback per topic, per page.",
-            "domUpdated": "listener to dom-update event of that element.",
-            "id": "Value will be passed as `id` attribute to element. If not specified, the default CMS element id will be used",
-            "topic": "Leaving this field empty causes element subscribe to its default topic (asn)",
-            "vertical": "Setting to true will add additional CSS class `btn-block` to the `ff-asn-group` and `<div slot=\"groupCaption\"` and ffw-asn-vertical, ffw-asn-group-vertical and ffw-asn-group-element-vertical to corresponding elements"
+            "callbackArg": "Name des Arguments, das im Callback-Bereich verfügbar sein wird",
+            "callback": "Rückruf zum abonnierten Thema. Es wird empfohlen, nur einen Rückruf pro Thema und Seite durchzuführen.",
+            "domUpdated": "Listener für das dom-update-Ereignis dieses Elements.",
+            "id": "Der Wert wird als „id“-Attribut an das Element übergeben. Wenn nicht angegeben, wird die Standard-CMS-Element-ID verwendet",
+            "topic": "Wenn Sie dieses Feld leer lassen, abonniert das Element sein Standardthema (ASN).",
+            "vertical": "Durch die Einstellung „true“ wird die zusätzliche CSS-Klasse „btn-block“ zu „ff-asn-group“ und „<div slots=\"groupCaption\"“ sowie zu ffw-asn-vertical, ffw-asn-group-vertical und ffw-asn hinzugefügt -group-element-vertikal zu entsprechenden Elementen"
           }
         },
         "sortbox": {
@@ -45,9 +45,9 @@
           "label": "FACT-Finder® Web Components ff-paging element"
         },
         "campaigns": {
-          "label": "FACT-Finder® Web Components campaigns elements collection",
+          "label": "FACT-Finder® Web Components Sammlung von Kampagnenelementen",
           "config": {
-            "leaveFreeIfNotSpecified": "Leave this value free if you want page to accept all campaigns matching the criteria"
+            "leaveFreeIfNotSpecified": "Lassen Sie diesen Wert frei, wenn die Seite alle Kampagnen akzeptieren soll, die den Kriterien entsprechen"
           }
         }
       }

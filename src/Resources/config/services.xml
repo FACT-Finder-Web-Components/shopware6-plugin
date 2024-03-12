@@ -76,6 +76,7 @@
             <bind key="$communicationParameters">%factfinder.communication.parameters.base%</bind>
             <bind key="$entryRepository" type="service" id="factfinder_feed_preprocessor.repository" />
             <bind key="$cache" type="service" id="cache.object" />
+            <bind key="$factfinderLogger" type="service" id="monolog.logger.factfinder_channel" />
         </defaults>
 
         <service id="Omikron\FactFinder\Shopware6\Communication\AdapterFactory" />
