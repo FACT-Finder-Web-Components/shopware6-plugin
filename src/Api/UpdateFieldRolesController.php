@@ -8,7 +8,7 @@ use Omikron\FactFinder\Shopware6\Config\FieldRolesInterface;
 use Psr\Log\LoggerInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,17 +16,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(defaults={"_routeScope"={"api"}})
+ * @RouteScope(scopes={"api"})
  */
 class UpdateFieldRolesController extends AbstractController
 {
     private FieldRolesInterface $fieldRoles;
-    private EntityRepository $channelRepository;
+    private EntityRepositoryInterface $channelRepository;
     private LoggerInterface $factfinderLogger;
 
     public function __construct(
         FieldRolesInterface $fieldRolesService,
-        EntityRepository $channelRepository,
+        EntityRepositoryInterface $channelRepository,
         LoggerInterface $factfinderLogger
     ) {
         $this->fieldRoles        = $fieldRolesService;
