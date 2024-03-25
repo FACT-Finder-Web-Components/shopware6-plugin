@@ -41,10 +41,10 @@ class UpdateFieldRolesController extends AbstractController
      *
      * @throws \Exception
      */
-    public function execute(): JsonResponse
+    public function execute(Context $context): JsonResponse
     {
         try {
-            foreach ($this->fetchSalesChannels() as $salesChannel) {
+            foreach ($this->fetchSalesChannels($context) as $salesChannel) {
                 $fieldRoles = $this->fieldRoles->getRoles($salesChannel->getId());
                 $this->fieldRoles->update($fieldRoles, $salesChannel->getId());
             }
@@ -60,10 +60,8 @@ class UpdateFieldRolesController extends AbstractController
     /**
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    private function fetchSalesChannels(): EntityCollection
+    private function fetchSalesChannels(Context $context): EntityCollection
     {
-        $context = Context::createDefaultContext();
-
         return $this->channelRepository->search(new Criteria(), $context)->getEntities();
     }
 }
