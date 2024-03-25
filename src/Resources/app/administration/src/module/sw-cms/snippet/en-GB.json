@@ -27,16 +27,28 @@
         }
       },
       "asn": {
-        "asn": {
-          "label": "FACT-Finder® Web Components ff-asn element",
-          "config": {
-            "callbackArg": "Name of argument which will be available inside the callback scope",
-            "callback": "callback to the subscribed topic. It is recommended to have only one callback per topic, per page.",
-            "domUpdated": "listener to dom-update event of that element.",
-            "id": "Value will be passed as `id` attribute to element. If not specified, the default CMS element id will be used",
-            "topic": "Leaving this field empty causes element subscribe to its default topic (asn)",
-            "vertical": "Setting to true will add additional CSS class `btn-block` to the `ff-asn-group` and `<div slot=\"groupCaption\"` and ffw-asn-vertical, ffw-asn-group-vertical and ffw-asn-group-element-vertical to corresponding elements"
-          }
+        "label": "FACT-Finder® Web Components ff-asn element",
+        "config": {
+          "callbackArg": "Name of argument which will be available inside the callback scope",
+          "callback": "callback to the subscribed topic. It is recommended to have only one callback per topic, per page.",
+          "domUpdated": "listener to dom-update event of that element.",
+          "id": "Value will be passed as `id` attribute to element. If not specified, the default CMS element id will be used",
+          "topic": "Leaving this field empty causes element subscribe to its default topic (asn)",
+          "vertical": "Setting to true will add additional CSS class `btn-block` to the `ff-asn-group` and `<div slot=\"groupCaption\"` and ffw-asn-vertical, ffw-asn-group-vertical and ffw-asn-group-element-vertical to corresponding elements"
+        },
+        "base": {
+          "subscribe": "Subscribe",
+          "vertical": "Vertical",
+          "ident": "ID",
+          "topic": "Topic",
+          "callbackArg": "Callback Argument",
+          "callback": "Callback",
+          "domUpdated": "Dom Updated",
+          "filterCloud": "Filter Cloud",
+          "blacklist": "Blacklist",
+          "whitelist": "Whitelist",
+          "order": "order",
+          "useFilterCloud": "Use Filter Cloud"
         },
         "sortbox": {
           "label": "FACT-Finder® Web Components ff-sortbox element"
@@ -48,6 +60,16 @@
           "label": "FACT-Finder® Web Components campaigns elements collection",
           "config": {
             "leaveFreeIfNotSpecified": "Leave this value free if you want page to accept all campaigns matching the criteria"
+          },
+          "base": {
+            "advisorCampaign": "Advisor Campaign",
+            "feedbackCampaign": "Feedback Campaign",
+            "redirectCampaign": "Redirect Campaign",
+            "pushedCampaign": "Pushed Products",
+            "advisorCampaignName": "Advisor Campaign name",
+            "name": "Name",
+            "label": "Label",
+            "feedbackCampaignLabel": "Feedback Campaign Label"
           }
         }
       }

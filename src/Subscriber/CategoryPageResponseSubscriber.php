@@ -9,10 +9,6 @@ use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
-use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryPageResponseSubscriber implements EventSubscriberInterface
 {
     private bool $httpCacheEnabled;
-    private EntityRepository $categoryRepository;
     private Communication $config;
     private SearchAdapter $searchAdapter;
     private Engine $mustache;
@@ -28,14 +23,12 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
 
     public function __construct(
         bool $httpCacheEnabled,
-        EntityRepository $categoryRepository,
         Communication $config,
         SearchAdapter $searchAdapter,
         Engine $mustache,
         CategoryPath $categoryPath
     ) {
         $this->httpCacheEnabled       = $httpCacheEnabled;
-        $this->categoryRepository     = $categoryRepository;
         $this->config                 = $config;
         $this->searchAdapter          = $searchAdapter;
         $this->mustache               = $mustache;
@@ -108,11 +101,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             return $request->attributes->get('categoryPath', '');
         }
 
-        $criteria = new Criteria();
-        $criteria->addFilter(new EqualsFilter('id', $categoryId));
-        $category = $this->categoryRepository->search($criteria, Context::createDefaultContext())->first();
-
-        return $category !== null ? $this->categoryPath->getValue($category) : '';
+        return '';
     }
 
     private function getCategoryId(Request $request): string
