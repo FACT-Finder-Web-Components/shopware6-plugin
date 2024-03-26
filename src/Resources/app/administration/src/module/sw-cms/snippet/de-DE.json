@@ -24,31 +24,71 @@
           "callback": "Rückruf zum abonnierten Thema. Es wird empfohlen, nur einen Rückruf pro Thema und Seite durchzuführen.",
           "domUpdated": "Listener für das dom-update-Ereignis dieses Elements",
           "id": "Der Wert wird als „id“-Attribut an das Element übergeben. Wenn nicht angegeben, wird die Standard-CMS-Element-ID verwendet"
+        },
+        "base": {
+          "subscribe": "Abonnieren",
+          "infiniteScrolling": "Unendliches Scrollen",
+          "ident": "ID",
+          "debounceDelay": "Entprellverzögerung",
+          "callbackArg": "Rückrufargument",
+          "callback": "Ruf zurück",
+          "domUpdated": "Dom aktualisiert"
         }
       },
       "asn": {
-        "asn": {
-          "label": "FACT-Finder® Web Components ff-asn element",
-          "config": {
-            "callbackArg": "Name des Arguments, das im Callback-Bereich verfügbar sein wird",
-            "callback": "Rückruf zum abonnierten Thema. Es wird empfohlen, nur einen Rückruf pro Thema und Seite durchzuführen.",
-            "domUpdated": "Listener für das dom-update-Ereignis dieses Elements.",
-            "id": "Der Wert wird als „id“-Attribut an das Element übergeben. Wenn nicht angegeben, wird die Standard-CMS-Element-ID verwendet",
-            "topic": "Wenn Sie dieses Feld leer lassen, abonniert das Element sein Standardthema (ASN).",
-            "vertical": "Durch die Einstellung „true“ wird die zusätzliche CSS-Klasse „btn-block“ zu „ff-asn-group“ und „<div slots=\"groupCaption\"“ sowie zu ffw-asn-vertical, ffw-asn-group-vertical und ffw-asn hinzugefügt -group-element-vertikal zu entsprechenden Elementen"
-          }
+        "label": "FACT-Finder® Web Components ff-asn element",
+        "config": {
+          "callbackArg": "Name des Arguments, das im Callback-Bereich verfügbar sein wird",
+          "callback": "Rückruf zum abonnierten Thema. Es wird empfohlen, nur einen Rückruf pro Thema und Seite durchzuführen.",
+          "domUpdated": "Listener für das dom-update-Ereignis dieses Elements.",
+          "id": "Der Wert wird als „id“-Attribut an das Element übergeben. Wenn nicht angegeben, wird die Standard-CMS-Element-ID verwendet",
+          "topic": "Wenn Sie dieses Feld leer lassen, abonniert das Element sein Standardthema (ASN).",
+          "vertical": "Durch die Einstellung „true“ wird die zusätzliche CSS-Klasse „btn-block“ zu „ff-asn-group“ und „<div slots=\"groupCaption\"“ sowie zu ffw-asn-vertical, ffw-asn-group-vertical und ffw-asn hinzugefügt -group-element-vertikal zu entsprechenden Elementen"
         },
-        "sortbox": {
-          "label": "FACT-Finder® Web Components ff-sortbox element"
+        "base": {
+          "subscribe": "Abonnieren",
+          "vertical": "Vertikal",
+          "ident": "ID",
+          "topic": "Thema",
+          "callbackArg": "Rückrufargument",
+          "callback": "Ruf zurück",
+          "domUpdated": "Dom aktualisiert",
+          "filterCloud": "Cloud filtern",
+          "blacklist": "Schwarze Liste",
+          "whitelist": "Whitelist",
+          "order": "Befehl",
+          "useFilterCloud": "Verwenden Sie Filter Cloud"
+        }
+      },
+      "sortbox": {
+        "label": "FACT-Finder® Web Components ff-sortbox element",
+        "base": {
+          "subscribe": "abonnieren",
+          "opened": "geöffnet",
+          "showSelected": "Ausgewählt anzeigen",
+          "showSelectedFirst": "Ausgewählte zuerst anzeigen",
+          "collapseOnblur": "Zusammenbruch auf Unschärfe"
+        }
+      },
+      "paging": {
+        "label": "FACT-Finder® Web Components ff-paging element",
+        "showOnly": "Nur Anzeigen",
+        "subscribe": "abonnieren"
+      },
+      "campaigns": {
+        "label": "FACT-Finder® Web Components Sammlung von Kampagnenelementen",
+        "config": {
+          "leaveFreeIfNotSpecified": "Lassen Sie diesen Wert frei, wenn die Seite alle Kampagnen akzeptieren soll, die den Kriterien entsprechen"
         },
-        "paging": {
-          "label": "FACT-Finder® Web Components ff-paging element"
-        },
-        "campaigns": {
-          "label": "FACT-Finder® Web Components Sammlung von Kampagnenelementen",
-          "config": {
-            "leaveFreeIfNotSpecified": "Lassen Sie diesen Wert frei, wenn die Seite alle Kampagnen akzeptieren soll, die den Kriterien entsprechen"
-          }
+        "base": {
+          "advisorCampaign": "Beraterkampagne",
+          "feedbackCampaign": "Feedback-Kampagne",
+          "redirectCampaign": "Redirect-Kampagne",
+          "pushedCampaign": "Gepushte Produkte",
+          "advisorCampaignName": "Name der Beraterkampagne",
+          "name": "Name",
+          "label": "Etikett",
+          "feedbackCampaignLabel": "Label der Feedback-Kampagne"
         }
       }
     }

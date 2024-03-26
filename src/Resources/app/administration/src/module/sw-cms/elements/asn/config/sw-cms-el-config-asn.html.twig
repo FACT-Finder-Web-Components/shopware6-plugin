@@ -1,56 +1,56 @@
 {% block sw_cms_element_asn_config %}
   <div>
-    <sw-switch-field label="Subscribe" v-model="element.config.subscribe.value"></sw-switch-field>
+    <sw-switch-field :label="$tc('sw-cms.elements.asn.base.subscribe')" v-model="element.config.subscribe.value"></sw-switch-field>
 
-    <sw-switch-field label="Vertical"
+    <sw-switch-field :label="$tc('sw-cms.elements.asn.base.vertical')"
                      v-tooltip="{ message:$tc('sw-cms.elements.asn.config.veritcal')}"
                      v-model="element.config.vertical.value">
     </sw-switch-field>
 
-    <sw-text-field label="ID"
-                   placeholder="ID"
+    <sw-text-field :label="$tc('sw-cms.elements.asn.base.ident')"
+                   :placeholder="$tc('sw-cms.elements.asn.base.ident')"
                    v-tooltip="{ message:$tc('sw-cms.elements.asn.config.id')}"
                    v-model="element.config.id.value">
     </sw-text-field>
 
-    <sw-text-field label="Topic"
-                   placeholder="Topic"
+    <sw-text-field :label="$tc('sw-cms.elements.asn.base.topic')"
+                   :placeholder="$tc('sw-cms.elements.asn.base.topic')"
                    v-tooltip="{ message:$tc('sw-cms.elements.asn.config.topic')}"
                    v-model="element.config.topic.value">
     </sw-text-field>
 
-    <sw-text-field label="Callback Argument"
-                   placeholder="Callback Argument"
+    <sw-text-field :label="$tc('sw-cms.elements.asn.base.callbackArg')"
+                   :placeholder="$tc('sw-cms.elements.asn.base.callbackARG')"
                    v-tooltip="{ message:$tc('sw-cms.elements.asn.config.callbackArg')}"
                    v-model="element.config.callbackArg.value">
     </sw-text-field>
-    <sw-textarea-field label="Callback"
-                       placeholder="Callback"
+    <sw-textarea-field :label="$tc('sw-cms.elements.asn.base.callback')"
+                       :placeholder="$tc('sw-cms.elements.asn.base.callback')"
                        size="medium"
                        v-model="element.config.callback.value"
                        v-tooltip="{ message:$tc('sw-cms.elements.asn.config.callback')}">
     </sw-textarea-field>
-    <sw-textarea-field label="Dom Updated"
-                       placeholder="Dom Updated"
+    <sw-textarea-field :label="$tc('sw-cms.elements.asn.base.domUpdated')"
+                       :placeholder="$tc('sw-cms.elements.asn.base.domUpdated')"
                        size="medium"
                        v-model="element.config.domUpdated.value"
                        v-tooltip="{ message:$tc('sw-cms.elements.asn.config.domUpdated')}">
     </sw-textarea-field>
 
     <wrapper class="secondary">
-      <div class="h3 filter-cloud">Filter Cloud</div>
-      <sw-switch-field label="Use Filter Cloud" v-model="element.config.filterCloud.value"></sw-switch-field>
+      <div class="h3 ff-filter-cloud">{{ $tc('sw-cms.elements.asn.base.filterCloud') }}</div>
+      <sw-switch-field :label="$tc('sw-cms.elements.asn.base.useFilterCloud')" v-model="element.config.filterCloud.value"></sw-switch-field>
 
       <sw-container v-if="element.config.filterCloud.value">
-        <sw-text-field label="Blacklist"
-                       placeholder="Blacklist"
+        <sw-text-field :label="$tc('sw-cms.elements.asn.base.blacklist')"
+                       :placeholder="$tc('sw-cms.elements.asn.base.blacklist')"
                        v-model="element.config.filterCloudBlacklist.value"></sw-text-field>
 
-        <sw-text-field label="Whitelist"
-                       placeholder="Whitelist"
+        <sw-text-field :label="$tc('sw-cms.elements.asn.base.whitelist')"
+                       :placeholder="$tc('sw-cms.elements.asn.base.whitelist')"
                        v-model="element.config.filterCloudWhitelist.value"></sw-text-field>
 
-        <sw-select-field label="Order" placeholder="Order" v-model="element.config.filterCloudOrder.value">
+        <sw-select-field :label="$tc('sw-cms.elements.asn.base.order')" :placeholder="$tc('sw-cms.elements.asn.base.order')" v-model="element.config.filterCloudOrder.value">
           <option value="fact-finder">factfinder</option>
           <option value="alphabetical">alphabetical</option>
           <option value="user-selection">userSelection</option>

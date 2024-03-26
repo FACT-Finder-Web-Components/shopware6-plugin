@@ -34,8 +34,7 @@
             {% sw_icon 'arrow-medium-down' style { 'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle' } %}
           </div>
 
-          <ff-asn-group-element class="filter-multi-select-list-item" {% if vertical %}
-                                ffw-asn-group-element-vertical {% endif %}">
+          <ff-asn-group-element class="filter-multi-select-list-item {% if vertical %} ffw-asn-group-element-vertical {% endif %}">
           <div slot="selected" class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input filter-multi-select-checkbox" checked/>
             <span class="filter-multi-select-item-label custom-control-label">{{ '{{element.name}}' }}</span>
