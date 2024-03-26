@@ -3,12 +3,15 @@
     "blocks": {
       "commerce": {
         "factfinderWebComponentsListing": {
+          "title": "FACT-Finder Search Result",
           "label": "Typical collection of Web Components that implements search result page "
         },
         "factfinderWebComponentsCampaigns": {
+          "title": "FACT-Finder Campaigns",
           "label": "FACT-Finder® Web Components Campaigns"
         },
         "factfinderWebComponentsFilters": {
+          "title": "FACT-Finder Filters",
           "label": "FACT-Finder® Web Components Filters"
         },
         "factfinderWebComponentsRecordList": {
@@ -57,7 +60,8 @@
           "blacklist": "Blacklist",
           "whitelist": "Whitelist",
           "order": "order",
-          "useFilterCloud": "Use Filter Cloud"
+          "useFilterCloud": "Use Filter Cloud",
+          "alphabetical": "alphabetical"
         }
       },
       "sortbox": {
