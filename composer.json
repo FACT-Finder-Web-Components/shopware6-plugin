@@ -2,7 +2,7 @@
   "name": "omikron/shopware6-factfinder",
   "description": "FACT-Finder® Web Components for Shopware 6",
   "type": "shopware-platform-plugin",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "proprietary",
   "authors": [
     {
@@ -11,11 +11,11 @@
     }
   ],
   "require": {
-    "omikron/factfinder-communication-sdk": "^0.9.7",
-    "shopware/core": "~6.5.0",
-    "shopware/storefront": "~6.5.0",
+    "omikron/factfinder-communication-sdk": "^0.9.8",
+    "shopware/core": "^6.6.0",
+    "shopware/storefront": "^6.6.0",
     "league/flysystem-sftp-v3": "3.15.0",
-    "php": "^8.1",
+    "php": "~8.2.0||~8.3.0",
     "ext-json": "*",
     "mustache/mustache": "^2.14",
     "league/flysystem-ftp": "^3.0"
