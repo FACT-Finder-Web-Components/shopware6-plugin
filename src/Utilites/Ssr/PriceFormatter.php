@@ -51,8 +51,8 @@ class PriceFormatter
             }
 
             $record['record'] = [
-                    '__ORIG_PRICE__' => $price,
-                    $priceField      => $this->getFormattedPrice($price),
+                '__ORIG_PRICE__' => $price,
+                $priceField      => $this->getFormattedPrice($price),
             ] + $record['masterValues'];
 
             return $record;

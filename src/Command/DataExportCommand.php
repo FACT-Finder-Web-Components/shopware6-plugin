@@ -40,6 +40,7 @@ use Symfony\Component\Console\Question\Question;
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.ElseExpression)
  * @SuppressWarnings(PHPMD.MissingImport)
+ * @SuppressWarnings(PHPMD.ExcessiveParameterList)
  */
 #[AsCommand(name: 'factfinder:data:export')]
 class DataExportCommand extends Command
@@ -57,17 +58,17 @@ class DataExportCommand extends Command
     private $file;
 
     public function __construct(
-        private readonly SalesChannelService    $channelService,
-        private readonly EntityRepository       $channelRepository,
-        private readonly FeedFactory            $feedFactory,
-        private readonly UploadService          $uploadService,
-        private readonly PushImportService      $pushImportService,
-        private readonly EntityRepository       $languageRepository,
+        private readonly SalesChannelService $channelService,
+        private readonly EntityRepository $channelRepository,
+        private readonly FeedFactory $feedFactory,
+        private readonly UploadService $uploadService,
+        private readonly PushImportService $pushImportService,
+        private readonly EntityRepository $languageRepository,
         private readonly CurrencyFieldsProvider $currencyFieldsProvider,
-        private readonly FieldsProvider         $fieldProviders,
-        private readonly Communication          $communication,
-        private readonly array                  $productsColumnsBase,
-        private readonly string                 $kernelProjectDir
+        private readonly FieldsProvider $fieldProviders,
+        private readonly Communication $communication,
+        private readonly array $productsColumnsBase,
+        private readonly string $kernelProjectDir
     ) {
         $this->file                   = tmpfile();
         parent::__construct();
@@ -172,7 +173,7 @@ class DataExportCommand extends Command
     }
 
     private function getFeedColumns(string $exportType, string $entityClass): array
-    {;
+    {
         $fields = $this->fieldProviders->getFields($entityClass);
         return array_values(
             array_unique(

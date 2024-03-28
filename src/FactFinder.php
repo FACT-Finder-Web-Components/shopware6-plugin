@@ -96,19 +96,19 @@ class FactFinder extends Plugin
 
         if (!$factFinderFieldsSet) {
             $this->installCustomFieldsSet([
-               'name'      => self::FACT_FINDER_CUSTOM_FIELD_SET_NAME,
-               'config'    => [
-                   'label' => [
-                       'de-DE' => 'FACT-Finder®',
-                       'en-GB' => 'FACT-Finder®',
-                   ],
-               ],
-               'relations' => [
-                   [
-                       'entityName' => 'category',
-                   ],
-               ],
-           ], $appContext);
+                'name'      => self::FACT_FINDER_CUSTOM_FIELD_SET_NAME,
+                'config'    => [
+                    'label' => [
+                        'de-DE' => 'FACT-Finder®',
+                        'en-GB' => 'FACT-Finder®',
+                    ],
+                ],
+                'relations' => [
+                    [
+                        'entityName' => 'category',
+                    ],
+                ],
+            ], $appContext);
         }
 
         foreach ($this->customFields as $customField) {

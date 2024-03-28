@@ -20,7 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(defaults: ['_routeScope' => ['storefront']])]
 class ProxyController extends StorefrontController
 {
-
     public function __construct(private readonly Communication $config)
     {
     }
@@ -31,7 +30,7 @@ class ProxyController extends StorefrontController
     #[Route('/fact-finder/proxy/{endpoint}',
         name: 'frontend.factfinder.proxy.execute',
         requirements: ['endpoint' => '.*'],
-        defaults: ["csrf_protected" => false],
+        defaults: ['csrf_protected' => false],
         methods: ['GET', 'POST']
     )]
     public function execute(

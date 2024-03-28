@@ -19,8 +19,8 @@ class UpdateFieldRolesController extends AbstractController
 {
     public function __construct(
         private readonly FieldRolesInterface $fieldRolesService,
-        private readonly EntityRepository    $channelRepository,
-        private readonly LoggerInterface     $factfinderLogger
+        private readonly EntityRepository $channelRepository,
+        private readonly LoggerInterface $factfinderLogger
     ) {
     }
 

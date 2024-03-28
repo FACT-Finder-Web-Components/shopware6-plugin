@@ -18,7 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(defaults: ['_routeScope' => ['storefront']])]
 class ResultController extends StorefrontController
 {
-
     public function __construct(
         private readonly Communication $config,
         private readonly GenericPageLoader $pageLoader
