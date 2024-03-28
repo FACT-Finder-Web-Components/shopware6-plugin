@@ -15,27 +15,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(defaults={"_routeScope"={"storefront"}})
- */
+#[Route(defaults: ['_routeScope' => ['storefront']])]
 class ResultController extends StorefrontController
 {
-    private GenericPageLoader $pageLoader;
-    private Communication $config;
 
     public function __construct(
-        Communication $config,
-        GenericPageLoader $pageLoader
+        private readonly Communication $config,
+        private readonly GenericPageLoader $pageLoader
     ) {
-        $this->pageLoader = $pageLoader;
-        $this->config     = $config;
     }
 
     /**
-     * @Route(path="/factfinder/result", name="frontend.factfinder.result", methods={"GET"})
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
+    #[Route('/factfinder/result', name: 'frontend.factfinder.result', methods: ['GET'])]
     public function result(
         Request $request,
         SalesChannelContext $context,

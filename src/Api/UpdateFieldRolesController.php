@@ -10,43 +10,30 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(defaults={"_routeScope"={"api"}})
- */
+#[Route(defaults: ['_routeScope' => ['api']])]
 class UpdateFieldRolesController extends AbstractController
 {
-    private FieldRolesInterface $fieldRoles;
-    private EntityRepository $channelRepository;
-    private LoggerInterface $factfinderLogger;
-
     public function __construct(
-        FieldRolesInterface $fieldRolesService,
-        EntityRepository $channelRepository,
-        LoggerInterface $factfinderLogger
+        private readonly FieldRolesInterface $fieldRolesService,
+        private readonly EntityRepository    $channelRepository,
+        private readonly LoggerInterface     $factfinderLogger
     ) {
-        $this->fieldRoles        = $fieldRolesService;
-        $this->channelRepository = $channelRepository;
-        $this->factfinderLogger  = $factfinderLogger;
     }
 
     /**
-     * @Route("/api/_action/field-roles/update", name="api.action.fact_finder.field_roles.update", methods={"GET"}, defaults={"XmlHttpRequest"=true})
-     *
-     * @return JsonResponse
-     *
      * @throws \Exception
      */
+    #[Route('/api/_action/field-roles/update', name: 'api.action.fact_finder.field_roles.update', defaults: ['XmlHttpRequest' => true], methods: ['GET'])]
     public function execute(Context $context): JsonResponse
     {
         try {
             foreach ($this->fetchSalesChannels($context) as $salesChannel) {
-                $fieldRoles = $this->fieldRoles->getRoles($salesChannel->getId());
-                $this->fieldRoles->update($fieldRoles, $salesChannel->getId());
+                $fieldRoles = $this->fieldRolesService->getRoles($salesChannel->getId());
+                $this->fieldRolesService->update($fieldRoles, $salesChannel->getId());
             }
 
             return new JsonResponse();
