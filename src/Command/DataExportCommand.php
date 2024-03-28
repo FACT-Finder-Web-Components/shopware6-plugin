@@ -40,6 +40,7 @@ use Symfony\Component\Console\Question\Question;
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.ElseExpression)
  * @SuppressWarnings(PHPMD.MissingImport)
+ * @SuppressWarnings(PHPMD.ExcessiveParameterList)
  */
 #[AsCommand(name: 'factfinder:data:export')]
 class DataExportCommand extends Command
@@ -47,52 +48,29 @@ class DataExportCommand extends Command
     public const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     public const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
     public const EXPORT_TYPE_ARGUMENT            = 'export_type';
+    private const UPLOAD_FEED_OPTION             = 'upload';
+    private const PUSH_IMPORT_OPTION             = 'import';
+    private const PRODUCTS_EXPORT_TYPE           = 'products';
+    private const CMS_EXPORT_TYPE                = 'cms';
+    private const CATEGORIES_EXPORT_TYPE         = 'category';
+    private const BRANDS_EXPORT_TYPE             = 'brands';
 
-    private const UPLOAD_FEED_OPTION     = 'upload';
-    private const PUSH_IMPORT_OPTION     = 'import';
-    private const PRODUCTS_EXPORT_TYPE   = 'products';
-    private const CMS_EXPORT_TYPE        = 'cms';
-    private const CATEGORIES_EXPORT_TYPE = 'category';
-    private const BRANDS_EXPORT_TYPE     = 'brands';
-
-    private SalesChannelService $channelService;
-    private EntityRepository $channelRepository;
-    private FeedFactory $feedFactory;
-    private UploadService $uploadService;
-    private PushImportService $pushImportService;
-    private EntityRepository $languageRepository;
-    private CurrencyFieldsProvider $currencyFieldsProvider;
-    private FieldsProvider $fieldProviders;
     private $file;
-    private array $productsColumnsBase;
-    private Communication $communication;
-    private string $kernelProjectDir;
 
     public function __construct(
-        SalesChannelService $channelService,
-        EntityRepository $channelRepository,
-        FeedFactory $feedFactory,
-        UploadService $uploadService,
-        PushImportService $pushImportService,
-        EntityRepository $languageRepository,
-        CurrencyFieldsProvider $currencyFieldsProvider,
-        FieldsProvider $fieldProviders,
-        Communication $communication,
-        array $productsColumnsBase,
-        string $kernelProjectDir
+        private readonly SalesChannelService $channelService,
+        private readonly EntityRepository $channelRepository,
+        private readonly FeedFactory $feedFactory,
+        private readonly UploadService $uploadService,
+        private readonly PushImportService $pushImportService,
+        private readonly EntityRepository $languageRepository,
+        private readonly CurrencyFieldsProvider $currencyFieldsProvider,
+        private readonly FieldsProvider $fieldProviders,
+        private readonly Communication $communication,
+        private readonly array $productsColumnsBase,
+        private readonly string $kernelProjectDir
     ) {
-        $this->channelService         = $channelService;
-        $this->channelRepository      = $channelRepository;
-        $this->feedFactory            = $feedFactory;
-        $this->uploadService          = $uploadService;
-        $this->pushImportService      = $pushImportService;
-        $this->languageRepository     = $languageRepository;
-        $this->currencyFieldsProvider = $currencyFieldsProvider;
-        $this->fieldProviders         = $fieldProviders;
         $this->file                   = tmpfile();
-        $this->productsColumnsBase    = $productsColumnsBase;
-        $this->communication          = $communication;
-        $this->kernelProjectDir       = $kernelProjectDir;
         parent::__construct();
     }
 
@@ -126,7 +104,7 @@ class DataExportCommand extends Command
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $saveFile = false;
 
@@ -195,7 +173,7 @@ class DataExportCommand extends Command
     }
 
     private function getFeedColumns(string $exportType, string $entityClass): array
-    {;
+    {
         $fields = $this->fieldProviders->getFields($entityClass);
         return array_values(
             array_unique(
@@ -227,9 +205,6 @@ class DataExportCommand extends Command
     }
 
     /**
-     * @param string $exportType
-     * @param string $salesChannelId
-     *
      * @return false|resource
      *
      * @throws \Exception

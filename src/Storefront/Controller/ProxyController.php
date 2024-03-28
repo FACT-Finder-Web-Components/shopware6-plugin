@@ -17,29 +17,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(defaults={"_routeScope"={"storefront"}})
- */
+#[Route(defaults: ['_routeScope' => ['storefront']])]
 class ProxyController extends StorefrontController
 {
-    private Communication $config;
-
-    public function __construct(Communication $config)
+    public function __construct(private readonly Communication $config)
     {
-        $this->config = $config;
     }
 
     /**
-     * @Route(
-     *     path="/fact-finder/proxy/{endpoint}",
-     *     name="frontend.factfinder.proxy.execute",
-     *     methods={"GET", "POST"},
-     *     requirements={"endpoint"=".*"},
-     *     defaults={"csrf_protected"=false}
-     * )
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
+    #[Route('/fact-finder/proxy/{endpoint}',
+        name: 'frontend.factfinder.proxy.execute',
+        requirements: ['endpoint' => '.*'],
+        defaults: ['csrf_protected' => false],
+        methods: ['GET', 'POST']
+    )]
     public function execute(
         string $endpoint,
         Request $request,

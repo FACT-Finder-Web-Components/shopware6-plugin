@@ -3,6 +3,6 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing https://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <import resource="../../Storefront/Controller" type="annotation" />
-    <import resource="../../Api/*Controller.php" type="annotation" />
+    <import resource="../../Storefront/Controller" type="attribute" />
+    <import resource="../../Api/*Controller.php" type="attribute" />
 </routes>
