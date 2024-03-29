@@ -51,9 +51,9 @@
                        v-model="element.config.filterCloudWhitelist.value"></sw-text-field>
 
         <sw-select-field :label="$tc('sw-cms.elements.asn.base.order')" :placeholder="$tc('sw-cms.elements.asn.base.order')" v-model="element.config.filterCloudOrder.value">
-          <option value="fact-finder">factfinder</option>
+          <option value="fact-finder">{{ $tc('sw-cms.elements.asn.base.factfinder') }}</option>
           <option value="alphabetical">{{ $tc('sw-cms.elements.asn.base.alphabetical') }}</option>
-          <option value="user-selection">userSelection</option>
+          <option value="user-selection">{{ $tc('sw-cms.elements.asn.base.userSelection') }}</option>
         </sw-select-field>
       </sw-container>
     </wrapper>
