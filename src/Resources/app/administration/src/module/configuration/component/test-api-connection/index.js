@@ -33,19 +33,19 @@ Component.register('test-api-connection', {
                     .then((response) => {
                         if (response.status === 200) {
                             this.createNotificationSuccess({
-                                message: this.$tc('configuration.testConnection.success')
+                                message: Shopware.Snippet.tc('configuration.testConnection.success')
                             });
                         } else {
                             this.createNotificationError({
-                                title: this.$tc('configuration.testConnection.fail'),
-                                message: this.$tc('configuration.testConnection.helpText')
+                                title: Shopware.Snippet.tc('configuration.testConnection.fail'),
+                                message: Shopware.Snippet.tc('configuration.testConnection.helpText')
                             });
                         }
                     })
                     .catch(() => {
                         this.createNotificationError({
-                            title: this.$tc('configuration.testConnection.fail'),
-                            message: this.$tc('configuration.testConnection.helpText')
+                            title: Shopware.Snippet.tc('configuration.testConnection.fail'),
+                            message: Shopware.Snippet.tc('configuration.testConnection.helpText')
                         });
                     })
                     .finally(() => {

@@ -23,7 +23,7 @@ Component.register('update-field-roles', {
                 this.isSaveSuccessful = true;
                 this.isLoading = false;
                 this.createNotificationSuccess({
-                    message: this.$tc('configuration.updateFieldRoles.update')
+                    message: Shopware.Snippet.tc('configuration.updateFieldRoles.update')
                 })
             },
         },

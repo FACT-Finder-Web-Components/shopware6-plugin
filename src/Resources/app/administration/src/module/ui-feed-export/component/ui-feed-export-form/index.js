@@ -49,17 +49,17 @@ Component.register('ui-feed-export-form', {
         },
         successFeedGenerationWindow() {
             this.createNotificationSuccess({
-                message: this.$tc('ui-feed-export.component.export_form.alert_success.text')
+                message: Shopware.Snippet.tc('ui-feed-export.component.export_form.alert_success.text')
             })
         },
         errorFeedGenerationWindow() {
             this.createNotificationError({
-                message: this.$tc('ui-feed-export.component.export_form.alert_error.text')
+                message: Shopware.Snippet.tc('ui-feed-export.component.export_form.alert_error.text')
             })
         },
         errorNotValidParams() {
             this.createNotificationError({
-                message: this.$tc('ui-feed-export.component.export_form.alert_not_valid_params.text')
+                message: Shopware.Snippet.tc('ui-feed-export.component.export_form.alert_not_valid_params.text')
             })
         },
         validateParams(params) {
