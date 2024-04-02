@@ -61,7 +61,9 @@
           "whitelist": "Whitelist",
           "order": "Befehl",
           "useFilterCloud": "Verwenden Sie Filter Cloud",
-          "alphabetical": "alphabetisch"
+          "alphabetical": "alphabetisch",
+          "factfinder": "factfinder",
+          "userSelection": "Benutzerauswahl"
         }
       },
       "sortbox": {
