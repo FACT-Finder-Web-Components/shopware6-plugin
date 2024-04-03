@@ -41,7 +41,7 @@ class Deeplink implements FieldInterface, EventSubscriberInterface
     {
         $url                = $entity->getSeoUrls()->first();
         $getSeoUrlRouteName = fn (Entity $entity) => $entity instanceof ProductEntity ? ProductRoute::ROUTE_NAME : CategoryRoute::ROUTE_NAME;
-        $formUrl            = fn (string $url): string => $url ? '/shop/public/' . ltrim($url, '/') : '';
+        $formUrl            = fn (string $url): string => $url ? '/' . ltrim($url, '/') : '';
 
         if (!$url) {
             $this->seoUrlUpdater->update($getSeoUrlRouteName($entity), [$entity->getId()]);
