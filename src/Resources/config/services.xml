@@ -145,6 +145,11 @@
         <service id="Omikron\FactFinder\Shopware6\Config\Communication" public="true"/>
         <service id="Omikron\FactFinder\Shopware6\Config\FieldRoles" public="true"/>
 
+        <service id="Omikron\FactFinder\Shopware6\Cookie\CookieProvider"
+                 decorates="Shopware\Storefront\Framework\Cookie\CookieProviderInterface">
+            <argument type="service" id="Omikron\FactFinder\Shopware6\Cookie\CookieProvider.inner" />
+        </service>
+
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\PriceFormatter" />
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter" />
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath" />
