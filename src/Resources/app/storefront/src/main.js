@@ -6,4 +6,4 @@ const PluginManager = window.PluginManager;
 PluginManager.register('TrackingPlugin', TrackingPlugin);
 PluginManager.register('AsnPlugin', AsnPlugin);
 
-PluginManager.override('OffCanvasFilter', OffCanvasFilter, '[data-offcanvas-filter]');
+PluginManager.register('OffCanvasFilter', OffCanvasFilter, '[data-offcanvas-filter]');
