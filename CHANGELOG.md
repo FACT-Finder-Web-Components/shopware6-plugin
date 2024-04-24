@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Handle category-page attribute for ff-communication
+
 ## [v4.4.0] - 2024.03.12
 ### Add
 - Add validation for plugin configuration form

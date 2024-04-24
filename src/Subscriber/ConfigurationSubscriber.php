@@ -61,7 +61,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             'currency-country-code' => $event->getRequest()->getLocale() ?? '',
         ];
 
-        //Filter empty items
+        // Filter empty items
         $communication = array_filter($communication);
 
         if (!empty($this->addParams)) {
