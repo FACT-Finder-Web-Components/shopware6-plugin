@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
+use Exception;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\ExtensionConfig;
 use Shopware\Core\Framework\Event\ShopwareSalesChannelEvent;
@@ -104,7 +105,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             return $parameters['page'];
         }
 
-        throw new \Exception(sprintf('Unable to get page from event %s.', get_class($event)));
+        throw new Exception(sprintf('Unable to get page from event %s.', get_class($event)));
     }
 
     private function isSearchImmediate(ShopwareSalesChannelEvent $event): bool
