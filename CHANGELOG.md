@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.4.1] - 2024.04.25
 ### Fix
 - Handle category-page attribute for ff-communication
 
@@ -413,6 +413,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v4.4.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.4.1
 [v4.4.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.4.0
 [v4.3.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.3.2
 [v4.3.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.3.1
