@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Support sid for SSR
+
 ## [v4.4.1] - 2024.04.25
 ### Fix
 - Handle category-page attribute for ff-communication
