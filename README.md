@@ -2,9 +2,9 @@
 
 [![Build status](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/workflows/build/badge.svg)](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/actions)
 
-This document helps you to integrate the FACT-Finder® Web Components SDK into your Showpare Shop. In addition, it gives
+This document helps you to integrate the FACT-Finder® Web Components SDK into your Shopware Shop. In addition, it gives
 a concise overview of its primary functions. The first chapter *Installation* walks you through the suggested
-installation process. The second chapter *Settings* explains the customisation options in the Showpare backend. The
+installation process. The second chapter *Settings* explains the customisation options in the Shopware backend. The
 final chapter *Exporting Feed* describes how to use provided console command to export the feed.
 
 - [System Requirements](#system-requirements)
