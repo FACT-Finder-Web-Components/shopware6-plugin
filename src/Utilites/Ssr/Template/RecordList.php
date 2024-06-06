@@ -46,16 +46,13 @@ class RecordList
     ): string {
         $results = $this->searchResults($paramString, $isNavigationRequest);
 
-        // Support redirect campaigns for SSR
-        if ($this->getRedirectCampaign($results)) {
-            throw new DetectRedirectCampaignException($this->getRedirectCampaign($results));
-        }
-
         return $this->renderResults($results, $paramString);
     }
 
     /**
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     *
+     * @throws DetectRedirectCampaignException
      */
     public function searchResults(
         string $paramString,
@@ -65,7 +62,14 @@ class RecordList
             ? sprintf('page=%s', substr($paramString, 2))
             : str_replace('&p=', '&page=', $paramString);
 
-        return $this->searchAdapter->search($paramString, $isNavigationRequest, $this->salesChannelId);
+        $results = $this->searchAdapter->search($paramString, $isNavigationRequest, $this->salesChannelId);
+
+        // Support redirect campaigns for SSR
+        if ($this->getRedirectCampaign($results)) {
+            throw new DetectRedirectCampaignException($this->getRedirectCampaign($results));
+        }
+
+        return $results;
     }
 
     public function renderResults(
