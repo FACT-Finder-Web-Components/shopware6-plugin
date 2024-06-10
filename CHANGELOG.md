@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Add userId for cart tracking 
+
 ## [v4.4.2] - 2024.05.08
 ### Fix
 - Support sid for SSR
