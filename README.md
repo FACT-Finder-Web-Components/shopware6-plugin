@@ -48,11 +48,14 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 
 ## System Requirements
 
-- Shopware 6.5 or higher
+- Shopware 6.5 
 - PHP version 8.1 or higher
 
 For Shopware 6.4 please use SDK version 4.x:
 https://github.com/FACT-Finder-Web-Components/shopware6-plugin
+
+For Shopware 6.6 please use Shopware marketplace version:
+https://store.shopware.com/en/factf26713613196f/factfinder-ai-powered-search-product-discovery.html
 
 ## FACT-Finder® Supported Sections
 

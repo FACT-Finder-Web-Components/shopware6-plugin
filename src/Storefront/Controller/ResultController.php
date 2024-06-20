@@ -62,7 +62,7 @@ class ResultController extends StorefrontController
         try {
             $response->setContent(
                 $recordList->getContent(
-                    $this->parseQueryString((string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY))
+                    $this->parseQueryString($request->getQueryString() ?? '', $request)
                 )
             );
         } catch (DetectRedirectCampaignException $exception) {
@@ -72,14 +72,15 @@ class ResultController extends StorefrontController
         return $response;
     }
 
-    private function parseQueryString(string $queryString): string
+    private function parseQueryString(string $queryString, Request $request): string
     {
         if ($queryString === '') {
             return '';
         }
 
-        $queryParams = explode('&', $queryString);
-        $result      = array_reduce(
+        $queryParams   = explode('&', $queryString);
+        $queryParams[] = sprintf('sid=%s', $request->cookies->get('ffwebc_sid', ''));
+        $result        = array_reduce(
             $queryParams,
             function (string $carry, string $queryParam) {
                 $result = explode('=', $queryParam);

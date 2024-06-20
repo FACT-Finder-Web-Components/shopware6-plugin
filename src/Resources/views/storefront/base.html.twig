@@ -46,6 +46,20 @@
   <script>
     const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');
 
+    {% if page.extensions.factfinder.ssr %}
+      function generateSid() {
+        var length = 30;
+        var characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var text = "";
+
+        for (var i = 0; i < length; i++) {
+          text += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
+        }
+
+        return text;
+      }
+    {% endif %}
+
     document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
       {% if page.extensions.factfinder.ssr == 'ssr' %}
         const searchResult = {FF_SEARCH_RESULT};
@@ -77,6 +91,18 @@
           factfinder.communication.sessionManager.clearAllSessionData();
         }
       }
+
+      {% if page.extensions.factfinder.ssr %}
+        const ffcommunication = document.querySelector('ff-communication');
+
+        if (!cookies['ffwebc_sid']) {
+          const sid = generateSid();
+          document.cookie = 'ffwebc_sid=' + sid + '; path=/;';
+          ffcommunication.setAttribute('sid', sid);
+        } else {
+          ffcommunication.setAttribute('sid', cookies['ffwebc_sid']);
+        }
+      {% endif %}
 
       if ({{ page.extensions.factfinder.searchImmediate }}) {
         searchImmediate();

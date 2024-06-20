@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Support sid for SSR
+
 ## [v5.1.0] - 2024.03.11
 ### Add
 - Add validation for plugin configuration form

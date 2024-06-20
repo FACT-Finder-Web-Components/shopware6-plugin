@@ -29,6 +29,11 @@ class CookieProvider implements CookieProviderInterface
                 'cookie'       => BeforeSendResponseEventSubscriber::USER_ID,
                 'value'        => '0',
             ],
+            [
+                'snippet_name' => 'ff.cookie.webcSid',
+                'cookie'       => 'ffwebc_sid',
+                'value'        => '0',
+            ],
         ],
     ];
 
