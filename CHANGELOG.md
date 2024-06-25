@@ -1,5 +1,10 @@
 # Changelog
 ## Unreleased
+### Add
+- Add userId for cart tracking
+### Change
+- Support only Shopware v6.5.*
+
 ### Fix
 - Support sid for SSR
 
