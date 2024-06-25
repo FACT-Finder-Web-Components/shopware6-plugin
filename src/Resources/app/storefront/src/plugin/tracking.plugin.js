@@ -53,6 +53,7 @@ export default class TrackingPlugin extends Plugin
                         price: trackingHelper.getPrice(product),
                         title: trackingHelper.getTitle(product),
                         count: quantity,
+                        userId: factfinder.communication.globalCommunicationParameter.userId,
                     });
                 },
             });
