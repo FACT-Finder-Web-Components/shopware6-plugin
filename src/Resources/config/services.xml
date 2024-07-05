@@ -111,6 +111,10 @@
             <argument type="service" id="Shopware\Core\Content\Category\SalesChannel\CategoryRoute"/>
         </service>
 
+        <service id="Omikron\FactFinder\Shopware6\Subscriber\CategoryPageResponseSubscriber">
+            <argument>%shopware.http.cache.enabled%</argument>
+        </service>
+
         <service id="Omikron\FactFinder\Shopware6\Export\ExportCmsPages">
             <argument type="service" id="sales_channel.category.repository" />
         </service>
