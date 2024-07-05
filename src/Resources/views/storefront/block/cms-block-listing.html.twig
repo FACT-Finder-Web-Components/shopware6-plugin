@@ -6,7 +6,7 @@
       {% block element_product_listing_filter_button %}
         <button class="btn header-actions-btn filter-panel-wrapper-toggle"
                 type="button"
-                data-offcanvas-filter="true"
+                data-off-canvas-filter="true"
                 aria-haspopup="true"
                 aria-expanded="false"
                 aria-label="{{ 'general.menuLink'|trans }}">
@@ -20,7 +20,7 @@
   </div>
   <div class="col-12">
     <div id="filtersOrigin" class="filter-panel-wrapper">
-      <div data-cms-element-id="{{ element.id }}" data-offcanvas-filter-content="true">
+      <div data-cms-element-id="{{ element.id }}" data-off-canvas-filter-content="true">
         {% sw_include "@Parent/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
       </div>
     </div>

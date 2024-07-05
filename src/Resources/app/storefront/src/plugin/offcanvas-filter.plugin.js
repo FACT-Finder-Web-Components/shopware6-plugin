@@ -24,10 +24,10 @@ export default class OffCanvasFilter extends OffCanvasFilterPlugin
     _onClickOffCanvasFilter(event) {
         event.preventDefault();
 
-        const filterContent = document.querySelector('[data-offcanvas-filter-content="true"]');
+        const filterContent = document.querySelector('[data-off-canvas-filter-content="true"]');
         this._toggleASNMobileMode(filterContent.querySelector('ff-asn'));
         if (!filterContent) {
-            throw Error('There was no DOM element with the data attribute "data-offcanvas-filter-content".');
+            throw Error('There was no DOM element with the data attribute "data-off-canvas-filter-content".');
         }
 
         //open canvas but don't pass asn or filter cloud html as it will cause the new element to create and initiate with no data
