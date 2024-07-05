@@ -2,6 +2,8 @@
 ## Unreleased
 ### Fix
   - Handle category-page for ff-communication
+  - Fix problem with offcanvas-filter plugin
+  - 
 ## [v2.0.0] - 2024.05.08
 ### BREAKING
 - IMPORTANT! Drop Shopware 6.5 compatibility
