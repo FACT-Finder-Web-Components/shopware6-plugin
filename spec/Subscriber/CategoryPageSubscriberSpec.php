@@ -185,6 +185,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         $event->getPage()->willReturn($navigationPage);
         $extension->get('communication')->willReturn([]);
         $navigationPage->getExtension('factfinder')->willReturn($extension);
+        $extension->getVars()->willReturn(['communication' => ['']]);
         $this->beConstructedWith($cmsPageRoute, $config, $extensionConfig, 'CategoryPath', $addParams);
     }
 }

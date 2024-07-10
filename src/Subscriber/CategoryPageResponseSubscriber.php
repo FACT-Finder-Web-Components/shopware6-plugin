@@ -5,48 +5,46 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
-use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
-use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class CategoryPageResponseSubscriber implements EventSubscriberInterface
 {
-    private bool $httpCacheEnabled;
     private Communication $config;
     private SearchAdapter $searchAdapter;
     private Engine $mustache;
-    private CategoryPath $categoryPath;
 
     public function __construct(
-        bool $httpCacheEnabled,
         Communication $config,
         SearchAdapter $searchAdapter,
         Engine $mustache,
-        CategoryPath $categoryPath
     ) {
-        $this->httpCacheEnabled       = $httpCacheEnabled;
         $this->config                 = $config;
         $this->searchAdapter          = $searchAdapter;
         $this->mustache               = $mustache;
-        $this->categoryPath           = $categoryPath;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            BeforeSendResponseEvent::class => 'onPageRendered',
+            KernelEvents::RESPONSE => 'onPageRendered',
         ];
     }
 
-    public function onPageRendered(BeforeSendResponseEvent $event): void
+    public function onPageRendered(ResponseEvent $event): void
     {
         $request      = $event->getRequest();
         $response     = $event->getResponse();
         $categoryPath = $this->getCategoryPath($request);
+
+        if ($response->getContent() === false) {
+            return;
+        }
 
         if (
             $this->config->isSsrActive() === false
@@ -54,6 +52,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             || $categoryPath === ''
         ) {
             $response->setContent(str_replace('{FF_SEARCH_RESULT}', '{}', $response->getContent()));
+
             return;
         }
 
@@ -97,11 +96,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             return '';
         }
 
-        if ($this->httpCacheEnabled === false) {
-            return $request->attributes->get('categoryPath', '');
-        }
-
-        return '';
+        return $request->attributes->get('categoryPath', '');
     }
 
     private function getCategoryId(Request $request): string
