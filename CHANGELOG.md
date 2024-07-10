@@ -1,9 +1,12 @@
 # Changelog
-## Unreleased
+## [v2.1.0] - 2024.07.10
 ### Fix
-  - Handle category-page for ff-communication
-  - Fix problem with offcanvas-filter plugin
-  - Fix SSR for category page
+- Handle category-page for ff-communication
+- Fix problem with offcanvas-filter plugin
+- Fix SSR for category page
+
+### Add
+- Add FactFinder tracking
 
 ## [v2.0.0] - 2024.05.08
 ### BREAKING
