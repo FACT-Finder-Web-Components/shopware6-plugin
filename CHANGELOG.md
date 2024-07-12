@@ -8,6 +8,8 @@
 - Support sid for SSR
 - Fix problem with session data for login tracking
 - Handle category-page attribute for ff-communication
+### Remove
+- Remove reporting for Shopware marketplace
 
 ## [v5.1.0] - 2024.03.11
 ### Add

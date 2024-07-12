@@ -195,15 +195,5 @@
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine" />
         <service id="Omikron\FactFinder\Shopware6\Config\FieldRolesInterface"
                  alias="Omikron\FactFinder\Shopware6\Config\FieldRoles" />
-
-        <service id="Omikron\FactFinder\Shopware6\ScheduledTask\MarketplaceReportTask">
-            <tag name="shopware.scheduled.task" />
-        </service>
-        <service id="Omikron\FactFinder\Shopware6\ScheduledTask\MarketplaceReportTaskHandler">
-            <tag name="messenger.message_handler" />
-            <argument type="service" id="scheduled_task.repository"/>
-            <argument>%kernel.shopware_version%</argument>
-            <argument>%instance_id%</argument>
-        </service>
     </services>
 </container>
