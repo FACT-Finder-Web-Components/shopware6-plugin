@@ -64,6 +64,14 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         $this->onPageLoaded($event);
     }
 
+    public function it_should_not_fail_if_ff_cms_use_search_immediate_is_not_present_in_custom_fields(
+        NavigationPageLoadedEvent $event,
+        ArrayEntity $extension
+    ): void {
+        $extension->assign(Argument::cetera())->shouldBeCalled();
+        $this->shouldNotThrow()->during('onPageLoaded', [$event]);
+    }
+
     public function it_should_encode_category_path_correctly(
         CategoryEntity $categoryEntity,
         ArrayEntity $extension,
@@ -148,7 +156,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         SalesChannelContext $salesChannelContext,
         SalesChannelEntity $salesChannelEntity,
         CategoryRouteResponse $categoryRouteResponse,
-        array $addParams = ['param1' =>'navigation=true'] // addParams parameters collections are passed as associative array (see comment src/Subscriber/CategoryPageSubscriber.php:55)
+        array $addParams = ['param1' =>'navigation=true'] //addParams parameters collections are passed as associative array (see comment src/Subscriber/CategoryPageSubscriber.php:55)
     ): void {
         $navigationId = '1';
         $extensionConfig->getTrackingSettings()->willReturn(
@@ -176,7 +184,9 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
             ]);
         $event->getPage()->willReturn($navigationPage);
         $extension->get('communication')->willReturn([]);
+        $extension->get('communication')->willReturn([]);
         $navigationPage->getExtension('factfinder')->willReturn($extension);
+        $extension->getVars()->willReturn(['communication' => ['']]);
         $this->beConstructedWith($cmsPageRoute, $config, $extensionConfig, 'CategoryPath', $addParams);
     }
 }
