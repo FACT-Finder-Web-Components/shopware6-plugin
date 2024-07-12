@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.2.0] - 2024.07.12
 ### Add
 - Add userId for cart tracking
 ### Change
@@ -419,6 +419,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v5.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.2.0
 [v5.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.1.0
 [v5.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.0.0
 [v4.2.7]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v4.2.7
