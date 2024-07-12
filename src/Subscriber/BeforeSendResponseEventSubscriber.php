@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
-use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
-use Shopware\Storefront\Framework\Routing\StorefrontResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 {
@@ -20,8 +20,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            BeforeSendResponseEvent::class => [
-                ['isCustomerLoggedOut'],
+            KernelEvents::RESPONSE => [
                 ['isHasJustLoggedInCookieSet'],
                 ['hasCustomerJustLoggedIn'],
                 ['hasCustomerJustLoggedOut'],
@@ -29,32 +28,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function isCustomerLoggedOut(BeforeSendResponseEvent $event): bool
-    {
-        $response = $event->getResponse();
-
-        if (
-            method_exists($response, 'getContext') === false
-            || $response->getContext() === null
-        ) {
-            return false;
-        }
-
-        try {
-            $this->validateRequest($event->getRequest(), $response);
-
-            if ($response->getContext()->getCustomer() === null) {
-                $response->headers->clearCookie(self::USER_ID);
-                $response->headers->clearCookie(self::HAS_JUST_LOGGED_OUT);
-            }
-
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    public function isHasJustLoggedInCookieSet(BeforeSendResponseEvent $event): bool
+    public function isHasJustLoggedInCookieSet(ResponseEvent $event): bool
     {
         $request  = $event->getRequest();
         $response = $event->getResponse();
@@ -72,7 +46,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function hasCustomerJustLoggedIn(BeforeSendResponseEvent $event): bool
+    public function hasCustomerJustLoggedIn(ResponseEvent $event): bool
     {
         $request  = $event->getRequest();
 
@@ -84,26 +58,18 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
 
         $response = $event->getResponse();
 
-        if (
-            method_exists($response, 'getContext') === false
-            || $response->getContext() === null
-        ) {
-            return false;
-        }
-
-        $context = $response->getContext();
-
         try {
             $this->validateRequest($request, $response);
 
-            if ($context->getCustomer() === null) {
+            if (empty($session->get(self::USER_ID, false))) {
                 return false;
             }
 
             if ($session->get(self::HAS_JUST_LOGGED_IN, false) === true) {
                 $response->headers->setCookie($this->getCookie(self::HAS_JUST_LOGGED_IN, '1'));
-                $response->headers->setCookie($this->getCookie(self::USER_ID, $context->getCustomer()->getId()));
+                $response->headers->setCookie($this->getCookie(self::USER_ID, $session->get(self::USER_ID, false)));
                 $session->set(self::HAS_JUST_LOGGED_IN, false);
+                $response->headers->clearCookie(self::HAS_JUST_LOGGED_OUT);
             }
 
             return true;
@@ -112,7 +78,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function hasCustomerJustLoggedOut(BeforeSendResponseEvent $event): bool
+    public function hasCustomerJustLoggedOut(ResponseEvent $event): bool
     {
         $request  = $event->getRequest();
         $response = $event->getResponse();
@@ -152,8 +118,7 @@ class BeforeSendResponseEventSubscriber implements EventSubscriberInterface
     protected function validateRequest(Request $request, Response $response): void
     {
         if (
-            !$response instanceof StorefrontResponse
-            || $request->isXmlHttpRequest()
+            $request->isXmlHttpRequest()
             || $response->getStatusCode() >= Response::HTTP_MULTIPLE_CHOICES
         ) {
             throw new \Exception('Not supported request');

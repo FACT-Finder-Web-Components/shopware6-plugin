@@ -7,6 +7,7 @@
 
 ### Fix
 - Support sid for SSR
+- Fix problem with session data for login tracking
 
 ## [v5.1.0] - 2024.03.11
 ### Add

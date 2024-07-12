@@ -24,16 +24,18 @@ class CustomerLoginEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function hasJustLoggedIn(): void
+    public function hasJustLoggedIn(CustomerLoginEvent $event): void
     {
         if (
             !isset($this->requestStack)
             || $this->requestStack->getMainRequest() === null
+            || empty($event->getCustomer()->getId())
         ) {
             return;
         }
 
         $session = $this->requestStack->getMainRequest()->getSession();
         $session->set(BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_IN, true);
+        $session->set(BeforeSendResponseEventSubscriber::USER_ID, $event->getCustomer()->getId());
     }
 }

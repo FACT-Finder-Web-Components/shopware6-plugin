@@ -7,6 +7,9 @@ a concise overview of its primary functions. The first chapter *Installation* wa
 installation process. The second chapter *Settings* explains the customisation options in the Showpare backend. The
 final chapter *Exporting Feed* describes how to use provided console command to export the feed.
 
+Our Shopware plugin offers a basic working integration for default Shopware Storefront theme. Most projects may require
+modifications in order to fit their needs. For more advanced features please check our official [WebComponnents documentation](https://web-components.fact-finder.de/documentation/4.x/install-dist).
+
 - [System Requirements](#system-requirements)
 - [FACT-Finder® Supported Sections](#fact-finder-supported-sections)
 - [Installation](#installation)
@@ -49,7 +52,7 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 ## System Requirements
 
 - Shopware 6.5 
-- PHP version 8.1 or higher
+- PHP version: 8.1, 8.2 or 8.3
 
 For Shopware 6.4 please use SDK version 4.x:
 https://github.com/FACT-Finder-Web-Components/shopware6-plugin

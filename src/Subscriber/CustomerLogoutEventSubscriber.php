@@ -35,5 +35,6 @@ class CustomerLogoutEventSubscriber implements EventSubscriberInterface
 
         $session = $this->requestStack->getMainRequest()->getSession();
         $session->set(BeforeSendResponseEventSubscriber::HAS_JUST_LOGGED_OUT, true);
+        $session->remove(BeforeSendResponseEventSubscriber::USER_ID);
     }
 }
