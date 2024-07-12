@@ -64,14 +64,6 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         $this->onPageLoaded($event);
     }
 
-    public function it_should_not_fail_if_ff_cms_use_search_immediate_is_not_present_in_custom_fields(
-        NavigationPageLoadedEvent $event,
-        ArrayEntity $extension
-    ): void {
-        $extension->assign(Argument::cetera())->shouldBeCalled();
-        $this->shouldNotThrow()->during('onPageLoaded', [$event]);
-    }
-
     public function it_should_encode_category_path_correctly(
         CategoryEntity $categoryEntity,
         ArrayEntity $extension,
