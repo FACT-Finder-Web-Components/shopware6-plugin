@@ -63,8 +63,8 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
         $categoryPath  = (new CategoryPath($this->fieldName))->getValue($category);
         $communication = [
-                'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
-            ] + ($isCategory ? ['category-page' => $categoryPath] : []);
+            'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
+        ] + ($isCategory ? ['category-page' => $categoryPath] : []);
 
         if ($route === 'frontend.navigation.page') {
             $event->getRequest()->attributes->set('categoryPath', $categoryPath);
