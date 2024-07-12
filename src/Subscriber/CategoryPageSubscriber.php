@@ -17,13 +17,9 @@ use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 class CategoryPageSubscriber implements EventSubscriberInterface
 {
     private AbstractCategoryRoute $cmsPageRoute;
-
     private Communication $config;
-
     private ExtensionConfig $extensionConfig;
-
     private string $fieldName;
-
     private array $addParams;
 
     public function __construct(
@@ -75,14 +71,31 @@ class CategoryPageSubscriber implements EventSubscriberInterface
             $event->getRequest()->attributes->set('categoryPath', $categoryPath);
         }
 
+        $factfinderConfig    = $event->getPage()->getExtension('factfinder')->getVars();
+        $communicationConfig = [];
+
+        if (isset($factfinderConfig['communication'])) {
+            $communicationConfig = array_merge($factfinderConfig['communication'], $communication);
+        }
+
         $event->getPage()->getExtension('factfinder')->assign(
             [
-                'communication'         => $communication,
-                'trackingSettings'      => $this->extensionConfig->getTrackingSettings(),
-                'redirectMapping'       => (string) $this->extensionConfig->getRedirectMapping(),
-                'searchImmediate'       => $searchImmediate ? 'true' : 'false',
-                'categoryPathFieldName' => "{$this->fieldName}ROOT",
+                'communication'           => $communication,
+                'trackingSettings'        => $this->extensionConfig->getTrackingSettings(),
+                'redirectMapping'         => (string) $this->extensionConfig->getRedirectMapping(),
+                'searchImmediate'         => $searchImmediate ? 'true' : 'false',
+                'categoryPathFieldName'   => "{$this->fieldName}ROOT",
+                'communicationAttributes' => !empty($communicationConfig) ? $this->getCommunicationAttributes($communicationConfig) : $communication,
             ]
+        );
+    }
+
+    private function getCommunicationAttributes(array $communicationConfig): array
+    {
+        return array_map(
+            fn (string $key, string $value) => sprintf('%s="%s" ', $key, htmlspecialchars($value)),
+            array_keys($communicationConfig),
+            array_values($communicationConfig)
         );
     }
 }
