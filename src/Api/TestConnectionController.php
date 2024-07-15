@@ -10,14 +10,11 @@ use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Shopware6\Config\Communication as CommunicationConfig;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
 use Psr\Log\LoggerInterface;
-use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(defaults={"_routeScope"={"api"}})
- */
+#[Route(defaults: ['_routeScope' => ['api']])]
 class TestConnectionController extends AbstractController
 {
     public function __construct(
@@ -28,9 +25,12 @@ class TestConnectionController extends AbstractController
     ) {
     }
 
-    /**
-     * @Route("/api/_action/test-connection/api", name="api.action.fact_finder.test_api_connection", methods={"GET"}, defaults={"XmlHttpRequest"=true})
-     */
+    #[Route(
+        '/api/_action/test-connection/api',
+        name: 'api.action.fact_finder.test_api_connection',
+        defaults: ['XmlHttpRequest' => true],
+        methods: ['GET']
+    )]
     public function testApiConnection(): JsonResponse
     {
         $client = $this->clientBuilder
@@ -57,9 +57,12 @@ class TestConnectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/_action/test-connection/ftp", name="api.action.fact_finder.test_ftp_connection", methods={"GET"}, defaults={"XmlHttpRequest"=true})
-     */
+    #[Route(
+        '/api/_action/test-connection/ftp',
+        name: 'api.action.fact_finder.test_ftp_connection',
+        defaults: ['XmlHttpRequest' => true],
+        methods: ['GET']
+    )]
     public function testFTPConnection(): JsonResponse
     {
         try {
@@ -69,7 +72,10 @@ class TestConnectionController extends AbstractController
         } catch (FilesystemException $e) {
             $this->factfinderLogger->error($e->getMessage());
 
-            return new JsonResponse(['message' => "Connection could not be established. Error: {$e->getMessage()}"], 400);
+            return new JsonResponse(
+                ['message' => "Connection could not be established. Error: {$e->getMessage()}"],
+                400
+            );
         }
     }
 

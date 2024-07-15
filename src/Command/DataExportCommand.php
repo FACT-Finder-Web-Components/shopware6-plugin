@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Command;
 
 use Omikron\FactFinder\Shopware6\Communication\PushImportService;
+use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Export\ChannelTypeNamingStrategy;
 use Omikron\FactFinder\Shopware6\Export\CurrencyFieldsProvider;
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\BrandEntity;
@@ -33,65 +34,43 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.ElseExpression)
  * @SuppressWarnings(PHPMD.MissingImport)
+ * @SuppressWarnings(PHPMD.ExcessiveParameterList)
  */
 #[AsCommand(name: 'factfinder:data:export')]
-class DataExportCommand extends Command implements ContainerAwareInterface
+class DataExportCommand extends Command
 {
-    use ContainerAwareTrait;
-
     public const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     public const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
     public const EXPORT_TYPE_ARGUMENT            = 'export_type';
+    private const UPLOAD_FEED_OPTION             = 'upload';
+    private const PUSH_IMPORT_OPTION             = 'import';
+    private const PRODUCTS_EXPORT_TYPE           = 'products';
+    private const CMS_EXPORT_TYPE                = 'cms';
+    private const CATEGORIES_EXPORT_TYPE         = 'category';
+    private const BRANDS_EXPORT_TYPE             = 'brands';
 
-    private const UPLOAD_FEED_OPTION     = 'upload';
-    private const PUSH_IMPORT_OPTION     = 'import';
-    private const PRODUCTS_EXPORT_TYPE   = 'products';
-    private const CMS_EXPORT_TYPE        = 'cms';
-    private const CATEGORIES_EXPORT_TYPE = 'category';
-    private const BRANDS_EXPORT_TYPE     = 'brands';
-
-    private SalesChannelService $channelService;
-    private EntityRepository $channelRepository;
-    private FeedFactory $feedFactory;
-    private UploadService $uploadService;
-    private PushImportService $pushImportService;
-    private EntityRepository $languageRepository;
-    private CurrencyFieldsProvider $currencyFieldsProvider;
-    private FieldsProvider $fieldProviders;
-
-    /** @@todo v4 remove this reference */
     private $file;
 
     public function __construct(
-        SalesChannelService $channelService,
-        EntityRepository $channelRepository,
-        FeedFactory $feedFactory,
-        UploadService $uploadService,
-        PushImportService $pushImportService,
-        EntityRepository $languageRepository,
-        CurrencyFieldsProvider $currencyFieldsProvider,
-        FieldsProvider $fieldProviders,
-        ContainerInterface $container
+        private readonly SalesChannelService $channelService,
+        private readonly EntityRepository $channelRepository,
+        private readonly FeedFactory $feedFactory,
+        private readonly UploadService $uploadService,
+        private readonly PushImportService $pushImportService,
+        private readonly EntityRepository $languageRepository,
+        private readonly CurrencyFieldsProvider $currencyFieldsProvider,
+        private readonly FieldsProvider $fieldProviders,
+        private readonly Communication $communication,
+        private readonly array $productsColumnsBase,
+        private readonly string $kernelProjectDir
     ) {
-        $this->channelService         = $channelService;
-        $this->channelRepository      = $channelRepository;
-        $this->feedFactory            = $feedFactory;
-        $this->uploadService          = $uploadService;
-        $this->pushImportService      = $pushImportService;
-        $this->languageRepository     = $languageRepository;
-        $this->currencyFieldsProvider = $currencyFieldsProvider;
-        $this->fieldProviders         = $fieldProviders;
-        $this->file                   = tmpfile();
-        $this->container              = $container;
+        $this->file = tmpfile();
         parent::__construct();
     }
 
@@ -107,7 +86,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     public function getTypeEntityMap(): array
     {
-        return array_merge($this->getBaseTypeEntityMap(), $this->container->getParameter('factfinder.data_export.entity_type_map'));
+        return array_merge($this->getBaseTypeEntityMap());
     }
 
     public function configure(): void
@@ -125,7 +104,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $saveFile = false;
 
@@ -195,12 +174,11 @@ class DataExportCommand extends Command implements ContainerAwareInterface
 
     private function getFeedColumns(string $exportType, string $entityClass): array
     {
-        $base   = (array) $this->container->getParameter(sprintf('factfinder.export.%s.columns.base', $exportType));
         $fields = $this->fieldProviders->getFields($entityClass);
         return array_values(
             array_unique(
                 array_merge(
-                    $base,
+                    $this->productsColumnsBase,
                     array_map([$this, 'getFieldName'], $fields),
                     $exportType === self::PRODUCTS_EXPORT_TYPE ? $this->currencyFieldsProvider->getCurrencyFields() : [])));
     }
@@ -227,16 +205,13 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     }
 
     /**
-     * @param string $exportType
-     * @param string $salesChannelId
-     *
      * @return false|resource
      *
      * @throws \Exception
      */
     private function createFile(string $exportType, string $salesChannelId)
     {
-        $dir = $this->container->getParameter('kernel.project_dir') . '/var/factfinder';
+        $dir = $this->kernelProjectDir . '/var/factfinder';
 
         if (!is_dir($dir)) {
             mkdir($dir);
@@ -246,8 +221,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
             throw new \Exception('Directory ' . $dir . ' is not writable. Aborting');
         }
 
-        /** @todo v4 refactor this */
-        $channelId  = $this->container->get('Omikron\FactFinder\Shopware6\Config\Communication')->getChannel($salesChannelId);
+        $channelId  = $this->communication->getChannel($salesChannelId);
         $filename   = $dir . DIRECTORY_SEPARATOR . (new ChannelTypeNamingStrategy())->createFeedFileName($exportType, $channelId);
         $this->file = fopen($filename, 'w+');
 

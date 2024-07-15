@@ -60,8 +60,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         $response     = $event->getResponse();
         $categoryPath = $this->getCategoryPath($request);
 
-        if (
-            $this->config->isSsrActive() === false
+        if ($this->config->isSsrActive() === false
             || $request->isXmlHttpRequest()
             || $categoryPath === ''
         ) {

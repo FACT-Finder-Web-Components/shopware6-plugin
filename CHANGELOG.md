@@ -1,4 +1,10 @@
 # Changelog
+## Unreleased
+- IMPORTANT! Drop Shopware 6.5 compatibility
+- IMPORTANT! Drop PHP 8.1 compatibility
+- Add support for Shopware 6.6
+- Upgrade libraries as required Shopware v6.6
+
 ## [v5.2.0] - 2024.07.12
 ### Add
 - Add userId for cart tracking
