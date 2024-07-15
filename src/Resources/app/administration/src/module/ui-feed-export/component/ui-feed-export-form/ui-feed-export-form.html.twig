@@ -1,38 +1,40 @@
-<sw-card-view>
+{% block factfinder_module_ui_feed_export %}
+  <sw-card-view>
 
-  <sw-card>
-    <sw-container columns="repeat(auto-fit, minmax(250px, 1fr)" gap="0px 30px">
-      <sw-entity-single-select
-        v-model="salesChannelValue"
-        entity="sales_channel"
-        id="sales_channel"
-        :label="$tc('ui-feed-export.component.export_form.sales_channel.label')">
-      </sw-entity-single-select>
+    <sw-card>
+      <sw-container columns="repeat(auto-fit, minmax(250px, 1fr)" gap="0px 30px">
+        <sw-entity-single-select
+          v-model:value ="salesChannelValue"
+          entity="sales_channel"
+          id="sales_channel"
+          :label="$tc('ui-feed-export.component.export_form.sales_channel.label')">
+        </sw-entity-single-select>
 
-      <sw-entity-single-select
-        v-model="salesChannelLanguageValue"
-        entity="language"
-        id="sales_channel_language"
-        :label="$tc('ui-feed-export.component.export_form.sales_channel_language.label')">
-      </sw-entity-single-select>
+        <sw-entity-single-select
+          v-model:value ="salesChannelLanguageValue"
+          entity="language"
+          id="sales_channel_language"
+          :label="$tc('ui-feed-export.component.export_form.sales_channel_language.label')">
+        </sw-entity-single-select>
 
-      <sw-select-field id="export_type"
-                       v-model="exportTypeValue"
-                       :label="$tc('ui-feed-export.component.export_form.export_type.label')">
-        <option v-for="(key, value) in typeSelectOptions" :value="value">
-          {{ value | capitalize }}
-        </option>
-      </sw-select-field>
+        <sw-select-field id="export_type"
+                         v-model:value ="exportTypeValue"
+                         :label="$tc('ui-feed-export.component.export_form.export_type.label')">
+          <option v-for="(key, value) in typeSelectOptions" :value="value">
+            {{ value | capitalize }}
+          </option>
+        </sw-select-field>
 
-    </sw-container>
-    <sw-button @click="getFeedExportFile('_action/fact-finder/generate-feed')"
-               :isLoading="isLoadingExport"
-               :disabled="isLoadingExport"
-               variant="success"
-               block="true"
-               size="large">
+      </sw-container>
+      <sw-button @click="getFeedExportFile('_action/fact-finder/generate-feed')"
+                 :isLoading="isLoadingExport"
+                 :disabled="isLoadingExport"
+                 variant="success"
+                 block="true"
+                 size="large">
 
-      {{ $tc('ui-feed-export.component.export_form.button.title') }}
-    </sw-button>
-  </sw-card>
-</sw-card-view>
+        {{ $tc('ui-feed-export.component.export_form.button.title') }}
+      </sw-button>
+    </sw-card>
+  </sw-card-view>
+{% endblock %}

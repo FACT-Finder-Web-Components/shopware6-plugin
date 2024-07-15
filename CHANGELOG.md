@@ -4,6 +4,8 @@
 - IMPORTANT! Drop PHP 8.1 compatibility
 - Add support for Shopware 6.6
 - Upgrade libraries as required Shopware v6.6
+- Upgrade symfony to version 7
+- Refactor vue component to vue version 3
 
 ## [v5.2.0] - 2024.07.12
 ### Add
