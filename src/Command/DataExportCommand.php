@@ -70,7 +70,7 @@ class DataExportCommand extends Command
         private readonly array $productsColumnsBase,
         private readonly string $kernelProjectDir
     ) {
-        $this->file                   = tmpfile();
+        $this->file = tmpfile();
         parent::__construct();
     }
 

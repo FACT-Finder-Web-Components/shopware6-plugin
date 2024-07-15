@@ -78,6 +78,8 @@
             <bind key="$cache" type="service" id="cache.object" />
             <bind key="$container" type="service" id="service_container" />
             <bind key="$factfinderLogger" type="service" id="monolog.logger.factfinder_channel" />
+            <bind key="$productsColumnsBase">%factfinder.export.products.columns.base%</bind>
+            <bind key="$kernelProjectDir">%kernel.project_dir%</bind>
         </defaults>
 
         <service id="Omikron\FactFinder\Shopware6\Communication\AdapterFactory" />
