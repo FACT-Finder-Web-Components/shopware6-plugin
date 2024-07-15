@@ -16,22 +16,16 @@ use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
 class CategoryPageSubscriber implements EventSubscriberInterface
 {
-    private AbstractCategoryRoute $cmsPageRoute;
-    private Communication $config;
-    private ExtensionConfig $extensionConfig;
     private string $fieldName;
     private array $addParams;
 
     public function __construct(
-        AbstractCategoryRoute $cmsPageRoute,
-        Communication $config,
-        ExtensionConfig $extensionConfig,
+        private readonly AbstractCategoryRoute $cmsPageRoute,
+        private readonly Communication $config,
+        private readonly ExtensionConfig $extensionConfig,
         string $categoryPathFieldName,
         array $categoryPageAddParams = []
     ) {
-        $this->cmsPageRoute    = $cmsPageRoute;
-        $this->config          = $config;
-        $this->extensionConfig = $extensionConfig;
         $this->fieldName       = $categoryPathFieldName;
         $this->addParams       = $categoryPageAddParams;
     }
@@ -64,7 +58,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
         $categoryPath  = (new CategoryPath($this->fieldName))->getValue($category);
         $communication = [
-            'add-params'       => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
+            'add-params' => implode(',', array_map(fn (string $key, string $value): string => sprintf('%s=%s', $key, $value), array_keys($mergedAddParams), array_values($mergedAddParams))),
         ] + ($isCategory ? ['category-page' => $categoryPath] : []);
 
         if ($route === 'frontend.navigation.page') {

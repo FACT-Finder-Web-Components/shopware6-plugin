@@ -14,9 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RunPreprocessorCommand extends Command
 {
-    public const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
-    public const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
-
     public function configure(): void
     {
         $this->setName('factfinder:data:pre-process');
@@ -28,7 +25,7 @@ class RunPreprocessorCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Cache export is not support in SDK version 5.x');
+        $output->writeln('Cache export is not support in SDK version 6.x');
 
         return 0;
     }
