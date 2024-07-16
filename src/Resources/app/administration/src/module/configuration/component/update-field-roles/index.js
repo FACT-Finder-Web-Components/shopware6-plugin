@@ -4,8 +4,8 @@ const {Component, Mixin} = Shopware;
 
 Component.register('update-field-roles', {
         template,
-        inject: ['fieldRolesService',],
-        mixins: [
+    inject: ['fieldRolesService',],
+    mixins: [
             Mixin.getByName('notification'),
             Mixin.getByName('sw-inline-snippet'),
         ],
@@ -14,18 +14,17 @@ Component.register('update-field-roles', {
                 isLoading: false,
                 isSaveSuccessful: false,
             };
-        },
+    },
 
-        methods: {
-            async onClick() {
-                this.isLoading = true;
-                const response = await this.fieldRolesService.sendUpdateFieldRoles();
-                this.isSaveSuccessful = true;
-                this.isLoading = false;
-                this.createNotificationSuccess({
-                    message: this.$tc('configuration.updateFieldRoles.update')
-                })
-            },
+    methods: {
+        async onClick() {
+            this.isLoading = true;
+            const response = await this.fieldRolesService.sendUpdateFieldRoles();
+            this.isSaveSuccessful = true;
+            this.isLoading = false;
+            this.createNotificationSuccess({
+                message: Shopware.Snippet.tc('configuration.updateFieldRoles.update')
+            })
         },
     },
-);
+    },);

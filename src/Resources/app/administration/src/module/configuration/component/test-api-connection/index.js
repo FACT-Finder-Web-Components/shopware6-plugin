@@ -5,7 +5,7 @@ const {Component, Mixin} = Shopware;
 
 Component.register('test-api-connection', {
         template,
-        mixins: [
+    mixins: [
             Mixin.getByName('notification'),
             Mixin.getByName('sw-inline-snippet'),
         ],
@@ -14,45 +14,44 @@ Component.register('test-api-connection', {
                 isLoading: false,
                 isSaveSuccessful: false,
             };
-        },
+    },
 
-        methods: {
-            async onClick() {
-                this.isLoading = true;
-                const httpClient = Shopware.Service('syncService').httpClient;
-                const url = '_action/test-connection/api';
-                const basicHeaders = {
-                    Authorization: `Bearer ${Shopware.Context.api.authToken.access}`,
-                    'Content-Type': 'application/json'
-                };
+    methods: {
+        async onClick() {
+            this.isLoading = true;
+            const httpClient = Shopware.Service('syncService').httpClient;
+            const url = '_action/test-connection/api';
+            const basicHeaders = {
+                Authorization: `Bearer ${Shopware.Context.api.authToken.access}`,
+                'Content-Type': 'application/json'
+            };
 
-                httpClient
-                    .get(url, {
-                        headers: basicHeaders
+            httpClient
+                .get(url, {
+                    headers: basicHeaders
                     })
-                    .then((response) => {
-                        if (response.status === 200) {
-                            this.createNotificationSuccess({
-                                message: this.$tc('configuration.testConnection.success')
+                .then((response) => {
+                    if (response.status === 200) {
+                        this.createNotificationSuccess({
+                            message: Shopware.Snippet.tc('configuration.testConnection.success')
                             });
-                        } else {
-                            this.createNotificationError({
-                                title: this.$tc('configuration.testConnection.fail'),
-                                message: this.$tc('configuration.testConnection.helpText')
-                            });
-                        }
-                    })
-                    .catch(() => {
+                    } else {
                         this.createNotificationError({
-                            title: this.$tc('configuration.testConnection.fail'),
-                            message: this.$tc('configuration.testConnection.helpText')
-                        });
+                            title: Shopware.Snippet.tc('configuration.testConnection.fail'),
+                            message: Shopware.Snippet.tc('configuration.testConnection.helpText')
+                            });
+                    }
                     })
-                    .finally(() => {
-                        this.isSaveSuccessful = true;
-                        this.isLoading = false;
+                .catch(() => {
+                    this.createNotificationError({
+                        title: Shopware.Snippet.tc('configuration.testConnection.fail'),
+                        message: Shopware.Snippet.tc('configuration.testConnection.helpText')
+                        });
+                })
+                .finally(() => {
+                    this.isSaveSuccessful = true;
+                    this.isLoading = false;
                     });
-            },
         },
     },
-);
+    },);

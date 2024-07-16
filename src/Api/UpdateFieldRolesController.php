@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UpdateFieldRolesController extends AbstractController
 {
     public function __construct(
-        private readonly FieldRolesInterface $fieldRoles,
+        private readonly FieldRolesInterface $fieldRolesService,
         private readonly EntityRepository $channelRepository,
         private readonly LoggerInterface $factfinderLogger
     ) {
@@ -34,8 +34,8 @@ class UpdateFieldRolesController extends AbstractController
     {
         try {
             foreach ($this->fetchSalesChannels($context) as $salesChannel) {
-                $fieldRoles = $this->fieldRoles->getRoles($salesChannel->getId());
-                $this->fieldRoles->update($fieldRoles, $salesChannel->getId());
+                $fieldRoles = $this->fieldRolesService->getRoles($salesChannel->getId());
+                $this->fieldRolesService->update($fieldRoles, $salesChannel->getId());
             }
 
             return new JsonResponse();

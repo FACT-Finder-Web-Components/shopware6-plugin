@@ -1,1 +1,5 @@
-.filter-cloud{margin-top:30px}.flex-container{display:flex;flex-direction:row;align-items:stretch;flex-grow:1}.flex-container>div{flex:1;margin:.7rem;padding:.7rem;background:#189eff;font-size:30px;text-align:center;justify-content:center}.margint10{margin-top:10px}.preview-container{padding:15px;text-align:center}.test-connection-btn{margin-top:10px;width:176px}.test-ftp-connection-btn{margin-top:5px;width:240px}
+.filter-cloud{margin-top:30px}
+.flex-container{display:flex;flex-direction:row;align-items:stretch;flex-grow:1}.flex-container>div{flex:1;margin:.7rem;padding:.7rem;background:#189eff;font-size:30px;text-align:center;justify-content:center}.margint10{margin-top:10px}
+.preview-container{padding:15px;text-align:center}
+.test-connection-btn{margin-top:10px;width:176px}
+.test-ftp-connection-btn{margin-top:5px;width:240px}
