@@ -6,12 +6,8 @@ namespace Omikron\FactFinder\Shopware6\Export;
 
 class ChannelTypeNamingStrategy implements NamingStrategyInterface
 {
-    public function createFeedFileName(string $exportType, string $channelId): string
+    public function createFeedFileName(...$parts): string
     {
-        if ($exportType === 'products') {
-            return sprintf('export.productData.%s.csv', $channelId);
-        }
-
-        return sprintf('export.%s.%s.csv', $exportType, $channelId);
+        return sprintf('export.%s.%s.csv', ...$parts);
     }
 }
