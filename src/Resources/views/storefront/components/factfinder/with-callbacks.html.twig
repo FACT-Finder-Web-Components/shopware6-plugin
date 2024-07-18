@@ -12,7 +12,7 @@
 
     {% block dom_updated %}
     {% if domUpdated %}
-    document.addEventListener('WebComponentsReady', function () {
+    document.addEventListener('ffCoreReady', function () {
       document.getElementById("{{ id }}").addEventListener('dom-updated', function () {
         {{ domUpdated|raw }}
       });

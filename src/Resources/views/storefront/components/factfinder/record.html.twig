@@ -3,25 +3,25 @@
     <div class="card product-box box-standard">
       <div class="card-body">
         <div class="product-image-wrapper">
-          <a class="product-image-link is-standard" title="{{ '{{record.Name}}' }}"
-             data-redirect="{{ '{{record.Deeplink}}' }}" data-anchor="{{ '{{record.Deeplink}}' }}"
+          <a class="product-image-link is-standard" title="{{ '{{masterValues.Name}}' }}"
+             data-redirect="{{ '{{masterValues.Deeplink}}' }}" data-anchor="{{ '{{masterValues.Deeplink}}' }}"
              data-redirect-target="_self">
-            <img class="product-image is-standard" data-image="{{ '{{record.ImageUrl}}' }}"
-                 alt="{{ '{{record.Name}}' }}" title="{{ '{{record.Name}}' }}"/>
+            <img class="product-image is-standard" data-image="{{ '{{masterValues.ImageUrl}}' }}"
+                 alt="{{ '{{masterValues.Name}}' }}" title="{{ '{{masterValues.Name}}' }}"/>
           </a>
         </div>
         <div class="product-info">
-          <a class="product-name" title="{{ '{{record.Name}}' }}" data-redirect-target="_self"
-             data-redirect="{{ '{{record.Deeplink}}' }}" data-anchor="{{ '{{record.Deeplink}}' }}">
-            {{ '{{record.Name}}' }}
+          <a class="product-name" title="{{ '{{masterValues.Name}}' }}" data-redirect-target="_self"
+             data-redirect="{{ '{{masterValues.Deeplink}}' }}" data-anchor="{{ '{{masterValues.Deeplink}}' }}">
+            {{ '{{masterValues.Name}}' }}
           </a>
-          <div class="product-description">{{ '{{record.Brand}}' }}</div>
+          <div class="product-description">{{ '{{masterValues.Brand}}' }}</div>
           <div class="product-price-info">
-            <p class="product-price">{{ '{{record.Price}}' }} *</p>
+            <p class="product-price">{{ '{{ $ masterValues.Price}}' }} *</p>
           </div>
           <div class="product-action">
-            <a class="btn btn-block btn-buy" title="{{ '{{record.Name}}' }}" data-redirect-target="_self"
-               data-redirect="{{ '{{record.Deeplink}}' }}" data-anchor="{{ '{{record.Deeplink}}' }}">
+            <a class="btn btn-block btn-buy" title="{{ '{{masterValues.Name}}' }}" data-redirect-target="_self"
+               data-redirect="{{ '{{masterValues.Deeplink}}' }}" data-anchor="{{ '{{masterValues.Deeplink}}' }}">
               {{ 'listing.boxProductDetails'|trans|sw_sanitize }}
             </a>
           </div>

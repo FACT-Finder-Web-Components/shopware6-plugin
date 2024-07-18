@@ -66,7 +66,7 @@ function waitForFactFinder() {
         if (typeof window.factfinder !== 'undefined') {
             resolve(window.factfinder);
         } else {
-            document.addEventListener('ffReady', event => resolve(event.factfinder));
+            document.addEventListener('ffCoreReady', event => resolve(event.factfinder));
         }
     });
 }

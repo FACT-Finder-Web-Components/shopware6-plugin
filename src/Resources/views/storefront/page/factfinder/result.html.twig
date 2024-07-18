@@ -9,11 +9,16 @@
     {% block page_search_headline %}
       <h1 class="search-headline">
         {% block page_search_headline_text %}
-          <ff-template scope="result" unresolved>
+          <ff-template scope="SearchAndNavigation" unresolved>
             {{ 'ff.search.headlineBefore'|trans|sw_sanitize }}
           </ff-template>
-          <ff-breadcrumb-trail unresolved></ff-breadcrumb-trail>
-          <ff-template scope="result" unresolved>
+
+          <ff-breadcrumb-trail>
+            <ff-breadcrumb-trail-item type="search">{{ '{{breadCrumbTrail.text}} {{item.text}}' }}</ff-breadcrumb-trail-item>
+          </ff-breadcrumb-trail>
+
+          <ff-template scope="SearchAndNavigation" unresolved>
+            {{ '{{totalHits}}' }}
             {{ 'ff.search.headlineAfter'|trans|sw_sanitize }}
           </ff-template>
         {% endblock %}

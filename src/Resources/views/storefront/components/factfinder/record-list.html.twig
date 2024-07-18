@@ -14,7 +14,9 @@
           {% sw_include '@Parent/storefront/components/factfinder/record.html.twig' %}
         </ssr-record-template>
       {% else %}
-        {% sw_include '@Parent/storefront/components/factfinder/record.html.twig' %}
+        <template data-role="record">
+            {% sw_include '@Parent/storefront/components/factfinder/record.html.twig' %}
+        </template>
       {% endif %}
     {% endblock %}
   </ff-record-list>
