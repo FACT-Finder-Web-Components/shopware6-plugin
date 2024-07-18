@@ -34,6 +34,13 @@
             <required>true</required>
         </input-field>
 
+        <input-field>
+            <name>apiKey</name>
+            <label>API key</label>
+            <label lang="de-DE">API-Schlüssel</label>
+            <required>true</required>
+        </input-field>
+
         <input-field type="single-select">
             <name>apiVersion</name>
             <options>
