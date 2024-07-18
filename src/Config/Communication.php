@@ -26,6 +26,11 @@ class Communication extends BaseConfig
         ];
     }
 
+    public function getApiKey(): string
+    {
+        return (string) $this->config('apiKey');
+    }
+
     public function isSsrActive(): bool
     {
         return (bool) $this->config('useSsr');

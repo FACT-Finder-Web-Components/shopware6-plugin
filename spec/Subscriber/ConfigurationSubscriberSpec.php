@@ -64,6 +64,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $salesChannel->getId()->willReturn('main_sales_channel');
         $communication->getVersion()->willReturn(Version::NG);
         $communication->getApiVersion()->willReturn('v5');
+        $communication->getApiKey()->willReturn('abc-123');
         $communication->isSsrActive()->willReturn(false);
         $communication->isProxyEnabled()->willReturn(false);
         $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
@@ -109,6 +110,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $communication->getFieldRoles(Argument::any())->willReturn([]);
         $communication->getVersion()->willReturn(Version::NG);
         $communication->getApiVersion()->willReturn('v5');
+        $communication->getApiKey()->willReturn('abc-123');
         $communication->isSsrActive()->willReturn(false);
         $communication->isProxyEnabled()->willReturn(false);
         $event->getRequest()->willReturn($request);
@@ -150,6 +152,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $communication->getFieldRoles(Argument::any())->willReturn([]);
         $communication->getVersion()->willReturn(Version::NG);
         $communication->getApiVersion()->willReturn('v5');
+        $communication->getApiKey()->willReturn('abc-123');
         $communication->isSsrActive()->willReturn(false);
         $communication->isProxyEnabled()->willReturn(false);
         $event->getRequest()->willReturn($request);
