@@ -14,8 +14,7 @@
       class="{% if vertical %}ffw-asn-vertical{% endif %} filter-panel-items-container"
       align="{% if vertical %}vertical{% else %}horizontal {% endif %}"
       unresolved
-      subscribe="{{ subscribe ? 'true' : 'false' }}"
-      topic="{{ topic|default('asn') }}">
+      subscribe="{{ subscribe ? 'true' : 'false' }}">
 
       {% block component_factfinder_asn_group_custom %}
         {% for group in customGroups %}
@@ -38,11 +37,11 @@
                                 ffw-asn-group-element-vertical {% endif %}">
           <div slot="selected" class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input filter-multi-select-checkbox" checked/>
-            <span class="filter-multi-select-item-label custom-control-label">{{ '{{element.name}}' }}</span>
+            <span class="filter-multi-select-item-label custom-control-label">{{ '{{$facetElement}}' }}</span>
           </div>
           <div slot="unselected" class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input filter-multi-select-checkbox"/>
-            <span class="filter-multi-select-item-label custom-control-label">{{ '{{element.name}}' }}</span>
+            <span class="filter-multi-select-item-label custom-control-label">{{ '{{$facetElement}}' }}</span>
           </div>
           </ff-asn-group-element>
         </ff-asn-group>
@@ -66,17 +65,17 @@
           {% if filterCloudOrder %} order="{{ filterCloudOrder }}" {% endif %}
           unresolved>
           <span data-template="filter" class="filter-active">
-            {{ '{{group.name}}' }}: {{ '{{element.name}}' }}
+            {{ '{{$facetElement}}' }}
             <button class="filter-active-remove">
               &times;
             </button>
           </span>
         </ff-filter-cloud>
 
-        <ff-asn-remove-all-filter remove-params unresolved
+        <ff-asn-remove-all-filters remove-params unresolved
                                   class="filter-reset-all btn btn-sm btn-outline-danger">
           {{ 'listing.filterPanelResetAll'|trans|sw_sanitize }}
-        </ff-asn-remove-all-filter>
+        </ff-asn-remove-all-filters>
       </div>
     {% endblock %}
   {% endif %}
