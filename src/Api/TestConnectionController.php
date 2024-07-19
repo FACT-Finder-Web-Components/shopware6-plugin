@@ -33,15 +33,9 @@ class TestConnectionController extends AbstractController
     )]
     public function testApiConnection(): JsonResponse
     {
-        $client = $this->clientBuilder
-            ->withCredentials(new Credentials(...$this->config->getCredentials()))
-            ->withServerUrl($this->config->getServerUrl())
-            ->withVersion($this->config->getVersion())
-            ->build();
-
         try {
             $client = $this->clientBuilder
-                ->withCredentials(new Credentials(...$this->config->getCredentials()))
+                ->withApiKey($this->config->getApiKey())
                 ->withServerUrl($this->config->getServerUrl())
                 ->withVersion($this->config->getVersion())
                 ->build();
@@ -76,6 +70,32 @@ class TestConnectionController extends AbstractController
                 ['message' => "Connection could not be established. Error: {$e->getMessage()}"],
                 400
             );
+        }
+    }
+
+    #[Route(
+        '/api/_action/test-connection/push-import',
+        name: 'api.action.fact_finder.test_push_import_connection',
+        defaults: ['XmlHttpRequest' => true],
+        methods: ['GET']
+    )]
+    public function testPushImportApiConnection(): JsonResponse
+    {
+        try {
+            $client = $this->clientBuilder
+                ->withCredentials(new Credentials(...$this->config->getCredentials()))
+                ->withServerUrl($this->config->getServerUrl())
+                ->withVersion($this->config->getVersion())
+                ->build();
+
+            $endpoint = $this->createTestEndpoint();
+            $client->request('GET', $endpoint);
+
+            return new JsonResponse(['message' => 'Connection successfully established'], 200);
+        } catch (\Exception $e) {
+            $this->factfinderLogger->error($e->getMessage());
+
+            return new JsonResponse(['message' => 'Connection could not be established'], 400);
         }
     }
 

@@ -42,7 +42,7 @@ class ProxyController extends StorefrontController
     ): Response {
         $client = $clientBuilder
             ->withServerUrl($this->config->getServerUrl())
-            ->withCredentials(new Credentials(...$this->config->getCredentials()))
+            ->withApiKey($this->config->getApiKey())
             ->withVersion($this->config->getVersion())
             ->build();
         $query  = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
