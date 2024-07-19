@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Storefront\Controller;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Events\BeforeProxyErrorResponseEvent;
 use Omikron\FactFinder\Shopware6\Events\EnrichProxyDataEvent;
