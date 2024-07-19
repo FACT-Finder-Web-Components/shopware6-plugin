@@ -15,7 +15,6 @@ use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
 use PHPUnit\Framework\Assert;
 use Prophecy\Argument;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -36,14 +35,11 @@ class ProxyControllerSpec extends ObjectBehavior
         $serverUrl = 'https://example.fact-finder.de/fact-finder';
         $config->getServerUrl()->willReturn($serverUrl);
         $config->getVersion()->willReturn('ng');
-        $config->getCredentials()->willReturn([
-            'username',
-            'pass',
-        ]);
+        $config->getApiKey()->willReturn('api-key-123');
         $this->beConstructedWith($config);
         $clientBuilder->build()->willReturn($client);
         $clientBuilder->withServerUrl(Argument::any())->willReturn($clientBuilder);
-        $clientBuilder->withCredentials(Argument::any())->willReturn($clientBuilder);
+        $clientBuilder->withApiKey(Argument::any())->willReturn($clientBuilder);
         $clientBuilder->withVersion(Argument::any())->willReturn($clientBuilder);
         $this->client        = $client;
         $this->clientBuilder = $clientBuilder;
