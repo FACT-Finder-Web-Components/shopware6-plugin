@@ -7,6 +7,9 @@ a concise overview of its primary functions. The first chapter *Installation* wa
 installation process. The second chapter *Settings* explains the customisation options in the Shopware backend. The
 final chapter *Exporting Feed* describes how to use provided console command to export the feed.
 
+Our Shopware plugin offers a basic working integration for default Shopware Storefront theme. Most projects may require
+modifications in order to fit their needs. For more advanced features please check our official [WebComponnents documentation](https://web-components.fact-finder.de/documentation/4.x/install-dist).
+
 - [System Requirements](#system-requirements)
 - [FACT-Finder® Supported Sections](#fact-finder-supported-sections)
 - [Installation](#installation)
@@ -52,8 +55,11 @@ final chapter *Exporting Feed* describes how to use provided console command to 
 - Shopware 6.4
 - PHP version 7.4 or higher
 
-**Note:** If you use Shopware 6.5 or higher please use SDK version 5.x: 
+**Note:** If you use Shopware 6.5 please use SDK version 5.x: 
 https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/5.x
+
+**Note:** For Shopware 6.6 please use Shopware marketplace version:
+https://store.shopware.com/en/factf26713613196f/factfinder-ai-powered-search-product-discovery.html
 
 
 ## FACT-Finder® Supported Sections
