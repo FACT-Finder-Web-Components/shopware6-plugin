@@ -21,41 +21,9 @@
         </input-field>
 
         <input-field>
-            <name>username</name>
-            <label>Username</label>
-            <label lang="de-DE">Benutzername</label>
-            <required>true</required>
-        </input-field>
-
-        <input-field type="password">
-            <name>password</name>
-            <label>Password</label>
-            <label lang="de-DE">Passwort</label>
-            <required>true</required>
-        </input-field>
-
-        <input-field>
             <name>apiKey</name>
             <label>API key</label>
             <label lang="de-DE">API-Schlüssel</label>
-            <required>true</required>
-        </input-field>
-
-        <input-field type="single-select">
-            <name>apiVersion</name>
-            <options>
-                <option>
-                    <id>v4</id>
-                    <name>v4</name>
-                </option>
-                <option>
-                    <id>v5</id>
-                    <name>v5</name>
-                </option>
-            </options>
-            <defaultValue>v4</defaultValue>
-            <label>API Version</label>
-            <label lang="de-DE">API-Version</label>
             <required>true</required>
         </input-field>
 
@@ -223,6 +191,21 @@
     <card>
         <title>Import Settings</title>
         <title lang="de-DE">Import-Konfiguration</title>
+
+        <input-field>
+            <name>username</name>
+            <label>Username</label>
+            <label lang="de-DE">Benutzername</label>
+            <required>true</required>
+        </input-field>
+
+        <input-field type="password">
+            <name>password</name>
+            <label>Password</label>
+            <label lang="de-DE">Passwort</label>
+            <required>true</required>
+        </input-field>
+
         <input-field type="multi-select">
             <name>pushImport</name>
             <label>Enable Automatic Import for</label>
@@ -242,5 +225,9 @@
                 </option>
             </options>
         </input-field>
+
+        <component name="test-push-import-connection">
+            <name>testApiConnection</name>
+        </component>
     </card>
 </config>

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Storefront\Controller;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Events\BeforeProxyErrorResponseEvent;
 use Omikron\FactFinder\Shopware6\Events\EnrichProxyDataEvent;
@@ -42,7 +41,7 @@ class ProxyController extends StorefrontController
     ): Response {
         $client = $clientBuilder
             ->withServerUrl($this->config->getServerUrl())
-            ->withCredentials(new Credentials(...$this->config->getCredentials()))
+            ->withApiKey($this->config->getApiKey())
             ->withVersion($this->config->getVersion())
             ->build();
         $query  = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);

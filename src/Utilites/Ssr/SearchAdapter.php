@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Shopware6\Utilites\Ssr;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Client\ClientException;
-use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Psr\Http\Message\ResponseInterface;
 
@@ -33,7 +32,7 @@ class SearchAdapter
     ): array {
         $client = $this->clientBuilder
             ->withServerUrl($this->config->getServerUrl())
-            ->withCredentials(new Credentials(...$this->config->getCredentials()))
+            ->withApiKey($this->config->getApiKey())
             ->withVersion($this->config->getVersion())
             ->build();
 

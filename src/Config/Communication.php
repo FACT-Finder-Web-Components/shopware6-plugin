@@ -48,7 +48,7 @@ class Communication extends BaseConfig
 
     public function getApiVersion(): string
     {
-        return (string) $this->config('apiVersion') ?? 'v4';
+        return 'v5';
     }
 
     public function isProxyEnabled(): bool

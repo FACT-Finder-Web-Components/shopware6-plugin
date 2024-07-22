@@ -56,8 +56,6 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             'url'                   => $this->getServerUrl(),
             'channel'               => $this->config->getChannel($salesChannelId),
             'apiKey'                => $this->config->getApiKey(),
-            'version'               => $this->config->getVersion(),
-            'api'                   => $this->config->getApiVersion(),
             'currencyCode'          => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
             'currencyCountryCode'   => $event->getRequest()->getLocale(),
         ];
