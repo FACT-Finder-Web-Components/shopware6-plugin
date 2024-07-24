@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Handle js error if wishlist plugin is active
+
 ## [v2.1.0] - 2024.07.10
 ### Fix
 - Handle category-page for ff-communication
