@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryPageSubscriberSpec extends ObjectBehavior
 {
-    private string $filterCategoryPath = 'filter=CategoryPath%3ABooks+%252B+Sports%2FHome+%252F+Garden+100%2525';
+    private string $filterCategoryPath = 'Books + Sports,Home / Garden 100%';
 
     public function let(
         AbstractCategoryRoute $cmsPageRoute,
@@ -47,7 +47,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         NavigationPageLoadedEvent $event
     ): void {
         $categoryEntity->getCustomFields()->willReturn([OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME => false]);
-        $extension->assign(Argument::withEntry('communication', Argument::withEntry('category-page', Argument::any())))->shouldBeCalled();
+        $extension->assign(Argument::withEntry('communication', Argument::withEntry('categoryPage', Argument::any())))->shouldBeCalled();
         $this->onPageLoaded($event);
     }
 
@@ -77,7 +77,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         ArrayEntity $extension,
         NavigationPageLoadedEvent $event
     ): void {
-        $extension->assign(Argument::withEntry('communication', Argument::withEntry('category-page', $this->filterCategoryPath)))->shouldBeCalled();
+        $extension->assign(Argument::withEntry('communication', Argument::withEntry('categoryPage', $this->filterCategoryPath)))->shouldBeCalled();
         $this->onPageLoaded($event);
     }
 
