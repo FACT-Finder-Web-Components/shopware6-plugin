@@ -1,6 +1,20 @@
 {% block block_factfinder_web_components_listing %}
   {% set columns = 1 %}
   {% set element = block.slots.getSlot('toolbarFilters') %}
+
+  <!-- Category page -->
+  <script>
+    document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+      factfinder.config.setAppConfig({
+        categoryPage: [
+          factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, {{ (page.extensions.factfinder.communication.categoryPage|split(',')|json_encode())|raw }})
+    ],
+    });
+
+      factfinder.request.navigation({'filters': factfinder.config.get().appConfig.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
+    });
+  </script>
+
   <div class="col-12">
     <div class="cms-element-sidebar-filter">
       {% block element_product_listing_filter_button %}
@@ -27,7 +41,7 @@
   </div>
 
   <div class="col-12">
-    <div class="cms-element-product-listing-wrapper pt-3">
+    <div class="ff-cms-element-product-listing-wrapper pt-3">
       <div class="cms-element-product-listing">
         <div class="cms-element-product-listing-actions row justify-content-between">
           <div class="col-md-auto pt-3" data-cms-element-id="{{ element.id }}">
