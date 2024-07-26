@@ -1,5 +1,5 @@
 {% block component_factfinder_paging %}
-  <ff-paging class="pagination" unresolved {% if showOnly %} show-only="{{ showOnly }}" {% endif %}>
+  <ff-paging class="pagination" unresolved {% if showOnly %} show-only {% endif %}>
     <ff-paging-item type="firstLink" class="page-item page-first">
       <div class="page-link">
         {% sw_icon 'arrow-medium-double-left' style { size: 'fluid', pack: 'solid'} %}
@@ -14,7 +14,7 @@
 
     {% for p in -1..1 %}
       <ff-paging-item type="currentLink{% if p %} {{ p }}{% endif %}" class="page-item{% if not p %} active{% endif %}">
-        <div class="page-link">{{ '{{caption}}' }}</div>
+        <div class="page-link">{{ '{{page}}' }}</div>
       </ff-paging-item>
     {% endfor %}
 
