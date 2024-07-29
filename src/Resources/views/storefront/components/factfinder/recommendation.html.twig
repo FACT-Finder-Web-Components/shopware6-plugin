@@ -1,12 +1,10 @@
 {% block component_factfinder_recommendation %}
-  <ff-recommendation record-id="{{ product_number }}" max-results="4">
-    <template data-role="record">
-      <div class="row mt-5">
-        <div class="col-12">
-          <div class="h3">{{ "ff.recommendation.label"|trans }}</div>
-          {% sw_include '@Parent/storefront/components/factfinder/record-list-slider.html.twig' with {origin: 'ff-recommendation'} %}
-        </div>
+  <ff-recommendation product-number="{{ product_number }}" max-results="4">
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="h3">{{ "ff.recommendation.label"|trans }}</div>
+        {% sw_include '@Parent/storefront/components/factfinder/record-list-slider.html.twig' with {origin: 'ff-recommendation'} %}
       </div>
-    </template>
+    </div>
   </ff-recommendation>
 {% endblock %}
