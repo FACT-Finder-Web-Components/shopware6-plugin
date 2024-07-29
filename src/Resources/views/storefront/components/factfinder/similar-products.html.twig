@@ -1,5 +1,5 @@
 {% block component_factfinder_similar_products %}
-  <ff-similar-products record-id="{{ product_number }}" max-results="4" id-type="productNumber">
+  <ff-similar-products product-id="{{ product_number }}" max-results="4" id-type="productNumber">
     <div class="row mt-5">
       <div class="col-12">
         <div class="h3">{{ "ff.similarProducts.label"|trans|sw_sanitize }}</div>

@@ -1,6 +1,7 @@
 {% sw_extends '@Parent/storefront/components/factfinder/record-list.html.twig' %}
 {% block component_factfinder_record %}
-<div class="cms-element-product-slider">
+<template data-role="record">
+  <div class="cms-element-product-slider">
   <div class="base-slider product-slider" data-product-slider-options="{{ recordListSliderOptions|json_encode }}" data-origin="{{ origin }}">
     <div class="product-slider-container" data-product-slider-container="true">
       <ff-record>
@@ -52,6 +53,7 @@
     </div>
   </div>
 </div>
+</template>
 <script>
   document.querySelector('{{ origin }} ff-record-list').addEventListener('dom-updated', function(e) {
     const sliderPlugin = window.PluginManager.getPlugin('ProductSlider');
