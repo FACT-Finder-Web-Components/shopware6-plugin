@@ -62,12 +62,10 @@
         });
       //
 
-        if ({{ page.extensions.factfinder.searchImmediate }}) {
-          const searchParams = factfinder.utils.env.searchParamsFromUrl();
-          initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
-        }
-
-
+{#        {% if page.extensions.factfinder.searchImmediate %}#}
+{#          const searchParams = factfinder.utils.env.searchParamsFromUrl();#}
+{#          initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });#}
+{#        {% endif %}#}
 
       });
     </script>
@@ -77,7 +75,7 @@
   {{ parent() }}
 {% endblock %}
 
-{#{% block base_body_script %}#}
+{% block base_body_script %}
 {#  {% block base_script_factfinder_search_redirect %}#}
 {#    <script>#}
 {#      const ffRedirectMapping = JSON.parse('{{ page.extensions.factfinder.redirectMapping|raw }}');#}
@@ -108,72 +106,65 @@
 {#    </script>#}
 {#  {% endblock %}#}
 
-{#  <script>#}
-{#    const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');#}
+  <script>
+    {#const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');#}
 
-{#    {% if page.extensions.factfinder.ssr %}#}
-{#      function generateSid() {#}
-{#        var length = 30;#}
-{#        var characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";#}
-{#        var text = "";#}
+    {% if page.extensions.factfinder.ssr %}
+      function generateSid() {
+        var length = 30;
+        var characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var text = "";
 
-{#        for (var i = 0; i < length; i++) {#}
-{#          text += characterSet.charAt(Math.floor(Math.random() * characterSet.length));#}
-{#        }#}
+        for (var i = 0; i < length; i++) {
+          text += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
+        }
 
-{#        return text;#}
-{#      }#}
-{#    {% endif %}#}
+        return text;
+      }
+    {% endif %}
 
-{#    document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {#}
-{#      {% if page.extensions.factfinder.ssr == 'ssr' %}#}
-{#        const searchResult = {FF_SEARCH_RESULT};#}
+    document.addEventListener('ffCoreReady', ({ factfinder }) => {
+      {% if page.extensions.factfinder.ssr == 'ssr' %}
+        const searchResult = {FF_SEARCH_RESULT};
 
-{#        if (searchResult.hasOwnProperty('records')) {#}
-{#          factfinder.communication.EventAggregator.currentSearchResult = searchResult;#}
-{#          factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);#}
-{#        }#}
-{#      {% endif %}#}
+        if (searchResult.hasOwnProperty('records')) {
+          factfinder.response.dispatch.ssrSearch(searchResult);
+        }
+      {% endif %}
 
-{#      const cookies = document.cookie.split('; ').reduce((acc, cookie) => {#}
-{#        const cookieData = cookie.split('=');#}
-{#        const [key, value] = cookieData;#}
-{#        acc[key] = value;#}
+      const ffCookies = document.cookie.split('; ').reduce((acc, cookie) => {
+        const cookieData = cookie.split('=');
+        const [key, value] = cookieData;
+        acc[key] = value;
 
-{#        return acc;#}
-{#      }, {});#}
+        return acc;
+      }, {});
 
-{#      if (cookies['ff_user_id']) {#}
-{#        factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])#}
+      // if (ffCookies['ff_user_id']) {
+      //   factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
+      //
+      //   if (ffCookies['ff_has_just_logged_in']) {
+      //     factfinder.communication.Tracking.loginWithConfig();
+      //   }
+      // } else {
+      //   factfinder.communication.sessionManager.clearLoginData();
+      //
+      //   if (ffCookies['ff_has_just_logged_out']) {
+      //     factfinder.communication.sessionManager.clearAllSessionData();
+      //   }
+      // }
 
-{#        if (cookies['ff_has_just_logged_in']) {#}
-{#          factfinder.communication.Tracking.loginWithConfig();#}
-{#        }#}
-{#      } else {#}
-{#        factfinder.communication.sessionManager.clearLoginData();#}
+      {% if page.extensions.factfinder.ssr %}
+        if (!ffCookies['ffwebc_sid']) {
+          const sid = generateSid();
+          document.cookie = 'ffwebc_sid=' + sid + '; path=/;';
+          factfinder.config.setFFParams({sid: sid});
+        } else {
+          factfinder.config.setFFParams({sid: ffCookies['ffwebc_sid']});
+        }
+      {% endif %}
+    });
+  </script>
 
-{#        if (cookies['ff_has_just_logged_out']) {#}
-{#          factfinder.communication.sessionManager.clearAllSessionData();#}
-{#        }#}
-{#      }#}
-
-{#      {% if page.extensions.factfinder.ssr %}#}
-{#        const ffcommunication = document.querySelector('ff-communication');#}
-
-{#        if (!cookies['ffwebc_sid']) {#}
-{#          const sid = generateSid();#}
-{#          document.cookie = 'ffwebc_sid=' + sid + '; path=/;';#}
-{#          ffcommunication.setAttribute('sid', sid);#}
-{#        } else {#}
-{#          ffcommunication.setAttribute('sid', cookies['ffwebc_sid']);#}
-{#        }#}
-{#      {% endif %}#}
-
-{#      if ({{ page.extensions.factfinder.searchImmediate }}) {#}
-{#        searchImmediate();#}
-{#      }#}
-{#    });#}
-{#  </script>#}
-
-{#  {{ parent() }}#}
-{#{% endblock %}#}
+  {{ parent() }}
+{% endblock %}

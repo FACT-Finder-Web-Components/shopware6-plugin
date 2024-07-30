@@ -2,7 +2,7 @@
   <script>
     {% block add_callback %}
       {% if addCallback %}
-      document.addEventListener('ffReady', function ({resultDispatcher}) {
+      document.addEventListener('ffCoreReady', function ({resultDispatcher}) {
         resultDispatcher.addCallback('{{ topic }}', {{ arg }} => {
           {{ addCallback|raw }}
         });
