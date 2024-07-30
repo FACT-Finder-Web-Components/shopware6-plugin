@@ -65,6 +65,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             || $categoryPath === ''
         ) {
             $response->setContent(str_replace('{FF_SEARCH_RESULT}', '{}', $response->getContent()));
+
             return;
         }
 

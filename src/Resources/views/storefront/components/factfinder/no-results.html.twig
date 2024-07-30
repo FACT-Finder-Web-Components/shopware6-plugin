@@ -1,10 +1,10 @@
 {% block component_factfinder_record_list_no_results %}
   <ff-template class="cms-listing-col col-12" scope="SearchAndNavigation" unresolved>
-    {{ '{{^resultCount}}' }}
+    {{ '{{^hits}}' }}
     {% sw_include '@Parent/storefront/utilities/alert.html.twig' with {
       type: 'info',
       content: 'listing.emptyResultMessage'|trans|sw_sanitize
     } %}
-    {{ '{{/resultCount}}' }}
+    {{ '{{/hits}}' }}
   </ff-template>
 {% endblock %}
