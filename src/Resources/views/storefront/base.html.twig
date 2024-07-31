@@ -124,7 +124,7 @@
     {% endif %}
 
     document.addEventListener('ffCoreReady', ({ factfinder }) => {
-      {% if page.extensions.factfinder.ssr == 'ssr' %}
+      {% if page.extensions.factfinder.ssr == 'ssr' and app.request.attributes.get('_route') == 'frontend.factfinder.result' %}
         const searchResult = {FF_SEARCH_RESULT};
 
         if (searchResult.hasOwnProperty('records')) {

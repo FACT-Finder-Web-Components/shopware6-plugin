@@ -14,10 +14,11 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -50,11 +51,11 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            BeforeSendResponseEvent::class => 'onPageRendered',
+            KernelEvents::RESPONSE => 'onPageRendered',
         ];
     }
 
-    public function onPageRendered(BeforeSendResponseEvent $event): void
+    public function onPageRendered(ResponseEvent $event): void
     {
         $request      = $event->getRequest();
         $response     = $event->getResponse();
@@ -122,7 +123,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         $criteria->addFilter(new EqualsFilter('id', $categoryId));
         $category = $this->categoryRepository->search($criteria, Context::createDefaultContext())->first();
 
-        return $category !== null ? $this->categoryPath->getValue($category) : '';
+        return $category !== null ? $this->categoryPath->getSsrValue($category) : '';
     }
 
     private function getCategoryId(Request $request): string
