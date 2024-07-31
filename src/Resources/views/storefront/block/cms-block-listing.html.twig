@@ -2,7 +2,7 @@
   {% set columns = 1 %}
   {% set element = block.slots.getSlot('toolbarFilters') %}
 
-  <!-- Category page -->
+{#  <!-- Category page -->#}
   <script>
     document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
       factfinder.config.setAppConfig({
@@ -11,7 +11,15 @@
     ],
     });
 
-      factfinder.request.navigation({'filters': factfinder.config.get().appConfig.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
+      {% if page.extensions.factfinder.ssr == 'ssr' %}
+        const searchResult = {FF_SEARCH_RESULT};
+
+        if (searchResult.hasOwnProperty('records')) {
+          factfinder.response.dispatch.ssrNavigation(searchResult);
+        }
+      {% else %}
+        factfinder.request.navigation({'filters': factfinder.config.get().appConfig.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
+      {% endif %}
     });
   </script>
 
