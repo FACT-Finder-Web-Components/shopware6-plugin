@@ -591,10 +591,10 @@ Default field roles are defined as array of Symfony Configuration Parameters in 
      <parameter key="ean">EAN</parameter>  
      <parameter key="displayProductNumber">ProductNumber</parameter>  
      <parameter key="imageUrl">ImageUrl</parameter>  
-     <parameter key="masterArticleNumber">Master</parameter>  
+     <parameter key="masterId">Master</parameter>  
      <parameter key="price">Price</parameter>  
      <parameter key="productName">Name</parameter>  
-     <parameter key="trackingProductNumber">ProductNumber</parameter>  
+     <parameter key="productNumber">ProductNumber</parameter>  
     </parameter>
 
 In order to override these parameters defined by a module, you have to redefine them in your application `services.xml`. Parameters defined there take precedence over the defaults, defined in the module   

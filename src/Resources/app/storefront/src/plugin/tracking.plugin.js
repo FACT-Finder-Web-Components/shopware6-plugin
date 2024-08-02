@@ -36,27 +36,26 @@ export default class TrackingPlugin extends Plugin
         }
 
         waitForFactFinder().then(factfinder => {
-            const trackingHelper = factfinder.communication.Util.trackingHelper;
-            factfinder.communication.EventAggregator.addFFEvent({
-                type: 'getRecords',
-                recordId: productNumberInput.value,
-                idType: 'productNumber',
 
-                success: ([product]) => {
-                    const fieldRoles = factfinder.communication.fieldRoles;
-                    const getMasterId = ({record}) => record[fieldRoles.masterArticleNumber] || record[fieldRoles.masterId];
-                    const getTrackingNumber = ({record}) => record[fieldRoles.trackingProductNumber] || record[fieldRoles.productNumber]
+            factfinder.request.records({ productNumber: [productNumberInput.value]}).then((result) => {
+                const product = result.records[0];
+                const getUserId = factfinder.config.get().ffParams ? factfinder.config.get().ffParams.userId : undefined;
 
-                    factfinder.communication.Tracking.cart({
-                        id: getTrackingNumber(product),
-                        masterId: getMasterId(product),
-                        price: trackingHelper.getPrice(product),
-                        title: trackingHelper.getTitle(product),
-                        count: quantity,
-                        userId: factfinder.communication.globalCommunicationParameter.userId,
-                    });
-                },
-            });
+                let cartObj = {
+                    id: product.ProductNumber,
+                    masterId: product.Master,
+                    price: product.Price,
+                    title: product.Name,
+                    count: quantity,
+                    sid: JSON.parse(localStorage.ffwebco).sid,
+                }
+
+                if (getUserId) {
+                    cartObj.userId = getUserId;
+                }
+
+                factfinder.tracking.cart([cartObj]);
+            })
         });
     }
 }

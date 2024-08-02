@@ -40,16 +40,15 @@ class FieldRolesSpec extends ObjectBehavior
         $search->search('some_chnnel', '*')->willReturn($searchResult);
         $expected =  [
             'brand'                 => 'Manufacturer',
-            'campaignProductNumber' => 'ProductNumber',
             'deeplink'              => 'Deeplink',
             'description'           => 'Description',
             'displayProductNumber'  => 'ProductNumber',
             'ean'                   => null,
             'imageUrl'              => 'ImageUrl',
-            'masterArticleNumber'   => 'Master',
+            'masterId'              => 'Master',
             'price'                 => 'Price',
             'productName'           => 'Name',
-            'trackingProductNumber' => 'ProductNumber'
+            'productNumber'         => 'ProductNumber',
         ];
 
         $this->getRoles(Argument::any())->shouldReturn($expected);
