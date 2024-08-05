@@ -4,7 +4,7 @@
   <ff-checkout-tracking>
     {% for lineItem in page.order.nestedLineItems %}
       <ff-checkout-tracking-item
-        record-id="{{ lineItem.payload.productNumber }}"
+        product-number="{{ lineItem.payload.productNumber }}"
         count="{{ lineItem.quantity }}"
         channel="{{ page.extensions.factfinder.communication.channel }}">
       </ff-checkout-tracking-item>

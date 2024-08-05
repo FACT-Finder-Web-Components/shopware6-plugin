@@ -62,10 +62,10 @@
         });
       //
 
-{#        {% if page.extensions.factfinder.searchImmediate %}#}
-{#          const searchParams = factfinder.utils.env.searchParamsFromUrl();#}
-{#          initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });#}
-{#        {% endif %}#}
+        {% if page.extensions.factfinder.searchImmediate and not page.extensions.factfinder.ssr %}
+          const searchParams = factfinder.utils.env.searchParamsFromUrl();
+          initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
+        {% endif %}
 
       });
     </script>
@@ -107,7 +107,7 @@
 {#  {% endblock %}#}
 
   <script>
-    {#const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');#}
+    const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');
 
     {% if page.extensions.factfinder.ssr %}
       function generateSid() {
@@ -140,19 +140,28 @@
         return acc;
       }, {});
 
-      // if (ffCookies['ff_user_id']) {
-      //   factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
-      //
-      //   if (ffCookies['ff_has_just_logged_in']) {
-      //     factfinder.communication.Tracking.loginWithConfig();
-      //   }
-      // } else {
-      //   factfinder.communication.sessionManager.clearLoginData();
-      //
-      //   if (ffCookies['ff_has_just_logged_out']) {
-      //     factfinder.communication.sessionManager.clearAllSessionData();
-      //   }
-      // }
+      const clearCookie = (name) => {
+        document.cookie = name+'=; Max-Age=-1;';
+      }
+
+      if (ffCookies['ff_user_id']) {
+        factfinder.config.setFFParams({userId: ffCookies['ff_user_id']});
+
+        if (ffCookies['ff_has_just_logged_in']) {
+          clearCookie('ff_has_just_logged_in');
+          factfinder.tracking.login([{
+            sid: JSON.parse(localStorage.ffwebco).sid,
+            userId: factfinder.config.get().ffParams.userId
+          }]);
+        }
+      } else {
+        if (ffCookies['ff_has_just_logged_out']) {
+          clearCookie('ff_has_just_logged_out');
+          //Need to fix in webcomponents
+          //Now reset userId is impossible
+          // factfinder.config.setFFParams({userId: 'undefined'});
+        }
+      }
 
       {% if page.extensions.factfinder.ssr %}
         if (!ffCookies['ffwebc_sid']) {
