@@ -197,6 +197,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
     {
         $base   = (array) $this->container->getParameter(sprintf('factfinder.export.%s.columns.base', $exportType));
         $fields = $this->fieldProviders->getFields($entityClass);
+
         return array_values(
             array_unique(
                 array_merge(
