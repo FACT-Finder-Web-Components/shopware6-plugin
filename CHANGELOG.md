@@ -1,4 +1,7 @@
 # Changelog
+## Unreleased
+### Fix
+- Remove uasort() deprecation for CMS export
 ## [v5.2.0] - 2024.07.12
 ### Add
 - Add userId for cart tracking
