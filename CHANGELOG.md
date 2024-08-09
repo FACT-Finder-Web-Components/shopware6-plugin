@@ -1,7 +1,11 @@
 # Changelog
 ## Unreleased
 ### Fix
-- Handle js error if wishlist plugin is active
+- Fix problem with filter btn for not FF category page
+
+## [v2.1.1] - 2024.08.07
+### Fix
+- Handle JS error if wishlist plugin is active
 
 ## [v2.1.0] - 2024.07.10
 ### Fix
