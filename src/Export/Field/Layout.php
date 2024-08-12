@@ -70,9 +70,15 @@ class Layout implements FieldInterface
          * @param CmsBlockEntity|CmsSectionEntity $current
          * @param CmsBlockEntity|CmsSectionEntity $next
          *
-         * @return bool
+         * @return int
          */
-        $sortByPosition = fn ($current, $next): bool => !method_exists($current, 'getPosition') || $current->getPosition() > $next->getPosition();
+        $sortByPosition = function ($current, $next) {
+            if (!method_exists($current, 'getPosition')) {
+                return 0;
+            }
+
+            return ($current->getPosition() > $next->getPosition()) ? 1 : -1;
+        };
         $collection->sort($sortByPosition);
 
         return array_values($collection->getElements());
