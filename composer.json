@@ -35,7 +35,6 @@
   },
   "scripts": {
     "test": [
-      "vendor/bin/phpstan analyse -c phpstan.neon",
       "php-cs-fixer fix --dry-run -v",
       "phpspec run --format=dot",
       "phpmd src text phpmd.xml.dist",

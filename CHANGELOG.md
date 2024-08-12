@@ -1,11 +1,18 @@
 # Changelog
 ## Unreleased
+### BREAKING
 - IMPORTANT! Drop Shopware 6.5 compatibility
 - IMPORTANT! Drop PHP 8.1 compatibility
 - Add support for Shopware 6.6
 - Upgrade libraries as required Shopware v6.6
 - Upgrade symfony to version 7
 - Refactor vue component to vue version 3
+
+### Fix
+- Remove uasort() deprecation for CMS export
+- Fix SSR problem for category pages
+- Fix Shopware download export issue
+- Fix problem with filter btn for not FF category page
 
 ## [v5.2.0] - 2024.07.12
 ### Add
