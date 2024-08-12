@@ -11,6 +11,7 @@ use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
 use Prophecy\Argument;
 use Psr\Container\ContainerInterface;
+use Shopware\Core\Content\Media\MediaUrlPlaceholderHandlerInterface;
 use Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface;
 use Shopware\Core\Framework\Adapter\Twig\TemplateFinder;
 use Shopware\Core\Framework\Event\NestedEventDispatcher;
@@ -35,6 +36,7 @@ class ResultControllerSpec extends ObjectBehavior
     private Collaborator $salesChannelContext;
     private Collaborator $twig;
     private Collaborator $seoUrlPlaceholderHandler;
+    private Collaborator $mediaUrlPlaceholderHandler;
 
     public function let(
         Request $request,
@@ -48,15 +50,17 @@ class ResultControllerSpec extends ObjectBehavior
         NestedEventDispatcher $nestedEventDispatcher,
         SystemConfigService $systemConfigService,
         Environment $twig,
-        SeoUrlPlaceholderHandlerInterface $seoUrlPlaceholderHandler
+        SeoUrlPlaceholderHandlerInterface $seoUrlPlaceholderHandler,
+        MediaUrlPlaceholderHandlerInterface $mediaUrlPlaceholderHandler
     ): void {
-        $this->request                  = $request;
-        $this->config                   = $config;
-        $this->pageLoader               = $pageLoader;
-        $this->container                = $container;
-        $this->salesChannelContext      = $salesChannelContext;
-        $this->twig                     = $twig;
-        $this->seoUrlPlaceholderHandler = $seoUrlPlaceholderHandler;
+        $this->request                    = $request;
+        $this->config                     = $config;
+        $this->pageLoader                 = $pageLoader;
+        $this->container                  = $container;
+        $this->salesChannelContext        = $salesChannelContext;
+        $this->twig                       = $twig;
+        $this->seoUrlPlaceholderHandler   = $seoUrlPlaceholderHandler;
+        $this->mediaUrlPlaceholderHandler = $mediaUrlPlaceholderHandler;
         $this->beConstructedWith($config, $pageLoader);
         $requestStack->getCurrentRequest()->willReturn($request);
         $container->get('request_stack')->willReturn($requestStack);
@@ -68,6 +72,7 @@ class ResultControllerSpec extends ObjectBehavior
         $this->container->get('event_dispatcher')->willReturn($nestedEventDispatcher);
         $this->container->get(SystemConfigService::class)->willReturn($systemConfigService);
         $this->container->get(SeoUrlPlaceholderHandlerInterface::class)->willReturn($seoUrlPlaceholderHandler);
+        $this->container->get(MediaUrlPlaceholderHandlerInterface::class)->willReturn($mediaUrlPlaceholderHandler);
         $this->setTwig($twig);
         $nestedEventDispatcher->dispatch(Argument::any())->willReturn(Argument::any());
         $this->setContainer($container);
@@ -83,6 +88,7 @@ class ResultControllerSpec extends ObjectBehavior
         $this->config->isSsrActive()->willReturn(false);
         $this->twig->render('@FactFinder/storefront/page/factfinder/result.html.twig', Argument::any())->willReturn($content);
         $this->seoUrlPlaceholderHandler->replace($content, 'https://shop.com', $this->salesChannelContext)->willReturn($content);
+        $this->mediaUrlPlaceholderHandler->replace($content)->willReturn($content);
         $response = $this->result(
             $this->request,
             $this->salesChannelContext,
