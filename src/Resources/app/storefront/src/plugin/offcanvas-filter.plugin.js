@@ -7,6 +7,19 @@ export default class OffCanvasFilter extends OffCanvasFilterPlugin
     ASNGroupMobileClass = 'ffw-asn-group-vertical';
     ASNGroupElementMobileClass = 'ffw-asn-group-element-vertical';
 
+    init() {
+        this._registerEventListeners();
+    }
+
+    /**
+     * Register events to handle opening the Detail Filter OffCanvas
+     * by clicking a defined trigger selector
+     * @private
+     */
+    _registerEventListeners() {
+        this.el.addEventListener('click', this._onClickOffCanvasFilter.bind(this));
+    }
+
     _onCloseOffCanvas(event) {
         setTimeout(() => {
             const filterContent = event.detail.offCanvasContent && event.detail.offCanvasContent[0];
