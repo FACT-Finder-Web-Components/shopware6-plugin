@@ -5,6 +5,7 @@
 - Fix SSR problem for category pages
 - Fix Shopware download export issue
 - Fix problem with filter btn for not FF category page
+- Handle js error if wishlist plugin is active
 
 ## [v5.2.0] - 2024.07.12
 ### Add
