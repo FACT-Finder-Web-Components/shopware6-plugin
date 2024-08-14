@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.2.1] - 2024.08.14
 ### Fix
 - Remove uasort() deprecation for CMS export
 - Fix SSR problem for category pages
@@ -427,6 +427,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v5.2.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.2.1
 [v5.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.2.0
 [v5.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.1.0
 [v5.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.0.0
