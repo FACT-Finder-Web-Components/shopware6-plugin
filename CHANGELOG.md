@@ -4,6 +4,7 @@
 - Remove uasort() deprecation for CMS export
 - Fix SSR problem for category pages
 - Fix Shopware download export issue
+- Fix problem with filter btn for not FF category page
 
 ## [v5.2.0] - 2024.07.12
 ### Add

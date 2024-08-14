@@ -7,7 +7,22 @@ export default class OffCanvasFilter extends OffCanvasFilterPlugin
     ASNGroupMobileClass = 'ffw-asn-group-vertical';
     ASNGroupElementMobileClass = 'ffw-asn-group-element-vertical';
 
-    _onCloseOffCanvas(event) {
+    init()
+    {
+        this._registerEventListeners();
+    }
+
+    /**
+     * Register events to handle opening the Detail Filter OffCanvas
+     * by clicking a defined trigger selector
+     * @private
+     */
+    _registerEventListeners()
+    {
+        this.el.addEventListener('click', this._onClickOffCanvasFilter.bind(this));
+    }
+    _onCloseOffCanvas(event)
+    {
         setTimeout(() => {
             const filterContent = event.detail.offCanvasContent && event.detail.offCanvasContent[0];
             if (!filterContent) {
@@ -21,7 +36,8 @@ export default class OffCanvasFilter extends OffCanvasFilterPlugin
         document.$emitter.unsubscribe('onCloseOffcanvas', this._onCloseOffCanvas.bind(this));
     }
 
-    _onClickOffCanvasFilter(event) {
+    _onClickOffCanvasFilter(event)
+    {
         event.preventDefault();
 
         const filterContent = document.querySelector('[data-offcanvas-filter-content="true"]');
@@ -43,7 +59,8 @@ export default class OffCanvasFilter extends OffCanvasFilterPlugin
         this.$emitter.publish('onClickOffCanvasFilter');
     }
 
-    _toggleASNMobileMode(asnInstance,) {
+    _toggleASNMobileMode(asnInstance,)
+    {
 
         const modifyClasses =  operation => instance => classes => instance.classList[operation](...classes);
         const addClasses = modifyClasses('add');

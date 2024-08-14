@@ -5,5 +5,4 @@ import OffCanvasFilter from './plugin/offcanvas-filter.plugin';
 const PluginManager = window.PluginManager;
 PluginManager.register('TrackingPlugin', TrackingPlugin);
 PluginManager.register('AsnPlugin', AsnPlugin);
-
-PluginManager.override('OffCanvasFilter', OffCanvasFilter, '[data-offcanvas-filter]');
+PluginManager.register('FFOffCanvasFilter', OffCanvasFilter, '[data-ff-offcanvas-filter]');
