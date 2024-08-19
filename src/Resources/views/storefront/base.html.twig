@@ -49,8 +49,6 @@
         const ffRedirectMapping = JSON.parse('{{ page.extensions.factfinder.redirectMapping|raw }}');
 
         factfinder.request.before.search(({ searchParams, searchOptions }) => {
-          console.log(searchParams.query);
-          console.log(ffRedirectMapping);
 
           if (ffRedirectMapping.hasOwnProperty(searchParams.query)) {
             window.location = ffRedirectMapping[searchParams.query];
