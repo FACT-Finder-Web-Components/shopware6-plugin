@@ -80,8 +80,7 @@
             <label lang="de-DE">Weiterleitungszuordnung für ausgewählte Abfragen</label>
             <helpText>Put each pair "query=url" in separate row. If the phrase appears twice, the first one from the top of the list will be taken.</helpText>
             <helpText lang="de-DE">Fügen Sie jedes Paar „query=url“ in eine separate Zeile ein. Wenn die Phrase zweimal vorkommt, wird die erste von oben in der Liste verwendet.</helpText>
-            <placeholder>phrase one=/some/special/link/one
-                phrase two=https://domain.com/some/special/link/two
+            <placeholder>phrase one=/some/special/link/one &#10;phrase two=https://domain.com/some/special/link/two
             </placeholder>
         </input-field>
     </card>

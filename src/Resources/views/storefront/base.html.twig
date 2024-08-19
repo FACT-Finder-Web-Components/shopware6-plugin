@@ -46,7 +46,16 @@
       // }));
       //   <?php endif; ?>
       //
+        const ffRedirectMapping = JSON.parse('{{ page.extensions.factfinder.redirectMapping|raw }}');
+
         factfinder.request.before.search(({ searchParams, searchOptions }) => {
+
+          if (ffRedirectMapping.hasOwnProperty(searchParams.query)) {
+            window.location = ffRedirectMapping[searchParams.query];
+
+            return;
+          }
+
           if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
             // <?php if(!empty($parameters['add-params'])) : ?>
             // window.location.href =  `/factfinder/result?query=${searchParams.query}&<?= /* @noEscape */ http_build_query($parameters['add-params']) ?>`;
