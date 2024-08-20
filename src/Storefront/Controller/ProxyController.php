@@ -27,7 +27,7 @@ class ProxyController extends StorefrontController
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     #[Route(
-        '/fact-finder/proxy/{endpoint}',
+        '/fact-finder/proxy{endpoint}',
         name: 'frontend.factfinder.proxy.execute',
         requirements: ['endpoint' => '.*'],
         defaults: ['csrf_protected' => false],
@@ -40,7 +40,7 @@ class ProxyController extends StorefrontController
         EventDispatcherInterface $eventDispatcher
     ): Response {
         $client = $clientBuilder
-            ->withServerUrl($this->config->getServerUrl())
+            ->withServerUrl($this->config->getServerUrl() . '/')
             ->withApiKey($this->config->getApiKey())
             ->withVersion($this->config->getVersion())
             ->build();
@@ -54,7 +54,7 @@ class ProxyController extends StorefrontController
 
                     break;
                 case Request::METHOD_POST:
-                    $response = $client->request('POST', $endpoint, [
+                    $response = $client->request('POST', trim($endpoint, '/'), [
                         'body'    => $request->getContent(),
                         'headers' => ['Content-Type' => 'application/json'],
                     ]);
