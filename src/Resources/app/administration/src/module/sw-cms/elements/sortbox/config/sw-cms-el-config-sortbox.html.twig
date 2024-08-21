@@ -1,9 +1,9 @@
 {% block sw_cms_element_sortbox_config %}
   <div>
-    <sw-switch-field label="subscribe" v-model="element.config.subscribe.value"></sw-switch-field>
-    <sw-switch-field label="opened" v-model="element.config.showSelected.value"></sw-switch-field>
-    <sw-switch-field label="show selected" v-model="element.config.showSelectedFirst.value"></sw-switch-field>
-    <sw-switch-field label="show selected first" v-if="element.config.showSelected.value" v-model="element.config.showSelectedFirst.value"></sw-switch-field>
-    <sw-switch-field label="collapse onblur" v-model="element.config.collapseOnblur.value"></sw-switch-field>
+    <sw-switch-field label="subscribe" v-model:value="element.config.subscribe.value"></sw-switch-field>
+    <sw-switch-field label="opened" v-model:value="element.config.showSelected.value"></sw-switch-field>
+    <sw-switch-field label="show selected" v-model:value="element.config.showSelectedFirst.value"></sw-switch-field>
+    <sw-switch-field label="show selected first" v-if="element.config.showSelected.value" v-model:value="element.config.showSelectedFirst.value"></sw-switch-field>
+    <sw-switch-field label="collapse onblur" v-model:value="element.config.collapseOnblur.value"></sw-switch-field>
   </div>
 {% endblock %}
