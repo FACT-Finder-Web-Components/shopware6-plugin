@@ -3,8 +3,8 @@
     <sw-text-field
       :label="$tc('sw-cms.elements.paging.showOnly')"
       :placeholder="$tc('sw-cms.elements.paging.showOnly')"
-      v-model="element.config.showOnly.value">
+      v-model:value="element.config.showOnly.value">
     </sw-text-field>
-    <sw-switch-field :label="$tc('sw-cms.elements.paging.subscribe')" v-model="element.config.subscribe.value"></sw-switch-field>
+    <sw-switch-field :label="$tc('sw-cms.elements.paging.subscribe')" v-model:value="element.config.subscribe.value"></sw-switch-field>
   </div>
 {% endblock %}

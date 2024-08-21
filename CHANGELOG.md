@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fix
 - Fix problem with filter btn for not FF category page
+- Fix shopping experience FF vue components
 
 ## [v2.1.1] - 2024.08.07
 ### Fix

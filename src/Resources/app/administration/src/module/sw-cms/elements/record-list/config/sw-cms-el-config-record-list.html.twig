@@ -1,38 +1,38 @@
 {% block sw_cms_element_record_list_config %}
   <div>
-    <sw-switch-field :label="$tc('sw-cms.elements.recordList.base.subscribe')" v-model="element.config.subscribe.value"></sw-switch-field>
+    <sw-switch-field :label="$tc('sw-cms.elements.recordList.base.subscribe')" v-model:value="element.config.subscribe.value"></sw-switch-field>
 
-    <sw-switch-field :label="$tc('sw-cms.elements.recordList.base.infiniteScrolling')" v-model="element.config.infiniteScrolling.value"></sw-switch-field>
+    <sw-switch-field :label="$tc('sw-cms.elements.recordList.base.infiniteScrolling')" v-model:value="element.config.infiniteScrolling.value"></sw-switch-field>
 
     <sw-text-field
       :label="$tc('sw-cms.elements.recordList.base.debounceDelay')"
       :placeholder="$tc('sw-cms.elements.recordList.base.debounceDelay')"
-      v-model="element.config.infiniteDebounceDelay.value">
+      v-model:value="element.config.infiniteDebounceDelay.value">
     </sw-text-field>
 
     <sw-text-field :label="$tc('sw-cms.elements.recordList.base.ident')"
                    :placeholder="$tc('sw-cms.elements.recordList.base.ident')"
                    v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.id')}"
-                   v-model="element.config.id.value">
+                   v-model:value="element.config.id.value">
     </sw-text-field>
 
     <sw-text-field :label="$tc('sw-cms.elements.recordList.base.callbackArg')"
                    :placeholder="$tc('sw-cms.elements.recordList.base.callbackArg')"
                    v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.callbackArg')}"
-                   v-model="element.config.callbackArg.value">
+                   v-model:value="element.config.callbackArg.value">
     </sw-text-field>
 
     <sw-textarea-field :label="$tc('sw-cms.elements.recordList.base.callback')"
                        :placeholder="$tc('sw-cms.elements.recordList.base.callback')"
                        size="medium"
-                       v-model="element.config.callback.value"
+                       v-model:value="element.config.callback.value"
                        v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.callback')}">
     </sw-textarea-field>
 
     <sw-textarea-field :label="$tc('sw-cms.elements.recordList.base.domUpdated')"
                        :placeholder="$tc('sw-cms.elements.recordList.base.domUpdated')"
                        size="medium"
-                       v-model="element.config.domUpdated.value"
+                       v-model:value="element.config.domUpdated.value"
                        v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.domUpdated')}">
     </sw-textarea-field>
   </div>

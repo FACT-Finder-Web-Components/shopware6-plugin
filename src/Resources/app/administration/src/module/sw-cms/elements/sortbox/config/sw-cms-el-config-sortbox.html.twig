@@ -1,9 +1,9 @@
 {% block sw_cms_element_sortbox_config %}
   <div>
-    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.subscribe')" v-model="element.config.subscribe.value"></sw-switch-field>
-    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.opened')" v-model="element.config.showSelected.value"></sw-switch-field>
-    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.showSelected')" v-model="element.config.showSelectedFirst.value"></sw-switch-field>
-    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.showSelectedFirst')" v-if="element.config.showSelected.value" v-model="element.config.showSelectedFirst.value"></sw-switch-field>
-    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.collapseOnblur')" v-model="element.config.collapseOnblur.value"></sw-switch-field>
+    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.subscribe')" v-model:value="element.config.subscribe.value"></sw-switch-field>
+    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.opened')" v-model:value="element.config.showSelected.value"></sw-switch-field>
+    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.showSelected')" v-model:value="element.config.showSelectedFirst.value"></sw-switch-field>
+    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.showSelectedFirst')" v-if="element.config.showSelected.value" v-model:value="element.config.showSelectedFirst.value"></sw-switch-field>
+    <sw-switch-field :label="$tc('sw-cms.elements.sortbox.base.collapseOnblur')" v-model:value="element.config.collapseOnblur.value"></sw-switch-field>
   </div>
 {% endblock %}
