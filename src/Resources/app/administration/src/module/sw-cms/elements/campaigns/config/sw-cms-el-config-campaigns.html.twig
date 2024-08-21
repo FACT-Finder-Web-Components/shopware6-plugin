@@ -1,7 +1,7 @@
 {% block sw_cms_element_campaigns_config %}
   <div>
 
-    <sw-switch-field label="Advisor Campaign" v-model="element.config.enableAdvisorCampaign.value">
+    <sw-switch-field label="Advisor Campaign" v-model:value="element.config.enableAdvisorCampaign.value">
     </sw-switch-field>
 
     <sw-container v-if="element.config.enableAdvisorCampaign.value">
@@ -9,11 +9,11 @@
         label="Name"
         placeholder="Advisor Campaign Name"
         v-tooltip="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
-        v-model="element.config.advisorCampaignName.value">
+        v-model:value="element.config.advisorCampaignName.value">
       </sw-text-field>
     </sw-container>
 
-    <sw-switch-field label="Feedback Campaign" v-model="element.config.enableFeedbackCampaign.value">
+    <sw-switch-field label="Feedback Campaign" v-model:value="element.config.enableFeedbackCampaign.value">
     </sw-switch-field>
 
     <sw-container v-if="element.config.enableFeedbackCampaign.value">
@@ -21,11 +21,11 @@
         label="Label"
         placeholder="Feedback Campaign Label"
         v-tooltip="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
-        v-model="element.config.feedbackCampaignLabel.value">
+        v-model:value="element.config.feedbackCampaignLabel.value">
       </sw-text-field>
 
       <sw-select-field label="Flag"
-                       v-model="element.config.feedbackCampaignFlag.value">
+                       v-model:value="element.config.feedbackCampaignFlag.value">
         <option v-for="(flag, index) in campaignFlags"
                 :key="index"
                 :value="flag"
@@ -35,15 +35,15 @@
       </sw-select-field>
     </sw-container>
 
-    <sw-switch-field label="Redirect Campaign" v-model="element.config.enableRedirectCampaign.value">
+    <sw-switch-field label="Redirect Campaign" v-model:value="element.config.enableRedirectCampaign.value">
     </sw-switch-field>
 
 
-    <sw-switch-field label="Pushed Products" v-model="element.config.enablePushedProducts.value">
+    <sw-switch-field label="Pushed Products" v-model:value="element.config.enablePushedProducts.value">
     </sw-switch-field>
     <sw-container v-if="element.config.enablePushedProducts.value">
       <sw-select-field label="Flag"
-                       v-model="element.config.pushedProductsFlag.value">
+                       v-model:value="element.config.pushedProductsFlag.value">
         <option v-for="(flag, index) in campaignFlags"
                 :key="index"
                 :value="flag"
@@ -55,7 +55,7 @@
         label="Name"
         placeholder="Name"
         v-tooltip="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
-        v-model="element.config.pushedProductsName.value">
+        v-model:value="element.config.pushedProductsName.value">
       </sw-text-field>
     </sw-container>
   </div>

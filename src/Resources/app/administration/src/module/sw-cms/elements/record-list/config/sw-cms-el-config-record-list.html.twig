@@ -1,38 +1,38 @@
 {% block sw_cms_element_record_list_config %}
   <div>
-    <sw-switch-field label="Subscribe" v-model="element.config.subscribe.value"></sw-switch-field>
+    <sw-switch-field label="Subscribe" v-model:value="element.config.subscribe.value"></sw-switch-field>
 
-    <sw-switch-field label="Infinite Scrolling" v-model="element.config.infiniteScrolling.value"></sw-switch-field>
+    <sw-switch-field label="Infinite Scrolling" v-model:value="element.config.infiniteScrolling.value"></sw-switch-field>
 
     <sw-text-field
       label="Debounce Delay"
       placeholder="Debounce Delay"
-      v-model="element.config.infiniteDebounceDelay.value">
+      v-model:value="element.config.infiniteDebounceDelay.value">
     </sw-text-field>
 
     <sw-text-field label="ID"
                    placeholder="ID"
                    v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.id')}"
-                   v-model="element.config.id.value">
+                   v-model:value="element.config.id.value">
     </sw-text-field>
 
     <sw-text-field label="Callback Argument"
                    placeholder="Callback Argument"
                    v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.callbackArg')}"
-                   v-model="element.config.callbackArg.value">
+                   v-model:value="element.config.callbackArg.value">
     </sw-text-field>
 
     <sw-textarea-field label="Add Callback"
                        placeholder="Callback"
                        size="medium"
-                       v-model="element.config.callback.value"
+                       v-model:value="element.config.callback.value"
                        v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.callback')}">
     </sw-textarea-field>
 
     <sw-textarea-field label="Dom Updated"
                        placeholder="Dom Updated"
                        size="medium"
-                       v-model="element.config.domUpdated.value"
+                       v-model:value="element.config.domUpdated.value"
                        v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.domUpdated')}">
     </sw-textarea-field>
   </div>
