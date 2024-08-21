@@ -3,6 +3,7 @@
 ### Fix
 - Fix problem with filter btn for not FF category page
 - Fix shopping experience FF vue components
+- Display by default recommendation and similar product on PDP
 
 ## [v2.1.1] - 2024.08.07
 ### Fix
