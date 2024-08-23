@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v2.2.0] - 2024.08.23
 ### Improve
 - Support Fact-Finder redirect campaigns for SSR
 
