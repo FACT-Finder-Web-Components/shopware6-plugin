@@ -26,9 +26,9 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         SearchAdapter $searchAdapter,
         Engine $mustache,
     ) {
-        $this->config                 = $config;
-        $this->searchAdapter          = $searchAdapter;
-        $this->mustache               = $mustache;
+        $this->config        = $config;
+        $this->searchAdapter = $searchAdapter;
+        $this->mustache      = $mustache;
     }
 
     public static function getSubscribedEvents()
@@ -76,8 +76,6 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         } catch (DetectRedirectCampaignException $exception) {
             $event->setResponse(new RedirectResponse($exception->getRedirectUrl()));
         }
-
-
     }
 
     /**
