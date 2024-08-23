@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectCampaignException;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -24,9 +26,9 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         SearchAdapter $searchAdapter,
         Engine $mustache,
     ) {
-        $this->config                 = $config;
-        $this->searchAdapter          = $searchAdapter;
-        $this->mustache               = $mustache;
+        $this->config        = $config;
+        $this->searchAdapter = $searchAdapter;
+        $this->mustache      = $mustache;
     }
 
     public static function getSubscribedEvents()
@@ -63,12 +65,17 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             $request->attributes->get('sw-sales-channel-id'),
             $response->getContent(),
         );
-        $response->setContent(
-            $recordList->getContent(
-                $this->getParamsString($categoryPath),
-                true
-            )
-        );
+
+        try {
+            $response->setContent(
+                $recordList->getContent(
+                    $this->getParamsString($categoryPath),
+                    true
+                )
+            );
+        } catch (DetectRedirectCampaignException $exception) {
+            $event->setResponse(new RedirectResponse($exception->getRedirectUrl()));
+        }
     }
 
     /**
