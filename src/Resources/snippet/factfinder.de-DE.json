@@ -16,6 +16,9 @@
     "similarProducts": {
       "label": "Ähnliche Produkte"
     },
+    "productCampaign": {
+      "label": "Schauen Sie sich diese Produkte an"
+    },
     "cookie": {
       "groupName": "FactFinder",
       "groupDescription": "Cookie erforderlich, damit das FactFinder-Plugin ordnungsgemäß funktioniert",
