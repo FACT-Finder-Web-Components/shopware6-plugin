@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Improve
+- Support Fact-Finder redirect campaigns for SSR
+
 ### Fix
 - Fix problem with filter btn for not FF category page
 - Fix shopping experience FF vue components

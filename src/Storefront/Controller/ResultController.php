@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Storefront\Controller;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectCampaignException;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Shopware\Storefront\Page\GenericPageLoader;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,11 +50,16 @@ class ResultController extends StorefrontController
             $context->getSalesChannelId(),
             $response->getContent(),
         );
-        $response->setContent(
-            $recordList->getContent(
-                $this->parseQueryString((string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY))
-            )
-        );
+
+        try {
+            $response->setContent(
+                $recordList->getContent(
+                    $this->parseQueryString((string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY))
+                )
+            );
+        } catch (DetectRedirectCampaignException $exception) {
+            return new RedirectResponse($exception->getRedirectUrl());
+        }
 
         return $response;
     }
