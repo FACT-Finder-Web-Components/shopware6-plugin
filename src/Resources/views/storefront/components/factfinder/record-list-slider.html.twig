@@ -9,11 +9,11 @@
           <div class="card product-box box-standard card-body">
             <div class="card-body">
               <div class="product-image-wrapper">
-                <img data-image="{{ '{{record.ImageURL}}' }}" class="product-image is-standard" alt="{{ '{{ record.Title }}' }}">
+                <img data-image="{{ '{{record.ImageURL}}' }}" class="product-image is-standard" alt="{{ '{{ record.Name }}' }}">
               </div>
               <div class="product-info">
                 <a href="{{ '{{record.Deeplink}}' }}" data-action="redirect" class="product-name">
-                  <div class="product-title">{{ '{{ record.Title }}' }}</div>
+                  <div class="product-title">{{ '{{ record.Name }}' }}</div>
                 </a>
                 <div class="product-description">
                   {{ '{{ record.Description }}' }}
@@ -56,10 +56,7 @@
 </template>
 <script>
   document.querySelector('{{ origin }} ff-record-list').addEventListener('dom-updated', function(e) {
-    const sliderPlugin = window.PluginManager.getPlugin('ProductSlider');
-    if (sliderPlugin) {
-      new (sliderPlugin.get('class'))(document.querySelector('[data-origin="{{ origin }}"]'), {}, 'ProductSlider')
-    }
+    window.PluginManager.initializePlugin('ProductSlider', '[data-origin="{{ origin }}"]')
   });
 </script>
 {% endblock %}
