@@ -1,5 +1,6 @@
 {% block component_factfinder_campaign_pushed_products %}
   {% set recordListTemplate = recordListTemplate|default('@Parent/storefront/components/factfinder/record-list.html.twig') %}
+  <div class="h3">{{ "ff.productCampaign.label"|trans }}</div>
   <ff-campaign-pushed-products {% if flag !== 'None' %} {{ flag }}  {% endif %} name="{{ name }}" unresolved>
     {% sw_include recordListTemplate %}
   </ff-campaign-pushed-products>

@@ -16,6 +16,9 @@
     "similarProducts": {
       "label": "Similar Products"
     },
+    "productCampaign": {
+      "label": "Check out these products"
+    },
     "cookie": {
       "groupName": "FactFinder",
       "groupDescription": "Cookie required for proper working of FactFinder plugin",
