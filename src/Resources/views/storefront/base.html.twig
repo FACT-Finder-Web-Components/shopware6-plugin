@@ -3,8 +3,6 @@
 {% block base_body_inner %}
   {% block base_body_inner_factfinder_communication %}
 
-{#    {% dump(page.extensions.factfinder.communication) %}#}
-
     <!--Main FF Web-components Initialisation -->
     <script>
       document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
@@ -28,24 +26,6 @@
       },
       });
 
-      //   <?php if(!empty($parameters['add-params'])) : ?>
-      //   factfinder.routing.setUrlParamOptionsListener(() => ({
-      //     postStringifier: pairs => {
-      //       <?php foreach ($parameters['add-params'] as $name => $value) {
-      //         /* @noEscape */ echo "pairs.push({ key: `{$name}`, value:  `{$value}` });";
-      //       } ?>
-      //
-      //       return pairs;
-      //     },
-      //   }));
-      //   <?php endif; ?>
-      //
-      // <?php if(!empty($parameters['parameter-whitelist'])) : ?>
-      //   factfinder.routing.setUrlParamOptionsListener(() => ({
-      //     allow: [<?= /* @noEscape */ $parameters['parameter-whitelist']; ?>],
-      // }));
-      //   <?php endif; ?>
-      //
         const ffRedirectMapping = JSON.parse('{{ page.extensions.factfinder.redirectMapping|raw }}');
 
         factfinder.request.before.search(({ searchParams, searchOptions }) => {
@@ -57,12 +37,6 @@
           }
 
           if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
-            // <?php if(!empty($parameters['add-params'])) : ?>
-            // window.location.href =  `/factfinder/result?query=${searchParams.query}&<?= /* @noEscape */ http_build_query($parameters['add-params']) ?>`;
-            // <?php else : ?>
-            // window.location.href =  `/factfinder/result?query=${searchParams.query}`;
-            // <?php endif; ?>
-
             window.location.href =  `/factfinder/result?query=${searchParams.query}`;
 
             // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
@@ -85,35 +59,17 @@
 {% endblock %}
 
 {% block base_body_script %}
-{#  {% block base_script_factfinder_search_redirect %}#}
-{#    <script>#}
-{#      const ffRedirectMapping = JSON.parse('{{ page.extensions.factfinder.redirectMapping|raw }}');#}
-
-{#      document.addEventListener('before-search', function (event) {#}
-{#        const query = event.detail.query;#}
-
-{#        if (ffRedirectMapping.hasOwnProperty(query)) {#}
-{#          event.preventDefault();#}
-{#          window.location = ffRedirectMapping[query];#}
-
-{#          return;#}
-{#        }#}
-
-{#        if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {#}
-{#          event.preventDefault();#}
-{#          window.location = '{{ path('frontend.factfinder.result') }}' + factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));#}
-{#        }#}
-{#      });#}
-
-{#      document.addEventListener('ffReady', function (e) {#}
-{#        e.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {#}
-{#          url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/order=[^&]+&?/, '').replace(/name=[^&]+&?/g, '');#}
-{#          factfinder.communication.Util.pushParameterToHistory(res, url, event);#}
-{#          return false;#}
-{#        });#}
-{#      });#}
-{#    </script>#}
-{#  {% endblock %}#}
+  {% block base_script_factfinder_search_redirect %}
+    <script>
+      document.addEventListener('ffReady', function (e) {
+        e.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {
+          url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/order=[^&]+&?/, '').replace(/name=[^&]+&?/g, '');
+          factfinder.communication.Util.pushParameterToHistory(res, url, event);
+          return false;
+        });
+      });
+    </script>
+  {% endblock %}
 
   <script>
     const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');
