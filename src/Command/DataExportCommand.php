@@ -68,7 +68,7 @@ class DataExportCommand extends Command
         private readonly FieldsProvider $fieldProviders,
         private readonly Communication $communication,
         private readonly array $productsColumnsBase,
-        private readonly string $kernelProjectDir
+        private readonly string $kernelProjectDir,
     ) {
         $this->file = tmpfile();
         parent::__construct();

@@ -23,7 +23,7 @@ class CurrencyFieldsProvider
     public function __construct(
         EntityRepository $currencyRepository,
         ExportSettings $exportSettings,
-        NumberFormatter $numberFormatter
+        NumberFormatter $numberFormatter,
     ) {
         $this->currencyRepository = $currencyRepository;
         $this->exportSettings     = $exportSettings;

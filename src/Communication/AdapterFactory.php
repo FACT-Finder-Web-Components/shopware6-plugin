@@ -12,7 +12,7 @@ class AdapterFactory extends BaseAdapterFactory
 {
     public function __construct(
         ClientBuilder $clientBuilder,
-        Communication $config
+        Communication $config,
     ) {
         parent::__construct(
             $clientBuilder,

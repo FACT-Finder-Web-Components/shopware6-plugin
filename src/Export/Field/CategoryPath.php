@@ -23,7 +23,7 @@ class CategoryPath implements FieldInterface
     public function __construct(
         SalesChannelService $channelService,
         CategoryBreadcrumbBuilder $breadcrumbBuilder,
-        string $categoryPathFieldName
+        string $categoryPathFieldName,
     ) {
         $this->fieldName         = $categoryPathFieldName;
         $this->channelService    = $channelService;

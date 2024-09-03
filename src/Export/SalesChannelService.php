@@ -23,7 +23,7 @@ class SalesChannelService
 
     public function __construct(
         CachedSalesChannelContextFactory $channelContextFactory,
-        EntityRepository $channelRepository
+        EntityRepository $channelRepository,
     ) {
         $this->channelRepository     = $channelRepository;
         $this->channelContextFactory = $channelContextFactory;

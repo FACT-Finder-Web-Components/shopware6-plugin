@@ -18,7 +18,7 @@ class GenericEntityFactory implements FactoryInterface
     public function __construct(
         PropertyFormatter $propertyFormatter,
         FieldsProvider $fieldsProviders,
-        \Traversable $exportedEntityTypes
+        \Traversable $exportedEntityTypes,
     ) {
         $this->propertyFormatter   = $propertyFormatter;
         $this->fieldsProvider      = $fieldsProviders;

@@ -24,7 +24,7 @@ class VariantEntity implements ExportEntityInterface, ProductEntityInterface
         Product $product,
         array $parentData,
         PropertyFormatter $propertyFormatter,
-        iterable $variantFields
+        iterable $variantFields,
     ) {
         $this->product           = $product;
         $this->parentData        = $parentData;
