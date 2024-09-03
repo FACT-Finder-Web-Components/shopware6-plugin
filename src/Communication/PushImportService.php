@@ -22,7 +22,7 @@ class PushImportService
         Import $importAdapter,
         Communication $communicationConfig,
         FtpConfig $uploadConfig,
-        SalesChannelService $salesChannelService
+        SalesChannelService $salesChannelService,
     ) {
         $this->communicationConfig = $communicationConfig;
         $this->uploadConfig        = $uploadConfig;

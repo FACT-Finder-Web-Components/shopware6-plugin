@@ -18,7 +18,7 @@ class SearchAdapter
     public function __construct(
         ClientBuilder $clientBuilder,
         Communication $config,
-        PriceFormatter $priceFormatter
+        PriceFormatter $priceFormatter,
     ) {
         $this->clientBuilder  = $clientBuilder;
         $this->config         = $config;
@@ -28,7 +28,7 @@ class SearchAdapter
     public function search(
         string $paramString,
         bool $navigationRequest,
-        string $salesChannelId
+        string $salesChannelId,
     ): array {
         $client = $this->clientBuilder
             ->withServerUrl($this->config->getServerUrl())

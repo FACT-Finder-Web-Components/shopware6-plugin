@@ -19,7 +19,7 @@ class UiFeedExportController extends AbstractController
     public function __construct(
         private readonly FeedExportHandler $feedExportHandler,
         private readonly DataExportCommand $dataExportCommand,
-        private readonly LoggerInterface $factfinderLogger
+        private readonly LoggerInterface $factfinderLogger,
     ) {
     }
 

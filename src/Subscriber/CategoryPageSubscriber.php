@@ -24,7 +24,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         private readonly Communication $config,
         private readonly ExtensionConfig $extensionConfig,
         string $categoryPathFieldName,
-        array $categoryPageAddParams = []
+        array $categoryPageAddParams = [],
     ) {
         $this->fieldName       = $categoryPathFieldName;
         $this->addParams       = $categoryPageAddParams;

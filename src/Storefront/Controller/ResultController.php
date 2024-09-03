@@ -22,7 +22,7 @@ class ResultController extends StorefrontController
 {
     public function __construct(
         private readonly Communication $config,
-        private readonly GenericPageLoader $pageLoader
+        private readonly GenericPageLoader $pageLoader,
     ) {
     }
 
@@ -31,7 +31,7 @@ class ResultController extends StorefrontController
         Request $request,
         SalesChannelContext $context,
         SearchAdapter $searchAdapter,
-        Engine $mustache
+        Engine $mustache,
     ): Response {
         $page     = $this->pageLoader->load($request, $context);
         $response = $this->renderStorefront('@Parent/storefront/page/factfinder/result.html.twig', ['page' => $page]);

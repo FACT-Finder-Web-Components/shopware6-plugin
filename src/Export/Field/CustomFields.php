@@ -46,7 +46,7 @@ class CustomFields implements FieldInterface
         EntityRepository $customFieldRepository,
         EntityRepository $languageRepository,
         ExportSettings $exportSettings,
-        CustomFieldsService $customFieldsService
+        CustomFieldsService $customFieldsService,
     ) {
         $this->propertyFormatter     = $propertyFormatter;
         $this->salesChannelService   = $salesChannelService;

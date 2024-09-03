@@ -35,7 +35,7 @@ class PreprocessedProductEntityFactory implements FactoryInterface
         FeedPreprocessorEntryReader $feedPreprocessorReader,
         FeedPreprocessorEntryPersister $entryPersister,
         FeedPreprocessor $feedPreprocessor,
-        \Traversable $cachedFields
+        \Traversable $cachedFields,
     ) {
         $this->channelService         = $channelService;
         $this->decoratedFactory       = $decoratedFactory;

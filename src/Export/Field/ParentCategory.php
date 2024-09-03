@@ -16,7 +16,7 @@ class ParentCategory implements FieldInterface
 
     public function __construct(
         SalesChannelService $channelService,
-        CategoryBreadcrumbBuilder $breadcrumbBuilder
+        CategoryBreadcrumbBuilder $breadcrumbBuilder,
     ) {
         $this->channelService    = $channelService;
         $this->breadcrumbBuilder = $breadcrumbBuilder;
