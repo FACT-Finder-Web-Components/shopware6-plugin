@@ -51,21 +51,26 @@ modifications in order to fit their needs. For more advanced features please che
 
 ## System Requirements
 
-- Shopware 6.5 
-- PHP version: 8.1, 8.2 or 8.3
+- Shopware 6.6
+- PHP version: 8.2 or 8.3
 
 For Shopware 6.4 please use SDK version 4.x:
-https://github.com/FACT-Finder-Web-Components/shopware6-plugin
+https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/4.x
 
-For Shopware 6.6 please use Shopware marketplace version:
-https://store.shopware.com/en/factf26713613196f/factfinder-ai-powered-search-product-discovery.html
+For Shopware 6.5 please use SDK version 5.x:
+https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/5.x
 
 ## FACT-Finder® Supported Sections
 
-Version | Compatibility
-------- | --- 
-NG      | ✔️ 
-7.x     | ❌️
+FF Version | Compatibility
+---------- | --- 
+NG         | ✔️ 
+7.x        | ❌️
+
+API Version| Compatibility
+---------- | --- 
+v5         | ✔️ 
+v4         | ❌️
 
 ## Installation
 
@@ -103,12 +108,10 @@ store cache in order the new applied configuration to start working.
   **Note:** Server URL should contain a used protocol: (e.g. `https://`) and should end with an
   endpoint ( `fact-finder` )
 * Channel - Channel you want to serve data from
-* Username
-* Password
-* API Version - Used FACT-Finder® api version   
-  **Note:** Module supports FACT-Finder® api version `v4` and `v5`. By selecting the wrong api version you may cause the Web Components to be unable to communicate with FACT-Finder®
+* API key - your FACT-Finder® API key
 
 You can check if the above data is correctly set by clicking on the `Test Connection` button. Please save your settings before clicking on button.
+
 #### Update Field Roles
 This functionality offers a way to download field roles configured in FACT-Finder®.
 Please use this if you don't use feed offered by the plugin or for some reason you have changed the column names.
@@ -133,8 +136,8 @@ This section contains a plugin configuration, which is optional and provides add
 * Use Proxy? - By enabling this, once a search query is sent, it does not immediately reach FACT-Finder, but is handed off to a specific controller
 `src/Storefront/Controller/ProxyController.php` which hands the request to the FACT-Finder system, receives the answer, processes it and only then returns it to the frontend view. You can use `EnrichProxyDataEvent` to enrich data received from FACT-Finder. You can find more
   details about implementation [here](#enrich-data-received-from-fact-finder-in-proxycontroller).
+Note: Sending each request to FACT-Finder instance trough Shopware, you lose on performance as each request need to be handled first by HTTP server and then, by Shopware itself. This additional traffic could be easily avoided by not activating this feature if there's no clear reason to use it.
 
-    Note: Sending each request to FACT-Finder instance trough Shopware, you lose on performance as each request need to be handled first by HTTP server and then, by Shopware itself. This additional traffic could be easily avoided by not activating this feature if there's no clear reason to use it.
 * Scenario how to count single click on "Add to cart" button
 * Redirect mapping for selected queries - put each pair `query=url` in separate row. If the phrase appears twice, the first one from the top of the list will be taken. Url can be relative path `/some/page` or absolute url `https://domain.com/some/page?someParameter=1`. If provided pair has an invalid format then it will be ignored.
 
@@ -142,7 +145,7 @@ This section contains a plugin configuration, which is optional and provides add
 
 ![Export Settings](docs/assets/export-settings.png "Export Settings")
 
-* Select Filter Attributes which should be ignored- product properties selected here will not be
+* Select Filter Attributes which should be ignored - product properties selected here will not be
   exported. By default, all properties are being exported.
   **Note:** Variant products properties which are part of the configuration will ignore that settings.
 * Select Custom Fields which should be ignored - custom fields selected here will not be exported. By
@@ -177,15 +180,18 @@ Following settings are used for uploading already exported feed to a given FTP/S
 
 ### Import Settings
 
-![Upload Setting](docs/assets/import-settings.png "Import Setting")
+![Import Setting](docs/assets/import-settings.png "Import Setting")
 
+* Username - your usernama to FACT-Finder® dashboard
+* Password - your password to FACT-Finder® dashboard
 * Enable Automatic Import for - define import types which should be triggered. Possible types are: Suggest, Search and
   Recommendation
 
-## Category Pages
+*Note** Credentials (username and password) are only use to start automatic import in FACT-Finder® system. 
 
-**Note:**
-This feature is experimental, and it is highly possible that it will be significantly modified in a near future.
+You can check if the above data is correctly set by clicking on the `Test Connection` button. Please save your settings before clicking on button.
+
+## Category Pages
 
 Plugin offers a way to use FACT-Finder® Web Components on category pages using page builder Shopping Experiences. There
 is two CMS blocks offered:
@@ -340,7 +346,7 @@ system.
 
 ### Web Components Documentation
 
-Full FACT-Finder® Web Components documentation you can find [here](https://web-components.fact-finder.de/api/4.x/ff-communication)
+Full FACT-Finder® Web Components documentation you can find [here](https://web-components.fact-finder.de/documentation/4.x/install-dist)
 
 
 ### Including Scripts
@@ -359,15 +365,14 @@ theme [meta.html.twig](https://github.com/shopware/platform/blob/trunk/src/Store
 **Note:** Including these scripts is obligatory for Web Components to work. Make sure you include it or if your
 storefront does not use that file, include all scripts in mentioned order on your own.
 
-### Communication
+### Configuration
 
-Main configuration element `ff-communication` is added in file `src/Resources/views/storefront/base.html.twig`
-. Same as with `meta.twig.html`, it extends
+The main configuration is added in file `src/Resources/views/storefront/base.html.twig`. Same as with `meta.twig.html`, it extends
 the [base.html.twig](https://github.com/shopware/platform/blob/trunk/src/Storefront/Resources/views/storefront/base.html.twig)
-file defined in default Storefront. This element is populated automatically with the data, configured in module
+file defined in default Storefront. The configuration is populated automatically with the data, configured in module
 configuration.
 
-**Note:** If your theme doesn't extend the default Storefront, make sure you implement `ff-communication` element as it
+**Note:** If your theme doesn't extend the default Storefront, you have to implement webcomponent configuration in you theme as it
 is mandatory and FACT-Finder® Web Components will not work without it.
 
 ### Templates
@@ -377,8 +382,9 @@ extending default Storefront wherever it is possible. You can use these template
 using `sw_extends` which offers a support for a multi inheritance.
 
 ### Tracking
+
 Plugin offers a following way of tracking customer actions
- * login - logged automatically via ff-communication element when `user-id` is set
+ * login - logged automatically via basic configuration when `user-id` is set
  * click on product - implemented using ff-record template [directives](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Click Tracking)
  * add to cart - implemented in a js [plugin](src/Resources/app/storefront/src/plugin/tracking.plugin.js)
  * purchase - implemented using [ff-checkout-tracking element](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Checkout Tracking)
@@ -387,7 +393,6 @@ Plugin offers a following way of tracking customer actions
 Plugin implements a list of given Web Components:
 
 * Page Header
-    * ff-communication
     * ff-searchbox
     * ff-suggest
 
@@ -469,6 +474,7 @@ as `factfinder.export.field` and can be picked up automatically. Of course, auto
 just a convenience we offer, you can still assign the tag to your service manually.
 
 ### Export Fields Stored in Variants
+
 By default, only these fields are exported from variants:
     * CustomFields
     * ImageUrl
@@ -496,6 +502,7 @@ where `$association` would be a `children.cover` in that example.
 Please note that adding more and more associations will have an impact on overall export performance.
 
 ### Creating Custom Entity Export
+
 Plugin offers a flexible export mechanism which could be specified to work with different types of entities.
 In current state of plugin it allows to export three types of entities:
 * SalesChannelProductEntity
@@ -508,6 +515,7 @@ You can extend base with new kinds of entities. In order to do so you need to pr
 * implementation of Omikron\FactFinder\Shopware6\Export\Data\Factory\FactoryInterface which is responsible for yielding exportable entities mentioned above
 
 #### Generic Entity Factory
+
 If your Entity does not require custom logic in order to be yield (for instance ProductEntityFactory also yields VariantEntities if product is configurable with properties)
 You don't need to create new Factory for it. It will be handled by Omikron\FactFinder\Shopware6\Export\Data\Factory\GenericEntityFactory.
 
@@ -534,9 +542,10 @@ after that you cann call Omikron\FactFinder\Shopware6\Export\FeedFactory to crea
 **Note:** $context is object of class Shopware\Core\System\SalesChannel\SalesChannelContext
 
 ### Extending Specific Web Component Template
+
 All the Web Components rendering HTML, contains it inside the Twig block.
 If you need to change it just extend the parent file and override the block which contains the template.
-For example if you need to define own template for the ff-record element which is responsible for rendering record tiles on search result page
+For example if you need to define own template for the ff-record element which is responsible for rendering record titles on search result page
 
     {% sw_extends '@Parent/storefront/components/factfinder/record-list.html.twig' %}
 
@@ -552,6 +561,7 @@ With this code you override only this block and rest of the parent file HTML wil
 Template in that section stands for the HTML rendered by Web Components, not the `.html.twig` file
 
 ### Split ASN on Category Page
+
 The demo version of the split ASN approach is available [here](https://search-web-components.fact-finder.de/demos/4.x/ff-asn-split-two-parts/?query=%2a&sid=gQbPAzrjX6VOv1AOI1VQCZwipREXBX).
 It is possible to reproduce this functionality with the PageBuilder:
 
@@ -570,6 +580,7 @@ It is possible to reproduce this functionality with the PageBuilder:
 **Note:** In that setup, Filter Cloud must be disabled as for now it has no support for custom topics
 
 #### Duplicated filter variants
+
 The example above divides the ASN groups into two exclusive collections.
 If you just want to duplicate some filter from the first ASN and put it in the second, just change the configuration of first ASN to be:
 ![Split ASN - Main (duplicate filters)](docs/assets/split-asn-4.png "Split ASN - Main (duplicate filters)")
@@ -580,6 +591,7 @@ In that case we  do not use `splice` method but `slice` which does not mutate th
 **Note:** Since all ASN groups are available in first ASN, the Filter Cloud can be used.
    
 ### Set custom Field Roles
+
 If you don't plan to use feed offered by the module, or you want some of the essential column to have different name than the default you must remember to adjust the field roles used by the FACT-Finder® and the Web Components.
 
 Default field roles are defined as array of Symfony Configuration Parameters in  `services.xml` file`

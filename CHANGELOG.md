@@ -3,6 +3,7 @@
 ### BREAKING
 - IMPORTANT! Drop Shopware 6.5 compatibility
 - IMPORTANT! Drop PHP 8.1 compatibility
+- IMPORTANT! Update Fact-Finder webcomponents library from v4 to v5
 - Add support for Shopware 6.6
 - Upgrade libraries as required Shopware v6.6
 - Upgrade symfony to version 7
