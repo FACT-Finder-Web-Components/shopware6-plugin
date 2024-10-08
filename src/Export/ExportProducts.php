@@ -56,6 +56,10 @@ class ExportProducts implements ExportInterface
             $criteria->addAssociation($association);
         }
         $criteria->addFilter(new EqualsFilter('parentId', null));
+
+        $criteria->getAssociation('children')
+            ->addFilter(new EqualsFilter('active', true));
+
         return $criteria;
     }
 }
