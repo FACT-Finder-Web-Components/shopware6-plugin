@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.2.2] - 2024.10.09
 ### Improve
 - Improve code style after CS library updates
 - Product export - improve load variants properties
@@ -433,6 +433,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v5.2.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.2.2
 [v5.2.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.2.1
 [v5.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.2.0
 [v5.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.1.0
