@@ -48,7 +48,6 @@ class ExportProducts implements ExportInterface
         $criteria->addAssociation('children.options.group');
         $criteria->addAssociation('children.properties.group');
         $criteria->addAssociation('manufacturer');
-        $criteria->addAssociation('children.properties.group');
         $criteria->addAssociation('properties');
         $criteria->addAssociation('customFields');
         $criteria->addAssociation('properties.group');
