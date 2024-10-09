@@ -46,6 +46,7 @@ class ExportProducts implements ExportInterface
         $criteria->addAssociation('categories');
         $criteria->addAssociation('categoriesRo');
         $criteria->addAssociation('children.options.group');
+        $criteria->addAssociation('children.properties.group');
         $criteria->addAssociation('manufacturer');
         $criteria->addAssociation('properties');
         $criteria->addAssociation('customFields');

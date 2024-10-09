@@ -134,6 +134,7 @@
             <tag name="factfinder.export.variant_field"/>
         </service>
         <service id="Omikron\FactFinder\Shopware6\Export\Field\FilterAttributes">
+            <tag name="factfinder.export.variant_field"/>
             <tag name="factfinder.export.cached_product_entity"/>
         </service>
         <service id="Omikron\FactFinder\Shopware6\Api\UiFeedExportController" />
