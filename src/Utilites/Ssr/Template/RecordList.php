@@ -25,7 +25,7 @@ class RecordList
         Engine $mustache,
         SearchAdapter $searchAdapter,
         string $salesChannelId,
-        string $content
+        string $content,
     ) {
         $this->request        = $request;
         $this->mustache       = $mustache;
@@ -42,7 +42,7 @@ class RecordList
      */
     public function getContent(
         string $paramString,
-        bool $isNavigationRequest = false
+        bool $isNavigationRequest = false,
     ): string {
         $results = $this->searchResults($paramString, $isNavigationRequest);
 
@@ -59,7 +59,7 @@ class RecordList
      */
     public function searchResults(
         string $paramString,
-        bool $isNavigationRequest = false
+        bool $isNavigationRequest = false,
     ): array {
         $paramString = strpos($paramString, 'p=') === 0
             ? sprintf('page=%s', substr($paramString, 2))
@@ -70,7 +70,7 @@ class RecordList
 
     public function renderResults(
         array $results,
-        string $paramString
+        string $paramString,
     ): string {
         $records        = $results['records'] ?? [];
         $recordsContent = array_reduce(

@@ -18,7 +18,7 @@ class FeedPreprocessorEntryReader
 
     public function __construct(
         SalesChannelService $channelService,
-        EntityRepository $entryRepository
+        EntityRepository $entryRepository,
     ) {
         $this->channelService  = $channelService;
         $this->entryRepository = $entryRepository;

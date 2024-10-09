@@ -36,7 +36,7 @@ class CachedFieldRoles implements FieldRolesInterface
 
     public function update(
         array $fieldRoles,
-        ?string $salesChannelId
+        ?string $salesChannelId,
     ): void {
         $salesChannelId = $salesChannelId ?? '';
         $this->decorated->update($fieldRoles, $salesChannelId);

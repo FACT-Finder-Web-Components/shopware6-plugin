@@ -36,7 +36,7 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
         EntityRepository $languageRepository,
         FeedPreprocessor $feedPreprocessor,
         FeedPreprocessorEntryPersister $entryPersister,
-        ExportSettings $exportSettings
+        ExportSettings $exportSettings,
     ) {
         $this->productRepository  = $productRepository;
         $this->languageRepository = $languageRepository;

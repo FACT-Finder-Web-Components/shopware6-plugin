@@ -13,7 +13,7 @@ class Loader implements \Mustache_Loader
 
     public function __construct(
         \Mustache_Loader $loader,
-        FilterInterface $filter
+        FilterInterface $filter,
     ) {
         $this->loader = $loader;
         $this->filter = $filter;

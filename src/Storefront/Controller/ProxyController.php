@@ -44,7 +44,7 @@ class ProxyController extends StorefrontController
         string $endpoint,
         Request $request,
         ClientBuilder $clientBuilder,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
     ): Response {
         $client = $clientBuilder
             ->withServerUrl($this->config->getServerUrl())

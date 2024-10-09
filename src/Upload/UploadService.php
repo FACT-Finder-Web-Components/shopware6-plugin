@@ -12,7 +12,7 @@ class UploadService
 {
     public function __construct(
         private readonly FtpConfig $config,
-        private readonly FilesystemFactory $filesystemFactory
+        private readonly FilesystemFactory $filesystemFactory,
     ) {
     }
 

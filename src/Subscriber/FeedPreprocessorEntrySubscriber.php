@@ -18,7 +18,7 @@ class FeedPreprocessorEntrySubscriber implements EventSubscriberInterface
 
     public function __construct(
         EntityRepository $productRepository,
-        CategoryPath $categoryPath
+        CategoryPath $categoryPath,
     ) {
         $this->productRepository      = $productRepository;
         $this->categoryFieldGenerator = $categoryPath;

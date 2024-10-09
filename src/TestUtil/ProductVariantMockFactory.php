@@ -21,7 +21,7 @@ class ProductVariantMockFactory
 {
     public function create(
         ProductEntity $parent,
-        array $data = []
+        array $data = [],
     ): ProductEntity {
         $variant  = new ProductEntity();
         $size     = $data['size'] ?? 'S';

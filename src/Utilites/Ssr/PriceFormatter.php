@@ -21,7 +21,7 @@ class PriceFormatter
         SalesChannelService $channelService,
         CurrencyFormatter $currencyFormatter,
         CachedFieldRoles $fieldRolesService,
-        array $fieldRoles
+        array $fieldRoles,
     ) {
         $this->channelService    = $channelService;
         $this->currencyFormatter = $currencyFormatter;

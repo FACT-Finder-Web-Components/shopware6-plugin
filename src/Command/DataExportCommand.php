@@ -80,7 +80,7 @@ class DataExportCommand extends Command implements ContainerAwareInterface
         EntityRepository $languageRepository,
         CurrencyFieldsProvider $currencyFieldsProvider,
         FieldsProvider $fieldProviders,
-        ContainerInterface $container
+        ContainerInterface $container,
     ) {
         $this->channelService         = $channelService;
         $this->channelRepository      = $channelRepository;

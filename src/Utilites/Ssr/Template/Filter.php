@@ -14,7 +14,7 @@ class Filter implements FilterInterface
 
     public function __construct(
         SalesChannelService $channelService,
-        CachedFieldRoles $fieldRolesService
+        CachedFieldRoles $fieldRolesService,
     ) {
         $context          = $channelService->getSalesChannelContext();
         $this->fieldRoles = $fieldRolesService->getRoles($context->getSalesChannelId());

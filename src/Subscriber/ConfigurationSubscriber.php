@@ -30,7 +30,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         RouterInterface $router,
         array $fieldRoles,
         array $communicationParameters,
-        array $configurationAddParams = []
+        array $configurationAddParams = [],
     ) {
         $this->config                  = $config;
         $this->extensionConfig         = $extensionConfig;

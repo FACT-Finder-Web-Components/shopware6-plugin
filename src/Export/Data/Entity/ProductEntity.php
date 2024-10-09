@@ -29,7 +29,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
     public function __construct(
         Product $product,
         \Traversable $productFields,
-        \Traversable $cachedProductFields
+        \Traversable $cachedProductFields,
     ) {
         $this->product             = $product;
         $this->productFields       = iterator_to_array($productFields);
