@@ -23,7 +23,7 @@ class ProductEntityFactory implements FactoryInterface
         PropertyFormatter $propertyFormatter,
         FieldsProvider $fieldsProviders,
         CurrencyFieldsProvider $currencyFieldsProvider,
-        \Traversable $variantFields
+        \Traversable $variantFields,
     ) {
         $this->propertyFormatter      = $propertyFormatter;
         $this->fieldsProvider         = $fieldsProviders;

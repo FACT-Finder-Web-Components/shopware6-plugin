@@ -25,7 +25,7 @@ class UiFeedExportController extends AbstractController
         private FeedExportHandler $feedExportHandler,
         private DataExportCommand $dataExportCommand,
         private RefreshExportCacheHandler $refreshCacheHandler,
-        private LoggerInterface $factfinderLogger
+        private LoggerInterface $factfinderLogger,
     ) {
     }
 

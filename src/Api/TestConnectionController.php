@@ -24,7 +24,7 @@ class TestConnectionController extends AbstractController
         private readonly ClientBuilder $clientBuilder,
         private readonly CommunicationConfig $config,
         private readonly UploadService $uploadService,
-        private readonly LoggerInterface $factfinderLogger
+        private readonly LoggerInterface $factfinderLogger,
     ) {
     }
 

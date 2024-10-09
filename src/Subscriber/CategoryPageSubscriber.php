@@ -27,7 +27,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         Communication $config,
         ExtensionConfig $extensionConfig,
         string $categoryPathFieldName,
-        array $categoryPageAddParams = []
+        array $categoryPageAddParams = [],
     ) {
         $this->cmsPageRoute    = $cmsPageRoute;
         $this->config          = $config;

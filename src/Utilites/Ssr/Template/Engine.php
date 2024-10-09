@@ -22,7 +22,7 @@ class Engine
 
     public function render(
         string $templateFile,
-        array $context = []
+        array $context = [],
     ): string {
         return $this->engine->loadTemplate($templateFile)->render($context);
     }

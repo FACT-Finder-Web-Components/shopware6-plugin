@@ -38,7 +38,7 @@ class FilterAttributes implements FieldInterface
 
         if ($entity->getChildren()) {
             $attributes = $entity->getChildren()->reduce(
-                fn(array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
+                fn (array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
                 $attributes
             );
         }

@@ -25,7 +25,7 @@ class FeedPreprocessor
     public function __construct(
         PropertyFormatter $propertyFormatter,
         EventDispatcherInterface $eventDispatcher,
-        ExportCustomFields $customFields
+        ExportCustomFields $customFields,
     ) {
         $this->propertyFormatter = $propertyFormatter;
         $this->eventDispatcher   = $eventDispatcher;
@@ -156,7 +156,7 @@ class FeedPreprocessor
         Context $context,
         ?string $variationKey = '',
         ?array $customFields = null,
-        ?array $filterAttributes = null
+        ?array $filterAttributes = null,
     ): array {
         return [
             'id'                  => Uuid::randomHex(),

@@ -38,7 +38,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         Communication $config,
         SearchAdapter $searchAdapter,
         Engine $mustache,
-        CategoryPath $categoryPath
+        CategoryPath $categoryPath,
     ) {
         $this->httpCacheEnabled       = $httpCacheEnabled;
         $this->categoryRepository     = $categoryRepository;

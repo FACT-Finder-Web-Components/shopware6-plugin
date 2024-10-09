@@ -57,8 +57,8 @@ modifications in order to fit their needs. For more advanced features please che
 For Shopware 6.4 please use SDK version 4.x:
 https://github.com/FACT-Finder-Web-Components/shopware6-plugin
 
-For Shopware 6.6 please use Shopware marketplace version:
-https://store.shopware.com/en/factf26713613196f/factfinder-ai-powered-search-product-discovery.html
+For Shopware 6.6 please use SDK version 6.x:
+https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/6.x
 
 ## FACT-Finder® Supported Sections
 
@@ -183,9 +183,6 @@ Following settings are used for uploading already exported feed to a given FTP/S
   Recommendation
 
 ## Category Pages
-
-**Note:**
-This feature is experimental, and it is highly possible that it will be significantly modified in a near future.
 
 Plugin offers a way to use FACT-Finder® Web Components on category pages using page builder Shopping Experiences. There
 is two CMS blocks offered:
