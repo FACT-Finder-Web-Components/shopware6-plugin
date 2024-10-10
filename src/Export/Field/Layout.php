@@ -43,7 +43,14 @@ class Layout implements FieldInterface
         }
 
         $layout = array_map(
-            fn (CmsSlotEntity $slot) => safeGetByName(safeGetByName($slot->getConfig(), 'content'), 'value'),
+            function (CmsSlotEntity $slot) {
+
+                if (!$config = $slot->getConfig()) {
+                    return '';
+                }
+
+                return implode('', array_column($config, 'value'));
+            },
             flatMap(
                 fn (CmsBlockEntity $block): array => $this->toValues($block->getSlots()),
                 flatMap(
