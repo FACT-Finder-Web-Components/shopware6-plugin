@@ -44,7 +44,6 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         $disableImmediate = safeGetByName($category->getCustomFields(), OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME);
         $isHome           = $route === 'frontend.home.page';
         $isCategory       = !$isHome && !$disableImmediate;
-        $searchImmediate  = $this->config->isSsrActive() === false && $isCategory;
 
         $baseAddParams = array_filter(explode(',', (string) safeGetByName($event->getPage()->getExtension('factfinder')->get('communication'), 'add-params')));
         /**
@@ -77,7 +76,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
                 'communication'           => $communication,
                 'trackingSettings'        => $this->extensionConfig->getTrackingSettings(),
                 'redirectMapping'         => (string) $this->extensionConfig->getRedirectMapping(),
-                'searchImmediate'         => $searchImmediate ? 'true' : 'false',
+                'searchImmediate'         => false,
                 'categoryPathFieldName'   => "{$this->fieldName}ROOT",
                 'communicationAttributes' => !empty($communicationConfig) ? $this->getCommunicationAttributes($communicationConfig) : $communication,
             ]
