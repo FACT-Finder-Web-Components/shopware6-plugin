@@ -78,7 +78,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'communication'           => $communicationConfig,
                 'trackingSettings'        => $this->extensionConfig->getTrackingSettings(),
                 'redirectMapping'         => (string) $this->extensionConfig->getRedirectMapping(),
-                'searchImmediate'         => $this->isSearchImmediate($event) ? 'true' : 'false',
+                'searchImmediate'         => $this->isSearchImmediate($event),
                 'userId'                  => $customer ? $customer->getId() : null,
                 'ssr'                     => $this->config->isSsrActive(),
                 'communicationAttributes' => $this->getCommunicationAttributes($communicationConfig),

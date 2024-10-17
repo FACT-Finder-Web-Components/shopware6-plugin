@@ -1,10 +1,10 @@
 {% block sw_cms_element_paging_config %}
   <div>
-    <sw-text-field
+    <sw-switch-field
       label="Show Only"
       placeholder="Show Only"
       v-model:value="element.config.showOnly.value">
-    </sw-text-field>
+    </sw-switch-field>
     <sw-switch-field label="Subscribe" v-model:value="element.config.subscribe.value"></sw-switch-field>
   </div>
 {% endblock %}

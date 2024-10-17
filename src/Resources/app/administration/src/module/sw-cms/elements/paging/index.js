@@ -14,7 +14,7 @@ Shopware.Service('cmsService').registerCmsElement({
             source: 'static',
         },
         showOnly: {
-            value: 'true',
+            value: false,
             source: 'static',
         },
     },
