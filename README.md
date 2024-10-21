@@ -8,7 +8,7 @@ installation process. The second chapter *Settings* explains the customisation o
 final chapter *Exporting Feed* describes how to use provided console command to export the feed.
 
 Our Shopware plugin offers a basic working integration for default Shopware Storefront theme. Most projects may require
-modifications in order to fit their needs. For more advanced features please check our official [WebComponnents documentation](https://web-components.fact-finder.de/documentation/4.x/install-dist).
+modifications in order to fit their needs. For more advanced features please check our official [WebComponnents documentation](https://web-components.fact-finder.de/documentation/5.x/install-dist).
 
 - [System Requirements](#system-requirements)
 - [FACT-Finder® Supported Sections](#fact-finder-supported-sections)
@@ -346,7 +346,10 @@ system.
 
 ### Web Components Documentation
 
-Full FACT-Finder® Web Components documentation you can find [here](https://web-components.fact-finder.de/documentation/4.x/install-dist)
+Full FACT-Finder® Web Components documentation you can find [here](https://web-components.fact-finder.de/documentation/5.x/install-dist)
+
+**NOTE**
+SDK version 6.x supports the new version of web components 5.x, which are currently released as a beta release. If you notice any problems with the new version of web components, please let us know.
 
 
 ### Including Scripts

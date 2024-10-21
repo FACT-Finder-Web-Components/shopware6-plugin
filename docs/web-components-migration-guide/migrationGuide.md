@@ -87,7 +87,7 @@ factfinder: {
         campaignShoppingCart: (Required CampaignShoppingCartParams, Optional RequestOptions) => Promise CampaignsResult,
         navigation: (Required NavigationParams, Optional NavigationOptions) => Promise Result,
         navigationCategory: (Required NavigationCategoryParams, Optional RequestOptions) => Promise CategoryNavigation,
-        predictiveBasket: Required PredictiveBasketParams, Optional RequestOptions) => Promise PredictiveBasketResult,
+        predictiveBasket: (Required PredictiveBasketParams, Optional RequestOptions) => Promise PredictiveBasketResult,
         recommendation: (Required RecommendationParams, Optional RequestOptions) => Promise RecommendationResultWithFieldRoles,
         records: (Required RecordsParams, Optional RequestOptions) => Promise FlatRecordsResult,
         search: (Required SearchParams, Optional SearchOptions) => Promise Result,

@@ -1,19 +1,19 @@
 # Changelog
-## Unreleased
+## [v6.0.0] - 2024.07.12
 ### BREAKING
 - IMPORTANT! Drop Shopware 6.5 compatibility
 - IMPORTANT! Drop PHP 8.1 compatibility
 - IMPORTANT! Update Fact-Finder webcomponents library from v4 to v5
 - Add support for Shopware 6.6
 - Upgrade libraries as required Shopware v6.6
-- Upgrade symfony to version 7
-- Refactor vue component to vue version 3
+- Upgrade Symfony to version 7
+- Refactor vue component to Vue version 3
 
 ### Fix
 - Remove uasort() deprecation for CMS export
 - Fix SSR problem for category pages
 - Fix Shopware download export issue
-- Fix problem with filter btn for not FF category page
+- Fix problem with filter button for not Fact-Finder category page
 
 ## [v5.2.0] - 2024.07.12
 ### Add
@@ -435,6 +435,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.0
 [v5.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.2.0
 [v5.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.1.0
 [v5.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.0.0
