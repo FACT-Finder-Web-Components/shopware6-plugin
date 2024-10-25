@@ -55,7 +55,7 @@ modifications in order to fit their needs. For more advanced features please che
 - PHP version: 8.1, 8.2 or 8.3
 
 For Shopware 6.4 please use SDK version 4.x:
-https://github.com/FACT-Finder-Web-Components/shopware6-plugin
+https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/4.x
 
 For Shopware 6.6 please use SDK version 6.x:
 https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/6.x
