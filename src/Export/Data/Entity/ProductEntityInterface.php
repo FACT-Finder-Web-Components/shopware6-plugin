@@ -7,4 +7,5 @@ namespace Omikron\FactFinder\Shopware6\Export\Data\Entity;
 interface ProductEntityInterface
 {
     public function getProductNumber(): string;
+    public function getProductName(): string;
 }

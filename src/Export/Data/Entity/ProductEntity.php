@@ -57,6 +57,11 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         return $this->product->getProductNumber();
     }
 
+    public function getProductName(): string
+    {
+        return (string) $this->product->getTranslation('name');
+    }
+
     public function getFilterAttributes(): string
     {
         return $this->filterAttributes;
@@ -100,7 +105,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
         $defaultFields           = [
             'ProductNumber'    => $this->product->getProductNumber(),
             'Master'           => $isVariant ? $this->parent->getProductNumber() : $this->product->getProductNumber(),
-            'Name'             => (string) $this->product->getTranslation('name'),
+            'Name'             => $this->getProductName(),
             'FilterAttributes' => $this->getFilterAttributes(),
             'CustomFields'     => $this->getCustomFields(),
         ];
