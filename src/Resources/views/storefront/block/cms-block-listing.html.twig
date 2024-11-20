@@ -7,7 +7,10 @@
     document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
       factfinder.config.setAppConfig({
         categoryPage: [
-          factfinder.utils.filterBuilders.categoryFilter(`CategoryPath`, {{ (page.extensions.factfinder.communication.categoryPage|split(',')|json_encode())|raw }})
+          factfinder.utils.filterBuilders.categoryFilter(
+            '{{ page.extensions.factfinder.categoryPathFieldName|replace({'ROOT': ''}) }}',
+            {{ (page.extensions.factfinder.communication.categoryPage|split(',')|json_encode())|raw }}
+          )
     ],
     });
 

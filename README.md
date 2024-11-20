@@ -27,6 +27,7 @@ modifications in order to fit their needs. For more advanced features please che
       - [Campaigns Element](#campaigns-element)
     - [Blocks and Elements Templates](#blocks-and-elements-templates)
     - [Assigning Layout to Category](#assigning-layout-to-category)
+    - [Set correct name for CategoryPath field](#set-correct-name-for-categorypath-field)
 - [Exporting Feeds](#exporting-feeds)
     - [CLI](#cli)
     - [Selecting Categories for CMS Export](#selecting-categories-for-cms-export)
@@ -276,6 +277,15 @@ Once the page layout is done, you need to assign layout to selected categories.
 We strongly recommend not creating many layouts as currently there's still only few possibilities offered anyway.
 Future development will bring more blocks and elements will be provided here.
 
+### Set correct name for CategoryPath field
+
+By default, SDK uses a field named CategoryPath (default field name for FactFinder instance). 
+If in your FactFinder instance configuration you have a different field name for Category field then you must set this name in the `services.xml` file as shown below:
+
+    //src/Resources/config/services.xml:34
+    <parameter key="factfinder.navigation.category_path_field_name" type="string">CategoryPath</parameter>
+
+
 ## Exporting Feeds
 
 FACT-Finder allows to export different types of feeds, like a **products**, **cms** and **brands** (or manufacturers)
@@ -503,6 +513,9 @@ where `$association` would be a `children.cover` in that example.
 
 **Note:**
 Please note that adding more and more associations will have an impact on overall export performance.
+
+**Note:**
+If you need to export variant names in data feed you could use [this sample code as an example](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/pull/258):
 
 ### Creating Custom Entity Export
 
