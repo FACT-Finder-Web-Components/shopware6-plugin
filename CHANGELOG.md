@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Improve
+- Add the ability to set a name for the CategoryPath field (category page)
+
 ## [v6.0.0] - 2024.07.12
 ### BREAKING
 - IMPORTANT! Drop Shopware 6.5 compatibility
