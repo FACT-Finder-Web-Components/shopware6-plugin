@@ -3,6 +3,9 @@
 ### Improve
 - Add the ability to set a name for the CategoryPath field (category page)
 
+### Change
+- Upgrade Web Components version to v5.0.0-pre.4
+
 ## [v6.0.0] - 2024.07.12
 ### BREAKING
 - IMPORTANT! Drop Shopware 6.5 compatibility
