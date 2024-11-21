@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.0.1] - 2024.11.21
 ### Improve
 - Add the ability to set a name for the CategoryPath field (category page)
 - Reset useId in WebComponents after user logout
@@ -443,6 +443,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.1
 [v6.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.0
 [v5.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.2.0
 [v5.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.1.0
