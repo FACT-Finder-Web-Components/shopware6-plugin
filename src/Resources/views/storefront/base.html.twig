@@ -121,9 +121,7 @@
       } else {
         if (ffCookies['ff_has_just_logged_out']) {
           clearCookie('ff_has_just_logged_out');
-          //Need to fix in webcomponents
-          //Now reset userId is impossible
-          // factfinder.config.setFFParams({userId: 'undefined'});
+          factfinder.config.setFFParams({userId: undefined});
         }
       }
 
