@@ -2,6 +2,7 @@
 ## Unreleased
 ### Improve
 - Add the ability to set a name for the CategoryPath field (category page)
+- Reset useId in WebComponents after user logout
 
 ### Change
 - Upgrade Web Components version to v5.0.0-pre.4
