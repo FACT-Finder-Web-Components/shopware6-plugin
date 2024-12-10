@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Don't redirect to search result page if search is executed already on result page
+
 ## [v6.0.1] - 2024.11.21
 ### Improve
 - Add the ability to set a name for the CategoryPath field (category page)

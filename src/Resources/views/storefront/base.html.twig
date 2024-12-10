@@ -36,12 +36,14 @@
             return;
           }
 
-          if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
-            window.location.href =  `/factfinder/result?query=${searchParams.query}`;
+          {% if app.request.pathInfo !== "/factfinder/result" %}
+            if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
+              window.location.href =  `/factfinder/result?query=${searchParams.query}`;
 
-            // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
-            return false;
-          }
+              // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
+              return false;
+            }
+          {% endif %}
         });
 
         {% if page.extensions.factfinder.searchImmediate and not page.extensions.factfinder.ssr %}
