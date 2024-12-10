@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.0.2] - 2024.12.10
 ### Fix
 - Don't redirect to search result page if search is executed already on result page
 
@@ -450,6 +450,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.0.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.2
 [v6.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.1
 [v6.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.0
 [v5.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.2.0
