@@ -1,4 +1,7 @@
 # Changelog
+## Unreleased
+### Change
+- Update FactFinder logo icon
 ## [v6.0.2] - 2024.12.10
 ### Fix
 - Don't redirect to search result page if search is executed already on result page
