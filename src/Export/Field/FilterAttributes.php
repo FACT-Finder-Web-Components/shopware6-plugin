@@ -34,14 +34,10 @@ class FilterAttributes implements FieldInterface
      */
     public function getValue(Entity $entity): string
     {
-        $attributes = array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($entity));
-
-        if ($entity->getChildren()) {
-            $attributes = $entity->getChildren()->reduce(
-                fn (array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
-                $attributes
-            );
-        }
+        $attributes = $entity->getChildren()->reduce(
+            fn (array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
+            array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($entity))
+        );
 
         return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';
     }

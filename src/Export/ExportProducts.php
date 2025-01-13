@@ -23,7 +23,7 @@ class ExportProducts implements ExportInterface
         $this->customAssociations = $customAssociations;
     }
 
-    public function getByContext(SalesChannelContext $context, int $batchSize = 100): iterable
+    public function getByContext(SalesChannelContext $context, int $batchSize = 1): iterable
     {
         $criteria = $this->getCriteria($batchSize);
         $products = $this->productRepository->search($criteria, $context);
@@ -46,7 +46,6 @@ class ExportProducts implements ExportInterface
         $criteria->addAssociation('categories');
         $criteria->addAssociation('categoriesRo');
         $criteria->addAssociation('children.options.group');
-        $criteria->addAssociation('children.properties.group');
         $criteria->addAssociation('manufacturer');
         $criteria->addAssociation('properties');
         $criteria->addAssociation('customFields');
@@ -57,9 +56,6 @@ class ExportProducts implements ExportInterface
             $criteria->addAssociation($association);
         }
         $criteria->addFilter(new EqualsFilter('parentId', null));
-
-        $criteria->getAssociation('children')
-            ->addFilter(new EqualsFilter('active', true));
 
         return $criteria;
     }
