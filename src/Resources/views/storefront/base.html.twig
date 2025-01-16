@@ -47,7 +47,9 @@
         });
 
         {% if page.extensions.factfinder.searchImmediate and not page.extensions.factfinder.ssr %}
-          const searchParams = factfinder.utils.env.searchParamsFromUrl();
+          const searchParams = factfinder.utils.env.searchParamsFromUrl(
+            { categoryFieldName: `{{ page.extensions.factfinder.categoryPathFieldName }}` }
+          );
           initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
         {% endif %}
 

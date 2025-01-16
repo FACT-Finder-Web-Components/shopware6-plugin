@@ -23,6 +23,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     private array $fieldRoles;
     private array $communicationParameters;
     private array $addParams;
+    private string $categoryPathFieldName;
 
     public function __construct(
         Communication $config,
@@ -30,6 +31,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         RouterInterface $router,
         array $fieldRoles,
         array $communicationParameters,
+        string $categoryPathFieldName,
         array $configurationAddParams = [],
     ) {
         $this->config                  = $config;
@@ -38,6 +40,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         $this->fieldRoles              = $fieldRoles;
         $this->communicationParameters = $communicationParameters;
         $this->addParams               = $configurationAddParams;
+        $this->categoryPathFieldName   = $categoryPathFieldName;
     }
 
     public static function getSubscribedEvents()
@@ -82,6 +85,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'userId'                  => $customer ? $customer->getId() : null,
                 'ssr'                     => $this->config->isSsrActive(),
                 'communicationAttributes' => $this->getCommunicationAttributes($communicationConfig),
+                'categoryPathFieldName'   => $this->categoryPathFieldName,
             ]));
         }
     }
