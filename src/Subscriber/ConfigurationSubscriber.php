@@ -39,8 +39,8 @@ class ConfigurationSubscriber implements EventSubscriberInterface
         $this->router                  = $router;
         $this->fieldRoles              = $fieldRoles;
         $this->communicationParameters = $communicationParameters;
-        $this->addParams               = $configurationAddParams;
         $this->categoryPathFieldName   = $categoryPathFieldName;
+        $this->addParams               = $configurationAddParams;
     }
 
     public static function getSubscribedEvents()

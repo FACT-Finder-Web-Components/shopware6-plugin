@@ -62,18 +62,6 @@
 {% endblock %}
 
 {% block base_body_script %}
-  {% block base_script_factfinder_search_redirect %}
-    <script>
-      document.addEventListener('ffReady', function (e) {
-        e.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {
-          url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/order=[^&]+&?/, '').replace(/name=[^&]+&?/g, '');
-          factfinder.communication.Util.pushParameterToHistory(res, url, event);
-          return false;
-        });
-      });
-    </script>
-  {% endblock %}
-
   <script>
     const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');
 

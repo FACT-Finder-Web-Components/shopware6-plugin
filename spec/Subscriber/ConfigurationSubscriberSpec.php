@@ -42,7 +42,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
             ]
         );
         $extensionConfig->getRedirectMapping()->willReturn(new RedirectMapping(''));
-        $this->beConstructedWith($communication, $extensionConfig, $router, $fieldRoles, $communicationParameters);
+        $this->beConstructedWith($communication, $extensionConfig, $router, $fieldRoles, $communicationParameters, 'CategoryPath');
     }
 
     public function it_will_return_factfinderchannel_for_specific_sales_channel_id(
