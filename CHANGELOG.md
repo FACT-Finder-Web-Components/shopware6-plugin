@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fix
 - Set correct CategoryPath field name for searchParamsFromUrl
+- Fix Filter off-canvas issue
 
 ### Change
 - Update FactFinder logo icon

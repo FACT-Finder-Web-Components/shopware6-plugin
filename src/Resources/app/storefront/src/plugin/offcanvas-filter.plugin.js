@@ -22,7 +22,7 @@ export default class OffCanvasFilter extends OffCanvasFilterPlugin
 
     _onCloseOffCanvas(event) {
         setTimeout(() => {
-            const filterContent = event.detail.offCanvasContent && event.detail.offCanvasContent[0];
+            const filterContent = event.detail.offCanvasContent && event.detail.offCanvasContent[0].children[0];
             if (!filterContent) {
                 throw Error('There was nothing passed as `event.detail.offCanvasContent` in the `onCloseOffcanvas` event');
             }
