@@ -19,7 +19,7 @@ class CategoryPath
     {
         $categories   = array_slice($categoryEntity->getBreadcrumb(), 1);
 
-        return implode(',', $categories);
+        return implode('||', $categories);
     }
 
     public function getSsrValue(CategoryEntity $categoryEntity): string

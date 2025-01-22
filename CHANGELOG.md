@@ -4,6 +4,7 @@
 - Set correct CategoryPath field name for searchParamsFromUrl
 - Fix Filter off-canvas issue
 - Fix Proxy issue on PDP and for tracking requests
+- Fix problem with comma ',' in category name
 
 ### Change
 - Update FactFinder logo icon
