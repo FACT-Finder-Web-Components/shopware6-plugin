@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryPageSubscriberSpec extends ObjectBehavior
 {
-    private string $filterCategoryPath = 'Books + Sports,Home / Garden 100%';
+    private string $filterCategoryPath = 'Books + Sports||Home / Garden 100%';
 
     public function let(
         AbstractCategoryRoute $cmsPageRoute,
