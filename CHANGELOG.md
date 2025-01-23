@@ -1,13 +1,14 @@
 # Changelog
 ## Unreleased
+### Change
+- Update FactFinder logo icon
+- Introduce Handlebars.js template engine instead of Mustache.js in SSR
+
 ### Fix
 - Set correct CategoryPath field name for searchParamsFromUrl
 - Fix Filter off-canvas issue
 - Fix Proxy issue on PDP and for tracking requests
 - Fix problem with comma ',' in category name
-
-### Change
-- Update FactFinder logo icon
 
 ## [v6.0.2] - 2024.12.10
 ### Fix

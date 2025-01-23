@@ -31,7 +31,7 @@ class ResultController extends StorefrontController
         Request $request,
         SalesChannelContext $context,
         SearchAdapter $searchAdapter,
-        Engine $mustache,
+        Engine $handlebars,
     ): Response {
         $page     = $this->pageLoader->load($request, $context);
         $response = $this->renderStorefront('@Parent/storefront/page/factfinder/result.html.twig', ['page' => $page]);
@@ -42,7 +42,7 @@ class ResultController extends StorefrontController
 
         $recordList = new RecordList(
             $request,
-            $mustache,
+            $handlebars,
             $searchAdapter,
             $context->getSalesChannelId(),
             $response->getContent(),

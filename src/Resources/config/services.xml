@@ -182,10 +182,12 @@
             <argument type="service" id="product.repository"/>
         </service>
 
-        <service id="Mustache_Engine" alias="factfinder.mustache_engine" />
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\StringLoader" />
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Filter" />
-        <service id="Mustache_Loader_StringLoader" alias="factfinder.mustache_loader_string_loader" />
+
+        <service id="Handlebars\Handlebars" alias="factfinder.handlebars_engine" />
+        <service id="Handlebars\Loader\StringLoader" alias="factfinder.handlebars_loader_string_loader" />
+
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Loader">
             <argument type="service" id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\StringLoader"/>
             <argument type="service" id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Filter"/>

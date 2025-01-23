@@ -29,7 +29,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
     private EntityRepository $categoryRepository;
     private Communication $config;
     private SearchAdapter $searchAdapter;
-    private Engine $mustache;
+    private Engine $handlebars;
     private CategoryPath $categoryPath;
 
     public function __construct(
@@ -37,14 +37,14 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         EntityRepository $categoryRepository,
         Communication $config,
         SearchAdapter $searchAdapter,
-        Engine $mustache,
+        Engine $handlebars,
         CategoryPath $categoryPath,
     ) {
         $this->httpCacheEnabled       = $httpCacheEnabled;
         $this->categoryRepository     = $categoryRepository;
         $this->config                 = $config;
         $this->searchAdapter          = $searchAdapter;
-        $this->mustache               = $mustache;
+        $this->handlebars             = $handlebars;
         $this->categoryPath           = $categoryPath;
     }
 
@@ -76,7 +76,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
 
         $recordList = new RecordList(
             $request,
-            $this->mustache,
+            $this->handlebars,
             $this->searchAdapter,
             $request->attributes->get('sw-sales-channel-id'),
             $response->getContent(),
