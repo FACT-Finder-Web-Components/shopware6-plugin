@@ -45,7 +45,7 @@
   "config": {
     "allow-plugins": {
       "symfony/*": true,
-      "omikron/*": true,
+      "omikron/*": true
     }
   },
   "extra": {
