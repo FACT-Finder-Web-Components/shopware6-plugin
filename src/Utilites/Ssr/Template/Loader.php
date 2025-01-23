@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Utilites\Ssr\Template;
 
+use Handlebars\Loader as HandlebarsLoader;
 use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 
-class Loader implements \Mustache_Loader
+class Loader implements HandlebarsLoader
 {
-    private \Mustache_Loader $loader;
+    private HandlebarsLoader $loader;
     private FilterInterface $filter;
 
     public function __construct(
-        \Mustache_Loader $loader,
+        HandlebarsLoader $loader,
         FilterInterface $filter,
     ) {
         $this->loader = $loader;
@@ -25,6 +26,7 @@ class Loader implements \Mustache_Loader
     public function load($name)
     {
         $template = $this->loader->load($name);
-        return $template instanceof \Mustache_Source ? $template : $this->filter->filterValue($template);
+
+        return $this->filter->filterValue((string) $template);
     }
 }

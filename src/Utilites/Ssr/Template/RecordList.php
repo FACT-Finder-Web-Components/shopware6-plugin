@@ -14,7 +14,7 @@ class RecordList
     private const SSR_RECORD_PATTERN = '#<ssr-record-template>.*?</ssr-record-template>#s';
 
     private Request $request;
-    private Engine $mustache;
+    private Engine $handlebars;
     private SearchAdapter $searchAdapter;
     private string $salesChannelId;
     private string $content;
@@ -22,13 +22,13 @@ class RecordList
 
     public function __construct(
         Request $request,
-        Engine $mustache,
+        Engine $handlebars,
         SearchAdapter $searchAdapter,
         string $salesChannelId,
         string $content,
     ) {
         $this->request        = $request;
-        $this->mustache       = $mustache;
+        $this->handlebars     = $handlebars;
         $this->searchAdapter  = $searchAdapter;
         $this->salesChannelId = $salesChannelId;
         $this->content        = $content;
@@ -78,7 +78,7 @@ class RecordList
             fn (string $carry, array $record) => sprintf(
                 '%s%s',
                 $carry,
-                $this->mustache->render($this->template, $record)
+                $this->handlebars->render($this->template, $record)
             ),
             ''
         );

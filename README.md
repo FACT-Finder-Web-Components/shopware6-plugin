@@ -396,6 +396,9 @@ Plugin templates could be found in `Resources/views/storefront/`. Just as with t
 extending default Storefront wherever it is possible. You can use these templates if you are extending it
 using `sw_extends` which offers a support for a multi inheritance.
 
+FactFinder Web Components uses handlebars as the engine to resolve its HTML templates. Please refer to the official documentation for available features and their usage:
+https://handlebarsjs.com/
+
 ### Tracking
 
 Plugin offers a following way of tracking customer actions
