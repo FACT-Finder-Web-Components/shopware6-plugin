@@ -2,8 +2,6 @@
 
 [![Build status](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/workflows/build/badge.svg)](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/actions)
 
-This is a new version of SDK which support new WebComponents v5 NG. WebComponents v5 currently is in pre-released phrase. For official released WebComponents version please use SDK v5 available [here](https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/5.x)
-
 This document helps you to integrate the FACT-Finder® Web Components SDK into your Showpare Shop. In addition, it gives
 a concise overview of its primary functions. The first chapter *Installation* walks you through the suggested
 installation process. The second chapter *Settings* explains the customisation options in the Showpare backend. The
@@ -359,10 +357,6 @@ system.
 ### Web Components Documentation
 
 Full FACT-Finder® Web Components documentation you can find [here](https://web-components.fact-finder.de/documentation/5.x/install-dist)
-
-**NOTE**
-SDK version 6.x supports the new version of web components 5.x, which are currently released as a beta release. If you notice any problems with the new version of web components, please let us know.
-
 
 ### Including Scripts
 

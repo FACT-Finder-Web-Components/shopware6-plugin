@@ -3,6 +3,7 @@
 ### Change
 - Update FactFinder logo icon
 - Introduce Handlebars.js template engine instead of Mustache.js in SSR
+- Upgrade Web Components version to v5.0.1
 
 ### Fix
 - Set correct CategoryPath field name for searchParamsFromUrl
