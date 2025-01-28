@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.1.0] - 2025.01.28
 ### Change
 - Update FactFinder logo icon
 - Introduce Handlebars.js template engine instead of Mustache.js in SSR
@@ -462,6 +462,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.1.0
 [v6.0.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.2
 [v6.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.1
 [v6.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.0
