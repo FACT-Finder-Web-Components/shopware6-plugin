@@ -25,8 +25,7 @@
           factfinder.response.dispatch.ssrNavigation(searchResult);
         }
       {% else %}
-
-     const initOptions = factfinder.config.get();
+        const initOptions = factfinder.config.get();
         initialSearch({
           filters: initOptions.appConfig.categoryPage,
         });
