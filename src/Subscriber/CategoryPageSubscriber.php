@@ -77,7 +77,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
                 'trackingSettings'        => $this->extensionConfig->getTrackingSettings(),
                 'redirectMapping'         => (string) $this->extensionConfig->getRedirectMapping(),
                 'searchImmediate'         => false,
-                'categoryPathFieldName'   => "{$this->fieldName}ROOT",
+                'categoryPathFieldName'   => (string) $this->fieldName,
                 'communicationAttributes' => !empty($communicationConfig) ? $this->getCommunicationAttributes($communicationConfig) : $communication,
             ]
         );
