@@ -4,15 +4,19 @@
 
 {#  <!-- Category page -->#}
   <script>
-    document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+    document.addEventListener(`ffCoreReady`, ({ factfinder, initialSearch }) => {
       factfinder.config.setAppConfig({
         categoryPage: [
           factfinder.utils.filterBuilders.categoryFilter(
-            '{{ page.extensions.factfinder.categoryPathFieldName|replace({'ROOT': ''}) }}',
+            '{{ page.extensions.factfinder.categoryPathFieldName }}',
             {{ (page.extensions.factfinder.communication.categoryPage|split('||')|json_encode())|raw }}
           )
-    ],
-    });
+        ],
+      });
+
+      factfinder.routing.setUrlParamOptionsListener(() => ({
+        blockFilters: [`{{ page.extensions.factfinder.categoryPathFieldName }}`],
+      }));
 
       {% if page.extensions.factfinder.ssr == 'ssr' %}
         const searchResult = {FF_SEARCH_RESULT};
@@ -21,7 +25,10 @@
           factfinder.response.dispatch.ssrNavigation(searchResult);
         }
       {% else %}
-        factfinder.request.navigation({'filters': factfinder.config.get().appConfig.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
+        const initOptions = factfinder.config.get();
+        initialSearch({
+          filters: initOptions.appConfig.categoryPage,
+        });
       {% endif %}
     });
   </script>
@@ -79,5 +86,3 @@
     </div>
   </div>
 {% endblock %}
-
-

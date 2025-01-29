@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Remove CategoryPath filter in URL and ASN on category page
+
 ## [v6.1.0] - 2025.01.28
 ### Change
 - Update FactFinder logo icon
