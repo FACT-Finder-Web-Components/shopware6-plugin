@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Add
+- Add feature settings so it is possible to enable/disable some of FactFinder features like campaigns or recommendations
+
 ### Fix
 - Remove CategoryPath filter in URL and ASN on category page
 

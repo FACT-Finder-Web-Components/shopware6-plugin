@@ -16,6 +16,8 @@ modifications in order to fit their needs. For more advanced features please che
 - [Activating the Module](#activating-the-module)
 - [Main Settings](#main-settings)
     - [Update Field Roles](#update-field-roles)
+- [Advanced Settings](#advanced-settings)
+- [Features Settings](#features-settings)
 - [Export Settings](#export-settings)
     - [Price Columns Format](#price-columns-format)
 - [Upload Settings](#upload-settings)
@@ -142,7 +144,14 @@ Note: Sending each request to FACT-Finder instance trough Shopware, you lose on 
 * Scenario how to count single click on "Add to cart" button
 * Redirect mapping for selected queries - put each pair `query=url` in separate row. If the phrase appears twice, the first one from the top of the list will be taken. Url can be relative path `/some/page` or absolute url `https://domain.com/some/page?someParameter=1`. If provided pair has an invalid format then it will be ignored.
 
-### Export Settings
+## Features Settings
+
+![Features Settings](docs/assets/feature-settings.png "Features Settings")
+
+Some of the custom elements we offer works only when specific additional FACT-Finder modules has been purchased. 
+Here you can disabled them, if you do not use utilize this part of FACT-Finder functionality
+
+## Export Settings
 
 ![Export Settings](docs/assets/export-settings.png "Export Settings")
 
@@ -160,7 +169,7 @@ Note: Sending each request to FACT-Finder instance trough Shopware, you lose on 
 If `Export prices in all currencies` setting is set to true, price columns will be exported in followed pattern
 `Price_[currency ISO code]` i.e. `Price_De`
 
-### Upload Settings
+## Upload Settings
 
 ![Upload Setting](docs/assets/upload-settings.png "Upload Setting")
 Following settings are used for uploading already exported feed to a given FTP/SFTP server.
@@ -179,7 +188,7 @@ Following settings are used for uploading already exported feed to a given FTP/S
 *Note** Fields "Private Key Content" and "Passphrase" are optional. Use them only if your SFTP server require this method of authentication. 
 
 
-### Import Settings
+## Import Settings
 
 ![Import Setting](docs/assets/import-settings.png "Import Setting")
 

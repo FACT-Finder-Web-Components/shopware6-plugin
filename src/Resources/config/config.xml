@@ -86,6 +86,59 @@
     </card>
 
     <card>
+        <title>Features Settings</title>
+        <title lang="de-DE">Funktionen Einstellungen</title>
+
+        <input-field type="bool">
+            <name>useAdvisorCampaigns</name>
+            <label>Advisor Campaigns</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>useRedirectCampaigns</name>
+            <label>Redirect Campaigns</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>useFeedbackCampaigns</name>
+            <label>Feedback Campaigns</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>useProductCampaigns</name>
+            <label>Product Campaigns</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>usePushedProductsCampaigns</name>
+            <label>Pushed products Campaigns</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>useShoppingCartCampaigns</name>
+            <label>Shopping Cart Campaigns</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>useRecommendations</name>
+            <label>Recommendations</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>useSimilarProducts</name>
+            <label>Similar products</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+    </card>
+
+    <card>
         <title>Export Settings</title>
 
         <component name="sw-entity-multi-id-select">
