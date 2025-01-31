@@ -114,6 +114,12 @@
         </input-field>
 
         <input-field type="bool">
+            <name>usePushedProductsCampaigns</name>
+            <label>Pushed products Campaigns</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
             <name>useShoppingCartCampaigns</name>
             <label>Shopping Cart Campaigns</label>
             <defaultValue>true</defaultValue>
@@ -128,12 +134,6 @@
         <input-field type="bool">
             <name>useSimilarProducts</name>
             <label>Similar products</label>
-            <defaultValue>true</defaultValue>
-        </input-field>
-
-        <input-field type="bool">
-            <name>usePushedProductsCampaigns</name>
-            <label>Pushed products Campaigns</label>
             <defaultValue>true</defaultValue>
         </input-field>
     </card>

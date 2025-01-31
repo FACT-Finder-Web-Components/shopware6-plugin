@@ -34,6 +34,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $fieldRoles              = [];
         $communicationParameters = [];
         $communication->getServerUrl()->willReturn('https://factfinder.server.com');
+        $communication->getFactFinderFeatures()->willReturn([]);
         $extensionConfig->getTrackingSettings()->willReturn(
             [
                 'addToCart' => [
@@ -67,6 +68,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $communication->getApiKey()->willReturn('abc-123');
         $communication->isSsrActive()->willReturn(false);
         $communication->isProxyEnabled()->willReturn(false);
+        $communication->getFactFinderFeatures()->willReturn([]);
         $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
         $communication->getFieldRoles(Argument::any())->willReturn([]);
         $event->getRequest()->willReturn($request);

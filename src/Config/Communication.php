@@ -56,7 +56,7 @@ class Communication extends BaseConfig
         return (bool) $this->config('useProxy');
     }
 
-    public function getFactFinderFeatures() : array
+    public function getFactFinderFeatures(): array
     {
         return [
             'useAdvisorCampaigns'        => (bool) $this->config('useAdvisorCampaigns'),
