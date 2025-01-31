@@ -2,10 +2,23 @@
 
 {% block page_search %}
   <div class="cms-page search-page">
-    {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig' %}
-    {% sw_include '@Parent/storefront/components/factfinder/campaign-redirect.html.twig' %}
-    {% sw_include '@Parent/storefront/components/factfinder/campaign-advisor.html.twig' %}
-    {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' %}
+
+    {% if page.extensions.factfinder.features.useAdvisorCampaigns %}
+      {% sw_include '@Parent/storefront/components/factfinder/campaign-advisor.html.twig' %}
+    {% endif %}
+
+    {% if page.extensions.factfinder.features.useRedirectCampaigns %}
+      {% sw_include '@Parent/storefront/components/factfinder/campaign-redirect.html.twig' %}
+    {% endif %}
+
+    {% if page.extensions.factfinder.features.useFeedbackCampaigns %}
+      {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig' %}
+    {% endif %}
+
+    {% if page.extensions.factfinder.features.usePushedProductsCampaigns %}
+      {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' %}
+    {% endif %}
+
     {% block page_search_headline %}
       <h1 class="search-headline">
         {% block page_search_headline_text %}

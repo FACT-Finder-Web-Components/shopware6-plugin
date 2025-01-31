@@ -16,14 +16,24 @@
   } %}
   {{ parent() }}
   <div class="container">
-    {% sw_include '@Parent/storefront/components/factfinder/recommendation.html.twig' %}
-    {% sw_include '@Parent/storefront/components/factfinder/similar-products.html.twig' %}
-    {% sw_include '@Parent/storefront/components/factfinder/campaign-product.html.twig' %}
-    {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig' with { flag: 'is-product-campaign' } %}
-    {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' with {
-      recordListTemplate: '@Parent/storefront/components/factfinder/record-list-slider.html.twig',
-      origin: 'ff-campaign-pushed-products',
-      flag: 'is-product-campaign'
-    } %}
+
+    {% if page.extensions.factfinder.features.useRecommendations %}
+      {% sw_include '@Parent/storefront/components/factfinder/recommendation.html.twig' %}
+    {% endif %}
+
+    {% if page.extensions.factfinder.features.useSimilarProducts %}
+      {% sw_include '@Parent/storefront/components/factfinder/similar-products.html.twig' %}
+    {% endif %}
+
+    {% if page.extensions.factfinder.features.useProductCampaigns %}
+      {% sw_include '@Parent/storefront/components/factfinder/campaign-product.html.twig' %}
+      {% sw_include '@Parent/storefront/components/factfinder/campaign-feedbacktext.html.twig' with { flag: 'is-product-campaign' } %}
+      {% sw_include '@Parent/storefront/components/factfinder/campaign-pushed-products.html.twig' with {
+        recordListTemplate: '@Parent/storefront/components/factfinder/record-list-slider.html.twig',
+        origin: 'ff-campaign-pushed-products',
+        flag: 'is-product-campaign'
+      } %}
+    {% endif %}
+
   </div>
 {% endblock %}

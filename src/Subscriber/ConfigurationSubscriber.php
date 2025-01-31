@@ -86,6 +86,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'ssr'                     => $this->config->isSsrActive(),
                 'communicationAttributes' => $this->getCommunicationAttributes($communicationConfig),
                 'categoryPathFieldName'   => $this->categoryPathFieldName,
+                'features'                => $this->config->getFactFinderFeatures(),
             ]));
         }
     }

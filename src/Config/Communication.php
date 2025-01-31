@@ -55,4 +55,18 @@ class Communication extends BaseConfig
     {
         return (bool) $this->config('useProxy');
     }
+
+    public function getFactFinderFeatures() : array
+    {
+        return [
+            'useAdvisorCampaigns'        => (bool) $this->config('useAdvisorCampaigns'),
+            'useRedirectCampaigns'       => (bool) $this->config('useRedirectCampaigns'),
+            'useFeedbackCampaigns'       => (bool) $this->config('useFeedbackCampaigns'),
+            'useProductCampaigns'        => (bool) $this->config('useProductCampaigns'),
+            'useShoppingCartCampaigns'   => (bool) $this->config('useShoppingCartCampaigns'),
+            'useRecommendations'         => (bool) $this->config('useRecommendations'),
+            'useSimilarProducts'         => (bool) $this->config('useSimilarProducts'),
+            'usePushedProductsCampaigns' => (bool) $this->config('usePushedProductsCampaigns'),
+        ];
+    }
 }
