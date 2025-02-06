@@ -6,6 +6,7 @@
 
 ### Fix
 - Remove CategoryPath filter in URL and ASN on category page
+- Fix add to cart tracking issue for shopware listing products
 
 ## [v6.1.0] - 2025.01.28
 ### Change
