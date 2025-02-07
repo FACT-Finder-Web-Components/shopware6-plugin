@@ -46,6 +46,16 @@
           {% endif %}
         });
 
+        {% if app.request.pathInfo !== "/factfinder/result" %}
+          factfinder.notifications.addSuggestClickListener(origin => {
+              if (origin.suggestion.type === `searchTerm`) {
+                window.location.href =  `/factfinder/result?query=${origin.suggestion.searchParams.query}`;
+
+                return false;
+              }
+          });
+        {% endif %}
+
         {% if page.extensions.factfinder.searchImmediate and not page.extensions.factfinder.ssr %}
           const searchParams = factfinder.utils.env.searchParamsFromUrl(
             { categoryFieldName: `{{ page.extensions.factfinder.categoryPathFieldName }}` }
