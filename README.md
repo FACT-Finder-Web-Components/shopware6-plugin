@@ -130,6 +130,8 @@ Without SSR enabled, web crawlers could not have a chance to scan the element re
 
 **Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
 
+**Note:** If you have a problem with displaying product images or prices correctly, you probably have Field Roles set incorrectly. You can easily fix this by setting [custom fields roles](#set-custom-field-roles)
+
 ## Advanced Settings
 
 ![Advanced Settings](docs/assets/advanced-settings.png "Advanced Settings")
