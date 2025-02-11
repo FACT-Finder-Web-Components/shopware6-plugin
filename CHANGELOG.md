@@ -1,14 +1,16 @@
 # Changelog
-## Unreleased
+## [v6.2.0] - 2025.02.11
 ### Add
 - Add feature settings so it is possible to enable/disable some of FactFinder features like campaigns or recommendations
 - Support Proxy feature for Server Side Rendering
 - (SSR) Redirect to PDP if there is only one product in search result
+- Implement redirection to search result page for searchTerm suggests
 
 ### Fix
 - Remove CategoryPath filter in URL and ASN on category page
 - Fix add to cart tracking issue for shopware listing products
 - Remove unnecessary star (*) search requests on dev env mode
+- Fix price slider filter closing
 
 ## [v6.1.0] - 2025.01.28
 ### Change
@@ -473,6 +475,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.2.0
 [v6.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.1.0
 [v6.0.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.2
 [v6.0.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.1
