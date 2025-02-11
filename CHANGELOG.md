@@ -3,6 +3,7 @@
 ### Add
 - Add feature settings so it is possible to enable/disable some of FactFinder features like campaigns or recommendations
 - Support Proxy feature for Server Side Rendering
+- (SSR) Redirect to PDP if there is only one product in search result
 
 ### Fix
 - Remove CategoryPath filter in URL and ASN on category page

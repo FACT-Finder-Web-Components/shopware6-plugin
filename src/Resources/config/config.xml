@@ -27,12 +27,6 @@
             <required>true</required>
         </input-field>
 
-        <input-field type="bool">
-            <name>useSsr</name>
-            <label>Use server-side rendering?</label>
-            <label lang="de-DE">Serverseitiges Rendering verwenden?</label>
-        </input-field>
-
         <component name="update-field-roles">
             <name>fieldRoles</name>
         </component>
@@ -45,6 +39,20 @@
     <card>
         <title>Advanced Settings</title>
         <title lang="de-DE">Erweiterte Einstellungen</title>
+
+        <input-field type="bool">
+            <name>useSsr</name>
+            <label>Use server-side rendering [SSR]?</label>
+            <label lang="de-DE">Serverseitiges Rendering verwenden [SSR]?</label>
+        </input-field>
+
+        <input-field type="bool">
+            <name>useSsrPdp</name>
+            <label>[SSR] Redirect to product detail page for single search result?</label>
+            <label lang="de-DE">[SSR] Für einzelne Suchergebnisse zur Produktdetailseite weiterleiten?</label>
+            <helpText>This option only works with server side rendering [SSR] enabled. If SSR search result has one result it will automatically be redirected to the product detail page. This is also working with category pages.</helpText>
+            <helpText lang="de-DE">Diese Option funktioniert nur, wenn das serverseitige Rendering [SSR] aktiviert ist. Wenn das SSR-Suchergebnis ein Ergebnis enthält, wird es automatisch auf die Produktdetailseite umgeleitet [PDP].</helpText>
+        </input-field>
 
         <input-field type="bool">
             <name>useProxy</name>

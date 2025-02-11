@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Storefront\Controller;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
-use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectCampaignException;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectException;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
@@ -44,6 +44,7 @@ class ResultController extends StorefrontController
             $request,
             $handlebars,
             $searchAdapter,
+            $this->config,
             $context->getSalesChannelId(),
             $response->getContent(),
         );
@@ -54,7 +55,7 @@ class ResultController extends StorefrontController
                     $this->parseQueryString($request->getQueryString() ?? '', $request)
                 )
             );
-        } catch (DetectRedirectCampaignException $exception) {
+        } catch (DetectRedirectException $exception) {
             return new RedirectResponse($exception->getRedirectUrl());
         }
 

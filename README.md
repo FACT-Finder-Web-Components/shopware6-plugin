@@ -122,16 +122,6 @@ You can find more information about what Field Roles are in (Web Components docu
 **Note:**
  Updating process is ran for all sales channels, no need to run it separately for each of them
 
-#### Server Side Rendering
-That option enables Server Side Rendering (SSR) for `ff-record-list` element on category and search result pages.
-That means when user navigate to a page of mentioned type, the HTML output will contain the pre-rendered custom elements.
-This is useful especially in terms of SEO because `ff-record-list` renders product data which could have much impact on page rating in browser.
-Without SSR enabled, web crawlers could not have a chance to scan the element rendered content because it will not yet be rendered on the time of scanning.
-
-**Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
-
-**Note:** If you have a problem with displaying product images or prices correctly, you probably have Field Roles set incorrectly. You can easily fix this by setting [custom fields roles](#set-custom-field-roles)
-
 ## Advanced Settings
 
 ![Advanced Settings](docs/assets/advanced-settings.png "Advanced Settings")
@@ -145,6 +135,20 @@ Note: Sending each request to FACT-Finder instance trough Shopware, you lose on 
 
 * Scenario how to count single click on "Add to cart" button
 * Redirect mapping for selected queries - put each pair `query=url` in separate row. If the phrase appears twice, the first one from the top of the list will be taken. Url can be relative path `/some/page` or absolute url `https://domain.com/some/page?someParameter=1`. If provided pair has an invalid format then it will be ignored.
+
+#### Server Side Rendering
+That option enables Server Side Rendering (SSR) for `ff-record-list` element on category and search result pages.
+That means when user navigate to a page of mentioned type, the HTML output will contain the pre-rendered custom elements.
+This is useful especially in terms of SEO because `ff-record-list` renders product data which could have much impact on page rating in browser.
+Without SSR enabled, web crawlers could not have a chance to scan the element rendered content because it will not yet be rendered on the time of scanning.
+
+**Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
+
+* Redirect to product detail page for single search result? - This option only works with server side rendering enabled. If SSR search result has one result it will automatically be redirected to the product detail page.
+  This setting also works with category pages. **Note:** Redirection only happens when search is done via Server Side Rendering. If search is done via WebComponents redirect will not happen.
+
+**Note:** If you have a problem with displaying product images or prices correctly, you probably have Field Roles set incorrectly. You can easily fix this by setting [custom fields roles](#set-custom-field-roles)
+
 
 ## Features Settings
 

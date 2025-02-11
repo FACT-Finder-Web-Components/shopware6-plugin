@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
-use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectCampaignException;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectException;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
@@ -78,6 +78,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             $request,
             $this->handlebars,
             $this->searchAdapter,
+            $this->config,
             $request->attributes->get('sw-sales-channel-id'),
             $response->getContent(),
         );
@@ -89,7 +90,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
                     true
                 )
             );
-        } catch (DetectRedirectCampaignException $exception) {
+        } catch (DetectRedirectException $exception) {
             $event->setResponse(new RedirectResponse($exception->getRedirectUrl()));
         }
     }
