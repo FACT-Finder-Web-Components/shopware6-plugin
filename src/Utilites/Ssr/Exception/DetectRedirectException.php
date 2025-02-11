@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception;
 
-class DetectRedirectCampaignException extends \Exception
+class DetectRedirectException extends \Exception
 {
     private string $redirectUrl;
 

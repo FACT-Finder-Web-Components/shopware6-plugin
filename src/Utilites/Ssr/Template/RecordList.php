@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Utilites\Ssr\Template;
 
-use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectCampaignException;
+use Omikron\FactFinder\Shopware6\Config\Communication;
+use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectException;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,11 +20,13 @@ class RecordList
     private string $salesChannelId;
     private string $content;
     private string $template;
+    private Communication $pluginConfig;
 
     public function __construct(
         Request $request,
         Engine $handlebars,
         SearchAdapter $searchAdapter,
+        Communication $pluginConfig,
         string $salesChannelId,
         string $content,
     ) {
@@ -32,13 +35,14 @@ class RecordList
         $this->searchAdapter  = $searchAdapter;
         $this->salesChannelId = $salesChannelId;
         $this->content        = $content;
+        $this->pluginConfig   = $pluginConfig;
         $this->setTemplateString();
     }
 
     /**
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      *
-     * @throws DetectRedirectCampaignException
+     * @throws DetectRedirectException
      */
     public function getContent(
         string $paramString,
@@ -48,7 +52,14 @@ class RecordList
 
         // Support redirect campaigns for SSR
         if ($this->getRedirectCampaign($results)) {
-            throw new DetectRedirectCampaignException($this->getRedirectCampaign($results));
+            throw new DetectRedirectException($this->getRedirectCampaign($results));
+        }
+
+        // Support redirect to PDP if found one result
+        if ($this->pluginConfig->isSsrPdpEnabled()) {
+            if ($this->shouldRedirectToPDP($results) && $this->getProductDeeplink($results)) {
+                throw new DetectRedirectException($this->getProductDeeplink($results));
+            }
         }
 
         return $this->renderResults($results, $paramString);
@@ -121,14 +132,24 @@ class RecordList
         $this->template = $match[0] ?? '';
     }
 
-    private function getRedirectCampaign(array $result): ?string
+    private function getRedirectCampaign(array $results): ?string
     {
-        if (!empty($result['campaigns'])) {
-            $campaign = array_search('REDIRECT', array_column($result['campaigns'], 'flavour'));
+        if (!empty($results['campaigns'])) {
+            $campaign = array_search('REDIRECT', array_column($results['campaigns'], 'flavour'));
 
-            return $result['campaigns'][$campaign]['target']['destination'] ?? null;
+            return $results['campaigns'][$campaign]['target']['destination'] ?? null;
         }
 
         return null;
+    }
+
+    private function shouldRedirectToPDP(array $results): bool
+    {
+        return count($results['records']) === 1 && $results['totalHits'] === 1;
+    }
+
+    private function getProductDeeplink(array $results): ?string
+    {
+        return $results['records'][0]['record']['Deeplink'] ?? null;
     }
 }
