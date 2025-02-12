@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix cross-selling products tracking issue
+
 ## [v6.2.0] - 2025.02.11
 ### Add
 - Add feature settings so it is possible to enable/disable some of FactFinder features like campaigns or recommendations
