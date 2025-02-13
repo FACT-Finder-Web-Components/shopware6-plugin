@@ -11,6 +11,7 @@ use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
 use Prophecy\Argument;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use Shopware\Core\Content\Media\MediaUrlPlaceholderHandlerInterface;
 use Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface;
 use Shopware\Core\Framework\Adapter\Twig\TemplateFinder;
@@ -37,6 +38,7 @@ class ResultControllerSpec extends ObjectBehavior
     private Collaborator $twig;
     private Collaborator $seoUrlPlaceholderHandler;
     private Collaborator $mediaUrlPlaceholderHandler;
+    private Collaborator $factfinderLogger;
 
     public function let(
         Request $request,
@@ -51,7 +53,8 @@ class ResultControllerSpec extends ObjectBehavior
         SystemConfigService $systemConfigService,
         Environment $twig,
         SeoUrlPlaceholderHandlerInterface $seoUrlPlaceholderHandler,
-        MediaUrlPlaceholderHandlerInterface $mediaUrlPlaceholderHandler
+        MediaUrlPlaceholderHandlerInterface $mediaUrlPlaceholderHandler,
+        LoggerInterface $factfinderLogger,
     ): void {
         $this->request                    = $request;
         $this->config                     = $config;
@@ -61,7 +64,8 @@ class ResultControllerSpec extends ObjectBehavior
         $this->twig                       = $twig;
         $this->seoUrlPlaceholderHandler   = $seoUrlPlaceholderHandler;
         $this->mediaUrlPlaceholderHandler = $mediaUrlPlaceholderHandler;
-        $this->beConstructedWith($config, $pageLoader);
+        $this->factfinderLogger           = $factfinderLogger;
+        $this->beConstructedWith($config, $pageLoader, $factfinderLogger);
         $requestStack->getCurrentRequest()->willReturn($request);
         $container->get('request_stack')->willReturn($requestStack);
         $this->request->attributes = $attributes;
