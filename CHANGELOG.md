@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fix
 - Fix cross-selling products tracking issue
+- Handle ClientException for SSR (invalid credentials, API issue etc.)
 
 ## [v6.2.0] - 2025.02.11
 ### Add
