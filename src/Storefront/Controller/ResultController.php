@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Storefront\Controller;
 
+use Omikron\FactFinder\Communication\Client\ClientException;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectException;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
+use Psr\Log\LoggerInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Shopware\Storefront\Page\GenericPageLoader;
@@ -23,6 +25,7 @@ class ResultController extends StorefrontController
     public function __construct(
         private readonly Communication $config,
         private readonly GenericPageLoader $pageLoader,
+        private readonly LoggerInterface $factfinderLogger,
     ) {
     }
 
@@ -55,8 +58,10 @@ class ResultController extends StorefrontController
                     $this->parseQueryString($request->getQueryString() ?? '', $request)
                 )
             );
-        } catch (DetectRedirectException $exception) {
-            return new RedirectResponse($exception->getRedirectUrl());
+        } catch (DetectRedirectException $e) {
+            return new RedirectResponse($e->getRedirectUrl());
+        } catch (ClientException $e) {
+            $this->factfinderLogger->error("{$e->getMessage()}. Check logs for more information.");
         }
 
         return $response;
