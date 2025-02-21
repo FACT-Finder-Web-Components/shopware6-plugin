@@ -1,8 +1,15 @@
 # Changelog
 ## Unreleased
+### Add
+- Implement Popular Searches
+
 ### Fix
 - Fix cross-selling products tracking issue
 - Handle ClientException for SSR (invalid credentials, API issue etc.)
+
+### Change
+- Upgrade Web Components default styles
+- Upgrade Web Components version to v5.1.0
 
 ## [v6.2.0] - 2025.02.11
 ### Add

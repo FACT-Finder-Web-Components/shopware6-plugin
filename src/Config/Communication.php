@@ -72,6 +72,7 @@ class Communication extends BaseConfig
             'useRecommendations'         => (bool) $this->config('useRecommendations'),
             'useSimilarProducts'         => (bool) $this->config('useSimilarProducts'),
             'usePushedProductsCampaigns' => (bool) $this->config('usePushedProductsCampaigns'),
+            'usePopularSearches'         => (bool) $this->config('usePopularSearches'),
         ];
     }
 }

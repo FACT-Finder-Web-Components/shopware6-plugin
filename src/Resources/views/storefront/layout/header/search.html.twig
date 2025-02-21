@@ -7,7 +7,12 @@
         {% block layout_header_search_input_group %}
           <div class="input-group">
             {% block layout_header_search_input %}
-              <ff-searchbox suggest-onfocus="true" use-suggest="true" select-onclick="true">
+              <ff-searchbox
+                suggest-onfocus="true"
+                use-suggest="true"
+                select-onclick="true"
+                {% if page.extensions.factfinder.features.usePopularSearches %} popular-searches {% endif %}
+              >
                 {{ parent() }}
               </ff-searchbox>
             {% endblock %}

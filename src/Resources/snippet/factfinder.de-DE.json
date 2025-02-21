@@ -4,7 +4,8 @@
       "SearchTerms": "Suchbegriffe",
       "Categories": "Kategorien",
       "Brands": "Marken",
-      "Products": "Produktempfehlungen"
+      "Products": "Produktempfehlungen",
+      "PopularSearches": "Beliebte Suchanfragen"
     },
     "search": {
       "headlineBefore": "Suchergebnis für:",

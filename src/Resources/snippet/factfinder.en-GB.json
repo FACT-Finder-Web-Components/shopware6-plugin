@@ -4,7 +4,8 @@
       "SearchTerms": "Search Suggestions",
       "Categories": "Category Suggestions",
       "Brands": "Brands",
-      "Products": "Recommended Products"
+      "Products": "Recommended Products",
+      "PopularSearches": "Popular Searches"
     },
     "search": {
       "headlineBefore": "Your search for:",

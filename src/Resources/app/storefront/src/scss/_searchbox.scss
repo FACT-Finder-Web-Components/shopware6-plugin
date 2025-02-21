@@ -6,6 +6,7 @@ ff-searchbox {
 
   .header-search-input {
     @include border-end-radius(0);
+    border-right: 1px solid;
   }
 
   &:focus-within ~ .input-group-append .header-search-btn {

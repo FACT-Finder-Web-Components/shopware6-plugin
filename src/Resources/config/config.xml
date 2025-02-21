@@ -144,6 +144,12 @@
             <label>Similar products</label>
             <defaultValue>true</defaultValue>
         </input-field>
+
+        <input-field type="bool">
+            <name>usePopularSearches</name>
+            <label>Popular searches</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
     </card>
 
     <card>
