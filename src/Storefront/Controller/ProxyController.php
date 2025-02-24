@@ -51,8 +51,9 @@ class ProxyController extends StorefrontController
             ->withCredentials(new Credentials(...$this->config->getCredentials()))
             ->withVersion($this->config->getVersion())
             ->build();
-        $query  = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
-        $method = $request->getMethod();
+        $query    = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
+        $method   = $request->getMethod();
+        $endpoint = trim($endpoint, '/');
 
         try {
             switch ($method) {
@@ -71,7 +72,7 @@ class ProxyController extends StorefrontController
                     throw new \Exception(sprintf('HTTP Method %s is not supported', $method));
             }
 
-            $event = new EnrichProxyDataEvent(json_decode((string) $response->getBody(), true));
+            $event = new EnrichProxyDataEvent(json_decode((string) $response->getBody(), true) ?? []);
             $eventDispatcher->dispatch($event);
 
             return new JsonResponse($event->getData());

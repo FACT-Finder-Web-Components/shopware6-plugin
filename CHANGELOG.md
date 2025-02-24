@@ -1,8 +1,11 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix Proxy issue on PDP and for tracking requests
+
 ## [v5.2.2] - 2024.10.09
 ### Improve
 - Improve code style after CS library updates
-- Product export - improve load variants properties
 - Product export - improve load variants properties
 
 ## [v5.2.1] - 2024.08.14
