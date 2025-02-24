@@ -12,17 +12,17 @@ export default class AsnPlugin extends Plugin
 
     _handleToggleFilter(event) {
         const getAllGroupsExceptClicked = e => {
-            const clickedGroup = e.target.closest('ff-asn-group');
+            const clickedGroup = e.target.closest('ff-asn-group, ff-asn-group-slider');
 
-            return [...document.querySelectorAll('ff-asn-group')].filter(g => g !== clickedGroup)
+            return [...document.querySelectorAll('ff-asn-group, ff-asn-group-slider')].filter(g => g !== clickedGroup)
         }
 
         const isAsnGroup = e => {
-            return this._eventPath(e).find(p => p.tagName === 'ff-asn-group'.toUpperCase());
-        }
+            return this._eventPath(e).find(p => p.tagName === 'ff-asn-group'.toUpperCase()
+                || p.tagName === 'ff-asn-group-slider'.toUpperCase());        }
 
         if (!isAsnGroup(event)) {
-            document.querySelectorAll('ff-asn-group').forEach(g => {
+            document.querySelectorAll('ff-asn-group, ff-asn-group-slider').forEach(g => {
                 if (g.opened) g.toggle(true);
             })
         }
