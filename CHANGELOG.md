@@ -1,7 +1,11 @@
 # Changelog
 ## Unreleased
+### Add
+- Support Proxy feature for Server Side Rendering
+
 ### Fix
 - Fix Proxy issue on PDP and for tracking requests
+- Handle ClientException for SSR (invalid credentials, API issue etc.)
 
 ## [v5.2.2] - 2024.10.09
 ### Improve
