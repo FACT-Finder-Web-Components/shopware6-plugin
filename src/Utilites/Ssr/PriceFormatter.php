@@ -14,7 +14,7 @@ class PriceFormatter
     private SalesChannelService $channelService;
     private SalesChannelContext $context;
     private CurrencyFormatter $currencyFormatter;
-    private array $fieldRoles;
+    private CachedFieldRoles $fieldRolesService;
     private array $defaultFieldRoles;
 
     public function __construct(
@@ -26,7 +26,7 @@ class PriceFormatter
         $this->channelService    = $channelService;
         $this->currencyFormatter = $currencyFormatter;
         $this->context           = $this->channelService->getSalesChannelContext();
-        $this->fieldRoles        = $fieldRolesService->getRoles($this->context->getSalesChannelId());
+        $this->fieldRolesService = $fieldRolesService;
         $this->defaultFieldRoles = $fieldRoles;
     }
 
@@ -71,7 +71,9 @@ class PriceFormatter
 
     private function getPriceField(): string
     {
-        return $this->fieldRoles['price'] ?? $this->defaultFieldRoles['price'] ?? 'Price';
+        $fieldRoles = $this->fieldRolesService->getRoles($this->context->getSalesChannelId());
+
+        return $fieldRoles['price'] ?? $this->defaultFieldRoles['price'] ?? 'Price';
     }
 
     private function convertRecord(array $record): array

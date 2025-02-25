@@ -3,10 +3,14 @@
 ### Add
 - Support Proxy feature for Server Side Rendering
 
+### Change
+- Update FactFinder logo icon
+
 ### Fix
 - Fix Proxy issue on PDP and for tracking requests
 - Handle ClientException for SSR (invalid credentials, API issue etc.)
 - Fix price slider filter closing
+- Remove unnecessary star (*) search requests on dev env mode
 
 ## [v5.2.2] - 2024.10.09
 ### Improve

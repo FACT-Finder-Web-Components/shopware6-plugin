@@ -78,6 +78,7 @@
             <bind key="$cache" type="service" id="cache.object" />
             <bind key="$container" type="service" id="service_container" />
             <bind key="$factfinderLogger" type="service" id="monolog.logger.factfinder_channel" />
+            <bind key="$kernelEnv">%kernel.environment%</bind>
         </defaults>
 
         <service id="Omikron\FactFinder\Shopware6\Communication\AdapterFactory" />
