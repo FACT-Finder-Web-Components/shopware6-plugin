@@ -10,15 +10,27 @@ class CachedFieldRoles implements FieldRolesInterface
 {
     private FieldRolesInterface $decorated;
     private AdapterInterface $cache;
+    private string $kernelEnv;
+    private array $defaultFieldRoles;
 
-    public function __construct(FieldRolesInterface $decorated, AdapterInterface $cache)
-    {
-        $this->decorated = $decorated;
-        $this->cache     = $cache;
+    public function __construct(
+        FieldRolesInterface $decorated,
+        AdapterInterface $cache,
+        string $kernelEnv,
+        array $fieldRoles,
+    ) {
+        $this->decorated         = $decorated;
+        $this->cache             = $cache;
+        $this->kernelEnv         = $kernelEnv;
+        $this->defaultFieldRoles = $fieldRoles;
     }
 
     public function getRoles(?string $salesChannelId): array
     {
+        if ($this->isDevEnv()) {
+            return $this->defaultFieldRoles;
+        }
+
         $salesChannelId = $salesChannelId ?? '';
         $cacheKey       = $this->getCacheKey($salesChannelId);
         $item           = $this->cache->getItem($cacheKey);
@@ -50,5 +62,10 @@ class CachedFieldRoles implements FieldRolesInterface
     private function getCacheKey(string $salesChannelId): string
     {
         return sprintf('factfinder-field-roles-%s', $salesChannelId);
+    }
+
+    private function isDevEnv(): bool
+    {
+        return $this->kernelEnv === 'dev';
     }
 }
