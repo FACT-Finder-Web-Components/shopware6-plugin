@@ -58,6 +58,15 @@
             <label lang="de-DE">Serverseitiges Rendering verwenden?</label>
         </input-field>
 
+        <input-field type="bool">
+            <name>disableFactFinderWebc</name>
+            <label>Disable FactFinder Web Components on frontend?</label>
+            <label lang="de-DE">FactFinder-Webkomponenten im Frontend verwenden?</label>
+            <defaultValue>false</defaultValue>
+            <helpText>You can disable FactFinder integration on the frontend. This option works for each sales channel separately. Note. If you enable this option, FactFinder integration on the frontend will stop working.</helpText>
+            <helpText lang="de-DE">Sie können die FactFinder-Integration im Frontend deaktivieren. Diese Option funktioniert für jeden Vertriebskanal separat. Notiz. Wenn Sie diese Option aktivieren, funktioniert die FactFinder-Integration im Frontend nicht mehr.</helpText>
+        </input-field>
+
         <component name="update-field-roles">
             <name>fieldRoles</name>
         </component>

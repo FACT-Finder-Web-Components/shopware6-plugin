@@ -1,27 +1,39 @@
 {% sw_extends '@Parent/storefront/layout/header/search.html.twig' %}
 
 {% block layout_header_search %}
-  <div class="collapse" id="searchCollapse">
-    <div class="header-search">
-      <div class="header-search-form">
-        {% block layout_header_search_input_group %}
-          <div class="input-group">
-            {% block layout_header_search_input %}
-              <ff-searchbox suggest-onfocus="true" use-suggest="true" select-onclick="true">
-                {{ parent() }}
-              </ff-searchbox>
-            {% endblock %}
+  {% if not page.extensions.factfinder.disableWebc %}
+    <div class="collapse" id="searchCollapse">
+      <div class="header-search">
+        <div class="header-search-form">
+          {% block layout_header_search_input_group %}
+            <div class="input-group">
+              {% block layout_header_search_input %}
+                {% if not page.extensions.factfinder.disableWebc %}
+                  <ff-searchbox suggest-onfocus="true" use-suggest="true" select-onclick="true">
+                    {{ parent() }}
+                  </ff-searchbox>
+                {% else %}
+                  {{ parent() }}
+                {% endif %}
+              {% endblock %}
 
-            {% block layout_header_search_button %}
-              <ff-searchbutton class="input-group-append">
-                {{ parent() }}
-              </ff-searchbutton>
-            {% endblock %}
-          </div>
-        {% endblock %}
+              {% block layout_header_search_button %}
+                {% if not page.extensions.factfinder.disableWebc %}
+                  <ff-searchbutton class="input-group-append">
+                    {{ parent() }}
+                  </ff-searchbutton>
+                {% else %}
+                  {{ parent() }}
+                {% endif %}
+              {% endblock %}
+            </div>
+          {% endblock %}
 
-        {% sw_include '@Parent/storefront/layout/factfinder/suggest.html.twig' %}
+          {% sw_include '@Parent/storefront/layout/factfinder/suggest.html.twig' %}
+        </div>
       </div>
     </div>
-  </div>
+  {% else %}
+    {{ parent() }}
+  {% endif %}
 {% endblock %}

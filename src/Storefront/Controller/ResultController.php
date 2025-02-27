@@ -11,6 +11,7 @@ use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\RecordList;
 use Psr\Log\LoggerInterface;
+use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Shopware\Storefront\Page\GenericPageLoader;
@@ -50,6 +51,10 @@ class ResultController extends StorefrontController
         SearchAdapter $searchAdapter,
         Engine $mustache,
     ): Response {
+        if ($this->config->disableFFWebc($context->getSalesChannelId()) === true) {
+            throw new PageNotFoundException('WebComponents are disabled for this sales channel.');
+        }
+
         $page     = $this->pageLoader->load($request, $context);
         $response = $this->renderStorefront('@Parent/storefront/page/factfinder/result.html.twig', ['page' => $page]);
 

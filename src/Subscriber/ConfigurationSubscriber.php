@@ -83,6 +83,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'userId'                  => $customer ? $customer->getId() : null,
                 'ssr'                     => $this->config->isSsrActive(),
                 'communicationAttributes' => $this->getCommunicationAttributes($communicationConfig),
+                'disableWebc'             => $this->config->disableFFWebc($salesChannelId),
             ]));
         }
     }

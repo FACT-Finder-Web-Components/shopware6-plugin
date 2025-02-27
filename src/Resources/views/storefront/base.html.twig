@@ -1,114 +1,122 @@
 {% sw_extends '@Parent/storefront/base.html.twig' %}
 
 {% block base_body_inner %}
-  {% block base_body_inner_factfinder_communication %}
-    <ff-communication
-      {{ page.extensions.factfinder.communicationAttributes|join(' ')|raw }}
-      only-search-params="true"
-      disable-single-hit-redirect="true">
-    </ff-communication>
-  {% endblock %}
+
+{#  {{ dump(page.extensions.factfinder.disableWebc) }}#}
+
+  {% if not page.extensions.factfinder.disableWebc %}
+    {% block base_body_inner_factfinder_communication %}
+      <ff-communication
+        {{ page.extensions.factfinder.communicationAttributes|join(' ')|raw }}
+        only-search-params="true"
+        disable-single-hit-redirect="true">
+      </ff-communication>
+    {% endblock %}
+  {% endif %}
 
   {{ parent() }}
 {% endblock %}
 
 {% block base_body_script %}
-  {% block base_script_factfinder_search_redirect %}
-    <script>
-      const ffRedirectMapping = JSON.parse('{{ page.extensions.factfinder.redirectMapping|raw }}');
+  {% if not page.extensions.factfinder.disableWebc %}
+    {% block base_script_factfinder_search_redirect %}
+      <script>
+        const ffRedirectMapping = JSON.parse('{{ page.extensions.factfinder.redirectMapping|raw }}');
 
-      document.addEventListener('before-search', function (event) {
-        const query = event.detail.query;
+        document.addEventListener('before-search', function (event) {
+          const query = event.detail.query;
 
-        if (ffRedirectMapping.hasOwnProperty(query)) {
-          event.preventDefault();
-          window.location = ffRedirectMapping[query];
+          if (ffRedirectMapping.hasOwnProperty(query)) {
+            event.preventDefault();
+            window.location = ffRedirectMapping[query];
 
-          return;
-        }
+            return;
+          }
 
-        if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
-          event.preventDefault();
-          window.location = '{{ path('frontend.factfinder.result') }}' + factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));
-        }
-      });
-
-      document.addEventListener('ffReady', function (e) {
-        e.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {
-          url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/order=[^&]+&?/, '').replace(/name=[^&]+&?/g, '');
-          factfinder.communication.Util.pushParameterToHistory(res, url, event);
-          return false;
+          if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
+            event.preventDefault();
+            window.location = '{{ path('frontend.factfinder.result') }}' + factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));
+          }
         });
-      });
-    </script>
-  {% endblock %}
 
-  <script>
-    const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');
+        document.addEventListener('ffReady', function (e) {
+          e.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {
+            url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/order=[^&]+&?/, '').replace(/name=[^&]+&?/g, '');
+            factfinder.communication.Util.pushParameterToHistory(res, url, event);
+            return false;
+          });
+        });
+      </script>
+    {% endblock %}
 
-    {% if page.extensions.factfinder.ssr %}
-      function generateSid() {
-        var length = 30;
-        var characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var text = "";
+    {% block base_script_factfinder_tracking_script %}
+      <script>
+        const ffTrackingSettings = JSON.parse('{{ page.extensions.factfinder.trackingSettings|json_encode()|raw }}');
 
-        for (var i = 0; i < length; i++) {
-          text += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
-        }
+        {% if page.extensions.factfinder.ssr %}
+          function generateSid() {
+            var length = 30;
+            var characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var text = "";
 
-        return text;
-      }
-    {% endif %}
+            for (var i = 0; i < length; i++) {
+              text += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
+            }
 
-    document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
-      {% if page.extensions.factfinder.ssr == 'ssr' %}
-        const searchResult = {FF_SEARCH_RESULT};
+            return text;
+          }
+        {% endif %}
 
-        if (searchResult.hasOwnProperty('records')) {
-          factfinder.communication.EventAggregator.currentSearchResult = searchResult;
-          factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
-        }
-      {% endif %}
+        document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
+          {% if page.extensions.factfinder.ssr == 'ssr' %}
+            const searchResult = {FF_SEARCH_RESULT};
 
-      const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
-        const cookieData = cookie.split('=');
-        const [key, value] = cookieData;
-        acc[key] = value;
+            if (searchResult.hasOwnProperty('records')) {
+              factfinder.communication.EventAggregator.currentSearchResult = searchResult;
+              factfinder.communication.ResultDispatcher.dispatchRaw(searchResult);
+            }
+          {% endif %}
 
-        return acc;
-      }, {});
+          const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+            const cookieData = cookie.split('=');
+            const [key, value] = cookieData;
+            acc[key] = value;
 
-      if (cookies['ff_user_id']) {
-        factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
+            return acc;
+          }, {});
 
-        if (cookies['ff_has_just_logged_in']) {
-          factfinder.communication.Tracking.loginWithConfig();
-        }
-      } else {
-        factfinder.communication.sessionManager.clearLoginData();
+          if (cookies['ff_user_id']) {
+            factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id'])
 
-        if (cookies['ff_has_just_logged_out']) {
-          factfinder.communication.sessionManager.clearAllSessionData();
-        }
-      }
+            if (cookies['ff_has_just_logged_in']) {
+              factfinder.communication.Tracking.loginWithConfig();
+            }
+          } else {
+            factfinder.communication.sessionManager.clearLoginData();
 
-      {% if page.extensions.factfinder.ssr %}
-        const ffcommunication = document.querySelector('ff-communication');
+            if (cookies['ff_has_just_logged_out']) {
+              factfinder.communication.sessionManager.clearAllSessionData();
+            }
+          }
 
-        if (!cookies['ffwebc_sid']) {
-          const sid = generateSid();
-          document.cookie = 'ffwebc_sid=' + sid + '; path=/;';
-          ffcommunication.setAttribute('sid', sid);
-        } else {
-          ffcommunication.setAttribute('sid', cookies['ffwebc_sid']);
-        }
-      {% endif %}
+          {% if page.extensions.factfinder.ssr %}
+            const ffcommunication = document.querySelector('ff-communication');
 
-      if ({{ page.extensions.factfinder.searchImmediate }}) {
-        searchImmediate();
-      }
-    });
-  </script>
+            if (!cookies['ffwebc_sid']) {
+              const sid = generateSid();
+              document.cookie = 'ffwebc_sid=' + sid + '; path=/;';
+              ffcommunication.setAttribute('sid', sid);
+            } else {
+              ffcommunication.setAttribute('sid', cookies['ffwebc_sid']);
+            }
+          {% endif %}
 
+          if ({{ page.extensions.factfinder.searchImmediate }}) {
+            searchImmediate();
+          }
+        });
+      </script>
+    {% endblock %}
+  {% endif %}
   {{ parent() }}
 {% endblock %}
