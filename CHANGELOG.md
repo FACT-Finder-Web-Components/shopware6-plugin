@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Add possibility to disable Web Components integration per sales channel
+
 ## [v5.3.0] - 2025.02.25
 ### Add
 - Support Proxy feature for Server Side Rendering

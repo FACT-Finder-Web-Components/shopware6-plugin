@@ -37,6 +37,7 @@ modifications in order to fit their needs. For more advanced features please che
     - [Communication](#communication)
     - [Templates](#templates)
     - [Full List of Implemented Web Components](#full-list-of-implemented-web-components)
+- [Sales channels management](#sales-channels-management)
 - [Modification Examples](#modifications-examples)
     - [Adding New Column to Feed](#adding-new-column-to-feed)
     - [Export Fields Stored in Variants](#export-fields-stored-in-variants)
@@ -105,13 +106,14 @@ store cache in order the new applied configuration to start working.
 * Server URL - FACT-Finder® instance url   
   **Note:** Server URL should contain a used protocol: (e.g. `https://`) and should end with an
   endpoint ( `fact-finder` )
-* Channel - Channel you want to serve data from
+* Channel - Channel you want to serve data from. This field works for each sales channel separately, so you can, for example, adjust FactFinder integration to different store's language versions.
 * Username
 * Password
 * API Version - Used FACT-Finder® api version   
   **Note:** Module supports FACT-Finder® api version `v4` and `v5`. By selecting the wrong api version you may cause the Web Components to be unable to communicate with FACT-Finder®
 
 You can check if the above data is correctly set by clicking on the `Test Connection` button. Please save your settings before clicking on button.
+
 #### Update Field Roles
 This functionality offers a way to download field roles configured in FACT-Finder®.
 Please use this if you don't use feed offered by the plugin or for some reason you have changed the column names.
@@ -127,6 +129,12 @@ Without SSR enabled, web crawlers could not have a chance to scan the element re
 
 **Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
 **Note:** If you have a problem with displaying product images or prices correctly, you probably have Field Roles set incorrectly. You can easily fix this by setting [custom fields roles](#set-custom-field-roles)
+
+#### Disable FactFinder Web Components option
+
+This option allows you to disable FACT-Finder® Web Components integration on the frontend. It works for each sales channel separately so you can use our plugin only on the sales channels you want.
+
+**Note:** If you enable this option, FACT-Finder® integration on the frontend will stop working. Pay special attention not to define FACT-Finder® category pages for sales channels where you enable this option, as this will cause an error on the page or incorrect generation of HTML code
 
 ## Advanced Settings
 
@@ -411,6 +419,17 @@ Plugin implements a list of given Web Components:
 * Checkout Success Page
     * ff-checkout-tracking
 
+
+## Sales channels management
+
+The entire plugin configuration must be placed in `All Sales Channels`:
+
+![sales-channels-management.png](docs/assets/sales-channels-management.png)
+
+There are only two fields that can be defined for each sales channel separately:
+
+- `Channel` - you can define different data comes from FACT-Finder®, especially in the case of multi-language stores
+- `Disable FactFinder Web Components on frontend?` - allows you to disable FACT-Finder® Web Components integration on the frontend. With this option you can use our plugin only on the sales channels you want.
 
 ## Modifications Examples
 

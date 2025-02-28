@@ -22,6 +22,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(defaults={"_routeScope"={"storefront"}})
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ResultController extends StorefrontController
 {

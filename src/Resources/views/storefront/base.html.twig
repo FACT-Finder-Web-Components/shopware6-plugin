@@ -2,8 +2,6 @@
 
 {% block base_body_inner %}
 
-{#  {{ dump(page.extensions.factfinder.disableWebc) }}#}
-
   {% if not page.extensions.factfinder.disableWebc %}
     {% block base_body_inner_factfinder_communication %}
       <ff-communication
