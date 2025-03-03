@@ -77,6 +77,7 @@ class ResultControllerSpec extends ObjectBehavior
         $this->container->get(SystemConfigService::class)->willReturn($systemConfigService);
         $this->container->get(SeoUrlPlaceholderHandlerInterface::class)->willReturn($seoUrlPlaceholderHandler);
         $this->container->get(MediaUrlPlaceholderHandlerInterface::class)->willReturn($mediaUrlPlaceholderHandler);
+        $this->container->get('twig')->willReturn($twig);
         $this->setTwig($twig);
         $nestedEventDispatcher->dispatch(Argument::any())->willReturn(Argument::any());
         $this->setContainer($container);
