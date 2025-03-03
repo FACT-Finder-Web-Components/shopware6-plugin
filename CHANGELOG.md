@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.3.0] - 2025.03.03
 ### Add
 - Implement Popular Searches
 
@@ -487,6 +487,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.3.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.3.0
 [v6.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.2.0
 [v6.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.1.0
 [v6.0.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.0.2
