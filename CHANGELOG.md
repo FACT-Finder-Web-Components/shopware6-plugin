@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Remove unnecessary star (*) search requests on dev env mode
+
 ## [v4.4.3] - 2024.07.22
 ### Add
 - Add userId for cart tracking
