@@ -116,8 +116,7 @@ You can check if the above data is correctly set by clicking on the `Test Connec
 This functionality offers a way to download field roles configured in FACT-Finder®.
 Please use this if you don't use feed offered by the plugin or for some reason you have changed the column names.
 You can find more information about what Field Roles are in (Web Components documentation)[https://web-components.fact-finder.de/documentation/4.x/field-roles]
-**Note:**
- Updating process is ran for all sales channels, no need to run it separately for each of them
+**Note:** Updating process is ran for all sales channels, no need to run it separately for each of them
 
 #### Server Side Rendering
 That option enables Server Side Rendering (SSR) for `ff-record-list` element on category and search result pages.
@@ -126,6 +125,8 @@ This is useful especially in terms of SEO because `ff-record-list` renders produ
 Without SSR enabled, web crawlers could not have a chance to scan the element rendered content because it will not yet be rendered on the time of scanning.
 
 **Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
+
+**Note:** If you have a problem with displaying product images or prices correctly, you probably have Field Roles set incorrectly. You can easily fix this by setting [custom fields roles](#set-custom-field-roles)
 
 ## Advanced Settings
 
