@@ -26,9 +26,13 @@
         }
       {% else %}
         const initOptions = factfinder.config.get();
-        initialSearch({
-          filters: initOptions.appConfig.categoryPage,
-        });
+        const searchParams = factfinder.utils.env.searchParamsFromUrl(
+          { categoryFieldName: `{{ page.extensions.factfinder.categoryPathFieldName }}` }
+        );
+
+        searchParams.filters = searchParams.filters ?? [];
+        searchParams.filters.push(initOptions.appConfig.categoryPage[0]);
+        initialSearch(searchParams);
       {% endif %}
     });
   </script>

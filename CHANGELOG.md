@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix filter cloud issue on category pages
+
 ## [v6.3.1] - 2025.03.04
 ### Change
 - Upgrade Web Components version to v5.1.1
