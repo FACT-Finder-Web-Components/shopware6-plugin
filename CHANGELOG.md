@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fix
 - Remove unnecessary star (*) search requests on dev env mode
+- Fix price slider filter closing
 
 ## [v4.4.3] - 2024.07.22
 ### Add
