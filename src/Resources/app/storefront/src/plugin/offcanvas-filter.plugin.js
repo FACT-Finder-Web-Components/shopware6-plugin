@@ -9,6 +9,7 @@ export default class OffCanvasFilter extends OffCanvasFilterPlugin
 
     init() {
         this._registerEventListeners();
+        this._setupFilterVisibility();
     }
 
     /**
@@ -77,5 +78,75 @@ export default class OffCanvasFilter extends OffCanvasFilterPlugin
                 : addClasses(element)([this.ASNGroupElementMobileClass]);
             });
         });
+    }
+
+    // Fix ff-asn-remove-all-filters issue on mobile view (in the future this issue should be fixed in the webcomponents library)
+    _setupFilterVisibility() {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.addedNodes.length) {
+                    const filterContainer = document.querySelector('.filter-panel-active-container');
+                    if (filterContainer) {
+                        this._initializeFilterVisibility();
+                    }
+                }
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        const filterContainer = document.querySelector('.filter-panel-active-container');
+        if (filterContainer) {
+            this._initializeFilterVisibility();
+        }
+
+        document.addEventListener('ffCoreReady', () => {
+            this._updateFilterVisibility();
+        });
+    }
+
+    _initializeFilterVisibility() {
+        const filterContainer = document.querySelector('.filter-panel-active-container');
+        const filterCloud = filterContainer?.querySelector('ff-filter-cloud');
+        const resetButton = filterContainer?.querySelector('ff-asn-remove-all-filters');
+
+        if (!filterContainer || !filterCloud || !resetButton) {
+            return;
+        }
+
+        this.filterCloud = filterCloud;
+        this.resetButton = resetButton;
+
+        this._updateFilterVisibility();
+
+        if (this.filterObserver) {
+            this.filterObserver.disconnect();
+        }
+        this.filterObserver = new MutationObserver(() => {
+            this._updateFilterVisibility();
+        });
+        this.filterObserver.observe(filterCloud, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    _updateFilterVisibility() {
+        const filterContainer = document.querySelector('.filter-panel-active-container');
+        if (!filterContainer || !document.body.contains(this.filterCloud) || !document.body.contains(this.resetButton)) {
+            return;
+        }
+
+        const activeFilters = this.filterCloud.querySelectorAll('span.filter-active[data-template="filter"]');
+        if (activeFilters.length > 0) {
+            this.resetButton.classList.remove('ffw-hidden');
+            this.resetButton.style.display = 'inline-block';
+        } else {
+            this.resetButton.classList.add('ffw-hidden');
+            this.resetButton.style.display = 'none';
+        }
     }
 }

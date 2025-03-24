@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fix
 - Fix filter cloud issue on category pages
+- Fix ff-asn-remove-all-filters issue on mobile view
 
 ## [v6.3.1] - 2025.03.04
 ### Change
