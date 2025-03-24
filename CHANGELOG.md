@@ -4,6 +4,9 @@
 - Remove unnecessary star (*) search requests on dev env mode
 - Fix price slider filter closing
 
+### Change
+- Upgrade Web Components version to v4.3.0
+
 ## [v4.4.3] - 2024.07.22
 ### Add
 - Add userId for cart tracking
