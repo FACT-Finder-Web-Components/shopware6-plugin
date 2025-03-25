@@ -55,11 +55,11 @@ modifications in order to fit their needs. For more advanced features please che
 - Shopware 6.4
 - PHP version 7.4 or higher
 
-**Note:** If you use Shopware 6.5 please use SDK version 5.x: 
+**Note:** For Shopware 6.6 please use SDK version 5.x:
 https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/5.x
 
-**Note:** For Shopware 6.6 please use Shopware marketplace version:
-https://store.shopware.com/en/factf26713613196f/factfinder-ai-powered-search-product-discovery.html
+**Note:** For Shopware 6.6 please use SDK version 6.x:
+https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/6.x
 
 
 ## FACT-Finder® Supported Sections
