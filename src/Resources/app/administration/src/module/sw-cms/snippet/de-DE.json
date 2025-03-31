@@ -20,8 +20,6 @@
       "recordList": {
         "label": "FACT-Finder® Web Components ff-record-list element",
         "config": {
-          "callbackArg": "Name des Arguments, das im Callback-Bereich verfügbar sein wird",
-          "callback": "Rückruf zum abonnierten Thema. Es wird empfohlen, nur einen Rückruf pro Thema und Seite durchzuführen.",
           "domUpdated": "Listener für das dom-update-Ereignis dieses Elements",
           "id": "Der Wert wird als „id“-Attribut an das Element übergeben. Wenn nicht angegeben, wird die Standard-CMS-Element-ID verwendet"
         }
@@ -30,11 +28,8 @@
         "asn": {
           "label": "FACT-Finder® Web Components ff-asn element",
           "config": {
-            "callbackArg": "Name des Arguments, das im Callback-Bereich verfügbar sein wird",
-            "callback": "Rückruf zum abonnierten Thema. Es wird empfohlen, nur einen Rückruf pro Thema und Seite durchzuführen.",
             "domUpdated": "Listener für das dom-update-Ereignis dieses Elements.",
             "id": "Der Wert wird als „id“-Attribut an das Element übergeben. Wenn nicht angegeben, wird die Standard-CMS-Element-ID verwendet",
-            "topic": "Wenn Sie dieses Feld leer lassen, abonniert das Element sein Standardthema (ASN).",
             "vertical": "Durch die Einstellung „true“ wird die zusätzliche CSS-Klasse „btn-block“ zu „ff-asn-group“ und „<div slots=\"groupCaption\"“ sowie zu ffw-asn-vertical, ffw-asn-group-vertical und ffw-asn hinzugefügt -group-element-vertikal zu entsprechenden Elementen"
           }
         },
