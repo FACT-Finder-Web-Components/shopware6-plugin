@@ -4,6 +4,10 @@
 - Fix filter cloud issue on category pages
 - Fix ff-asn-remove-all-filters issue on mobile view
 
+### Remove
+- CMS blocks - remove `infinity scrolling` from `ff-record-list` (not supported by Web Components v5)
+- CMS blocks - remove `addCallbacks` from `ff-record-list` and `ff-asn` (use [transformers](https://web-components.fact-finder.de/api/5.x/core-overview#tab=docs) instead)
+
 ## [v6.3.1] - 2025.03.04
 ### Change
 - Upgrade Web Components version to v5.1.1

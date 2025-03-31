@@ -3,7 +3,6 @@
     {% if id %} id="{{ id }}" {% endif %}
     class="{{ class }}"
     subscribe="{{ subscribe ? 'true' : 'false' }}"
-    {{ infiniteScrolling ? 'infinite-scrolling infinite-debounce-delay=#{infiniteDebounceDelay}' : '' }}
     {{ ssr ? 'ssr' : 'unresolved' }}>
     {% block component_factfinder_record %}
       {% if ssr %}

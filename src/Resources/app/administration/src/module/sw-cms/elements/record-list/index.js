@@ -10,31 +10,7 @@ Shopware.Service('cmsService').registerCmsElement({
     previewComponent: 'sw-cms-el-preview-record-list',
     defaultConfig: {
         subscribe: {
-          value: true,
-          source: 'static'
-        },
-        infiniteScrolling: {
-            value: false,
-            source: 'static',
-        },
-        restoreScrollPosition: {
-            value: false,
-            source: 'static',
-        },
-        infiniteDebounceDelay: {
-            value: '32',
-            source: 'static',
-        },
-        infiniteScrollMargin: {
-            value: 0,
-            source: 'static',
-        },
-        callbackArg: {
-            value: 'records',
-            source: 'static'
-        },
-        callback: {
-            value: '',
+            value: true,
             source: 'static'
         },
         id: {

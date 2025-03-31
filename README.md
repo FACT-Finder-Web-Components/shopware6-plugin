@@ -245,19 +245,12 @@ FACT-Finder® response, hence they will not render any HTML.
 * Subscribe - Activate element
 * Vertical - If set to true, `btn-block` CSS class is added to `ff-asn-group`, and `ff-asn` gets a `align` property set to `vertical
 * ID - Element identifier. If left empty, the CMS Element ID will be used.
-* Topic - Topic which element is subscribed to. If left empty, the element subscribes to default `asn` topic
-* Callback Argument - A name of variable holding FACT-Finder response data appropriate for the element. It will be visible inside Callback scope
-* Callback - A function which allows to manipulate the received data. This data is available under the name set in CallbackArgument
 * Dom Updated - A listener to `dom-updated` event. This event is triggered when rendered its HTML template
 
 #### Record List Element
 ![Page Builder CMS Element Record List](docs/assets/page-builder-element-config-record-list.png "Page Builder CMS Element Record List")
 * Subscribe - activate element
-* Infinity Scrolling - Adds the `inifinity-scrolling` attribute to the `ff-record-list` element 
-* Infinite Debounce Delay - adds`infinite-debounce-delay` attribute to the `ff-record-list` element
 * ID - Element identifier. If left empty, the CMS Element ID will be used.
-* Callback Argument - A name of variable holding FACT-Finder response data appropriate for the element. It will be visibile inside Callback scope
-* Callback - A function which allows to manipulate the received data. This data is available under the name set in CallbackArgument
 * Dom Updated - A listener to `dom-updated` event. This event is triggered when rendered its HTML template
 
 #### Campaigns Element

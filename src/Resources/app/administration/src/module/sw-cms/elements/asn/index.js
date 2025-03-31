@@ -17,18 +17,6 @@ Shopware.Service('cmsService').registerCmsElement({
             value: false,
             source: 'static'
         },
-        topic: {
-            value: 'asn',
-            source: 'static'
-        },
-        callbackArg: {
-            value: 'groups',
-            source: 'static'
-        },
-        callback: {
-            value: '',
-            source: 'static'
-        },
         id: {
             value: '',
             source: 'static'

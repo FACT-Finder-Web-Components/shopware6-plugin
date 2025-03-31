@@ -1,23 +1,13 @@
 {% block callbacks %}
   <script>
-    {% block add_callback %}
-      {% if addCallback %}
-      document.addEventListener('ffCoreReady', function ({resultDispatcher}) {
-        resultDispatcher.addCallback('{{ topic }}', {{ arg }} => {
-          {{ addCallback|raw }}
+    {% block dom_updated %}
+      {% if domUpdated %}
+      document.addEventListener('ffCoreReady', function () {
+        document.getElementById("{{ id }}").addEventListener('dom-updated', function () {
+          {{ domUpdated|raw }}
         });
       });
       {% endif %}
-    {% endblock %}
-
-    {% block dom_updated %}
-    {% if domUpdated %}
-    document.addEventListener('ffCoreReady', function () {
-      document.getElementById("{{ id }}").addEventListener('dom-updated', function () {
-        {{ domUpdated|raw }}
-      });
-    });
-    {% endif %}
     {% endblock %}
   </script>
 {% endblock %}

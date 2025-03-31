@@ -4,17 +4,12 @@
 
   {% sw_include '@Parent/storefront/components/factfinder/record-list.html.twig' with {
     subscribe: config.subscribe,
-    infiniteScrolling: config.infiniteScrolling.value,
-    infiniteDebounceDelay: config.infiniteDebounceDelay.value,
     class: 'row cms-listing-row',
     id: id,
     ssr: page.extensions.factfinder.ssr
   } %}
 
   {% sw_include '@Parent/storefront/components/factfinder/with-callbacks.html.twig' with {
-    topic: 'records',
-    arg: config.callbackArg.value,
-    addCallback: config.callback.value,
     domUpdated: config.domUpdated.value,
     id: id
   } %}
