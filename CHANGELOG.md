@@ -3,6 +3,7 @@
 ### Fix
 - Fix filter cloud issue on category pages
 - Fix ff-asn-remove-all-filters issue on mobile view
+- Fix price slider behaviour on mobile view
 
 ### Remove
 - CMS blocks - remove `infinity scrolling` from `ff-record-list` (not supported by Web Components v5)
