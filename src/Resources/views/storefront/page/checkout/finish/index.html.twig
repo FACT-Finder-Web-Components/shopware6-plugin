@@ -6,6 +6,7 @@
       <ff-checkout-tracking-item
         product-number="{{ lineItem.payload.productNumber }}"
         count="{{ lineItem.quantity }}"
+        price="{{ lineItem.unitPrice }}"
         channel="{{ page.extensions.factfinder.communication.channel }}">
       </ff-checkout-tracking-item>
     {% endfor %}
