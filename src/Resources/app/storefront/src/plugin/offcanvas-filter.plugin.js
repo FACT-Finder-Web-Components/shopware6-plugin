@@ -50,6 +50,12 @@ export default class OffCanvasFilter extends OffCanvasFilterPlugin
         setTimeout(() => {
             const offCanvas = document.querySelector('.offcanvas');
             offCanvas.appendChild(filterContent);
+
+            const asnGroupSlider = filterContent.querySelector('ff-asn-group-slider');
+
+            if (asnGroupSlider && typeof asnGroupSlider._asnGroupChanged === 'function') {
+                asnGroupSlider._asnGroupChanged();
+            }
         });
 
         document.$emitter.subscribe('onCloseOffcanvas', this._onCloseOffCanvas.bind(this));
