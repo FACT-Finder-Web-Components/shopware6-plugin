@@ -1,3 +1,7 @@
+## Unreleased
+### Change
+- Add facet name to filter cloud
+
 # Changelog
 ## [v6.3.3] - 2025.04.09
 - prevent block by Cookie Consent (Cookiebot by Usercentrics)
