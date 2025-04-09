@@ -1,4 +1,7 @@
 # Changelog
+## [v6.3.3] - 2025.04.09
+- prevent block by Cookie Consent (Cookiebot by Usercentrics)
+
 ## [v6.3.2] - 2025.04.02
 ### Fix
 - Fix filter cloud issue on category pages
