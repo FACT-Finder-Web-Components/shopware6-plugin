@@ -2,6 +2,7 @@
 ## Unreleased
 ### Change
 - Add facet name to filter cloud
+- Improve filter display for `ff-breadcrumb-trail-item`
 
 ## [v6.3.2] - 2025.04.02
 ### Fix
