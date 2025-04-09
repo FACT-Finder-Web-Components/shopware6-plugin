@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- Add facet name to filter cloud
+
 ## [v6.3.2] - 2025.04.02
 ### Fix
 - Fix filter cloud issue on category pages
