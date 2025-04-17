@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Add
+- Add tracking for product card add to cart action
+
 ### Change
 - Add facet name to filter cloud
 - Improve filter display for `ff-breadcrumb-trail-item`
