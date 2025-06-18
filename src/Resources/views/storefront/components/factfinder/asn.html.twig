@@ -13,6 +13,7 @@
       {% if id %} id="{{ id }}" {% endif %}
       class="{% if vertical %}ffw-asn-vertical{% endif %} filter-panel-items-container"
       align="{% if vertical %}vertical{% else %}horizontal {% endif %}"
+      aria-label="Filter"
       unresolved
       subscribe="{{ subscribe ? 'true' : 'false' }}">
 
@@ -26,12 +27,19 @@
       {% endblock %}
 
       {% block component_factfinder_asn_group %}
-        <ff-asn-group class="filter-panel-item dropdown {% if vertical %} ffw-asn-group-vertical btn-block {% endif %}"
+        <ff-asn-group class="filter-multi-select filter-panel-item dropdown {% if vertical %} ffw-asn-group-vertical btn-block {% endif %}"
                       disable-auto-expand>
-          <div slot="groupCaption" class="filter-panel-item-toggle btn {% if vertical %} btn-block {% endif %}">
+          <button
+            slot="groupCaption"
+            class="filter-panel-item-toggle btn {% if vertical %} btn-block {% endif %}"
+            aria-expanded="false"
+            aria-label="Filter by {{ '{{group.name}}' }}"
+          >
             {{ '{{group.name}}' }}
-            {% sw_icon 'arrow-medium-down' style { 'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle' } %}
-          </div>
+            {% sw_icon 'arrow-medium-down' style {
+              'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle'
+            } %}
+          </button>
 
           <ff-asn-group-element class="filter-multi-select-list-item" {% if vertical %}
                                 ffw-asn-group-element-vertical {% endif %}">

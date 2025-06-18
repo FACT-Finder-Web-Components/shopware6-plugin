@@ -2,6 +2,7 @@
 ## Unreleased
 ### Add
 - Add tracking for product card add to cart action
+- Add improvements for European Accessibility Act
 
 ### Change
 - Add facet name to filter cloud
