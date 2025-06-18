@@ -5,7 +5,7 @@
         {{ config.opened.value ? 'opened' : '' }}
         {{ config.showSelected.value ? 'show-selected=true' : '' }}
         {{ config.showSelected.value ? 'show-selected-first=config.showSelectedFirst.value' }}>
-        <select class="sorting custom-select" aria-label="{{ 'general.sortingLabel'|trans|striptags }}"></select>
+        <select class="sorting custom-select form-select" aria-label="{{ 'general.sortingLabel'|trans|striptags }}"></select>
       </ff-sortbox-select>
     {% endblock %}
 

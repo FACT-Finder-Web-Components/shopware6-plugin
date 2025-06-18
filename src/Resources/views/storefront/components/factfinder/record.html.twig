@@ -11,19 +11,21 @@
           </a>
         </div>
         <div class="product-info">
-          <a class="product-name" title="{{ '{{masterValues.Name}}' }}" data-redirect-target="_self"
+          <a class="product-name stretched-link" title="{{ '{{masterValues.Name}}' }}" data-redirect-target="_self"
              data-redirect="{{ '{{masterValues.Deeplink}}' }}" data-anchor="{{ '{{masterValues.Deeplink}}' }}">
             {{ '{{masterValues.Name}}' }}
           </a>
-          <div class="product-description">{{ '{{masterValues.Brand}}' }}</div>
+          <div class="product-description">{{ '{{masterValues.Description}}' }}</div>
           <div class="product-price-info">
             <p class="product-price">{{ '{{ $ masterValues.Price}}' }} *</p>
           </div>
           <div class="product-action">
-            <a class="btn btn-block btn-buy" title="{{ '{{masterValues.Name}}' }}" data-redirect-target="_self"
-               data-redirect="{{ '{{masterValues.Deeplink}}' }}" data-anchor="{{ '{{masterValues.Deeplink}}' }}">
-              {{ 'listing.boxProductDetails'|trans|sw_sanitize }}
-            </a>
+            <div class="d-grid">
+              <a class="btn btn-light btn-detail" title="{{ '{{masterValues.Name}}' }}" data-redirect-target="_self"
+                 data-redirect="{{ '{{masterValues.Deeplink}}' }}" data-anchor="{{ '{{masterValues.Deeplink}}' }}">
+                {{ 'listing.boxProductDetails'|trans|sw_sanitize }}
+              </a>
+            </div>
           </div>
         </div>
       </div>

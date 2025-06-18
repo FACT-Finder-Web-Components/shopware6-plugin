@@ -2,10 +2,10 @@
 {{ groupName }}
 <ff-asn-group for-group="{{ groupName}}" class="filter-panel-item dropdown {% if vertical %}  ffw-asn-group-vertical btn-block {% endif %} {{ cssClass }}"
               disable-auto-expand>
-  <div slot="groupCaption" class="filter-panel-item-toggle btn {% if vertical %} btn-block {% endif %}">
+  <button slot="groupCaption" class="filter-panel-item-toggle btn {% if vertical %} btn-block {% endif %}">
     {{ '{{group.name}}' }}
     {% sw_icon 'arrow-medium-down' style { 'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle' } %}
-  </div>
+  </button>
   <ff-asn-group-element class="filter-multi-select-list-item" {% if vertical %}
                         ffw-asn-group-element-vertical {% endif %}">
   <div slot="selected" class="custom-control custom-checkbox">

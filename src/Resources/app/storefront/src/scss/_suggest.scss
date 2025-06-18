@@ -23,6 +23,10 @@ ff-suggest {
     &:last-child .search-suggest-product {
       border-bottom: 0;
     }
+
+    &.ffw-highlight-suggest-item {
+      background-color: lightgray;
+    }
   }
 
   .ff-popular-searches div {
