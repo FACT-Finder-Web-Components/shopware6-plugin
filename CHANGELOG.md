@@ -7,6 +7,7 @@
 ### Change
 - Add facet name to filter cloud
 - Improve filter display for `ff-breadcrumb-trail-item`
+- Upgrade Web Components version to v5.1.3
 
 ## [v6.3.2] - 2025.04.02
 ### Fix
