@@ -11,7 +11,7 @@ use Shopware\Core\Framework\Adapter\Filesystem\FilesystemFactory;
 readonly class UploadService
 {
     public function __construct(
-        private FtpConfig         $config,
+        private FtpConfig $config,
         private FilesystemFactory $filesystemFactory,
     ) {
     }

@@ -9,7 +9,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 
-readonly class FeedPreprocessorEntryPersister
+class FeedPreprocessorEntryPersister
 {
     public function __construct(private EntityRepository $entryRepository)
     {
@@ -26,7 +26,7 @@ readonly class FeedPreprocessorEntryPersister
     }
 
     /**
-     * @param array $entries [FeedPreprocessorEntry] $entries
+     * @param array   $entries [FeedPreprocessorEntry] $entries
      * @param Context $context
      */
     public function insertProductEntries(array $entries, Context $context): void

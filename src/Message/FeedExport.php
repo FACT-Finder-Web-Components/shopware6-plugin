@@ -9,7 +9,7 @@ readonly class FeedExport
     public function __construct(
         private ?string $salesChannelId = null,
         private ?string $salesChannelLanguageId = null,
-        private ?string $exportTypeValue = null
+        private ?string $exportTypeValue = null,
     ) {
     }
 

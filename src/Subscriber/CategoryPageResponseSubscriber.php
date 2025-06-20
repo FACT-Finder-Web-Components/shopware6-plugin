@@ -26,12 +26,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 readonly class CategoryPageResponseSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private bool             $httpCacheEnabled,
+        private bool $httpCacheEnabled,
         private EntityRepository $categoryRepository,
-        private Communication    $config,
-        private SearchAdapter    $searchAdapter,
-        private Engine           $handlebars,
-        private CategoryPath     $categoryPath,
+        private Communication $config,
+        private SearchAdapter $searchAdapter,
+        private Engine $handlebars,
+        private CategoryPath $categoryPath,
     ) {
     }
 

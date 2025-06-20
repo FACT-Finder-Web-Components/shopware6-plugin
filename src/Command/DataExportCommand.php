@@ -157,14 +157,14 @@ class DataExportCommand extends Command
         return 0;
     }
 
-    private function getSalesChannel(string $id = null): ?SalesChannelEntity
+    private function getSalesChannel(?string $id = null): ?SalesChannelEntity
     {
         return !is_null($id)
             ? $this->channelRepository->search(new Criteria([$id]), new Context(new SystemSource()))->first()
             : null;
     }
 
-    private function getLanguage(string $id = null): LanguageEntity
+    private function getLanguage(?string $id = null): LanguageEntity
     {
         return $this->languageRepository->search(
             new Criteria([$id ?: Defaults::LANGUAGE_SYSTEM]),

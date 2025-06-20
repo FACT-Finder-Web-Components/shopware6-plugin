@@ -26,11 +26,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 readonly class ProductIndexerSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private EntityRepository               $productRepository,
-        private EntityRepository               $languageRepository,
-        private FeedPreprocessor               $feedPreprocessor,
+        private EntityRepository $productRepository,
+        private EntityRepository $languageRepository,
+        private FeedPreprocessor $feedPreprocessor,
         private FeedPreprocessorEntryPersister $entryPersister,
-        private ExportSettings                 $exportSettings,
+        private ExportSettings $exportSettings,
     ) {
     }
 

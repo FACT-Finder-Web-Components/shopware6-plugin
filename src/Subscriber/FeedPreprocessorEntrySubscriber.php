@@ -15,7 +15,7 @@ readonly class FeedPreprocessorEntrySubscriber implements EventSubscriberInterfa
 {
     public function __construct(
         private EntityRepository $productRepository,
-        private CategoryPath     $categoryPath,
+        private CategoryPath $categoryPath,
     ) {
     }
 

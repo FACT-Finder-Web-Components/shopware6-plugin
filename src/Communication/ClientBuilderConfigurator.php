@@ -13,7 +13,7 @@ readonly class ClientBuilderConfigurator
 {
     public function __construct(
         private CommunicationConfig $config,
-        private LoggerInterface     $factfinderLogger
+        private LoggerInterface $factfinderLogger,
     ) {
     }
 

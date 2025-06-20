@@ -16,12 +16,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use function Omikron\FactFinder\Shopware6\Internal\Utils\flatMap;
 use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
-readonly class FeedPreprocessor
+class FeedPreprocessor
 {
     public function __construct(
-        private PropertyFormatter        $propertyFormatter,
+        private PropertyFormatter $propertyFormatter,
         private EventDispatcherInterface $eventDispatcher,
-        private ExportCustomFields       $customFields,
+        private ExportCustomFields $customFields,
     ) {
     }
 

@@ -11,7 +11,7 @@ class Loader implements HandlebarsLoader
 {
     public function __construct(
         private readonly HandlebarsLoader $loader,
-        private readonly FilterInterface  $filter,
+        private readonly FilterInterface $filter,
     ) {
     }
 

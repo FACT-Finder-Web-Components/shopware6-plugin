@@ -12,9 +12,9 @@ use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 readonly class FieldRoles implements FieldRolesInterface
 {
     public function __construct(
-        private Search              $search,
-        private Communication       $communication,
-        private SystemConfigService $systemConfig
+        private Search $search,
+        private Communication $communication,
+        private SystemConfigService $systemConfig,
     ) {
     }
 

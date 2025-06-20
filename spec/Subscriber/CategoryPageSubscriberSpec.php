@@ -35,7 +35,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         ArrayEntity $extension,
         SalesChannelContext $salesChannelContext,
         SalesChannelEntity $salesChannelEntity,
-        CategoryRouteResponse $categoryRouteResponse
+        CategoryRouteResponse $categoryRouteResponse,
     ): void {
         $config->isSsrActive()->willReturn(false);
         $this->configure($cmsPageRoute, $config, $extensionConfig, $event, $request, $categoryEntity, $navigationPage, $extension, $salesChannelContext, $salesChannelEntity, $categoryRouteResponse);
@@ -44,7 +44,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
     public function it_should_add_category_page_attribute_in_category_config(
         CategoryEntity $categoryEntity,
         ArrayEntity $extension,
-        NavigationPageLoadedEvent $event
+        NavigationPageLoadedEvent $event,
     ): void {
         $categoryEntity->getCustomFields()->willReturn([OmikronFactFinder::DISABLE_SEARCH_IMMEDIATE_CUSTOM_FIELD_NAME => false]);
         $extension->assign(Argument::withEntry('communication', Argument::withEntry('categoryPage', Argument::any())))->shouldBeCalled();
@@ -55,7 +55,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         CategoryEntity $categoryEntity,
         ArrayEntity $extension,
         NavigationPageLoadedEvent $event,
-        Request $request
+        Request $request,
     ): void {
         $request->get('_route')->willReturn('frontend.not_home.page');
         $event->getRequest()->willReturn($request);
@@ -66,7 +66,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
 
     public function it_should_not_fail_if_ff_cms_use_search_immediate_is_not_present_in_custom_fields(
         NavigationPageLoadedEvent $event,
-        ArrayEntity $extension
+        ArrayEntity $extension,
     ): void {
         $extension->assign(Argument::cetera())->shouldBeCalled();
         $this->shouldNotThrow()->during('onPageLoaded', [$event]);
@@ -75,7 +75,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
     public function it_should_encode_category_path_correctly(
         CategoryEntity $categoryEntity,
         ArrayEntity $extension,
-        NavigationPageLoadedEvent $event
+        NavigationPageLoadedEvent $event,
     ): void {
         $extension->assign(Argument::withEntry('communication', Argument::withEntry('categoryPage', $this->filterCategoryPath)))->shouldBeCalled();
         $this->onPageLoaded($event);
@@ -84,7 +84,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
     public function it_should_not_add_category_path_to_add_params(
         CategoryEntity $categoryEntity,
         ArrayEntity $extension,
-        NavigationPageLoadedEvent $event
+        NavigationPageLoadedEvent $event,
     ): void {
         $extension->assign(Argument::withEntry('communication', Argument::withEntry('add-params', Argument::not(Argument::containingString($this->filterCategoryPath)))))->shouldBeCalled();
         $this->onPageLoaded($event);
@@ -93,7 +93,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
     public function it_should_configure_add_params_if_set(
         CategoryEntity $categoryEntity,
         ArrayEntity $extension,
-        NavigationPageLoadedEvent $event
+        NavigationPageLoadedEvent $event,
     ): void {
         $extension->assign(Argument::withEntry('communication', Argument::withEntry('add-params', 'navigation=true')))->shouldBeCalled();
         $this->onPageLoaded($event);
@@ -110,7 +110,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         ArrayEntity $extension,
         SalesChannelContext $salesChannelContext,
         SalesChannelEntity $salesChannelEntity,
-        CategoryRouteResponse $categoryRouteResponse
+        CategoryRouteResponse $categoryRouteResponse,
     ): void {
         $this->configure($cmsPageRoute, $config, $extensionConfig, $event, $request, $categoryEntity, $navigationPage, $extension, $salesChannelContext, $salesChannelEntity, $categoryRouteResponse, ['param1' => 'navigation=true', 'param2' =>'filterCustom=customValue']);
         $categoryEntity->getCustomFields()->willReturn([]);
@@ -129,7 +129,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         ArrayEntity $extension,
         SalesChannelContext $salesChannelContext,
         SalesChannelEntity $salesChannelEntity,
-        CategoryRouteResponse $categoryRouteResponse
+        CategoryRouteResponse $categoryRouteResponse,
     ): void {
         $baseAddParams     = 'configurationParam=baseValue,configurationParam2=baseValue';
         $categoryAddParams = ['param1'=>'configurationParam=overridden', 'param2'=>'categoryParam=value1'];
@@ -156,7 +156,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         SalesChannelContext $salesChannelContext,
         SalesChannelEntity $salesChannelEntity,
         CategoryRouteResponse $categoryRouteResponse,
-        array $addParams = ['param1' =>'navigation=true'] //addParams parameters collections are passed as associative array (see comment src/Subscriber/CategoryPageSubscriber.php:55)
+        array $addParams = ['param1' => 'navigation=true'], // addParams parameters collections are passed as associative array (see comment src/Subscriber/CategoryPageSubscriber.php:55)
     ): void {
         $navigationId = '1';
         $extensionConfig->getTrackingSettings()->willReturn(
@@ -181,12 +181,12 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
                 0 => 'Home',
                 1 => 'Books + Sports',
                 2 => 'Home / Garden 100%',
-            ]);
+            ]
+        );
         $event->getPage()->willReturn($navigationPage);
-        $extension->get('communication')->willReturn([]);
         $extension->get('communication')->willReturn([]);
         $navigationPage->getExtension('factfinder')->willReturn($extension);
         $extension->getVars()->willReturn(['communication' => ['']]);
-        $this->beConstructedWith($cmsPageRoute, $config, $extensionConfig, 'CategoryPath', $addParams);
+        $this->beConstructedWith($cmsPageRoute, $extensionConfig, 'CategoryPath', $addParams);
     }
 }

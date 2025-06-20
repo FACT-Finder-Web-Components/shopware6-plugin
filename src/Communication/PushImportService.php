@@ -14,9 +14,9 @@ use Psr\Http\Client\ClientExceptionInterface;
 readonly class PushImportService
 {
     public function __construct(
-        private Import              $importAdapter,
-        private Communication       $communicationConfig,
-        private FtpConfig           $uploadConfig,
+        private Import $importAdapter,
+        private Communication $communicationConfig,
+        private FtpConfig $uploadConfig,
         private SalesChannelService $salesChannelService,
     ) {
     }

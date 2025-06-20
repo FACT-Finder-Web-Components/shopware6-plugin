@@ -18,13 +18,13 @@ use Symfony\Component\Routing\RouterInterface;
 readonly class ConfigurationSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private Communication   $config,
+        private Communication $config,
         private ExtensionConfig $extensionConfig,
         private RouterInterface $router,
-        private array           $fieldRoles,
-        private array           $communicationParameters,
-        private string          $categoryPathFieldName,
-        private array           $configurationAddParams = [],
+        private array $fieldRoles,
+        private array $communicationParameters,
+        private string $categoryPathFieldName,
+        private array $configurationAddParams = [],
     ) {
     }
 
