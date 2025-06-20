@@ -9,23 +9,19 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 use function Omikron\FactFinder\Shopware6\Internal\Utils\safeGetByName;
 
-class FieldRoles implements FieldRolesInterface
+readonly class FieldRoles implements FieldRolesInterface
 {
-    private Search $search;
-    private Communication $communicationConfig;
-    private SystemConfigService $systemConfig;
-
-    public function __construct(Search $search, Communication $communication, SystemConfigService $systemConfig)
-    {
-        $this->search              = $search;
-        $this->communicationConfig = $communication;
-        $this->systemConfig        = $systemConfig;
+    public function __construct(
+        private Search              $search,
+        private Communication       $communication,
+        private SystemConfigService $systemConfig
+    ) {
     }
 
     public function getRoles(?string $salesChannelId): array
     {
         try {
-            $searchResult = $this->search->search($this->communicationConfig->getChannel($salesChannelId), '*');
+            $searchResult = $this->search->search($this->communication->getChannel($salesChannelId), '*');
             $fieldRoles   = $searchResult['fieldRoles'] ?? [];
         } catch (\Exception $e) {
             $fieldRoles = [];

@@ -11,20 +11,15 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class FeedPreprocessorEntrySubscriber implements EventSubscriberInterface
+readonly class FeedPreprocessorEntrySubscriber implements EventSubscriberInterface
 {
-    private CategoryPath $categoryFieldGenerator;
-    private EntityRepository $productRepository;
-
     public function __construct(
-        EntityRepository $productRepository,
-        CategoryPath $categoryPath,
+        private EntityRepository $productRepository,
+        private CategoryPath     $categoryPath,
     ) {
-        $this->productRepository      = $productRepository;
-        $this->categoryFieldGenerator = $categoryPath;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [FeedPreprocessorEntryBeforeCreate::class => 'onCreateEntry'];
     }
@@ -37,7 +32,7 @@ class FeedPreprocessorEntrySubscriber implements EventSubscriberInterface
         $criteria->addAssociation('categories');
         $criteria->addAssociation('categoriesRo');
         $product                  = $this->productRepository->search($criteria, $event->getContext())->first();
-        $categoryPath             = $this->categoryFieldGenerator->getValue($product);
+        $categoryPath             = $this->categoryPath->getValue($product);
         $entry['additionalCache'] = ['CategoryPath' => $categoryPath];
         $event->setEntry($entry);
     }

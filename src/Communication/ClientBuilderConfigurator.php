@@ -9,15 +9,12 @@ use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Shopware6\Config\Communication as CommunicationConfig;
 use Psr\Log\LoggerInterface;
 
-class ClientBuilderConfigurator
+readonly class ClientBuilderConfigurator
 {
-    private CommunicationConfig $config;
-    private LoggerInterface $factfinderLogger;
-
-    public function __construct(CommunicationConfig $config, LoggerInterface $factfinderLogger)
-    {
-        $this->config           = $config;
-        $this->factfinderLogger = $factfinderLogger;
+    public function __construct(
+        private CommunicationConfig $config,
+        private LoggerInterface     $factfinderLogger
+    ) {
     }
 
     public function configure(ClientBuilder $clientBuilder): void

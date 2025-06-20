@@ -9,13 +9,10 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 
-class FeedPreprocessorEntryPersister
+readonly class FeedPreprocessorEntryPersister
 {
-    private EntityRepository $entryRepository;
-
-    public function __construct(EntityRepository $entryRepository)
+    public function __construct(private EntityRepository $entryRepository)
     {
-        $this->entryRepository = $entryRepository;
     }
 
     public function deleteAllProductEntries(string $productNumber, Context $context): void
@@ -29,7 +26,7 @@ class FeedPreprocessorEntryPersister
     }
 
     /**
-     * @param array[FeedPreprocessorEntry] $entries
+     * @param array $entries [FeedPreprocessorEntry] $entries
      * @param Context $context
      */
     public function insertProductEntries(array $entries, Context $context): void

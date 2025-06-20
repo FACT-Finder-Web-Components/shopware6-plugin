@@ -37,17 +37,14 @@ class CookieProvider implements CookieProviderInterface
         ],
     ];
 
-    private CookieProviderInterface $originalService;
-
-    public function __construct(CookieProviderInterface $service)
+    public function __construct(private readonly CookieProviderInterface $service)
     {
-        $this->originalService = $service;
     }
 
     public function getCookieGroups(): array
     {
         return array_merge(
-            $this->originalService->getCookieGroups(),
+            $this->service->getCookieGroups(),
             [self::FF_COOKIE_GROUP]
         );
     }

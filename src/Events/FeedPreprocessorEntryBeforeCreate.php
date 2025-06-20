@@ -10,13 +10,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class FeedPreprocessorEntryBeforeCreate extends Event implements ShopwareEvent
 {
-    private array $entry;
-    private Context $context;
-
-    public function __construct(array $entry, Context $context)
+    public function __construct(private array $entry, private readonly Context $context)
     {
-        $this->entry   = $entry;
-        $this->context = $context;
     }
 
     public function getEntry(): array

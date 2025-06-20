@@ -8,11 +8,8 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 abstract class BaseConfig
 {
-    private SystemConfigService $systemConfig;
-
-    public function __construct(SystemConfigService $systemConfig)
+    public function __construct(private readonly SystemConfigService $systemConfig)
     {
-        $this->systemConfig = $systemConfig;
     }
 
     /**

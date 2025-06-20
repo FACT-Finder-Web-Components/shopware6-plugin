@@ -23,29 +23,18 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class ProductIndexerSubscriber implements EventSubscriberInterface
+readonly class ProductIndexerSubscriber implements EventSubscriberInterface
 {
-    private EntityRepository $productRepository;
-    private EntityRepository $languageRepository;
-    private FeedPreprocessor $feedPreprocessor;
-    private FeedPreprocessorEntryPersister $entryPersister;
-    private ExportSettings $exportSettings;
-
     public function __construct(
-        EntityRepository $productRepository,
-        EntityRepository $languageRepository,
-        FeedPreprocessor $feedPreprocessor,
-        FeedPreprocessorEntryPersister $entryPersister,
-        ExportSettings $exportSettings,
+        private EntityRepository               $productRepository,
+        private EntityRepository               $languageRepository,
+        private FeedPreprocessor               $feedPreprocessor,
+        private FeedPreprocessorEntryPersister $entryPersister,
+        private ExportSettings                 $exportSettings,
     ) {
-        $this->productRepository  = $productRepository;
-        $this->languageRepository = $languageRepository;
-        $this->feedPreprocessor   = $feedPreprocessor;
-        $this->entryPersister     = $entryPersister;
-        $this->exportSettings     = $exportSettings;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [ProductIndexerEvent::class => 'processVariantsToExport'];
     }
@@ -57,6 +46,7 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
         }
 
         $languages = $this->fetchLanguages();
+
         foreach ($languages as $language) {
             $context  = $this->createLanguageContext($event, $language);
             $iterator = $this->getProductsIterator($event->getIds(), $context);
@@ -88,6 +78,7 @@ class ProductIndexerSubscriber implements EventSubscriberInterface
         $criteria = new Criteria($productIds);
         $criteria->addAssociation('configuratorGroupConfig');
         $criteria->addAssociation('children.options.group');
+
         return new RepositoryIterator($this->productRepository, $context, $criteria);
     }
 

@@ -10,7 +10,7 @@ namespace Omikron\FactFinder\Shopware6\Internal\Utils;
  *
  * @return mixed|null
  */
-function safeGetByName(?array $collection, string $name)
+function safeGetByName(?array $collection, string $name): mixed
 {
     return $collection[$name] ?? null;
 }
@@ -26,7 +26,7 @@ function flatMap(callable $fnc, array $arr, array ...$arrays): array
  *
  * @return false|mixed|null
  */
-function first(?array $collection, $default = null)
+function first(?array $collection, $default = null): mixed
 {
     return empty($collection) ? $default : reset($collection);
 }

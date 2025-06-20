@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Domain;
 
-class RedirectMapping
+readonly class RedirectMapping
 {
-    private string $data;
-
-    public function __construct(string $data)
+    public function __construct(private string $data)
     {
-        $this->data = $data;
     }
 
     public function __toString(): string

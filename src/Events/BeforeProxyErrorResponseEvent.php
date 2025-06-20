@@ -9,11 +9,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class BeforeProxyErrorResponseEvent extends Event
 {
-    private JsonResponse $response;
-
-    public function __construct(JsonResponse $response)
+    public function __construct(private JsonResponse $response)
     {
-        $this->response = $response;
     }
 
     public function getResponse(): JsonResponse

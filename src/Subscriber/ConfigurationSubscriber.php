@@ -15,32 +15,17 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-class ConfigurationSubscriber implements EventSubscriberInterface
+readonly class ConfigurationSubscriber implements EventSubscriberInterface
 {
-    private Communication $config;
-    private ExtensionConfig $extensionConfig;
-    private RouterInterface $router;
-    private array $fieldRoles;
-    private array $communicationParameters;
-    private array $addParams;
-    private string $categoryPathFieldName;
-
     public function __construct(
-        Communication $config,
-        ExtensionConfig $extensionConfig,
-        RouterInterface $router,
-        array $fieldRoles,
-        array $communicationParameters,
-        string $categoryPathFieldName,
-        array $configurationAddParams = [],
+        private Communication   $config,
+        private ExtensionConfig $extensionConfig,
+        private RouterInterface $router,
+        private array           $fieldRoles,
+        private array           $communicationParameters,
+        private string          $categoryPathFieldName,
+        private array           $configurationAddParams = [],
     ) {
-        $this->config                  = $config;
-        $this->extensionConfig         = $extensionConfig;
-        $this->router                  = $router;
-        $this->fieldRoles              = $fieldRoles;
-        $this->communicationParameters = $communicationParameters;
-        $this->categoryPathFieldName   = $categoryPathFieldName;
-        $this->addParams               = $configurationAddParams;
     }
 
     public static function getSubscribedEvents()
@@ -63,8 +48,8 @@ class ConfigurationSubscriber implements EventSubscriberInterface
             'currencyCountryCode'   => $event->getRequest()->getLocale(),
         ];
 
-        if (!empty($this->addParams)) {
-            $communication['add-params'] = implode(',', $this->addParams);
+        if (!empty($this->configurationAddParams)) {
+            $communication['add-params'] = implode(',', $this->configurationAddParams);
         }
 
         try {
@@ -99,8 +84,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
 
         $parameters = method_exists($event, 'getParameters') && is_array($event->getParameters()) ? $event->getParameters() : [];
 
-        if (
-            isset($parameters['page'])
+        if (isset($parameters['page'])
             && $parameters['page'] instanceof Struct
         ) {
             return $parameters['page'];
@@ -113,8 +97,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (
-            $this->config->isSsrActive()
+        if ($this->config->isSsrActive()
             || $request->isXmlHttpRequest()
         ) {
             return false;
@@ -127,7 +110,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
 
     private function isSearchPage(string $route): bool
     {
-        return strpos($route ?? '', 'factfinder') !== false;
+        return str_contains($route ?? '', 'factfinder');
     }
 
     private function getServerUrl(): string

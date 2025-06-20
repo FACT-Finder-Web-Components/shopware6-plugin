@@ -6,9 +6,7 @@ namespace Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception;
 
 class DetectRedirectException extends \Exception
 {
-    private string $redirectUrl;
-
-    public function __construct(string $redirectUrl)
+    public function __construct(private string $redirectUrl)
     {
         parent::__construct("Detect redirection for: $redirectUrl");
         $this->redirectUrl = $redirectUrl;

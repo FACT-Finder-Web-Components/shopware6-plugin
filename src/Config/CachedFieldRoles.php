@@ -8,20 +8,14 @@ use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 class CachedFieldRoles implements FieldRolesInterface
 {
-    private FieldRolesInterface $decorated;
-    private AdapterInterface $cache;
-    private string $kernelEnv;
     private array $defaultFieldRoles;
 
     public function __construct(
-        FieldRolesInterface $decorated,
-        AdapterInterface $cache,
-        string $kernelEnv,
+        private readonly FieldRolesInterface $decorated,
+        private readonly AdapterInterface $cache,
+        private readonly string $kernelEnv,
         array $fieldRoles,
     ) {
-        $this->decorated         = $decorated;
-        $this->cache             = $cache;
-        $this->kernelEnv         = $kernelEnv;
         $this->defaultFieldRoles = $fieldRoles;
     }
 

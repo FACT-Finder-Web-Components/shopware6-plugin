@@ -8,11 +8,11 @@ use League\Flysystem\FilesystemException;
 use Omikron\FactFinder\Shopware6\Config\FtpConfig;
 use Shopware\Core\Framework\Adapter\Filesystem\FilesystemFactory;
 
-class UploadService
+readonly class UploadService
 {
     public function __construct(
-        private readonly FtpConfig $config,
-        private readonly FilesystemFactory $filesystemFactory,
+        private FtpConfig         $config,
+        private FilesystemFactory $filesystemFactory,
     ) {
     }
 

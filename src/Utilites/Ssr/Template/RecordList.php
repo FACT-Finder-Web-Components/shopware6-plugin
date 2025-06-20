@@ -14,28 +14,15 @@ class RecordList
     private const RECORD_PATTERN     = '#<ff-record[\s>].*?</ff-record>#s';
     private const SSR_RECORD_PATTERN = '#<ssr-record-template>.*?</ssr-record-template>#s';
 
-    private Request $request;
-    private Engine $handlebars;
-    private SearchAdapter $searchAdapter;
-    private string $salesChannelId;
-    private string $content;
-    private string $template;
-    private Communication $pluginConfig;
-
     public function __construct(
-        Request $request,
-        Engine $handlebars,
-        SearchAdapter $searchAdapter,
-        Communication $pluginConfig,
-        string $salesChannelId,
-        string $content,
+        private readonly Request       $request,
+        private readonly Engine        $handlebars,
+        private readonly SearchAdapter $searchAdapter,
+        private readonly Communication $pluginConfig,
+        private readonly string        $salesChannelId,
+        private string                 $content,
+        private string                 $template,
     ) {
-        $this->request        = $request;
-        $this->handlebars     = $handlebars;
-        $this->searchAdapter  = $searchAdapter;
-        $this->salesChannelId = $salesChannelId;
-        $this->content        = $content;
-        $this->pluginConfig   = $pluginConfig;
         $this->setTemplateString();
     }
 

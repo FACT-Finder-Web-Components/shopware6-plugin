@@ -23,29 +23,16 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class CategoryPageResponseSubscriber implements EventSubscriberInterface
+readonly class CategoryPageResponseSubscriber implements EventSubscriberInterface
 {
-    private bool $httpCacheEnabled;
-    private EntityRepository $categoryRepository;
-    private Communication $config;
-    private SearchAdapter $searchAdapter;
-    private Engine $handlebars;
-    private CategoryPath $categoryPath;
-
     public function __construct(
-        bool $httpCacheEnabled,
-        EntityRepository $categoryRepository,
-        Communication $config,
-        SearchAdapter $searchAdapter,
-        Engine $handlebars,
-        CategoryPath $categoryPath,
+        private bool             $httpCacheEnabled,
+        private EntityRepository $categoryRepository,
+        private Communication    $config,
+        private SearchAdapter    $searchAdapter,
+        private Engine           $handlebars,
+        private CategoryPath     $categoryPath,
     ) {
-        $this->httpCacheEnabled       = $httpCacheEnabled;
-        $this->categoryRepository     = $categoryRepository;
-        $this->config                 = $config;
-        $this->searchAdapter          = $searchAdapter;
-        $this->handlebars             = $handlebars;
-        $this->categoryPath           = $categoryPath;
     }
 
     public static function getSubscribedEvents()

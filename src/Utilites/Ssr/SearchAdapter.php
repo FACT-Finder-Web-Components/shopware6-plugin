@@ -12,26 +12,15 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-class SearchAdapter
+readonly class SearchAdapter
 {
-    private ClientBuilder $clientBuilder;
-    private Communication $config;
-    private PriceFormatter $priceFormatter;
-    private RouterInterface $router;
-    private LoggerInterface $factfinderLogger;
-
     public function __construct(
-        ClientBuilder $clientBuilder,
-        Communication $config,
-        PriceFormatter $priceFormatter,
-        RouterInterface $router,
-        LoggerInterface $factfinderLogger,
+        private ClientBuilder   $clientBuilder,
+        private Communication   $config,
+        private PriceFormatter  $priceFormatter,
+        private RouterInterface $router,
+        private LoggerInterface $factfinderLogger,
     ) {
-        $this->clientBuilder    = $clientBuilder;
-        $this->config           = $config;
-        $this->priceFormatter   = $priceFormatter;
-        $this->router           = $router;
-        $this->factfinderLogger = $factfinderLogger;
     }
 
     public function search(

@@ -11,17 +11,12 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Uuid\Uuid;
 
-class FeedPreprocessorEntryReader
+readonly class FeedPreprocessorEntryReader
 {
-    private SalesChannelService $channelService;
-    private EntityRepository $entryRepository;
-
     public function __construct(
-        SalesChannelService $channelService,
-        EntityRepository $entryRepository,
+        private SalesChannelService $channelService,
+        private EntityRepository    $entryRepository,
     ) {
-        $this->channelService  = $channelService;
-        $this->entryRepository = $entryRepository;
     }
 
     /**

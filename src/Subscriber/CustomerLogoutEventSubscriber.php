@@ -8,13 +8,10 @@ use Shopware\Core\Checkout\Customer\Event\CustomerLogoutEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class CustomerLogoutEventSubscriber implements EventSubscriberInterface
+readonly class CustomerLogoutEventSubscriber implements EventSubscriberInterface
 {
-    private ?RequestStack $requestStack;
-
-    public function __construct(?RequestStack $requestStack = null)
+    public function __construct(private ?RequestStack $requestStack = null)
     {
-        $this->requestStack = $requestStack;
     }
 
     public static function getSubscribedEvents()
@@ -26,8 +23,7 @@ class CustomerLogoutEventSubscriber implements EventSubscriberInterface
 
     public function hasJustLoggedOut(): void
     {
-        if (
-            !isset($this->requestStack)
+        if (!isset($this->requestStack)
             || $this->requestStack->getMainRequest() === null
         ) {
             return;

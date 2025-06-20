@@ -8,11 +8,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class EnrichProxyDataEvent extends Event
 {
-    private array $data;
-
-    public function __construct(array $data)
+    public function __construct(private array $data)
     {
-        $this->data = $data;
     }
 
     public function getData(): array

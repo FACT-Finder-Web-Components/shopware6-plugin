@@ -9,15 +9,10 @@ use Omikron\FactFinder\Shopware6\Export\Filter\FilterInterface;
 
 class Loader implements HandlebarsLoader
 {
-    private HandlebarsLoader $loader;
-    private FilterInterface $filter;
-
     public function __construct(
-        HandlebarsLoader $loader,
-        FilterInterface $filter,
+        private readonly HandlebarsLoader $loader,
+        private readonly FilterInterface  $filter,
     ) {
-        $this->loader = $loader;
-        $this->filter = $filter;
     }
 
     /**

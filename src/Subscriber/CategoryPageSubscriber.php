@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Subscriber;
 
-use Omikron\FactFinder\Shopware6\Config\Communication;
 use Omikron\FactFinder\Shopware6\Config\ExtensionConfig;
 use Omikron\FactFinder\Shopware6\OmikronFactFinder;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Field\CategoryPath;
@@ -21,7 +20,6 @@ class CategoryPageSubscriber implements EventSubscriberInterface
 
     public function __construct(
         private readonly AbstractCategoryRoute $cmsPageRoute,
-        private readonly Communication $config,
         private readonly ExtensionConfig $extensionConfig,
         string $categoryPathFieldName,
         array $categoryPageAddParams = [],
