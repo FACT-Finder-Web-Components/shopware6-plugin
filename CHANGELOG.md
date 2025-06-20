@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.4.0] - 2025.06.20
 ### Add
 - Add tracking for product card add to cart action
 - Add improvements for European Accessibility Act
@@ -512,6 +512,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.4.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.4.0
 [v6.3.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.3.2
 [v6.3.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.3.1
 [v6.3.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.3.0
