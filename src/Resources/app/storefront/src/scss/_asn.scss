@@ -40,6 +40,14 @@ ff-asn {
     .custom-control-label {
       display: inline;
     }
+
+    .ffw-asn-group-container {
+      display: none;
+    }
+
+    &[opened] .ffw-asn-group-container {
+      display: block;
+    }
   }
 
   &-group-slider {

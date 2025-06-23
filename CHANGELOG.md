@@ -1,8 +1,11 @@
 # Changelog
+## Unreleased
+### Fix
+- Support tab navigation for `ff-asn` (EAA)
 ## [v6.4.0] - 2025.06.20
 ### Add
 - Add tracking for product card add to cart action
-- Add improvements for European Accessibility Act
+- Add improvements for European Accessibility Act (EAA)
 
 ### Change
 - Add facet name to filter cloud
