@@ -2,6 +2,8 @@
 ## Unreleased
 ### Fix
 - Support tab navigation for `ff-asn` (EAA)
+- Support tab navigation for `ff-asn-group-slider` and `ff-suggest` (EAA)
+
 ## [v6.4.0] - 2025.06.20
 ### Add
 - Add tracking for product card add to cart action

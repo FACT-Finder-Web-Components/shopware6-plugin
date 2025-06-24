@@ -51,6 +51,10 @@ ff-asn {
   }
 
   &-group-slider {
+    .ffw-wrapper {
+      display: none;
+    }
+
     .ffw-wrapper[opened] {
       display: flex;
       flex-direction: column;

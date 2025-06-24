@@ -56,10 +56,10 @@
       {% endblock %}
 
       <ff-asn-group-slider class="filter-panel-item dropdown" disable-auto-expand="true">
-        <div slot="groupCaption" class="filter-panel-item-toggle btn">
+        <button slot="groupCaption" class="filter-panel-item-toggle btn">
           {{ '{{group.name}}' }}
           {% sw_icon 'arrow-medium-down' style { 'pack': 'solid', 'size': 'xs', 'class': 'filter-panel-item-toggle' } %}
-        </div>
+        </button>
       </ff-asn-group-slider>
     </ff-asn>
   {% endblock %}
