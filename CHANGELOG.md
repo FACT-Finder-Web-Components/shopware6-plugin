@@ -4,6 +4,9 @@
 - Support tab navigation for `ff-asn` (EAA)
 - Support tab navigation for `ff-asn-group-slider` and `ff-suggest` (EAA)
 
+### Change
+- Upgrade Web Components version to v5.1.5 (EAA for `ff-record-list`)
+
 ## [v6.4.0] - 2025.06.20
 ### Add
 - Add tracking for product card add to cart action
