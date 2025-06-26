@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.4.1] - 2025.06.26
 ### Fix
 - Support tab navigation for `ff-asn` (EAA)
 - Support tab navigation for `ff-asn-group-slider` and `ff-suggest` (EAA)
@@ -521,6 +521,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.4.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.4.1
 [v6.4.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.4.0
 [v6.3.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.3.2
 [v6.3.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.3.1
