@@ -3,6 +3,7 @@
 ### Fix
 - Support tab navigation for `ff-asn` (EAA)
 - Support tab navigation for `ff-asn-group-slider` and `ff-suggest` (EAA)
+- Fix price slider bar position
 
 ### Change
 - Upgrade Web Components version to v5.1.5 (EAA for `ff-record-list`)
