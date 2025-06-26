@@ -3,6 +3,13 @@
     <ff-suggest layout="list" unresolved>
       {% block layout_search_suggest_result_suggest_container %}
         <section class="ff-suggest-container row pb-4">
+          <template data-role="popularSearches">
+            <div class="ff-popular-searches">
+              <h3>{{ "ff.suggest.PopularSearches"|trans }}</h3>
+              <div data-template>{{ '{{name}}' }} </div>
+            </div>
+          </template>
+
           <div data-container="searchTerm" class="col">
             <h3 class="h5 container-caption">{{ 'ff.suggest.SearchTerms'|trans|striptags }}</h3>
             <ff-suggest-item type="searchTerm">

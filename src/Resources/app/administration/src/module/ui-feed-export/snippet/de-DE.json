@@ -26,12 +26,6 @@
         },
         "alert_not_valid_params": {
           "text": "Bitte wählen Sie Exportparameter aus"
-        },
-        "refresh_cache_success": {
-          "text": "Der Export-Cache wurde aktualisiert"
-        },
-        "refresh_cache_error": {
-          "text": "Beim Aktualisieren des Exportcaches ist ein Fehler aufgetreten"
         }
       }
     }

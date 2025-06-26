@@ -52,13 +52,14 @@ ff-asn {
 
   &-group-slider {
     .ffw-wrapper {
-      display: none;
+      visibility: hidden;
     }
 
     .ffw-wrapper[opened] {
       display: flex;
       flex-direction: column;
       text-align: center;
+      visibility: visible;
     }
   }
 
