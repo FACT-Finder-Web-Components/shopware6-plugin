@@ -1,18 +1,20 @@
 {% block sw_cms_element_record_list_config %}
   <div>
-    <sw-switch-field label="Subscribe" v-model:value="element.config.subscribe.value"></sw-switch-field>
+    <sw-switch-field label="Subscribe" v-model:value="element.config.subscribe.value" deprecated></sw-switch-field>
 
     <sw-text-field label="ID"
                    placeholder="ID"
-                   v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.id')}"
-                   v-model:value="element.config.id.value">
+                   v-tooltip="{ message:$t('sw-cms.elements.recordList.config.id')}"
+                   v-model:value="element.config.id.value"
+                   deprecated>
     </sw-text-field>
 
     <sw-textarea-field label="Dom Updated"
                        placeholder="Dom Updated"
                        size="medium"
                        v-model:value="element.config.domUpdated.value"
-                       v-tooltip="{ message:$tc('sw-cms.elements.recordList.config.domUpdated')}">
+                       v-tooltip="{ message:$t('sw-cms.elements.recordList.config.domUpdated')}"
+                       deprecated>
     </sw-textarea-field>
   </div>
 {% endblock %}

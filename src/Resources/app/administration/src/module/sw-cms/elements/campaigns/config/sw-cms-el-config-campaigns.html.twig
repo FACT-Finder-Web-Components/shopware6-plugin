@@ -1,31 +1,32 @@
 {% block sw_cms_element_campaigns_config %}
   <div>
 
-    <sw-switch-field label="Advisor Campaign" v-model:value="element.config.enableAdvisorCampaign.value">
+    <sw-switch-field label="Advisor Campaign" v-model:value="element.config.enableAdvisorCampaign.value" deprecated>
     </sw-switch-field>
 
-    <sw-container v-if="element.config.enableAdvisorCampaign.value">
+    <sw-container v-if="element.config.enableAdvisorCampaign.value" deprecated>
       <sw-text-field
         label="Name"
         placeholder="Advisor Campaign Name"
-        v-tooltip="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
-        v-model:value="element.config.advisorCampaignName.value">
+        v-tooltip="$t('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
+        v-model:value="element.config.advisorCampaignName.value"
+        deprecated>
       </sw-text-field>
     </sw-container>
 
-    <sw-switch-field label="Feedback Campaign" v-model:value="element.config.enableFeedbackCampaign.value">
+    <sw-switch-field label="Feedback Campaign" v-model:value="element.config.enableFeedbackCampaign.value" deprecated>
     </sw-switch-field>
 
-    <sw-container v-if="element.config.enableFeedbackCampaign.value">
+    <sw-container v-if="element.config.enableFeedbackCampaign.value" deprecated>
       <sw-text-field
         label="Label"
         placeholder="Feedback Campaign Label"
-        v-tooltip="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
-        v-model:value="element.config.feedbackCampaignLabel.value">
+        v-tooltip="$t('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
+        v-model:value="element.config.feedbackCampaignLabel.value"
+        deprecated>
       </sw-text-field>
 
-      <sw-select-field label="Flag"
-                       v-model:value="element.config.feedbackCampaignFlag.value">
+      <sw-select-field label="Flag" v-model:value="element.config.feedbackCampaignFlag.value" deprecated>
         <option v-for="(flag, index) in campaignFlags"
                 :key="index"
                 :value="flag"
@@ -35,15 +36,14 @@
       </sw-select-field>
     </sw-container>
 
-    <sw-switch-field label="Redirect Campaign" v-model:value="element.config.enableRedirectCampaign.value">
+    <sw-switch-field label="Redirect Campaign" v-model:value="element.config.enableRedirectCampaign.value" deprecated>
     </sw-switch-field>
 
 
-    <sw-switch-field label="Pushed Products" v-model:value="element.config.enablePushedProducts.value">
+    <sw-switch-field label="Pushed Products" v-model:value="element.config.enablePushedProducts.value" deprecated>
     </sw-switch-field>
-    <sw-container v-if="element.config.enablePushedProducts.value">
-      <sw-select-field label="Flag"
-                       v-model:value="element.config.pushedProductsFlag.value">
+    <sw-container v-if="element.config.enablePushedProducts.value" deprecated>
+      <sw-select-field label="Flag" v-model:value="element.config.pushedProductsFlag.value" deprecated>
         <option v-for="(flag, index) in campaignFlags"
                 :key="index"
                 :value="flag"
@@ -54,8 +54,9 @@
       <sw-text-field
         label="Name"
         placeholder="Name"
-        v-tooltip="$tc('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
-        v-model:value="element.config.pushedProductsName.value">
+        v-tooltip="$t('sw-cms.elements.campaigns.config.leaveFreeIfNotSpecified')"
+        v-model:value="element.config.pushedProductsName.value"
+        deprecated>
       </sw-text-field>
     </sw-container>
   </div>

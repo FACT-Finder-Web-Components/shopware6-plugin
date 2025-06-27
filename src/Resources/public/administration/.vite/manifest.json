@@ -1,0 +1,11 @@
+{
+  "main.js": {
+    "file": "assets/omikron-fact-finder-DNjRtL7K.js",
+    "name": "omikron-fact-finder",
+    "src": "main.js",
+    "isEntry": true,
+    "css": [
+      "assets/omikron-fact-finder-CvZ24pll.css"
+    ]
+  }
+}

@@ -1,41 +1,46 @@
 {% block sw_cms_element_asn_config %}
   <div>
-    <sw-switch-field label="Subscribe" v-model:value="element.config.subscribe.value"></sw-switch-field>
+    <sw-switch-field label="Subscribe" v-model:value="element.config.subscribe.value" deprecated></sw-switch-field>
 
     <sw-switch-field label="Vertical"
-                     v-tooltip="{ message:$tc('sw-cms.elements.asn.config.veritcal')}"
-                     v-model:value="element.config.vertical.value">
+                     v-tooltip="{ message:$t('sw-cms.elements.asn.config.veritcal')}"
+                     v-model:value="element.config.vertical.value"
+                     deprecated>
     </sw-switch-field>
 
     <sw-text-field label="ID"
                    placeholder="ID"
-                   v-tooltip="{ message:$tc('sw-cms.elements.asn.config.id')}"
-                   v-model:value="element.config.id.value">
+                   v-tooltip="{ message:$t('sw-cms.elements.asn.config.id')}"
+                   v-model:value="element.config.id.value"
+                   deprecated>
     </sw-text-field>
 
     <sw-textarea-field label="Dom Updated"
                        placeholder="Dom Updated"
                        size="medium"
                        v-model:value="element.config.domUpdated.value"
-                       v-tooltip="{ message:$tc('sw-cms.elements.asn.config.domUpdated')}">
+                       v-tooltip="{ message:$t('sw-cms.elements.asn.config.domUpdated')}"
+                       deprecated>
     </sw-textarea-field>
 
     <wrapper class="secondary">
       <h3 class="filter-cloud">Filter Cloud</h3>
-      <sw-switch-field label="Use Filter Cloud" v-model:value="element.config.filterCloud.value"></sw-switch-field>
+      <sw-switch-field label="Use Filter Cloud" v-model:value="element.config.filterCloud.value" deprecated></sw-switch-field>
 
-      <sw-container v-if="element.config.filterCloud.value">
+      <sw-container v-if="element.config.filterCloud.value" deprecated>
         <sw-text-field label="Blacklist"
                        placeholder="Blacklist"
-                       v-model:value="element.config.filterCloudBlacklist.value">
+                       v-model:value="element.config.filterCloudBlacklist.value"
+                       deprecated>
         </sw-text-field>
 
         <sw-text-field label="Whitelist"
                        placeholder="Whitelist"
-                       v-model:value="element.config.filterCloudWhitelist.value">
+                       v-model:value="element.config.filterCloudWhitelist.value"
+                       deprecated>
         </sw-text-field>
 
-        <sw-select-field label="Order" placeholder="Order" v-model:value="element.config.filterCloudOrder.value">
+        <sw-select-field label="Order" placeholder="Order" v-model:value="element.config.filterCloudOrder.value" deprecated>
           <option value="fact-finder">factfinder</option>
           <option value="alphabetical">alphabetical</option>
           <option value="user-selection">userSelection</option>

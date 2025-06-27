@@ -4,6 +4,7 @@
   :isLoading="isLoading"
   :disabled="isLoading"
   :processSuccess="isSaveSuccessful"
-  @click="onClick">
-  {{ $tc('configuration.testFtpConnection.testConnection') }}
+  @click="onClick"
+  deprecated>
+  {{ $t('configuration.testFtpConnection.testConnection') }}
 </sw-button-process>

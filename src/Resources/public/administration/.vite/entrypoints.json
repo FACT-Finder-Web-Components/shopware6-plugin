@@ -1,0 +1,25 @@
+{
+  "base": "/bundles/omikronfactfinder/administration/",
+  "entryPoints": {
+    "omikron-fact-finder": {
+      "css": [
+        "/bundles/omikronfactfinder/administration/assets/omikron-fact-finder-CvZ24pll.css"
+      ],
+      "dynamic": [],
+      "js": [
+        "/bundles/omikronfactfinder/administration/assets/omikron-fact-finder-DNjRtL7K.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}
