@@ -50,12 +50,14 @@ class ExportProducts implements ExportInterface
         $criteria->addAssociation('properties');
         $criteria->addAssociation('customFields');
         $criteria->addAssociation('properties.group');
-        $criteria->addAssociation('media');
         $criteria->addAssociation('seoUrls');
+        $criteria->addAssociation('media');
+        $criteria->addAssociation('children.cover.media');
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
         }
         $criteria->addFilter(new EqualsFilter('parentId', null));
+
         return $criteria;
     }
 }
