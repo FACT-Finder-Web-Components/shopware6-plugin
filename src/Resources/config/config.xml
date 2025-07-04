@@ -76,7 +76,7 @@
                     <name lang="de-DE">Verfolgen Sie einen einzelnen Klick mit dem ausgewählten Betrag</name>
                 </option>
             </options>
-            <defaultValue>count_as_one</defaultValue>
+            <defaultValue>count_selected_amount</defaultValue>
             <label>Scenario how to count single click on "Add to cart" button</label>
             <label lang="de-DE">Szenario zum Zählen mit einem Klick auf die Schaltfläche „In den Warenkorb“</label>
             <required>true</required>

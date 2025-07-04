@@ -332,6 +332,12 @@ by default export outputs data in the STDOUT. It could be easily redirected usin
 
     php [SHOPWARE_ROOT]/bin/console factfinder:data:export -n > export.csv
 
+Console command can be executed with a variable from .env file e.g. `APP_URL=http://saleschannel-domain.com`.
+This is especially useful if you have several SalesChannels with different domains, and you want the ImageUrl of products to be set to the domain from a specific SalesChannel.
+
+    APP_URL=http://saleschannel-domain.com php [SHOPWARE_ROOT]/bin/console factfinder:data:export
+
+
 #### Selecting Categories for CMS Export
 With CMS Export we introduced custom field for CategoryEntity by which we filter the Categories going to be exported.
 You can find it on Category edit page. 

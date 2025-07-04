@@ -162,7 +162,7 @@ class CategoryPageSubscriberSpec extends ObjectBehavior
         $extensionConfig->getTrackingSettings()->willReturn(
             [
                 'addToCart' => [
-                    'count' => 'count_as_one',
+                    'count' => 'count_selected_amount',
                 ],
             ]
         );
