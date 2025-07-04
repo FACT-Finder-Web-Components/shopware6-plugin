@@ -25,7 +25,7 @@ class ExtensionConfig extends BaseConfig
     {
         return [
             'addToCart' => [
-                'count' => (string) $this->config('trackingAddToCartCount') ?? 'count_as_one',
+                'count' => (string) $this->config('trackingAddToCartCount') ?? 'count_selected_amount',
             ],
         ];
     }
