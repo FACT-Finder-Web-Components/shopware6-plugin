@@ -1,8 +1,28 @@
 # Changelog
+## Unreleased
+### BREAKING
+- IMPORTANT! Drop Shopware 6.6 compatibility
+- IMPORTANT! Drop Webpack compatibility
+- Add support for Shopware 6.7
+- Add support for PHP 8.4
+- Add support for Vite
+- Upgrade libraries as required Shopware v6.7
+- Upgrade Symfony to version 7.1
+
+### Add
+- Support tab navigation for `ff-asn` and `ff-suggest` (EAA)
+
+### Change
+- Change default behavior for add to cart btn tracking
+- Upgrade Web Components version to v5.1.5
+
+### Fix
+- Fix ImageUrl for product export feature
+
 ## [v6.4.0] - 2025.06.20
 ### Add
 - Add tracking for product card add to cart action
-- Add improvements for European Accessibility Act
+- Add improvements for European Accessibility Act (EAA)
 
 ### Change
 - Add facet name to filter cloud
