@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- Add more validation informations for test connection btn
+
 ## [v6.4.1] - 2025.06.26
 ### Fix
 - Support tab navigation for `ff-asn` (EAA)

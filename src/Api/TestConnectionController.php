@@ -46,8 +46,9 @@ class TestConnectionController extends AbstractController
             return new JsonResponse(['message' => 'Connection successfully established'], 200);
         } catch (\Exception $e) {
             $this->factfinderLogger->error($e->getMessage());
+            $errorDescription = $this->getErrorDescription($e->getMessage());
 
-            return new JsonResponse(['message' => 'Connection could not be established'], 400);
+            return new JsonResponse(['message' => $errorDescription], 400);
         }
     }
 
@@ -94,8 +95,9 @@ class TestConnectionController extends AbstractController
             return new JsonResponse(['message' => 'Connection successfully established'], 200);
         } catch (\Exception $e) {
             $this->factfinderLogger->error($e->getMessage());
+            $errorDescription = $this->getErrorDescription($e->getMessage());
 
-            return new JsonResponse(['message' => 'Connection could not be established'], 400);
+            return new JsonResponse(['message' => $errorDescription], 400);
         }
     }
 
@@ -105,5 +107,18 @@ class TestConnectionController extends AbstractController
         $channel    = $this->config->getChannel();
 
         return "rest/{$apiVersion}/records/{$channel}/compare";
+    }
+
+    private function getErrorDescription(string $errorMessage): string
+    {
+        preg_match('/\{.*?\}/', $errorMessage, $matches);
+
+        if (!empty($matches[0])) {
+            $json = json_decode($matches[0], true);
+
+            return $json['errorDescription'] ?? 'Check logs for more information.';
+        }
+
+        return 'Check logs for more information.';
     }
 }

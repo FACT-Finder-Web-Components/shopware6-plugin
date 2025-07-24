@@ -7,7 +7,7 @@
     "testConnection": {
       "success": "Verbindung erfolgreich hergestellt.",
       "fail": "Die Verbindung konnte nicht hergestellt werden.",
-      "helpText": "Bitte speichern Sie Ihre aktuelle Konfiguration, bevor Sie die Verbindung testen"
+      "helpText": "Bitte speichern Sie Ihre aktuelle Konfiguration, bevor Sie die Verbindung testen und überprüfen Sie die Fehlerprotokolle für weitere Informationen"
     },
     "testApiConnection": {
       "testConnection": "Testverbindung"
