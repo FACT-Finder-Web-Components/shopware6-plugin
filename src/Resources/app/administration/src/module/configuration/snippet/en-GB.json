@@ -7,7 +7,7 @@
     "testConnection": {
       "success": "Connection successfully established.",
       "fail": "Connection could not be established.",
-      "helpText": "Please save you current configuration before test connection"
+      "helpText": "Please save you current configuration before test connection and check the error logs for more information"
     },
     "testApiConnection": {
       "testConnection": "Test Connection"
