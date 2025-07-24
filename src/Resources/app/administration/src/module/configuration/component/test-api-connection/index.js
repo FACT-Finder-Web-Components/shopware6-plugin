@@ -42,11 +42,14 @@ Component.register('test-api-connection', {
                             });
                     }
                     })
-                .catch(() => {
+                .catch((error) => {
+                    const errorMessage = error.response?.data?.message ||
+                        Shopware.Snippet.tc('configuration.testConnection.helpText');
+
                     this.createNotificationError({
                         title: Shopware.Snippet.tc('configuration.testConnection.fail'),
-                        message: Shopware.Snippet.tc('configuration.testConnection.helpText')
-                        });
+                        message: errorMessage
+                    });
                 })
                 .finally(() => {
                     this.isSaveSuccessful = true;
