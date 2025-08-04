@@ -25,6 +25,14 @@
                  data-redirect="{{ '{{masterValues.Deeplink}}' }}" data-anchor="{{ '{{masterValues.Deeplink}}' }}">
                 {{ 'listing.boxProductDetails'|trans|sw_sanitize }}
               </a>
+
+              {% if page.extensions.factfinder.addCartBtn %}
+                <a class="btn btn-primary"
+                   href="/fact-finder/cart/add-by-number/{{ '{{variantValues.0.ProductNumber}}' }}"
+                   title="{{ 'listing.boxAddToCart'|trans|sw_sanitize }}">
+                  {{ 'listing.boxAddProduct'|trans|sw_sanitize }}
+                </a>
+              {% endif %}
             </div>
           </div>
         </div>

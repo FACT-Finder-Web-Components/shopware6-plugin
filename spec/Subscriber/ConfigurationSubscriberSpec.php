@@ -68,6 +68,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $communication->getApiKey()->willReturn('abc-123');
         $communication->isSsrActive()->willReturn(false);
         $communication->isProxyEnabled()->willReturn(false);
+        $communication->isCartBtnEnabled()->willReturn(false);
         $communication->getFactFinderFeatures()->willReturn([]);
         $communication->getChannel('main_sales_channel')->willReturn('some_ff_channel');
         $communication->getFieldRoles(Argument::any())->willReturn([]);
@@ -115,6 +116,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $communication->getApiKey()->willReturn('abc-123');
         $communication->isSsrActive()->willReturn(false);
         $communication->isProxyEnabled()->willReturn(false);
+        $communication->isCartBtnEnabled()->willReturn(false);
         $event->getRequest()->willReturn($request);
         $request->get('_route', Argument::any())->willReturn('factfinder');
         $request->getLocale()->willReturn('en');
@@ -157,6 +159,7 @@ class ConfigurationSubscriberSpec extends ObjectBehavior
         $communication->getApiKey()->willReturn('abc-123');
         $communication->isSsrActive()->willReturn(false);
         $communication->isProxyEnabled()->willReturn(false);
+        $communication->isCartBtnEnabled()->willReturn(false);
         $event->getRequest()->willReturn($request);
         $request->get('_route', Argument::any())->willReturn('factfinder');
         $request->getLocale()->willReturn('en');

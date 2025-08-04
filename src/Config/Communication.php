@@ -61,6 +61,11 @@ class Communication extends BaseConfig
         return (bool) $this->config('useSsrPdp');
     }
 
+    public function isCartBtnEnabled(): bool
+    {
+        return (bool) $this->config('addCartBtn');
+    }
+
     public function getFactFinderFeatures(): array
     {
         return [

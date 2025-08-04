@@ -87,6 +87,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
                 'communicationAttributes' => $this->getCommunicationAttributes($communicationConfig),
                 'categoryPathFieldName'   => $this->categoryPathFieldName,
                 'features'                => $this->config->getFactFinderFeatures(),
+                'addCartBtn'              => $this->config->isCartBtnEnabled(),
             ]));
         }
     }
@@ -99,10 +100,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
 
         $parameters = method_exists($event, 'getParameters') && is_array($event->getParameters()) ? $event->getParameters() : [];
 
-        if (
-            isset($parameters['page'])
-            && $parameters['page'] instanceof Struct
-        ) {
+        if (isset($parameters['page']) && $parameters['page'] instanceof Struct) {
             return $parameters['page'];
         }
 
@@ -113,8 +111,7 @@ class ConfigurationSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (
-            $this->config->isSsrActive()
+        if ($this->config->isSsrActive()
             || $request->isXmlHttpRequest()
         ) {
             return false;
