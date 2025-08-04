@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Add to cart button for record list
+
 ## [v7.0.0] - 2025.07.23
 ### BREAKING
 - IMPORTANT! Drop Shopware 6.6 compatibility

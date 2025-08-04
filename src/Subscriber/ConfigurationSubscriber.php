@@ -72,6 +72,7 @@ readonly class ConfigurationSubscriber implements EventSubscriberInterface
                 'communicationAttributes' => $this->getCommunicationAttributes($communicationConfig),
                 'categoryPathFieldName'   => $this->categoryPathFieldName,
                 'features'                => $this->config->getFactFinderFeatures(),
+                'addCartBtn'              => $this->config->isCartBtnEnabled(),
             ]));
         }
     }
