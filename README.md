@@ -133,6 +133,7 @@ This section contains a plugin configuration, which is optional and provides add
   details about implementation [here](#enrich-data-received-from-fact-finder-in-proxycontroller).
 Note: Sending each request to FACT-Finder instance trough Shopware, you lose on performance as each request need to be handled first by HTTP server and then, by Shopware itself. This additional traffic could be easily avoided by not activating this feature if there's no clear reason to use it.
 
+Add cart button - select this option if you want the Add to cart button on the product list
 * Scenario how to count single click on "Add to cart" button
 * Redirect mapping for selected queries - put each pair `query=url` in separate row. If the phrase appears twice, the first one from the top of the list will be taken. Url can be relative path `/some/page` or absolute url `https://domain.com/some/page?someParameter=1`. If provided pair has an invalid format then it will be ignored.
 
