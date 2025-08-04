@@ -142,6 +142,12 @@
         <service id="Omikron\FactFinder\Shopware6\Api\UpdateFieldRolesController" />
         <service id="Omikron\FactFinder\Shopware6\Api\TestConnectionController" />
 
+        <service id="Omikron\FactFinder\Shopware6\Storefront\Controller\AddToCartController" public="true">
+            <argument type="service" id="Shopware\Core\Checkout\Cart\SalesChannel\CartService"/>
+            <argument type="service" id="product.repository"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
         <service id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler">
             <tag name="messenger.message_handler" />
         </service>

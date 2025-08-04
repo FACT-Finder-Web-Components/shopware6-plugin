@@ -62,6 +62,13 @@
             <helpText lang="de-DE">Mit Proxy können Sie die von FACT-Finder zurückkommenden Daten innerhalb des SDK-Codes verfeinern. Weitere Informationen finden Sie in der Dokumentation.</helpText>
         </input-field>
 
+        <input-field type="bool">
+            <name>addCartBtn</name>
+            <label>Add Cart button for product list</label>
+            <label lang="de-DE">Schaltfläche „In den Warenkorb“ für die Produktliste</label>
+            <defaultValue>false</defaultValue>
+        </input-field>
+
         <input-field type="single-select">
             <name>trackingAddToCartCount</name>
             <options>
