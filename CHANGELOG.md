@@ -1,7 +1,10 @@
 # Changelog
 ## Unreleased
+### Add
+- Add to cart button for record list
+
 ### Change
-- Add more validation informations for test connection btn
+- Add more validation information for test connection btn
 
 ## [v6.4.1] - 2025.06.26
 ### Fix
