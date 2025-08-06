@@ -5,6 +5,7 @@
 
 ### Change
 - Add more validation information for test connection btn
+- Upgrade Web Components version to v5.1.6
 
 ### Fix
 - Fix data-binding  for `record-list-slider.html.twig` 
