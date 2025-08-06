@@ -4,28 +4,28 @@
   <div class="cms-element-product-slider">
   <div class="base-slider product-slider" data-product-slider-options="{{ recordListSliderOptions|json_encode }}" data-origin="{{ origin }}">
     <div class="product-slider-container" data-product-slider-container="true">
-      <ff-record>
+      <ff-record class="col-sm-6 col-lg-4 col-xl-3">
         <div class="product-slider-item">
           <div class="card product-box box-standard card-body">
             <div class="card-body">
               <div class="product-image-wrapper">
-                <img data-image="{{ '{{record.ImageURL}}' }}" class="product-image is-standard" alt="{{ '{{ record.Name }}' }}">
+                <img data-image="{{ '{{masterValues.ImageUrl}}' }}" class="product-image is-standard" alt="{{ '{{masterValues.Name}}' }}">
               </div>
               <div class="product-info">
-                <a href="{{ '{{record.Deeplink}}' }}" data-action="redirect" class="product-name stretched-link">
-                  <div class="product-title">{{ '{{ record.Name }}' }}</div>
+                <a class="product-name stretched-link" data-redirect="{{ '{{masterValues.Deeplink}}' }}" data-anchor="{{ '{{masterValues.Deeplink}}' }}" data-action="redirect">
+                  <div class="product-title">{{ '{{masterValues.Name}}' }}</div>
                 </a>
                 <div class="product-description">
-                  {{ '{{ record.Description }}' }}
+                  {{ '{{masterValues.Description}}' }}
                 </div>
                 <div class="product-price-info">
                   <div class="product-price-wrapper">
                     {{ "detail.dataColumnReferencePrice"|trans|sw_sanitize }}
-                    <span class="product-price"> {{ '{{record.Price}}' }}</span>
+                    <span class="product-price"> {{ '{{ $ masterValues.Price}}' }}</span>
                   </div>
                 </div>
                 <div class="product-action">
-                  <a href="{{ '{{record.Deeplink}}' }}" data-action="redirect"
+                  <a data-redirect="{{ '{{masterValues.Deeplink}}' }}" data-anchor="{{ '{{masterValues.Deeplink}}' }}" data-action="redirect"
                      title="{{ "listing.boxProductDetails"|trans|striptags }}" class="btn btn-block btn-light">
                     {{ "listing.boxProductDetails"|trans|striptags }}
                   </a>
