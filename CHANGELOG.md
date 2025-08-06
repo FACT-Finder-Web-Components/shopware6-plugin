@@ -6,6 +6,9 @@
 ### Change
 - Add more validation information for test connection btn
 
+### Fix
+- Fix data-binding  for `record-list-slider.html.twig` 
+
 ## [v6.4.1] - 2025.06.26
 ### Fix
 - Support tab navigation for `ff-asn` (EAA)
