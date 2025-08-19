@@ -4,6 +4,9 @@
 - Add to cart button for record list
 - Add automated feed export base on Shopware Scheduled Task
 
+### Change
+- Upgrade Web Components version to v5.1.6
+
 ## [v7.0.0] - 2025.07.23
 ### BREAKING
 - IMPORTANT! Drop Shopware 6.6 compatibility
