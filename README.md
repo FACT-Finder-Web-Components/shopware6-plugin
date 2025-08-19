@@ -22,6 +22,7 @@ modifications in order to fit their needs. For more advanced features please che
     - [Price Columns Format](#price-columns-format)
 - [Upload Settings](#upload-settings)
 - [Import Settings](#import-settings)
+- [Automatic Export Settings](#automatic-export-settings)
 - [Category Pages](#category-pages)
     - [Element Settings](#element-settings)
       - [ASN Element](#asn-element)
