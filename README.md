@@ -212,7 +212,7 @@ You can check if the above data is correctly set by clicking on the `Test Connec
 
 ![automatic-export-settings.png](docs/assets/automatic-export-settings.png)
 
-The plugin provides a configuration section in the administration panel that allows you to enable or disable automatic export and define which sales channel and language should be used for the export.
+The plugin provides a configuration section in the administration panel that allows you to enable or disable automatic export and define which sales channel and language should be used for the products export.
 By default, the automatic export is disabled. Once the administrator enables it and choose the sales channel and language, the automatic export will be active.
 By default, automatic export is performed once every 48 hours. If you want to change this value, you must overwrite the `ExportScheduledTask` file as follows:
 
@@ -220,7 +220,7 @@ By default, automatic export is performed once every 48 hours. If you want to ch
     public static function getDefaultInterval(): int
     {
         // change this value to adjust the export interval. This value is in seconds.
-        // For example, to set the interval to 48 hours = 172800, return 600.
+        // for example: 48 hours = 172800
         return 172800;
     }
 
