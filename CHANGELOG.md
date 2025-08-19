@@ -2,6 +2,7 @@
 ## Unreleased
 ### Add
 - Add to cart button for record list
+- Add automated feed export base on Shopware Scheduled Task
 
 ## [v7.0.0] - 2025.07.23
 ### BREAKING

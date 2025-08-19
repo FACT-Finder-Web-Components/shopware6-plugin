@@ -208,6 +208,24 @@ Following settings are used for uploading already exported feed to a given FTP/S
 
 You can check if the above data is correctly set by clicking on the `Test Connection` button. Please save your settings before clicking on button.
 
+## Automatic Export Settings
+
+![automatic-export-settings.png](docs/assets/automatic-export-settings.png)
+
+The plugin provides a configuration section in the administration panel that allows you to enable or disable automatic export and define which sales channel and language should be used for the export.
+By default, the automatic export is disabled. Once the administrator enables it and choose the sales channel and language, the automatic export will be active.
+By default, automatic export is performed once every 48 hours. If you want to change this value, you must overwrite the `ExportScheduledTask` file as follows:
+
+    //src/ScheduledTask/ExportScheduledTask.php
+    public static function getDefaultInterval(): int
+    {
+        // change this value to adjust the export interval. This value is in seconds.
+        // For example, to set the interval to 48 hours = 172800, return 600.
+        return 172800;
+    }
+
+Automatic Export is based on Shopware Scheduled Task. For more information, see the [Shopware documentation](https://developer.shopware.com/docs/guides/plugins/plugins/plugin-fundamentals/add-scheduled-task.html)
+
 ## Category Pages
 
 Plugin offers a way to use FACT-Finder® Web Components on category pages using page builder Shopping Experiences. There
