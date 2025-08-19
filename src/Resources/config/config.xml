@@ -303,4 +303,37 @@
             <name>testApiConnection</name>
         </component>
     </card>
+
+    <card>
+        <title>Automatic Export Settings</title>
+        <title lang="de-DE">Einstellungen für automatischen Export</title>
+        <input-field type="bool">
+            <name>autoExportEnabled</name>
+            <label>Enable Automatic Export</label>
+            <label lang="de-DE">Automatischen Export aktivieren</label>
+            <helpText>Enable or disable the automatic export feature. More information in the documentation</helpText>
+            <helpText lang="de-DE">Aktivieren oder deaktivieren Sie die Funktion für den automatischen Export.</helpText>
+            <defaultValue>false</defaultValue>
+        </input-field>
+        <component name="sw-entity-single-select">
+            <name>autoExportSelectedSalesChannel</name>
+            <label>Select Sales Channel</label>
+            <label lang="de-DE">Vertriebskanal auswählen</label>
+            <helpText>Select the sales channel for automatic export.</helpText>
+            <helpText lang="de-DE">Wählen Sie den Vertriebskanal für den automatischen Export.</helpText>
+            <entity>sales_channel</entity>
+            <placeholder>Select a sales channel...</placeholder>
+            <placeholder lang="de-DE">Vertriebskanal auswählen...</placeholder>
+        </component>
+        <component name="sw-entity-single-select">
+            <name>autoExportSelectedLanguage</name>
+            <label>Select Language</label>
+            <label lang="de-DE">Sprache auswählen</label>
+            <helpText>Select the language for the export.</helpText>
+            <helpText lang="de-DE">Wählen Sie die Sprache für den Export des Vertriebskanals.</helpText>
+            <entity>language</entity>
+            <placeholder>Select a language...</placeholder>
+            <placeholder lang="de-DE">Sprache auswählen...</placeholder>
+        </component>
+    </card>
 </config>

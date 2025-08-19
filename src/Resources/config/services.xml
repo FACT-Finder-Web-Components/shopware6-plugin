@@ -202,5 +202,16 @@
         <service id="Omikron\FactFinder\Shopware6\Utilites\Ssr\Template\Engine" />
         <service id="Omikron\FactFinder\Shopware6\Config\FieldRolesInterface"
                  alias="Omikron\FactFinder\Shopware6\Config\FieldRoles" />
+
+        <service id="Omikron\FactFinder\Shopware6\ScheduledTask\ExportScheduledTask">
+            <tag name="shopware.scheduled.task" />
+        </service>
+        <service id="Omikron\FactFinder\Shopware6\ScheduledTask\ExportScheduledTaskHandler">
+            <argument type="service" id="scheduled_task.repository"/>
+            <argument type="service" id="monolog.logger.factfinder_channel"/>
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
+            <argument type="service" id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler" />
+            <tag name="messenger.message_handler" />
+        </service>
     </services>
 </container>
