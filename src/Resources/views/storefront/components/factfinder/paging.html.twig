@@ -13,7 +13,6 @@
     </ff-paging-item>
 
     {% set queryParams = app.request.query.all %}
-    {% dump(queryParams) %}
     {% for p in -1..1 %}
       {% set updatedParams = queryParams|filter((value, key) => key != 'page') %}
       {% set url = app.request.attributes.get('_route') ? path(app.request.attributes.get('_route'), updatedParams) : app.request.uri %}
