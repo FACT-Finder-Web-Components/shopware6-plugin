@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- Upgrade Web Components version to v5.1.7
+
 ## [v6.5.0] - 2025.08.06
 ### Add
 - Add to cart button for record list
