@@ -2,6 +2,8 @@
 ## Unreleased
 ### Change
 - Upgrade Web Components version to v5.1.7
+- Add template to suggest element
+
 ## [v7.1.0] - 2025.08.19
 ### Add
 - Add to cart button for record list
