@@ -2,6 +2,7 @@
 ## Unreleased
 ### Change
 - Upgrade Web Components version to v5.1.7
+- Add template to suggest element
 
 ## [v6.5.0] - 2025.08.06
 ### Add
