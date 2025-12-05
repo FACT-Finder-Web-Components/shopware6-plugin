@@ -111,7 +111,7 @@ store cache in order the new applied configuration to start working.
 * Server URL - FACT-Finder® instance url   
   **Note:** Server URL should contain a used protocol: (e.g. `https://`) and should end with an
   endpoint ( `fact-finder` )
-* Channel - Channel you want to serve data from
+* Channel - Channel you want to serve data from. This field works for each sales channel separately, so you can, for example, adjust FactFinder integration to different store's language versions.
 * API key - your FACT-Finder® API key
 
 You can check if the above data is correctly set by clicking on the `Test Connection` button. Please save your settings before clicking on button.
@@ -122,6 +122,13 @@ Please use this if you don't use feed offered by the plugin or for some reason y
 You can find more information about what Field Roles are in (Web Components documentation)[https://web-components.fact-finder.de/documentation/4.x/field-roles]
 **Note:**
  Updating process is ran for all sales channels, no need to run it separately for each of them
+
+#### Disable FactFinder Web Components option
+
+This option allows you to disable FACT-Finder® Web Components integration on the frontend. It works for each sales channel separately so you can use our plugin only on the sales channels you want.
+
+**Note:** If you enable this option, FACT-Finder® integration on the frontend will stop working. Pay special attention not to define FACT-Finder® category pages for sales channels where you enable this option, as this will cause an error on the page or incorrect generation of HTML code
+
 
 ## Advanced Settings
 
@@ -461,6 +468,17 @@ Plugin implements a list of given Web Components:
 * Checkout Success Page
     * ff-checkout-tracking
 
+
+## Sales channels management
+
+The entire plugin configuration must be placed in `All Sales Channels`:
+
+![sales-channels-management.png](docs/assets/sales-channels-management.png)
+
+There are only two fields that can be defined for each sales channel separately:
+
+- `Channel` - you can define different data comes from FACT-Finder®, especially in the case of multi-language stores
+- `Disable FactFinder Web Components on frontend?` - allows you to disable FACT-Finder® Web Components integration on the frontend. With this option you can use our plugin only on the sales channels you want.
 
 ## Modifications Examples
 

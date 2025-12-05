@@ -18,6 +18,11 @@ class Communication extends BaseConfig
         return (string) $this->config('channel', $salesChannelId);
     }
 
+    public function disableFFWebc(?string $salesChannelId = null): bool
+    {
+        return (bool) $this->config('disableFactFinderWebc', $salesChannelId);
+    }
+
     public function getCredentials(): array
     {
         return [

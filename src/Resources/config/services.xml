@@ -213,5 +213,10 @@
             <argument type="service" id="Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler" />
             <tag name="messenger.message_handler" />
         </service>
+        <service id="Omikron\FactFinder\Shopware6\Twig\FactFinderExtension">
+            <argument type="service" id="Omikron\FactFinder\Shopware6\Config\Communication" />
+            <argument type="service" id="request_stack" />
+            <tag name="twig.extension" />
+        </service>
     </services>
 </container>

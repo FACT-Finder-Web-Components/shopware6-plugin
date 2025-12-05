@@ -1,17 +1,18 @@
 {% sw_extends '@Parent/storefront/layout/meta.html.twig' %}
 
 {% block layout_head_javascript_tracking %}
-
-  <!-- Set SDK version -->
-  <script>
-    document.addEventListener(`_ffSdkVersion`, ({ setSdkVersion }) => {
-      setSdkVersion(`sw6-v7.1.0`);
-    });
-  </script>
-  <script src="{{ asset('ff-web-components/vendor/custom-elements-es5-adapter.js', '@OmikronFactFinder') }}"></script>
-  <script src="{{ asset('ff-web-components/vendor/webcomponents-loader.js', '@OmikronFactFinder') }}"></script>
-  <script src="{{ asset('ff-web-components/bundle.js', '@OmikronFactFinder') }}" defer></script>
-  <style>[unresolved]{display:none}</style>
+  {% if not ff_disable_webc() %}
+    <!-- Set SDK version -->
+    <script>
+      document.addEventListener(`_ffSdkVersion`, ({ setSdkVersion }) => {
+        setSdkVersion(`sw6-v7.1.0`);
+      });
+    </script>
+    <script src="{{ asset('ff-web-components/vendor/custom-elements-es5-adapter.js', '@OmikronFactFinder') }}"></script>
+    <script src="{{ asset('ff-web-components/vendor/webcomponents-loader.js', '@OmikronFactFinder') }}"></script>
+    <script src="{{ asset('ff-web-components/bundle.js', '@OmikronFactFinder') }}" defer></script>
+    <style>[unresolved]{display:none}</style>
+  {% endif %}
 
   {{ parent() }}
 {% endblock %}
