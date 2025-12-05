@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Add
+- Add possibility to disable Web Components integration per sales channel
+
 ### Change
 - Upgrade Web Components version to v5.1.7
 - Add template to suggest element

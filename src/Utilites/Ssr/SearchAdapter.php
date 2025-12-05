@@ -9,6 +9,7 @@ use Omikron\FactFinder\Communication\Client\ClientException;
 use Omikron\FactFinder\Shopware6\Config\Communication;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -28,6 +29,10 @@ class SearchAdapter
         bool $navigationRequest,
         string $salesChannelId,
     ): array {
+        if ($this->config->disableFFWebc($salesChannelId) === true) {
+            throw new PageNotFoundException('WebComponents are disabled for this sales channel.');
+        }
+
         try {
             $client = $this->clientBuilder
                 ->withServerUrl($this->getServerUrl())

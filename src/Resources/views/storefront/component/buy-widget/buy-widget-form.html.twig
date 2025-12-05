@@ -2,5 +2,7 @@
 
 {% block buy_widget_product_buy_meta %}
   {{ parent() }}
-  <input type="hidden" name="product-number" value="{{ product.productNumber }}">
+  {% if not ff_disable_webc() %}
+    <input type="hidden" name="product-number" value="{{ product.productNumber }}">
+  {% endif %}
 {% endblock %}
