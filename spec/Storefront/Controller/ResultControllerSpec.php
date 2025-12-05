@@ -67,6 +67,7 @@ class ResultControllerSpec extends ObjectBehavior
         $this->factfinderLogger           = $factfinderLogger;
         $this->beConstructedWith($config, $pageLoader, $factfinderLogger);
         $requestStack->getCurrentRequest()->willReturn($request);
+        $salesChannelContext->getSalesChannelId()->willReturn('main_sales_channel');
         $container->get('request_stack')->willReturn($requestStack);
         $this->request->attributes = $attributes;
         $attributes->get(PlatformRequest::ATTRIBUTE_SALES_CHANNEL_CONTEXT_OBJECT)->willReturn($salesChannelContext);
@@ -93,6 +94,7 @@ class ResultControllerSpec extends ObjectBehavior
         $this->twig->render('@OmikronFactFinder/storefront/page/factfinder/result.html.twig', Argument::any())->willReturn($content);
         $this->seoUrlPlaceholderHandler->replace($content, 'https://shop.com', $this->salesChannelContext)->willReturn($content);
         $this->mediaUrlPlaceholderHandler->replace($content)->willReturn($content);
+        $this->config->disableFFWebc('main_sales_channel')->willReturn(false);
         $response = $this->result(
             $this->request,
             $this->salesChannelContext,
