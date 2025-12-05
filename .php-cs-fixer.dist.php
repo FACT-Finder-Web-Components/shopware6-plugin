@@ -21,7 +21,7 @@ return $config
     ->setRules([
         '@PSR2'                        => true,
         '@PSR12'                       => true,
-        '@PHP74Migration:risky'        => true,
+        '@PHP7x4Migration:risky'       => true,
         '@Symfony'                     => true,
         'array_syntax'                 => ['syntax' => 'short'],
         'binary_operator_spaces'       => [

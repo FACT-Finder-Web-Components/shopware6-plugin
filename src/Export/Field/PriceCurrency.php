@@ -9,7 +9,7 @@ use Omikron\FactFinder\Shopware6\Export\Formatter\NumberFormatter;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\System\Currency\CurrencyEntity;
 
-class PriceCurrency extends Price
+class PriceCurrency extends Price implements \Stringable
 {
     private CurrencyEntity $currency;
     private NumberFormatter $numberFormatter;

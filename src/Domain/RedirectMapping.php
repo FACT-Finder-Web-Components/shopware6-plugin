@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Shopware6\Domain;
 
-readonly class RedirectMapping
+readonly class RedirectMapping implements \Stringable
 {
     public function __construct(private string $data)
     {
