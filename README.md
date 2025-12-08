@@ -123,13 +123,6 @@ You can find more information about what Field Roles are in (Web Components docu
 **Note:**
  Updating process is ran for all sales channels, no need to run it separately for each of them
 
-#### Disable FactFinder Web Components option
-
-This option allows you to disable FACT-Finder® Web Components integration on the frontend. It works for each sales channel separately so you can use our plugin only on the sales channels you want.
-
-**Note:** If you enable this option, FACT-Finder® integration on the frontend will stop working. Pay special attention not to define FACT-Finder® category pages for sales channels where you enable this option, as this will cause an error on the page or incorrect generation of HTML code
-
-
 ## Advanced Settings
 
 ![Advanced Settings](docs/assets/advanced-settings.png "Advanced Settings")
@@ -157,6 +150,13 @@ Without SSR enabled, web crawlers could not have a chance to scan the element re
   This setting also works with category pages. **Note:** Redirection only happens when search is done via Server Side Rendering. If search is done via WebComponents redirect will not happen.
 
 **Note:** If you have a problem with displaying product images or prices correctly, you probably have Field Roles set incorrectly. You can easily fix this by setting [custom fields roles](#set-custom-field-roles)
+
+#### Disable FactFinder Web Components option
+
+This option allows you to disable FACT-Finder® Web Components integration on the frontend. It works for each sales channel separately so you can use our plugin only on the sales channels you want.
+
+**Note:** If you enable this option, FACT-Finder® integration on the frontend will stop working. Pay special attention not to define FACT-Finder® category pages for sales channels where you enable this option, as this will cause an error on the page or incorrect generation of HTML code
+
 
 
 ## Features Settings

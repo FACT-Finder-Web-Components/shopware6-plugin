@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v7.2.0] - 2025.12.08
 ### Add
 - Add possibility to disable Web Components integration per sales channel
 
@@ -548,6 +548,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v7.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.2.0
 [v7.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.1.0
 [v7.0.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.0.0
 [v6.4.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.4.0
