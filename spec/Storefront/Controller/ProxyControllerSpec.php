@@ -36,8 +36,6 @@ class ProxyControllerSpec extends ObjectBehavior
         HeaderBag $headerBag
     ): void {
         $serverUrl = 'https://example.fact-finder.de/fact-finder';
-
-        // Konfiguracja zachowania mocka Communication
         $config->getServerUrl()->willReturn($serverUrl);
         $config->getVersion()->willReturn('ng');
         $config->getApiKey()->willReturn('api-key-123');
