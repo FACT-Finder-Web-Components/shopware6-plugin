@@ -47,6 +47,7 @@ modifications in order to fit their needs. For more advanced features please che
     - [Split ASN on Category Page](#split-asn-on-category-page)
     - [Set custom Field Roles](#set-custom-field-roles)
     - [Enrich data received from FACT-Finder in ProxyController](#enrich-data-received-from-fact-finder-in-proxycontroller)
+- [Troubleshooting](#troubleshooting)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -55,11 +56,11 @@ modifications in order to fit their needs. For more advanced features please che
 - Shopware 6.5 
 - PHP version: 8.1, 8.2 or 8.3
 
-For Shopware 6.4 please use SDK version 4.x:
-https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/4.x
-
 For Shopware 6.6 please use SDK version 6.x:
 https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/6.x
+
+For Shopware 6.7 please use SDK version 7.x:
+https://github.com/FACT-Finder-Web-Components/shopware6-plugin/tree/release/7.x
 
 ## FACT-Finder® Supported Sections
 
@@ -647,7 +648,21 @@ class EnrichProxyDataEventSubscriber implements EventSubscriberInterface
 }
 
 ```
+## Troubleshooting
 
+### Composer Security Advisories
+When working with **Shopware 6.5.x**, you may encounter a build failure during `composer update` or `composer install`. This is caused by the **Composer Audit** feature (introduced in Composer 2.7+), which automatically blocks the installation of packages with known security vulnerabilities.
+
+The error message typically looks like this:
+`...these were not loaded, because they are affected by security advisories (PKSA-...)`
+
+### Recommended Solution: Upgrade
+The most effective and secure way to resolve this is to **upgrade to the latest version of our plugin** and, if possible, move to **Shopware 6.7+**.
+
+The latest versions provide:
+* **Security Patches:** Protection against the vulnerabilities flagged by Composer.
+* **Stability:** Improved compatibility with modern PHP versions and server environments.
+* **Performance:** Optimized code execution for faster storefront response times.
 
 ## Contribute
 
