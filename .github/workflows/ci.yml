@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run:
           composer config audit.block-insecure false
-          composer update --no-ansi --no-interaction --no-audit --prefer-${{ matrix.deps }}
+          composer update --no-ansi --no-interaction --prefer-${{ matrix.deps }}
 
       - name: Run tests
         run: composer test
