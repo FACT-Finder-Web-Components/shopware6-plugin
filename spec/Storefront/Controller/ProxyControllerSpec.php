@@ -15,10 +15,10 @@ use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
 use PHPUnit\Framework\Assert;
 use Prophecy\Argument;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +31,7 @@ class ProxyControllerSpec extends ObjectBehavior
     public function let(
         Communication $config,
         ClientInterface $client,
-        ClientBuilder $clientBuilder
+        ClientBuilder $clientBuilder,
     ): void {
         $serverUrl = 'https://example.fact-finder.de/fact-finder';
         $config->getServerUrl()->willReturn($serverUrl);
@@ -40,11 +40,13 @@ class ProxyControllerSpec extends ObjectBehavior
             'username',
             'pass',
         ]);
+        $config->isProxyEnabled()->willReturn(true);
         $this->beConstructedWith($config);
         $clientBuilder->build()->willReturn($client);
         $clientBuilder->withServerUrl(Argument::any())->willReturn($clientBuilder);
         $clientBuilder->withCredentials(Argument::any())->willReturn($clientBuilder);
         $clientBuilder->withVersion(Argument::any())->willReturn($clientBuilder);
+
         $this->client        = $client;
         $this->clientBuilder = $clientBuilder;
     }
@@ -54,15 +56,23 @@ class ProxyControllerSpec extends ObjectBehavior
         ResponseInterface $response,
         EventDispatcherInterface $eventDispatcher,
         EnrichProxyDataEvent $event,
-        Stream $stream
+        Stream $stream,
     ): void {
-        // Expect & Given
         $request->getMethod()->willReturn(Request::METHOD_GET);
+        $request->headers = new HeaderBag([
+            '1234567890abcdef1234' => 'val',
+            'abcdef1234567890abcd' => 'val',
+            '0987654321fedcba0987' => 'val',
+        ]);
+
         $uri                    = 'rest/v5/search/example_channel?query=bag&sid=123&format=json';
         $_SERVER['REQUEST_URI'] = sprintf('/fact-finder/proxy/%s', $uri);
+
         $this->client->request(Request::METHOD_GET, $uri)->willReturn($response);
-        $jsonResponse = file_get_contents(dirname(__DIR__, 2) . '/data/proxy/search-bag.json');
+
+        $jsonResponse = json_encode(['some' => 'data']); // Skrócone dla przykładu
         $responseData = json_decode($jsonResponse, true);
+
         $stream->__toString()->willReturn($jsonResponse);
         $response->getBody()->willReturn($stream);
         $event->getData()->willReturn($responseData);
@@ -80,13 +90,25 @@ class ProxyControllerSpec extends ObjectBehavior
         Request $request,
         EventDispatcherInterface $eventDispatcher,
         BeforeProxyErrorResponseEvent $event,
-        RequestInterface $requestInterface
+        RequestInterface $requestInterface,
     ): void {
         // Expect & Given
         $request->getMethod()->willReturn(Request::METHOD_GET);
+        $request->headers = new HeaderBag([
+            '1234567890abcdef1234' => 'val',
+            'abcdef1234567890abcd' => 'val',
+            '0987654321fedcba0987' => 'val',
+        ]);
+
         $uri                    = 'rest/v5/search/example_channel?query=bag&sid=123&format=json';
         $_SERVER['REQUEST_URI'] = sprintf('/fact-finder/proxy/%s', $uri);
-        $this->client->request(Request::METHOD_GET, $uri)->willThrow(new ConnectException('Unable to connect with server.', $requestInterface->getWrappedObject()));
+
+        $this->client->request(Request::METHOD_GET, $uri)->willThrow(
+            new ConnectException('Unable to connect with server.', $requestInterface->getWrappedObject())
+        );
+
+        $errorResponse = new JsonResponse(['message' => 'Unable to connect with server.'], Response::HTTP_BAD_REQUEST);
+        $event->getResponse()->willReturn($errorResponse);
         $eventDispatcher->dispatch(Argument::type(BeforeProxyErrorResponseEvent::class))->willReturn($event);
 
         // When

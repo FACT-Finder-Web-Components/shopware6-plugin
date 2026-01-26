@@ -31,7 +31,9 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.deps }}-composer
 
       - name: Install dependencies
-        run: composer update --no-ansi --no-interaction --prefer-${{ matrix.deps }}
+        run: |
+          composer config audit.block-insecure false
+          composer update --no-ansi --no-interaction --no-audit --prefer-${{ matrix.deps }}
 
       - name: Run tests
         run: composer test

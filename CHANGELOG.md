@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Secure proxy endpoint
+
 ## [v5.4.0] - 2025.03.05
 ### Add
 - Add possibility to disable Web Components integration per sales channel

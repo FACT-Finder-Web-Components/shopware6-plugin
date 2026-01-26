@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -46,6 +47,17 @@ class ProxyController extends StorefrontController
         ClientBuilder $clientBuilder,
         EventDispatcherInterface $eventDispatcher,
     ): Response {
+        if (!$this->config->isProxyEnabled()) {
+            throw new NotFoundHttpException('Proxy is disabled.');
+        }
+
+        if (!$this->isWebcRequest($request->headers->all())) {
+            return new JsonResponse(
+                ['message' => 'UNAUTHORIZED'],
+                Response::HTTP_UNAUTHORIZED
+            );
+        }
+
         $client = $clientBuilder
             ->withServerUrl($this->config->getServerUrl())
             ->withCredentials(new Credentials(...$this->config->getCredentials()))
@@ -83,5 +95,21 @@ class ProxyController extends StorefrontController
 
             return $event->getResponse();
         }
+    }
+
+    private function isWebcRequest(array $headers): bool
+    {
+        $pattern = '/^[0-9a-f]{20}$/i';
+
+        $matchingHeaders = array_filter(
+            array_keys($headers),
+            fn ($headerName) => preg_match($pattern, (string) $headerName)
+        );
+
+        if (count($matchingHeaders) >= 3) {
+            return true;
+        }
+
+        return false;
     }
 }
