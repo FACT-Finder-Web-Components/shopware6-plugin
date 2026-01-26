@@ -51,15 +51,12 @@ class ProxyController extends StorefrontController
             throw new NotFoundHttpException('Proxy is disabled.');
         }
 
-//        $ffo = $request->headers->get('_ffo');
-//        $fft = $request->headers->get('_fft');
-//
-//        if (!$ffo || !$fft) {
-//            return new JsonResponse(
-//                ['message' => 'UNAUTHORIZED'],
-//                Response::HTTP_UNAUTHORIZED
-//            );
-//        }
+        if (!$this->isWebcRequest($request->headers->all())) {
+            return new JsonResponse(
+                ['message' => 'UNAUTHORIZED'],
+                Response::HTTP_UNAUTHORIZED
+            );
+        }
 
         $client = $clientBuilder
             ->withServerUrl($this->config->getServerUrl())
@@ -98,5 +95,21 @@ class ProxyController extends StorefrontController
 
             return $event->getResponse();
         }
+    }
+
+    private function isWebcRequest(array $headers): bool
+    {
+        $pattern = '/^[0-9a-f]{20}$/i';
+
+        $matchingHeaders = array_filter(
+            array_keys($headers),
+            fn ($headerName) => preg_match($pattern, (string) $headerName)
+        );
+
+        if (count($matchingHeaders) >= 3) {
+            return true;
+        }
+
+        return false;
     }
 }
