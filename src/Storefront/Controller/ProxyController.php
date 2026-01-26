@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -46,6 +47,20 @@ class ProxyController extends StorefrontController
         ClientBuilder $clientBuilder,
         EventDispatcherInterface $eventDispatcher,
     ): Response {
+        if (!$this->config->isProxyEnabled()) {
+            throw new NotFoundHttpException('Proxy is disabled.');
+        }
+
+//        $ffo = $request->headers->get('_ffo');
+//        $fft = $request->headers->get('_fft');
+//
+//        if (!$ffo || !$fft) {
+//            return new JsonResponse(
+//                ['message' => 'UNAUTHORIZED'],
+//                Response::HTTP_UNAUTHORIZED
+//            );
+//        }
+
         $client = $clientBuilder
             ->withServerUrl($this->config->getServerUrl())
             ->withCredentials(new Credentials(...$this->config->getCredentials()))
