@@ -10,7 +10,6 @@ use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Shopware6\Config\Communication as CommunicationConfig;
 use Omikron\FactFinder\Shopware6\Upload\UploadService;
 use Psr\Log\LoggerInterface;
-use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,12 +32,6 @@ class TestConnectionController extends AbstractController
      */
     public function testApiConnection(): JsonResponse
     {
-        $client = $this->clientBuilder
-            ->withCredentials(new Credentials(...$this->config->getCredentials()))
-            ->withServerUrl($this->config->getServerUrl())
-            ->withVersion($this->config->getVersion())
-            ->build();
-
         try {
             $client = $this->clientBuilder
                 ->withCredentials(new Credentials(...$this->config->getCredentials()))

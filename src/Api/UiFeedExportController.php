@@ -10,7 +10,6 @@ use Omikron\FactFinder\Shopware6\Message\RefreshExportCache;
 use Omikron\FactFinder\Shopware6\MessageQueue\FeedExportHandler;
 use Omikron\FactFinder\Shopware6\MessageQueue\RefreshExportCacheHandler;
 use Psr\Log\LoggerInterface;
-use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
