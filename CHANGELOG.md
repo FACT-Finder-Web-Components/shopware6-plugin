@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Change
+- Upgrade Web Components version to v4.3.0
+
 ### Fix
 - Secure proxy endpoint
 
