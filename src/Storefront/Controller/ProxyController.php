@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(defaults: ['_routeScope' => ['storefront']])]
@@ -39,9 +40,22 @@ class ProxyController extends StorefrontController
         ClientBuilder $clientBuilder,
         EventDispatcherInterface $eventDispatcher,
     ): Response {
+        if (!$this->config->isProxyEnabled()) {
+            throw new NotFoundHttpException('Proxy is disabled.');
+        }
+
+        $apiKey = $request->headers->get('x-ff-api-key');
+
+        if (!$apiKey) {
+            return new JsonResponse(
+                ['message' => 'UNAUTHORIZED'],
+                Response::HTTP_UNAUTHORIZED
+            );
+        }
+
         $client = $clientBuilder
             ->withServerUrl($this->config->getServerUrl() . '/')
-            ->withApiKey($this->config->getApiKey())
+            ->withApiKey($apiKey)
             ->withVersion($this->config->getVersion())
             ->build();
         $query    = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY);
