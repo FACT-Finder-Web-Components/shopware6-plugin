@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.5.1] - 2026.01.27
 ### Change
 - Upgrade Web Components version to v5.1.8
 - Add template to suggest element
@@ -540,6 +540,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.5.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.5.1
 [v6.5.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.5.0
 [v6.4.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.4.1
 [v6.4.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.4.0
