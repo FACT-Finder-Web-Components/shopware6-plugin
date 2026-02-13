@@ -114,7 +114,7 @@
 
       const clearCookie = (name) => {
         document.cookie = name+'=; Max-Age=-1;';
-      }
+      };
 
       if (ffCookies['ff_user_id']) {
         factfinder.config.setFFParams({userId: ffCookies['ff_user_id']});
