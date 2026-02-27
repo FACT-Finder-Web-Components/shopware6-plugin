@@ -1,4 +1,7 @@
 # Changelog
+## Unreleased
+### Add
+- Add SsrSearchResultsReceivedEvent to RecordList
 ## [v6.5.1] - 2026.01.27
 ### Change
 - Upgrade Web Components version to v5.1.8

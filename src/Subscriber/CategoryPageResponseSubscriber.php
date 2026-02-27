@@ -14,6 +14,7 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
     private SearchAdapter $searchAdapter;
     private Engine $handlebars;
     private CategoryPath $categoryPath;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
         bool $httpCacheEnabled,
@@ -39,13 +41,15 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         SearchAdapter $searchAdapter,
         Engine $handlebars,
         CategoryPath $categoryPath,
+        EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->httpCacheEnabled       = $httpCacheEnabled;
-        $this->categoryRepository     = $categoryRepository;
-        $this->config                 = $config;
-        $this->searchAdapter          = $searchAdapter;
-        $this->handlebars             = $handlebars;
-        $this->categoryPath           = $categoryPath;
+        $this->httpCacheEnabled        = $httpCacheEnabled;
+        $this->categoryRepository      = $categoryRepository;
+        $this->config                  = $config;
+        $this->searchAdapter           = $searchAdapter;
+        $this->handlebars              = $handlebars;
+        $this->categoryPath            = $categoryPath;
+        $this->eventDispatcher         = $eventDispatcher;
     }
 
     public static function getSubscribedEvents()
@@ -79,6 +83,7 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
             $this->handlebars,
             $this->searchAdapter,
             $this->config,
+            $this->eventDispatcher,
             $request->attributes->get('sw-sales-channel-id'),
             $response->getContent(),
         );

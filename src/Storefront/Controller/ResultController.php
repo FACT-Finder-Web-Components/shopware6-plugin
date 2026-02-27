@@ -14,11 +14,15 @@ use Psr\Log\LoggerInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Shopware\Storefront\Page\GenericPageLoader;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 #[Route(defaults: ['_routeScope' => ['storefront']])]
 class ResultController extends StorefrontController
 {
@@ -35,6 +39,7 @@ class ResultController extends StorefrontController
         SalesChannelContext $context,
         SearchAdapter $searchAdapter,
         Engine $handlebars,
+        EventDispatcherInterface $eventDispatcher,
     ): Response {
         $page     = $this->pageLoader->load($request, $context);
         $response = $this->renderStorefront('@Parent/storefront/page/factfinder/result.html.twig', ['page' => $page]);
@@ -48,6 +53,7 @@ class ResultController extends StorefrontController
             $handlebars,
             $searchAdapter,
             $this->config,
+            $eventDispatcher,
             $context->getSalesChannelId(),
             $response->getContent(),
         );

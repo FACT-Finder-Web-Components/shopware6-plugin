@@ -22,6 +22,7 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Shopware\Storefront\Framework\Routing\RequestTransformer;
 use Shopware\Storefront\Page\GenericPageLoader;
 use Shopware\Storefront\Page\Page;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -78,7 +79,6 @@ class ResultControllerSpec extends ObjectBehavior
         $this->container->get(SeoUrlPlaceholderHandlerInterface::class)->willReturn($seoUrlPlaceholderHandler);
         $this->container->get(MediaUrlPlaceholderHandlerInterface::class)->willReturn($mediaUrlPlaceholderHandler);
         $this->container->get('twig')->willReturn($twig);
-        $this->setTwig($twig);
         $nestedEventDispatcher->dispatch(Argument::any())->willReturn(Argument::any());
         $this->setContainer($container);
     }
@@ -86,7 +86,8 @@ class ResultControllerSpec extends ObjectBehavior
     public function it_should_return_original_response_content_when_ssr_is_not_active(
         SearchAdapter $searchAdapter,
         Page $page,
-        Engine $handlebars
+        Engine $handlebars,
+        EventDispatcherInterface $eventDispatcher
     ): void {
         $content = 'original content';
         $this->pageLoader->load($this->request, $this->salesChannelContext)->willReturn($page);
@@ -98,7 +99,8 @@ class ResultControllerSpec extends ObjectBehavior
             $this->request,
             $this->salesChannelContext,
             $searchAdapter,
-            $handlebars
+            $handlebars,
+            $eventDispatcher
         );
 
         $response->shouldBeAnInstanceOf(Response::class);

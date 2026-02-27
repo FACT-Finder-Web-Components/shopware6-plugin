@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Shopware6\Utilites\Ssr\Template;
 
 use Omikron\FactFinder\Shopware6\Config\Communication;
+use Omikron\FactFinder\Shopware6\Events\SsrSearchResultsReceivedEvent;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\Exception\DetectRedirectException;
 use Omikron\FactFinder\Shopware6\Utilites\Ssr\SearchAdapter;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class RecordList
@@ -21,21 +23,24 @@ class RecordList
     private string $content;
     private string $template;
     private Communication $pluginConfig;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
         Request $request,
         Engine $handlebars,
         SearchAdapter $searchAdapter,
         Communication $pluginConfig,
+        EventDispatcherInterface $eventDispatcher,
         string $salesChannelId,
         string $content,
     ) {
-        $this->request        = $request;
-        $this->handlebars     = $handlebars;
-        $this->searchAdapter  = $searchAdapter;
-        $this->salesChannelId = $salesChannelId;
-        $this->content        = $content;
-        $this->pluginConfig   = $pluginConfig;
+        $this->request         = $request;
+        $this->handlebars      = $handlebars;
+        $this->searchAdapter   = $searchAdapter;
+        $this->salesChannelId  = $salesChannelId;
+        $this->content         = $content;
+        $this->pluginConfig    = $pluginConfig;
+        $this->eventDispatcher = $eventDispatcher;
         $this->setTemplateString();
     }
 
@@ -49,6 +54,9 @@ class RecordList
         bool $isNavigationRequest = false,
     ): string {
         $results = $this->searchResults($paramString, $isNavigationRequest);
+        $event   = new SsrSearchResultsReceivedEvent($results);
+        $this->eventDispatcher->dispatch($event);
+        $results = $event->getData();
 
         // Support redirect campaigns for SSR
         if ($this->getRedirectCampaign($results)) {
