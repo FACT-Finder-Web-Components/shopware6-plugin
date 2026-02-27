@@ -150,6 +150,27 @@ Without SSR enabled, web crawlers could not have a chance to scan the element re
 
 **Note:** If you have a problem with displaying product images or prices correctly, you probably have Field Roles set incorrectly. You can easily fix this by setting [custom fields roles](#set-custom-field-roles)
 
+##### SSR Record List Data Event
+
+When Server Side Rendering (SSR) is enabled, the plugin renders the ff-record-list content on the server before sending the HTML response to the client.
+To allow flexible customization of the rendered data, the plugin dispatches a dedicated Symfony event that enables developers to modify, enrich or filter the SSR result set.
+
+This event is especially useful for:
+
+- Enriching product data with custom attributes.
+- Modifying record lists depending on user session or context.
+- Filtering or reordering products before rendering.
+- Injecting additional metadata used by frontend components.
+
+Applying business rules that cannot be easily implemented on the frontend.
+
+**SsrSearchResultsReceivedEvent** is dispatched right before the SSR HTML output is generated.
+It provides full access to:
+- The product record list data.
+- The current Shopware context.
+- The current HTTP request and user session.
+
+This allows deep customization of rendered results. (Check example implementation)[]
 
 ## Features Settings
 
@@ -669,6 +690,41 @@ class EnrichProxyDataEventSubscriber implements EventSubscriberInterface
 
 ```
 
+### Enrich SSR record list data by adding a custom flag to each product.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Omikron\FactFinder\Shopware6\Subscriber;
+
+use Omikron\FactFinder\Shopware6\Events\SsrSearchResultsReceivedEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class EnrichSsrRecordListEventSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return [SsrSearchResultsReceivedEvent::class => 'enrichData'];
+    }
+
+    public function enrichData(SsrSearchResultsReceivedEvent $event): void
+    {
+        $data    = $event->getData();
+        $records = $data['records'] ?? [];
+
+        foreach ($records as &$record) {
+            if (isset($record['record']) && is_array($record['record'])) {
+                $record['record']['custom_badge'] = 'recommended';
+            }
+        }
+
+        $data['records'] = $records;
+        $event->setData($data);
+    }
+}
+```
 
 ## Contribute
 
