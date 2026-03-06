@@ -42,9 +42,14 @@ class VariantEntity implements ExportEntityInterface, ProductEntityInterface
         return $this->product->getProductNumber();
     }
 
+    public function getProductName(): string
+    {
+        return $this->product->getTranslation('name') ? (string) $this->product->getTranslation('name') : $this->parentData['Name'];
+    }
+
     public function toArray(): array
     {
         $opts = '|' . implode('|', map($this->propertyFormatter, $this->product->getOptions()->getElements())) . '|';
-        return array_reduce($this->variantFields, fn (array $fields, FieldInterface $field): array => [$field->getName() => $field->getValue($this->product)] + $fields, ['ProductNumber' => $this->product->getProductNumber(), 'FilterAttributes' => $opts] + $this->parentData);
+        return array_reduce($this->variantFields, fn (array $fields, FieldInterface $field): array => [$field->getName() => $field->getValue($this->product)] + $fields, ['ProductNumber' => $this->product->getProductNumber(), 'Name' => $this->getProductName(), 'FilterAttributes' => $opts] + $this->parentData);
     }
 }
