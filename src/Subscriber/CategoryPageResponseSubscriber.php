@@ -26,7 +26,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class CategoryPageResponseSubscriber implements EventSubscriberInterface
 {
-    private bool $httpCacheEnabled;
     private EntityRepository $categoryRepository;
     private Communication $config;
     private SearchAdapter $searchAdapter;
@@ -35,7 +34,6 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
     private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
-        bool $httpCacheEnabled,
         EntityRepository $categoryRepository,
         Communication $config,
         SearchAdapter $searchAdapter,
@@ -43,7 +41,6 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
         CategoryPath $categoryPath,
         EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->httpCacheEnabled        = $httpCacheEnabled;
         $this->categoryRepository      = $categoryRepository;
         $this->config                  = $config;
         $this->searchAdapter           = $searchAdapter;
@@ -123,10 +120,6 @@ class CategoryPageResponseSubscriber implements EventSubscriberInterface
 
         if ($categoryId === '') {
             return '';
-        }
-
-        if ($this->httpCacheEnabled === false) {
-            return $request->attributes->get('categoryPath', '');
         }
 
         $criteria = new Criteria();

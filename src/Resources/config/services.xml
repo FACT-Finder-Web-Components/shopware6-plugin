@@ -113,7 +113,6 @@
         </service>
 
         <service id="Omikron\FactFinder\Shopware6\Subscriber\CategoryPageResponseSubscriber">
-            <argument>%shopware.http.cache.enabled%</argument>
             <argument type="service" id="category.repository" />
         </service>
 
