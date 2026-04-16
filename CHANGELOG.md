@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix ImageUrl for products without image
+
 ## [v7.2.1] - 2026.01.27
 ### Change
 - Upgrade Web Components version to v5.1.8

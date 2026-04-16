@@ -26,23 +26,37 @@ class ImageUrl implements FieldInterface
         return [ProductEntity::class, CmsPageEntity::class, BrandEntity::class];
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
     private function checkAndReturnMediaUrlOrEmptyString(?Entity $entity = null): string
     {
+        if ($entity === null) {
+            return '';
+        }
+
         if (method_exists($entity, 'getCover')) {
             $cover = $entity->getCover();
 
-            if ($cover && !empty($cover->getMedia()->getUrl())) {
+            if ($cover && $cover->getMedia() && !empty($cover->getMedia()->getUrl())) {
                 return $cover->getMedia()->getUrl();
             }
         }
 
-        $media = $entity?->getMedia();
+        if (method_exists($entity, 'getMedia')) {
+            $media = $entity->getMedia();
 
-        if ($media) {
-            if (method_exists($media, 'first')) {
-                return $this->checkAndReturnMediaUrlOrEmptyString($media->first());
+            if ($media) {
+                if (method_exists($media, 'first')) {
+                    $firstElement = $media->first();
+
+                    return $firstElement ? $this->checkAndReturnMediaUrlOrEmptyString($firstElement) : '';
+                }
+
+                if (method_exists($media, 'getUrl')) {
+                    return $media->getUrl() ?? '';
+                }
             }
-            return $media->getUrl();
         }
 
         return '';
