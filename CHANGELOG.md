@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v7.2.2] - 2026.04.17
 ### Fix
 - Fix ImageUrl for products without image
 
@@ -559,6 +559,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v7.2.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.2.2
 [v7.2.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.2.1
 [v7.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.2.0
 [v7.1.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.1.0
