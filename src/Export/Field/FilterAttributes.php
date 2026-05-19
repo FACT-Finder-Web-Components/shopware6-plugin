@@ -29,16 +29,33 @@ class FilterAttributes implements FieldInterface
 
     /**
      * @param Product $entity
-     *
-     * @return string
      */
     public function getValue(Entity $entity): string
     {
-        $attributes = $entity->getChildren()->reduce(
-            fn (array $result, Product $child): array => $result + array_map($this->propertyFormatter, $child->getOptions()->getElements()),
-            array_map($this->propertyFormatter, $this->applyPropertyGroupsFilter($entity))
-        );
-        return $attributes ? '|' . implode('|', array_values($attributes)) . '|' : '';
+        // 1. Bazowe właściwości (dziedziczone lub bezpośrednie)
+        $properties = $this->applyPropertyGroupsFilter($entity);
+        $attributes = $properties ? array_map($this->propertyFormatter, $properties) : [];
+
+        // 2. Pobieranie opcji bez ładowania całych encji dzieci
+        if ($entity->getParentId() !== null) {
+            // Jesteśmy w wariancie - pobieramy jego konkretne opcje
+            $options = $entity->getOptions() ? $entity->getOptions()->getElements() : [];
+            $attributes = array_merge($attributes, array_map($this->propertyFormatter, $options));
+        } else {
+            // Jesteśmy w produkcie głównym - pobieramy agregację opcji ze wszystkich wariantów
+            $configuratorSettings = $entity->getConfiguratorSettings();
+            if ($configuratorSettings) {
+                $options = [];
+                foreach ($configuratorSettings as $setting) {
+                    if ($setting->getOption()) {
+                        $options[] = $setting->getOption();
+                    }
+                }
+                $attributes = array_merge($attributes, array_map($this->propertyFormatter, $options));
+            }
+        }
+
+        return $attributes ? '|' . implode('|', array_unique(array_values($attributes))) . '|' : '';
     }
 
     public function getCompatibleEntityTypes(): array
@@ -51,10 +68,11 @@ class FilterAttributes implements FieldInterface
         $disabledProperties = $this->exportSettings->getDisabledPropertyGroups();
 
         if (!$disabledProperties) {
-            return $product->getProperties()->getElements();
+            return $product->getProperties() ? $product->getProperties()->getElements() : [];
         }
+
         return $product->getProperties()
-                       ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledProperties))
-                       ->getElements();
+            ->filter(fn (PropertyGroupOptionEntity $option): bool => !in_array($option->getGroupId(), $disabledProperties))
+            ->getElements();
     }
 }

@@ -154,6 +154,9 @@ class DataExportCommand extends Command
             unlink(stream_get_meta_data($this->file)['uri']);
         }
 
+        $peakMemory = memory_get_peak_usage(true) / 1024 / 1024;
+        $output->writeln(sprintf('<info>Peak Memory Usage: %.2f MB</info>', $peakMemory));
+
         return 0;
     }
 

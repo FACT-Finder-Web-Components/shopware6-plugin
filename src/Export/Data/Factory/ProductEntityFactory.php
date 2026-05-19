@@ -23,7 +23,7 @@ class ProductEntityFactory implements FactoryInterface
         PropertyFormatter $propertyFormatter,
         FieldsProvider $fieldsProviders,
         CurrencyFieldsProvider $currencyFieldsProvider,
-        \Traversable $variantFields,
+        \Traversable $variantFields
     ) {
         $this->propertyFormatter      = $propertyFormatter;
         $this->fieldsProvider         = $fieldsProviders;
@@ -37,22 +37,27 @@ class ProductEntityFactory implements FactoryInterface
     }
 
     /**
-     * @param Entity $entity
-     * @param string $producedType
-     *
-     * @return ProductEntity[]|iterable
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @param SalesChannelProductEntity $entity
      */
     public function createEntities(Entity $entity, string $producedType = ProductEntity::class): iterable
     {
-        // @todo use spread operator?
         $fields = array_merge($this->fieldsProvider->getFields($producedType), $this->currencyFieldsProvider->getCurrencyFields());
-        $parent = new $producedType($entity, new \ArrayIterator($fields), new \ArrayIterator());
-        if ($entity->getChildCount()) {
-            yield from $entity->getChildren()->map(fn (
-                SalesChannelProductEntity $child) => new VariantEntity($child, $parent->toArray(), $this->propertyFormatter, iterator_to_array($this->variantFields)));
+
+        if ($entity->getParentId() !== null) {
+            // To jest WARIANT.
+            // Tworzymy bazową encję ProductEntity (odpowiednik rodzica), ponieważ wariant w
+            // Shopware posiada w sobie dziedziczone dane od rodzica (nazwa, opis, producent).
+            $pseudoParent = new $producedType($entity, new \ArrayIterator($fields), new \ArrayIterator());
+
+            yield new VariantEntity(
+                $entity,
+                $pseudoParent->toArray(),
+                $this->propertyFormatter,
+                iterator_to_array($this->variantFields)
+            );
+        } else {
+            // To jest PRODUKT GŁÓWNY (Rodzic lub samodzielny produkt).
+            yield new $producedType($entity, new \ArrayIterator($fields), new \ArrayIterator());
         }
-        yield $parent;
     }
 }

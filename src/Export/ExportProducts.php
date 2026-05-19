@@ -25,12 +25,39 @@ class ExportProducts implements ExportInterface
 
     public function getByContext(SalesChannelContext $context, int $batchSize = 100): iterable
     {
-        $criteria = $this->getCriteria($batchSize);
-        $products = $this->productRepository->search($criteria, $context);
-        while ($products->count()) {
-            yield from $products;
-            $criteria->setOffset($criteria->getOffset() + $criteria->getLimit());
+        $offset = 0;
+
+        while (true) {
+            $criteria = $this->getCriteria($batchSize, $offset);
             $products = $this->productRepository->search($criteria, $context);
+
+            if ($products->count() === 0) {
+                break;
+            }
+
+            foreach ($products->getElements() as $product) {
+                yield $product;
+            }
+
+            $products->clear();
+            unset($products, $criteria);
+            gc_collect_cycles();
+
+            // --- DEBUG PAMIĘCI START ---
+            // Przeliczamy bajty na megabajty dla czytelności
+            $memoryUsageMB = memory_get_usage(true) / 1024 / 1024;
+            $peakMemoryMB  = memory_get_peak_usage(true) / 1024 / 1024;
+
+            echo sprintf(
+                "[%s] Offset: %d | Memory: %.2f MB | Peak: %.2f MB\n",
+                date('H:i:s'),
+                $offset,
+                $memoryUsageMB,
+                $peakMemoryMB
+            );
+            // --- DEBUG PAMIĘCI END ---
+
+            $offset += $batchSize;
         }
     }
 
@@ -39,24 +66,30 @@ class ExportProducts implements ExportInterface
         return ExportProductEntity::class;
     }
 
-    private function getCriteria(int $batchSize): Criteria
+    private function getCriteria(int $batchSize, int $offset): Criteria
     {
         $criteria = new Criteria();
         $criteria->setLimit($batchSize);
+        $criteria->setOffset($offset);
         $criteria->addAssociation('categories');
         $criteria->addAssociation('categoriesRo');
-        $criteria->addAssociation('children.options.group');
         $criteria->addAssociation('manufacturer');
-        $criteria->addAssociation('properties');
-        $criteria->addAssociation('customFields');
         $criteria->addAssociation('properties.group');
-        $criteria->addAssociation('seoUrls');
+        $criteria->addAssociation('options.group');
         $criteria->addAssociation('media');
-        $criteria->addAssociation('children.cover.media');
+        $criteria->addAssociation('cover.media');
+        $criteria->addAssociation('seoUrls');
+        $criteria->addAssociation('customFields');
+
+        $criteria->addAssociation('configuratorSettings.option.group');
+
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
         }
-        $criteria->addFilter(new EqualsFilter('parentId', null));
+
+        // UWAGA: Usunęliśmy addFilter(new EqualsFilter('parentId', null));
+        // Chcemy eksportować płasko wszystko: zarówno rodziców jak i warianty,
+        // więc nie filtrujemy tutaj po parentId!
 
         return $criteria;
     }

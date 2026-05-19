@@ -29,9 +29,16 @@ class Feed
         $stream->addEntity($columns);
         $emptyRecord = array_combine($columns, array_fill(0, count($columns), ''));
 
+        $i = 0;
+
         foreach ($this->getEntities() as $entity) {
             $entityData = array_merge($emptyRecord, array_intersect_key($entity->toArray(), $emptyRecord));
             $stream->addEntity($this->prepare($entityData));
+
+            unset($entity, $entityData);
+            if (++$i % 500 === 0) {
+                gc_collect_cycles();
+            }
         }
     }
 
