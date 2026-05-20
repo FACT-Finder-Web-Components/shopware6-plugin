@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.6.0] - 2026.05.20
 ### Add
 - Add support for PHP 8.4
 - Add Recently viewed component
@@ -552,6 +552,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.6.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.6.0
 [v6.5.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.5.2
 [v6.5.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.5.1
 [v6.5.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.5.0
