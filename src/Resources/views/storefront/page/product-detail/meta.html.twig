@@ -1,0 +1,29 @@
+{% sw_extends '@Storefront/storefront/page/product-detail/meta.html.twig' %}
+
+{% block layout_head_canonical %}
+  {{ parent() }}
+
+
+  {% if page.extensions.factfinder.features.useRecentlyViewed and page.product %}
+    {% set product = page.product %}
+
+    <script>
+      document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+        factfinder.components.recentlyViewed.config({
+          maxLength: 5,
+        });
+
+        factfinder.components.recentlyViewed.addEntry({
+          Name: '{{ product.translated.name|escape('js') }}',
+          Master: '{{ product.productNumber|escape('js') }}',
+          ProductNumber: '{{ product.productNumber|escape('js') }}',
+          Deeplink: '{{ seoUrl('frontend.detail.page', {'productId': product.id})|escape('js') }}',
+          Price: {{ product.calculatedPrice.unitPrice|default(0) }},
+          ImageUrl: '{{ product.cover.media.url|escape('js') }}'
+        });
+      });
+    </script>
+  {% endif %}
+
+
+{% endblock %}
