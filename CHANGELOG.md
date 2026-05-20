@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Add support for PHP 8.4
+
 ## [v6.5.2] - 2026.03.02
 ### Add
 - Add SsrSearchResultsReceivedEvent to SSR RecordList
