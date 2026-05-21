@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Shopware6\Export;
 
 use Omikron\FactFinder\Shopware6\Export\Data\Entity\ProductEntity as ExportProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepository;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
@@ -35,7 +34,27 @@ class ExportProducts implements ExportInterface
                 break;
             }
 
+            $parentIds = [];
+            // 1. Zbieramy unikalne ID rodziców z bieżącej paczki
             foreach ($products->getElements() as $product) {
+                if ($product->getParentId() !== null) {
+                    $parentIds[$product->getParentId()] = true;
+                }
+            }
+
+            $parents = [];
+            if (!empty($parentIds)) {
+                $parentCriteria = new Criteria(array_keys($parentIds));
+                $parentCriteria->addAssociation('categories');
+                $parentCriteria->addAssociation('categoriesRo');
+                $parents = $this->productRepository->search($parentCriteria, $context)->getElements();
+            }
+
+            foreach ($products->getElements() as $product) {
+                if ($product->getParentId() !== null && isset($parents[$product->getParentId()])) {
+                    $product->setParent($parents[$product->getParentId()]);
+                }
+
                 yield $product;
             }
 
@@ -71,6 +90,8 @@ class ExportProducts implements ExportInterface
         $criteria = new Criteria();
         $criteria->setLimit($batchSize);
         $criteria->setOffset($offset);
+        $criteria->setTotalCountMode(Criteria::TOTAL_COUNT_MODE_NONE);
+
         $criteria->addAssociation('categories');
         $criteria->addAssociation('categoriesRo');
         $criteria->addAssociation('manufacturer');
@@ -86,10 +107,6 @@ class ExportProducts implements ExportInterface
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
         }
-
-        // UWAGA: Usunęliśmy addFilter(new EqualsFilter('parentId', null));
-        // Chcemy eksportować płasko wszystko: zarówno rodziców jak i warianty,
-        // więc nie filtrujemy tutaj po parentId!
 
         return $criteria;
     }

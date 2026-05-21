@@ -96,10 +96,12 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
     {
         $cachedProductFieldNames = array_map(fn (FieldInterface $field) => $field->getName(), iterator_to_array($this->cachedProductFields));
         $fields                  = array_filter($this->productFields, fn (FieldInterface $productField) => !in_array($productField->getName(), $cachedProductFieldNames));
-        $isVariant               = $this->product->getId() !== $this->product->getParentId() && isset($this->parent);
-        $defaultFields           = [
+        $isVariant = $this->product->getParentId() !== null;
+        $resolvedParent = $this->parent ?? $this->product->getParent();
+
+        $defaultFields = [
             'ProductNumber'    => $this->product->getProductNumber(),
-            'Master'           => $isVariant ? $this->parent->getProductNumber() : $this->product->getProductNumber(),
+            'Master'           => ($isVariant && $resolvedParent) ? $resolvedParent->getProductNumber() : $this->product->getProductNumber(),
             'Name'             => (string) $this->product->getTranslation('name'),
             'FilterAttributes' => $this->getFilterAttributes(),
             'CustomFields'     => $this->getCustomFields(),
@@ -109,7 +111,7 @@ class ProductEntity implements ExportEntityInterface, ProductEntityInterface
             $fields,
             fn (array $fields, FieldInterface $field): array => array_merge(
                 $fields,
-                [$field->getName() => ($this->getAdditionalCache($field->getName()) ?? $field->getValue($isVariant ? $this->parent : $this->product))]
+                [$field->getName() => ($this->getAdditionalCache($field->getName()) ?? $field->getValue($isVariant && $resolvedParent ? $resolvedParent : $this->product))]
             ),
             $defaultFields
         );

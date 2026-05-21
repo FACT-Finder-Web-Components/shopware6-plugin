@@ -23,7 +23,7 @@ class ConsoleOutput implements StreamInterface
     {
         $this->fileResource = $this->fileResource ?? new File('php://output', 'w');
         ob_start();
-        $this->fileResource->fputcsv($entity, $this->delimiter);
+        $this->fileResource->fputcsv($entity, $this->delimiter, '"', '\\');
         $this->output->writeln(rtrim(ob_get_clean()));
     }
 }

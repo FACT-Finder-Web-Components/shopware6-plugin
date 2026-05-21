@@ -32,25 +32,24 @@ class FilterAttributes implements FieldInterface
      */
     public function getValue(Entity $entity): string
     {
-        // 1. Bazowe właściwości (dziedziczone lub bezpośrednie)
         $properties = $this->applyPropertyGroupsFilter($entity);
         $attributes = $properties ? array_map($this->propertyFormatter, $properties) : [];
 
-        // 2. Pobieranie opcji bez ładowania całych encji dzieci
         if ($entity->getParentId() !== null) {
-            // Jesteśmy w wariancie - pobieramy jego konkretne opcje
-            $options = $entity->getOptions() ? $entity->getOptions()->getElements() : [];
+            $options    = $entity->getOptions() ? $entity->getOptions()->getElements() : [];
             $attributes = array_merge($attributes, array_map($this->propertyFormatter, $options));
         } else {
-            // Jesteśmy w produkcie głównym - pobieramy agregację opcji ze wszystkich wariantów
             $configuratorSettings = $entity->getConfiguratorSettings();
+
             if ($configuratorSettings) {
                 $options = [];
+
                 foreach ($configuratorSettings as $setting) {
                     if ($setting->getOption()) {
                         $options[] = $setting->getOption();
                     }
                 }
+
                 $attributes = array_merge($attributes, array_map($this->propertyFormatter, $options));
             }
         }

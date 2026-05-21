@@ -23,6 +23,6 @@ class CsvFile implements StreamInterface
 
     public function addEntity(array $entity): void
     {
-        fputcsv($this->fileResource, $entity, $this->delimiter);
+        fputcsv($this->fileResource, $entity, $this->delimiter, '"', '\\');
     }
 }

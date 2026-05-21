@@ -45,7 +45,7 @@
             <parameter key="productNumber">ProductNumber</parameter>
         </parameter>
         <parameter key="factfinder.export.associations" type="collection">
-            <parameter key="variant_cover">children.media</parameter>
+            <parameter key="variant_cover">cover.media</parameter>
         </parameter>
         <parameter key="factfinder.category_page.add_params" type="collection">
         </parameter>
