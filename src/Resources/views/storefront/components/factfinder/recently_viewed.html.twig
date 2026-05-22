@@ -1,0 +1,42 @@
+{% block component_factfinder_recently_viewed %}
+  <ff-recently-viewed wait-for-update>
+    <h3>Recently viewed:</h3>
+
+    <ff-record-list subscribe="false" class="row grid-row grid-view">
+      <template data-role="record">
+        <ff-record class="cms-listing-col col-sm-6 col-lg-4 col-xl-3">
+          <div class="card product-box box-standard">
+            <div class="card-body">
+              <div class="product-image-wrapper">
+                <a class="product-image-link is-standard" title="{{ '{{Name}}' }}"
+                   data-redirect="{{ '{{Deeplink}}' }}" data-anchor="{{ '{{Deeplink}}' }}"
+                   data-redirect-target="_self">
+                  <img class="product-image is-standard" data-image="{{ '{{ImageUrl}}' }}"
+                       alt="{{ '{{Name}}' }}" title="{{ '{{Name}}' }}"/>
+                </a>
+              </div>
+              <div class="product-info">
+                <a class="product-name stretched-link" title="{{ '{{Name}}' }}" data-redirect-target="_self"
+                   data-redirect="{{ '{{Deeplink}}' }}" data-anchor="{{ '{{Deeplink}}' }}">
+                  {{ '{{Name}}' }}
+                </a>
+                <div class="product-description">{{ '{{Description}}' }}</div>
+                <div class="product-price-info">
+                  <p class="product-price">{{ '{{ $ Price}}' }} *</p>
+                </div>
+                <div class="product-action">
+                  <div class="d-grid">
+                    <a class="btn btn-light btn-detail" title="{{ '{{Name}}' }}" data-redirect-target="_self"
+                       data-redirect="{{ '{{Deeplink}}' }}" data-anchor="{{ '{{Deeplink}}' }}">
+                      {{ 'listing.boxProductDetails'|trans|sw_sanitize }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ff-record>
+      </template>
+    </ff-record-list>
+  </ff-recently-viewed>
+{% endblock %}

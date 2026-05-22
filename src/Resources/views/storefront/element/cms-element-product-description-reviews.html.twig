@@ -37,6 +37,10 @@
         } %}
       {% endif %}
 
+      {% if page.extensions.factfinder.features.useRecentlyViewed %}
+        {% sw_include '@Parent/storefront/components/factfinder/recently_viewed.html.twig' %}
+      {% endif %}
+
     </div>
   {% endif %}
 {% endblock %}
