@@ -5,6 +5,9 @@
 
 ### Change
 - Upgrade Web Components version to v5.2.1
+
+### Fix
+- Fix error with the revocation button
 - Remove deprecation for fputcsv()
 
 ## [v7.2.2] - 2026.04.17
