@@ -34,15 +34,34 @@ class ExportProducts implements ExportInterface
         }
     }
 
+    public function getBatchByContext(SalesChannelContext $context, int $limit, int $offset): iterable
+    {
+        $criteria = $this->getCriteria($limit, $offset);
+        $products = $this->productRepository->search($criteria, $context);
+
+        foreach ($products->getElements() as $product) {
+            yield $product;
+        }
+
+//        $products->clear();
+//        unset($products, $criteria);
+//        gc_collect_cycles();
+    }
+
     public function getProducedExportEntityType(): string
     {
         return ExportProductEntity::class;
     }
 
-    private function getCriteria(int $batchSize): Criteria
+    private function getCriteria(int $batchSize, ?int $offset = null): Criteria
     {
         $criteria = new Criteria();
         $criteria->setLimit($batchSize);
+
+        if ($offset) {
+            $criteria->setOffset($offset);
+        }
+
         $criteria->addAssociation('categories');
         $criteria->addAssociation('categoriesRo');
         $criteria->addAssociation('children.options.group');
