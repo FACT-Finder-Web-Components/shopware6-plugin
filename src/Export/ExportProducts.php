@@ -108,6 +108,15 @@ class ExportProducts implements ExportInterface
             $criteria->addAssociation($association);
         }
 
+//        $criteria->addFilter(new \Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter(
+//            \Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter::CONNECTION_OR,
+//            [
+//                new \Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter('parentId', null),
+//                new \Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter('parent.active', true)
+//            ]
+//        ));
+
         return $criteria;
     }
 }
+//

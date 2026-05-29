@@ -64,3 +64,4 @@ class CategoryPath implements FieldInterface
         return $entity->getCategories() ?? new CategoryCollection();
     }
 }
+//

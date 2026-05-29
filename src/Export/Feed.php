@@ -54,3 +54,4 @@ class Feed
         return array_map([$this->filter, 'filterValue'], $data);
     }
 }
+//
