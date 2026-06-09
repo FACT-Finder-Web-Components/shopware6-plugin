@@ -21,6 +21,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 #[AsCommand(name: 'factfinder:export:batch', description: 'Internal worker command for exporting a batch of products', hidden: true)]
 class ExportBatchCommand extends Command
 {
@@ -66,13 +70,11 @@ class ExportBatchCommand extends Command
             $input->getArgument('language')
         );
 
-        $entityClass = ProductEntity::class;
-        $feedService = $this->feedFactory->create($context, $entityClass);
-
-        $fileResource = fopen($filePath, 'a');
-        $out          = new CsvFile($fileResource);
-
-        $feedColumns = $this->getFeedColumns('products', ProductEntity::class);
+        $entityClass    = ProductEntity::class;
+        $feedService    = $this->feedFactory->create($context, $entityClass);
+        $fileResource   = fopen($filePath, 'a');
+        $out            = new CsvFile($fileResource);
+        $feedColumns    = $this->getFeedColumns('products', ProductEntity::class);
         $processedCount = $feedService->generateBatch($out, $feedColumns, $offset, $limit, $offset === 0);
 
         fclose($fileResource);

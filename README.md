@@ -364,6 +364,15 @@ This is especially useful if you have several SalesChannels with different domai
 
     APP_URL=http://saleschannel-domain.com php [SHOPWARE_ROOT]/bin/console factfinder:data:export
 
+##### Running export with a worker
+
+Since version 7.3.0, we've introduced a new export flow based on the worker. 
+The biggest advantage of this export method is the reduced memory usage, which is especially helpful when you have a large or complex products catalog. 
+Currently, this command is only available from the CLI and can be executed by:
+
+    php [SHOPWARE_ROOT]/bin/console factfinder:data:worker-export
+
+The options are the same as described above for `factfinder:data:export`
 
 #### Selecting Categories for CMS Export
 With CMS Export we introduced custom field for CategoryEntity by which we filter the Categories going to be exported.

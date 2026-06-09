@@ -44,8 +44,8 @@ use Symfony\Component\Process\Process;
  * @SuppressWarnings(PHPMD.MissingImport)
  * @SuppressWarnings(PHPMD.ExcessiveParameterList)
  */
-#[AsCommand(name: 'factfinder:product-data:export')]
-class ProductDataExportCommand extends Command
+#[AsCommand(name: 'factfinder:data:worker-export')]
+class WorkerDataExportCommand extends Command
 {
     public const SALES_CHANNEL_ARGUMENT          = 'sales_channel';
     public const SALES_CHANNEL_LANGUAGE_ARGUMENT = 'language';
@@ -105,6 +105,9 @@ class ProductDataExportCommand extends Command
     /**
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -191,18 +194,18 @@ class ProductDataExportCommand extends Command
                     break;
                 }
 
-                $workerMemory = $result['memory'] ?? 0;
-                $workerPeak   = $result['peak'] ?? 0;
-                $masterPeak   = memory_get_peak_usage(true) / 1024 / 1024;
-
-                $output->writeln(sprintf(
-                    '[%s] Offset: %d | Worker Peak: %.2f MB | Worker Final: %.2f MB | MASTER PEAK: %.2f MB',
-                    date('H:i:s'),
-                    $offset,
-                    $workerPeak,
-                    $workerMemory,
-                    $masterPeak
-                ));
+                // Uncomment if you want to debug memory consumption for each batch
+                //                $workerMemory = $result['memory'] ?? 0;
+                //                $workerPeak   = $result['peak'] ?? 0;
+                //                $masterPeak   = memory_get_peak_usage(true) / 1024 / 1024;
+                //                $output->writeln(sprintf(
+                //                    '[%s] Offset: %d | Worker: %.2f MB | Worker Final: %.2f MB | MASTER: %.2f MB',
+                //                    date('H:i:s'),
+                //                    $offset,
+                //                    $workerPeak,
+                //                    $workerMemory,
+                //                    $masterPeak
+                //                ));
 
                 $offset += $batchSize;
             }
@@ -214,7 +217,6 @@ class ProductDataExportCommand extends Command
             // Old flow for CMS, CATEGORY and BRANDS
             $feedService = $this->feedFactory->create($context, $entityClass);
             $out         = $needFile ? new CsvFile($this->file) : new ConsoleOutput($output);
-
             $feedService->generate($out, $feedColumns);
         }
 
@@ -228,13 +230,13 @@ class ProductDataExportCommand extends Command
             $this->pushImportService->execute();
         }
 
-//        if (!$saveFile && $this->file) {
-//            $metaData = stream_get_meta_data($this->file);
-//
-//            if (file_exists($metaData['uri'])) {
-//                unlink($metaData['uri']);
-//            }
-//        }
+        if (!$saveFile && $this->file) {
+            $metaData = stream_get_meta_data($this->file);
+
+            if (file_exists($metaData['uri'])) {
+                unlink($metaData['uri']);
+            }
+        }
 
         return Command::SUCCESS;
     }
@@ -293,7 +295,7 @@ class ProductDataExportCommand extends Command
      */
     private function createFile(string $exportType, string $salesChannelId)
     {
-        $dir = $this->kernelProjectDir . '/var/factfinder/newflow';
+        $dir = $this->kernelProjectDir . '/var/factfinder';
 
         if (!is_dir($dir)) {
             mkdir($dir);

@@ -42,10 +42,6 @@ class ExportProducts implements ExportInterface
         foreach ($products->getElements() as $product) {
             yield $product;
         }
-
-//        $products->clear();
-//        unset($products, $criteria);
-//        gc_collect_cycles();
     }
 
     public function getProducedExportEntityType(): string
@@ -72,9 +68,11 @@ class ExportProducts implements ExportInterface
         $criteria->addAssociation('seoUrls');
         $criteria->addAssociation('media');
         $criteria->addAssociation('children.cover.media');
+
         foreach ($this->customAssociations as $association) {
             $criteria->addAssociation($association);
         }
+
         $criteria->addFilter(new EqualsFilter('parentId', null));
 
         return $criteria;
