@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v7.3.0] - 2026.06.09
 ### Add
 - Add Recently viewed component
 - Add worker command for product export - reduce memory usage and increase performance for big catalogs
@@ -571,6 +571,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v7.3.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.3.0
 [v7.2.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.2.2
 [v7.2.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.2.1
 [v7.2.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.2.0
