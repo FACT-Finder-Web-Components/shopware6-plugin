@@ -2,6 +2,7 @@
 ## Unreleased
 ### Add
 - Add Recently viewed component
+- Add worker command for product export - reduce memory usage and increase performance for big catalogs
 
 ### Change
 - Upgrade Web Components version to v5.2.1

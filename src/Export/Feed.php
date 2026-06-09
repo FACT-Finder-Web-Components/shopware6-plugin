@@ -42,6 +42,31 @@ class Feed
         }
     }
 
+    public function generateBatch(StreamInterface $stream, array $columns, int $offset, int $limit, bool $writeHeaders): int
+    {
+        if ($writeHeaders) {
+            $stream->addEntity($columns);
+        }
+
+        $emptyRecord    = array_combine($columns, array_fill(0, count($columns), ''));
+        $processedCount = 0;
+
+        foreach ($this->getEntitiesForBatch($offset, $limit) as $entity) {
+            $entityData = array_merge($emptyRecord, array_intersect_key($entity->toArray(), $emptyRecord));
+            $stream->addEntity($this->prepare($entityData));
+            $processedCount++;
+        }
+
+        return $processedCount;
+    }
+
+    public function getEntitiesForBatch(int $offset, int $limit): iterable
+    {
+        foreach ($this->exporter->getBatchByContext($this->context, $limit, $offset) as $entity) {
+            yield from $this->compositeFactory->createEntities($entity, $this->exporter->getProducedExportEntityType());
+        }
+    }
+
     private function prepare(array $data): array
     {
         return array_map([$this->filter, 'filterValue'], $data);
