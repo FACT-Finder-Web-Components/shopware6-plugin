@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix redirection for ff-suggest
+
 ## [v7.3.0] - 2026.06.09
 ### Add
 - Add Recently viewed component
