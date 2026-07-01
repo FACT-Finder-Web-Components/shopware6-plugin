@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix redirection for ff-suggest
+
 ## [v6.6.0] - 2026.05.20
 ### Add
 - Add support for PHP 8.4
