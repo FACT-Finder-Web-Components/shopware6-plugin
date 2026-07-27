@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- Upgrade Web Components version to v5.3.0
+
 ## [v7.3.1] - 2026.07.01
 ### Fix
 - Fix redirection for ff-suggest
