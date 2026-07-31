@@ -71,6 +71,11 @@ class Communication extends BaseConfig
         return (bool) $this->config('addCartBtn');
     }
 
+    public function supportAtlasAi(): bool
+    {
+        return (bool) $this->config('atlasAiSupport');
+    }
+
     public function getFactFinderFeatures(): array
     {
         return [

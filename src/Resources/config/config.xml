@@ -78,6 +78,15 @@
             <defaultValue>false</defaultValue>
         </input-field>
 
+        <input-field type="bool">
+            <name>atlasAiSupport</name>
+            <label>Atlas AI support</label>
+            <label lang="de-DE">Atlas AI-Unterstützung</label>
+            <defaultValue>false</defaultValue>
+            <helpText>If Atlas AI support is enabled, the integration handles Atlas AI-specific requirements automatically. This includes creating a dedicated Atlas AI user ID and storing it on the client side across sessions. Important: If you enable this function, userId will be generated automatically and the previous values for userId that were sent for logged in users will be overwritten.</helpText>
+            <helpText lang="de-DE">Wenn die Atlas AI-Unterstützung aktiviert ist, kümmert sich die Integration automatisch um die Atlas AI-spezifischen Anforderungen. Dazu gehört die Erstellung einer dedizierten Atlas AI-Benutzer-ID und deren clientseitige Speicherung über mehrere Sitzungen hinweg. Wichtig: Wenn Sie diese Funktion aktivieren, wird die Benutzer-ID automatisch generiert und die zuvor für angemeldete Benutzer gesendeten Werte werden überschrieben.</helpText>
+        </input-field>
+
         <input-field type="single-select">
             <name>trackingAddToCartCount</name>
             <options>

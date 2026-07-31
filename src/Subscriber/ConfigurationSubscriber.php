@@ -46,6 +46,7 @@ readonly class ConfigurationSubscriber implements EventSubscriberInterface
             'apiKey'                => $this->config->getApiKey(),
             'currencyCode'          => $event->getSalesChannelContext()->getCurrency()->getIsoCode(),
             'currencyCountryCode'   => $event->getRequest()->getLocale(),
+            'supportAtlasAi'        => $this->config->supportAtlasAi(),
         ];
 
         if (!empty($this->configurationAddParams)) {
