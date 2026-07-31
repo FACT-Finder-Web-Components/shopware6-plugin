@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Add
+- Add support for Atlas AI
+
 ### Change
 - Upgrade Web Components version to v5.3.0
 

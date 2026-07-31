@@ -16,17 +16,17 @@
                 apiKey: `{{page.extensions.factfinder.communication.apiKey}}`,
               },
               appConfig: {
-                debug: true,
+                atlasAiMode: {{page.extensions.factfinder.communication.supportAtlasAi ? 'true' : 'false'}},
                 fieldRoles: {{ page.extensions.factfinder.field_roles|json_encode|raw }},
                 formatting: {
                   locale: `{{page.extensions.factfinder.communication.currencyCountryCode}}`,
                   formatOptions: {
                     style: `currency`,
                     currency: `{{page.extensions.factfinder.communication.currencyCode}}`,
+                  },
+                },
               },
-            },
-          },
-          });
+            });
 
             const ffRedirectMapping = JSON.parse('{{ page.extensions.factfinder.redirectMapping|raw }}');
 

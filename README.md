@@ -137,6 +137,7 @@ Note: Sending each request to FACT-Finder instance trough Shopware, you lose on 
 * Add cart button - select this option if you want the Add to cart button on the product list
 * Scenario how to count single click on "Add to cart" button
 * Redirect mapping for selected queries - put each pair `query=url` in separate row. If the phrase appears twice, the first one from the top of the list will be taken. Url can be relative path `/some/page` or absolute url `https://domain.com/some/page?someParameter=1`. If provided pair has an invalid format then it will be ignored.
+* Atlas AI support - If Atlas AI support is enabled, the integration handles Atlas AI-specific requirements automatically. This includes creating a dedicated Atlas AI user ID and storing it on the client side across sessions. **Important: If you enable this function, userId will be generated automatically and the previous values for userId that were sent for logged-in users will be overwritten.**
 
 #### Server Side Rendering
 That option enables Server Side Rendering (SSR) for `ff-record-list` element on category and search result pages.
