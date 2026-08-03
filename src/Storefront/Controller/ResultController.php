@@ -83,12 +83,20 @@ class ResultController extends StorefrontController
 
         $queryParams   = explode('&', $queryString);
         $queryParams[] = sprintf('sid=%s', $request->cookies->get('ffwebc_sid', ''));
-        $result        = array_reduce(
+        $userId        = $request->cookies->get('ff_atlas_ai_user_id', $request->cookies->get('ff_user_id', ''));
+
+        if ($userId !== '') {
+            $queryParams[] = sprintf('userId=%s', $userId);
+        }
+
+        $result = array_reduce(
             $queryParams,
             function (string $carry, string $queryParam) {
-                $result = explode('=', $queryParam);
+                $result = explode('=', $queryParam, 2);
+                $key    = $result[0];
+                $value  = isset($result[1]) ? htmlspecialchars($result[1]) : '';
 
-                return sprintf('%s&%s=%s', $carry, $result[0], htmlspecialchars($result[1]));
+                return sprintf('%s&%s=%s', $carry, $key, $value);
             },
             ''
         );
