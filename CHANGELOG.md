@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v7.4.0] - 2026.08.03
 ### Add
 - Add support for Atlas AI
 
@@ -585,6 +585,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v7.4.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.4.0
 [v7.3.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.3.1
 [v7.3.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.3.0
 [v7.2.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v7.2.2
