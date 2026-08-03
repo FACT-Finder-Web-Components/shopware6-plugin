@@ -50,11 +50,27 @@
 
             {% if app.request.pathInfo !== "/factfinder/result" %}
               factfinder.notifications.addSuggestClickListener(origin => {
-                  if (origin.suggestion.type === `searchTerm` || origin.suggestion.type === `brand`) {
-                    window.location.href =  `/factfinder/result?query=${origin.suggestion.searchParams.query}`;
+                if (origin.suggestion.type === `searchTerm` || origin.suggestion.type === `brand`) {
 
-                    return false;
+                  const searchParams = origin.suggestion.searchParams;
+                  const urlParams = new URLSearchParams();
+
+                  if (searchParams.query && searchParams.query !== '*') {
+                    urlParams.set('query', searchParams.query);
                   }
+
+                  if (searchParams.filters && searchParams.filters.length > 0) {
+                    searchParams.filters.forEach(filter => {
+                      filter.values.forEach(val => {
+                        urlParams.append('filter', `${filter.name}:${val.value}`);
+                      });
+                    });
+                  }
+
+                  window.location.href =  `/factfinder/result?${urlParams.toString()}`;
+
+                  return false;
+                }
               });
 
               factfinder.notifications.addPopularSearchClickListener(({ origin, popularSearch }) => {

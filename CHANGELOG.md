@@ -6,6 +6,9 @@
 ### Change
 - Upgrade Web Components version to v5.3.0
 
+### Fix
+- Fix brand suggestion redirection url
+
 ## [v7.3.1] - 2026.07.01
 ### Fix
 - Fix redirection for ff-suggest
