@@ -52,6 +52,7 @@ class WorkerDataExportCommand extends Command
     public const EXPORT_TYPE_ARGUMENT            = 'export_type';
     private const UPLOAD_FEED_OPTION             = 'upload';
     private const PUSH_IMPORT_OPTION             = 'import';
+    private const BATCH_SIZE_OPTION              = 'batch-size';
     private const PRODUCTS_EXPORT_TYPE           = 'products';
     private const CMS_EXPORT_TYPE                = 'cms';
     private const CATEGORIES_EXPORT_TYPE         = 'category';
@@ -97,6 +98,7 @@ class WorkerDataExportCommand extends Command
         $this->setDescription('Allows to export feed for products in queue method');
         $this->addOption(self::UPLOAD_FEED_OPTION, 'u', InputOption::VALUE_NONE, 'Should upload after exporting');
         $this->addOption(self::PUSH_IMPORT_OPTION, 'i', InputOption::VALUE_NONE, 'Should import after uploading');
+        $this->addOption(self::BATCH_SIZE_OPTION, 'b', InputOption::VALUE_OPTIONAL, 'Batch size for products export', 100);
         $this->addArgument(self::EXPORT_TYPE_ARGUMENT, InputArgument::OPTIONAL, sprintf('Set data export type(%s)', implode(', ', array_keys($this->getTypeEntityMap()))));
         $this->addArgument(self::SALES_CHANNEL_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel');
         $this->addArgument(self::SALES_CHANNEL_LANGUAGE_ARGUMENT, InputArgument::OPTIONAL, 'ID of the sales channel language');
@@ -119,8 +121,10 @@ class WorkerDataExportCommand extends Command
             $exportTypeQuestion = $this->getChoiceQuestion(sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE), array_keys($this->getTypeEntityMap()), 'Invalid option %s', 0);
             $exportType         = $helper->ask($input, $output, $exportTypeQuestion);
 
-            $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
-            $language         = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
+            $salesChannel      = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
+            $language          = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
+            $batchSizeQuestion = new Question('Enter batch size for products export (default - 100): ', 100);
+            $batchSize         = (int) $helper->ask($input, $output, $batchSizeQuestion);
 
             $saveFileQuestion = $this->getChoiceQuestion('Save export to local file? (default  - no): ', ['no', 'yes'], 'Invalid option %s', 0);
             $saveFile         = (bool) array_flip($saveFileQuestion->getChoices())[$helper->ask($input, $output, $saveFileQuestion)];
@@ -136,6 +140,11 @@ class WorkerDataExportCommand extends Command
             $exportType       = $input->getArgument(self::EXPORT_TYPE_ARGUMENT) ?? self::PRODUCTS_EXPORT_TYPE;
             $uploadFeed       = $input->getOption(self::UPLOAD_FEED_OPTION);
             $pushImport       = $input->getOption(self::PUSH_IMPORT_OPTION);
+            $batchSize        = (int) $input->getOption(self::BATCH_SIZE_OPTION);
+        }
+
+        if ($batchSize <= 0) {
+            $batchSize = 100;
         }
 
         $context          = $this->channelService->getSalesChannelContext($salesChannel, $language->getId());
@@ -155,10 +164,9 @@ class WorkerDataExportCommand extends Command
             $phpBinaryFinder = new PhpExecutableFinder();
             $phpBinary       = $phpBinaryFinder->find() ?: 'php';
 
-            $batchSize = 100;
-            $offset    = 0;
+            $offset = 0;
 
-            $output->writeln('<info>Start generate data feed file by queue system:</info>');
+            $output->writeln(sprintf('<info>Start generate data feed file by queue system (Batch size: %d):</info>', $batchSize));
 
             while (true) {
                 $process = new Process([
@@ -194,18 +202,16 @@ class WorkerDataExportCommand extends Command
                     break;
                 }
 
-                // Uncomment if you want to debug memory consumption for each batch
-                //                $workerMemory = $result['memory'] ?? 0;
-                //                $workerPeak   = $result['peak'] ?? 0;
-                //                $masterPeak   = memory_get_peak_usage(true) / 1024 / 1024;
-                //                $output->writeln(sprintf(
-                //                    '[%s] Offset: %d | Worker: %.2f MB | Worker Final: %.2f MB | MASTER: %.2f MB',
-                //                    date('H:i:s'),
-                //                    $offset,
-                //                    $workerPeak,
-                //                    $workerMemory,
-                //                    $masterPeak
-                //                ));
+                $workerPeak   = $result['peak'] ?? 0;
+                $masterPeak   = memory_get_peak_usage(true) / 1024 / 1024;
+
+                $output->writeln(sprintf(
+                    '[%s] <info>Processed batch</info> | Offset: <comment>%d</comment> | Worker Memory Peak: <comment>%.2f MB</comment> | Master Memory Peak: <comment>%.2f MB</comment>',
+                    date('H:i:s'),
+                    $offset,
+                    $workerPeak,
+                    $masterPeak
+                ));
 
                 $offset += $batchSize;
             }
@@ -215,19 +221,24 @@ class WorkerDataExportCommand extends Command
             }
         } else {
             // Old flow for CMS, CATEGORY and BRANDS
+            $output->writeln(sprintf('<info>Start direct generate data feed for %s...</info>', $exportType));
             $feedService = $this->feedFactory->create($context, $entityClass);
             $out         = $needFile ? new CsvFile($this->file) : new ConsoleOutput($output);
             $feedService->generate($out, $feedColumns);
         }
 
-        $output->writeln('<info>Generate export data feed file completed</info>');
+        $output->writeln('<info>Generate export data feed file completed successfully.</info>');
 
         if ($uploadFeed) {
+            $output->writeln('<info>Starting file upload to FACT-Finder...</info>');
             $this->uploadService->upload($this->file);
+            $output->writeln('<info>Upload completed successfully.</info>');
         }
 
         if ($pushImport) {
+            $output->writeln('<info>Triggering push import in FACT-Finder...</info>');
             $this->pushImportService->execute();
+            $output->writeln('<info>Push import triggered successfully.</info>');
         }
 
         if (!$saveFile && $this->file) {
@@ -237,6 +248,8 @@ class WorkerDataExportCommand extends Command
                 unlink($metaData['uri']);
             }
         }
+
+        $output->writeln('<info>All tasks finished!</info>');
 
         return Command::SUCCESS;
     }
