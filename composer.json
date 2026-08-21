@@ -46,6 +46,11 @@
     "allow-plugins": {
       "symfony/*": true,
       "omikron/*": true
+    },
+    "policy": {
+      "advisories": {
+        "block": false
+      }
     }
   },
   "extra": {
