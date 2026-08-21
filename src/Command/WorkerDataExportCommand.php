@@ -121,8 +121,8 @@ class WorkerDataExportCommand extends Command
             $exportTypeQuestion = $this->getChoiceQuestion(sprintf('Select data export type (default  - %s)', self::PRODUCTS_EXPORT_TYPE), array_keys($this->getTypeEntityMap()), 'Invalid option %s', 0);
             $exportType         = $helper->ask($input, $output, $exportTypeQuestion);
 
-            $salesChannel     = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
-            $language         = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
+            $salesChannel      = $this->getSalesChannel($helper->ask($input, $output, new Question('ID of the sales channel (leave empty if no value): ')));
+            $language          = $this->getLanguage($helper->ask($input, $output, new Question('ID of the sales channel language (leave empty if no value): ')));
             $batchSizeQuestion = new Question('Enter batch size for products export (default - 100): ', 100);
             $batchSize         = (int) $helper->ask($input, $output, $batchSizeQuestion);
 
