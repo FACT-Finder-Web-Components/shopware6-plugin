@@ -7,30 +7,30 @@ export default class AsnPlugin extends Plugin
     }
 
     registerEvents() {
-        document.addEventListener('click', this._handleToggleFilter.bind(this));
+        document.addEventListener('click', this._handleToggleFilter.bind(this), true);
     }
 
     _handleToggleFilter(event) {
-        const getAllGroupsExceptClicked = e => {
-            const clickedGroup = e.target.closest('ff-asn-group, ff-asn-group-slider');
+        const path = (event.composedPath && event.composedPath()) || this._eventPath(event);
 
-            return [...document.querySelectorAll('ff-asn-group, ff-asn-group-slider')].filter(g => g !== clickedGroup)
-        }
+        const clickedGroup = path.find(p =>
+            p && p.tagName && (p.tagName === 'FF-ASN-GROUP' || p.tagName === 'FF-ASN-GROUP-SLIDER')
+        );
 
-        const isAsnGroup = e => {
-            return this._eventPath(e).find(p => p.tagName === 'ff-asn-group'.toUpperCase()
-                || p.tagName === 'ff-asn-group-slider'.toUpperCase());        }
+        const allGroups = document.querySelectorAll('ff-asn-group, ff-asn-group-slider');
 
-        if (!isAsnGroup(event)) {
-            document.querySelectorAll('ff-asn-group, ff-asn-group-slider').forEach(g => {
-                if (g.opened) g.toggle(true);
-            })
-        }
-
-        if (isAsnGroup(event)) {
-            getAllGroupsExceptClicked(event).forEach(g => {
-                if (g.opened) g.toggle(true);
-            })
+        if (!clickedGroup) {
+            allGroups.forEach(g => {
+                if (g.opened) {
+                    g.toggle(true);
+                }
+            });
+        } else {
+            allGroups.forEach(g => {
+                if (g !== clickedGroup && g.opened) {
+                    g.toggle(true);
+                }
+            });
         }
     }
 
@@ -39,7 +39,6 @@ export default class AsnPlugin extends Plugin
             target = evt.target;
 
         if (path != null) {
-            // Safari doesn't include Window, but it should.
             return (path.indexOf(window) < 0) ? path.concat(window) : path;
         }
 
@@ -62,4 +61,3 @@ export default class AsnPlugin extends Plugin
         return [target].concat(getParents(target), window);
     }
 }
-
