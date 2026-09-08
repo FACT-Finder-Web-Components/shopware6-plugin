@@ -4,7 +4,7 @@
   {% if not page.extensions.factfinder.disableWebc %}
     <script>
       document.addEventListener('ffReady', function (e) {
-        e.factfinder.sdk = 'sw6-v5.4.1';
+        e.factfinder.sdk = 'sw6-v5.4.2';
         e.factfinder.communication.fieldRoles = {{ page.extensions.factfinder.field_roles|json_encode|raw }};
       });
     </script>

@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.4.2] - 2026.09.08
 ### Fix
 - Fix ASN popup issue
 
@@ -460,6 +460,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v5.4.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.4.2
 [v5.4.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.4.1
 [v5.4.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.4.0
 [v5.3.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v5.3.0
