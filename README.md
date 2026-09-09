@@ -119,7 +119,7 @@ You can check if the above data is correctly set by clicking on the `Test Connec
 #### Update Field Roles
 This functionality offers a way to download field roles configured in FACT-Finder®.
 Please use this if you don't use feed offered by the plugin or for some reason you have changed the column names.
-You can find more information about what Field Roles are in (Web Components documentation)[https://web-components.fact-finder.de/documentation/4.x/field-roles]
+
 **Note:**
  Updating process is ran for all sales channels, no need to run it separately for each of them
 
@@ -145,7 +145,7 @@ That means when user navigate to a page of mentioned type, the HTML output will 
 This is useful especially in terms of SEO because `ff-record-list` renders product data which could have much impact on page rating in browser.
 Without SSR enabled, web crawlers could not have a chance to scan the element rendered content because it will not yet be rendered on the time of scanning.
 
-**Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/4.x/server-side-rendering) from Web Components documentation.
+**Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/5.x/server-side-rendering) from Web Components documentation.
 
 * Redirect to product detail page for single search result? - This option only works with server side rendering enabled. If SSR search result has one result it will automatically be redirected to the product detail page.
   This setting also works with category pages. **Note:** Redirection only happens when search is done via Server Side Rendering. If search is done via WebComponents redirect will not happen.
@@ -295,7 +295,7 @@ FACT-Finder® response, hence they will not render any HTML.
 * Pushed Products Flag - Set a flag making the campaign element reacts to FACT-Finder campaign of the specific type
 
 **Note:**
-You can find more information about campaigns related elements and their configuration in Web Components [documentation](https://web-components.fact-finder.de/api/4.x/ff-campaign#tab=api)
+You can find more information about campaigns related elements and their configuration in Web Components [documentation](https://web-components.fact-finder.de/api/5.x/ff-campaign)
 
 ### Blocks and Elements Templates
 
@@ -412,7 +412,7 @@ Full FACT-Finder® Web Components documentation you can find [here](https://web-
 ### Including Scripts
 
 The module is shipped with script including FACT-Finder® Web Components.
-[Including Scripts](https://web-components.fact-finder.de/documentation/4.x/include-scripts) step is implemented in the
+[Including Scripts](https://web-components.fact-finder.de/documentation/5.x/include-scripts) step is implemented in the
 module. No additional action is required.
 
 * Resources/public/ff-web-components/vendor/custom-elements-es5-adapter.js
@@ -448,9 +448,9 @@ https://handlebarsjs.com/
 
 Plugin offers a following way of tracking customer actions
  * login - logged automatically via basic configuration when `user-id` is set
- * click on product - implemented using ff-record template [directives](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Click Tracking)
+ * click on product - implemented using ff-record template [directives](https://web-components.fact-finder.de/api/5.x/ff-record-list) (see Adding tracking)
  * add to cart - implemented in a js [plugin](src/Resources/app/storefront/src/plugin/tracking.plugin.js)
- * purchase - implemented using [ff-checkout-tracking element](https://web-components.fact-finder.de/documentation/4.x/tracking-guide) (see Checkout Tracking)
+ * purchase - implemented using [ff-checkout-tracking element](https://web-components.fact-finder.de/api/5.x/ff-checkout-tracking) (see Checkout Tracking)
 
 ### Full List of Implemented Web Components
 Plugin implements a list of given Web Components:
