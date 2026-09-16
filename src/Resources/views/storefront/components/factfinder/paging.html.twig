@@ -12,9 +12,13 @@
       </a>
     </ff-paging-item>
 
+    {% set queryParams = app.request.query.all %}
     {% for p in -1..1 %}
+      {% set updatedParams = queryParams|filter((value, key) => key != 'page') %}
+      {% set url = app.request.attributes.get('_route') ? path(app.request.attributes.get('_route'), updatedParams) : app.request.uri %}
+
       <ff-paging-item type="currentLink{% if p %} {{ p }}{% endif %}" class="page-item{% if not p %} active{% endif %}">
-        <a href="#" class="page-link">{{ '{{page}}' }}</a>
+        <a href="{{ url ~ "&page={{page}}" }}" class="page-link">{{ '{{page}}' }}</a>
       </ff-paging-item>
     {% endfor %}
 
