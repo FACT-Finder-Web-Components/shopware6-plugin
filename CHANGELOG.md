@@ -1,8 +1,11 @@
 # Changelog
 ## Unreleased
+### Add
+- Add support for PHP 8.5
+
 ### Fix
 - Fix ASN popup issue
-- 
+
 ## [v7.4.0] - 2026.08.03
 ### Add
 - Add support for Atlas AI
