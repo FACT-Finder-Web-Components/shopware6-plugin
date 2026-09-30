@@ -238,9 +238,9 @@ Automatic Export is based on Shopware Scheduled Task. For more information, see 
 ## Category Pages
 
 Plugin offers a way to use FACT-Finder® Web Components on category pages using page builder Shopping Experiences. There
-is two CMS blocks offered:
+is 3 CMS blocks offered:
 
-* Listing
+* Search Result - this block is designed for both the **search result page** and the **category page**.
     * ff-record-list
     * ff-asn + including ff-filter-cloud
     * ff-pagination
@@ -250,13 +250,15 @@ is two CMS blocks offered:
     * ff-campaign-advisor
     * ff-campaign-redirect
     * ff-campaign-pushed-products
+* Filters
+    * ff-asn + including ff-filter-cloud
 
 ![Page Builder CMS Blocks](docs/assets/page-builder-cms-blocks.png "Page Builder CMS Blocks")
 ![Page Builder CMS Preview](docs/assets/page-builder-listing.png "Page Builder CMS Preview")
 
 Offered Cms Blocks and Elements are designed to work on pages of type `LandingPage`.
 There is a type `CategoryPage` but the builtin validation will not allow saving that prepared page, unless it contains at least one default Product Listing Block.
-The block `FACTFinder Web Components Listing` is unfortunately not taken into account.
+The block `FACT-Finder Search Result` is unfortunately not taken into account.
 
 All elements are available under the category `Commerce`
 

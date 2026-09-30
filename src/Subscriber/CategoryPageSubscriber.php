@@ -28,7 +28,7 @@ class CategoryPageSubscriber implements EventSubscriberInterface
         $this->addParams       = $categoryPageAddParams;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [NavigationPageLoadedEvent::class => 'onPageLoaded'];
     }

@@ -8,23 +8,24 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
+use Shopware\Core\System\CustomField\CustomFieldCollection;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
 
 class CustomFieldsServiceSpec extends ObjectBehavior
 {
-    public function let(EntityRepository $customFieldRepository) {
+    public function let(EntityRepository $customFieldRepository): void
+    {
         $this->beConstructedWith(
             $customFieldRepository
         );
     }
 
     public function it_will_return_custom_field_names_if_no_cache(
-        EntityRepository $customFieldRepository
-    ) {
+        EntityRepository $customFieldRepository,
+    ): void {
         $customFieldRepository
            ->search(Argument::cetera())
            ->will($this->mockCustomFieldRepository());
@@ -35,8 +36,8 @@ class CustomFieldsServiceSpec extends ObjectBehavior
     }
 
     public function it_will_return_custom_field_from_cache(
-        EntityRepository $customFieldRepository
-    ) {
+        EntityRepository $customFieldRepository,
+    ): void {
         $customFieldRepository
             ->search(Argument::cetera())
             ->will($this->mockCustomFieldRepository())
@@ -58,9 +59,9 @@ class CustomFieldsServiceSpec extends ObjectBehavior
             $customFields->setName('test');
             $customFields->setId('test_id');
             return new EntitySearchResult(
-                '',
+                'custom_field',
                 1,
-                new EntityCollection([$customFields]),
+                new CustomFieldCollection([$customFields]),
                 null,
                 new Criteria(),
                 new Context(new SystemSource())

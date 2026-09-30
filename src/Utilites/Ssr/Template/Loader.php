@@ -18,7 +18,7 @@ class Loader implements HandlebarsLoader
     /**
      * {@inheritDoc}
      */
-    public function load($name)
+    public function load($name): string
     {
         $template = $this->loader->load($name);
 
