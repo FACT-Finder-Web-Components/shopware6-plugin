@@ -90,7 +90,8 @@ Component.register('ui-feed-export-form', {
             httpClient
                 .get(url, {
                     headers: basicHeaders,
-                    params: params
+                    params: params,
+                    timeout: 300000,
                 })
                 .then((response) => {
                     if (response.status === 200) {
