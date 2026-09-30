@@ -32,7 +32,7 @@ class Deeplink implements FieldInterface, EventSubscriberInterface
         return 'Deeplink';
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [SeoUrlUpdateEvent::class => 'onUrlUpdated'];
     }
