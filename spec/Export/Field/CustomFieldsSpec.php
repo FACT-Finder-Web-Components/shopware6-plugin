@@ -17,12 +17,13 @@ use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Api\Context\SystemSource;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
+use Shopware\Core\System\CustomField\CustomFieldCollection;
 use Shopware\Core\System\CustomField\CustomFieldEntity;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
+use Shopware\Core\System\Language\LanguageCollection;
 use Shopware\Core\System\Language\LanguageEntity;
 use Shopware\Core\System\Locale\LocaleEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -32,25 +33,25 @@ class CustomFieldsSpec extends ObjectBehavior
 {
     private $selectFieldConfig = [
         'label'   => [
-                'de-DE' => 'SelectFieldDE',
-                'en-GB' => 'SelectFieldEN',
-            ],
+            'de-DE' => 'SelectFieldDE',
+            'en-GB' => 'SelectFieldEN',
+        ],
         'options' => [
-                [
-                    'label' => [
-                            'de-DE' => 'option1DE',
-                            'en-GB' => 'option1EN',
-                        ],
-                    'value' => 'option1',
+            [
+                'label' => [
+                    'de-DE' => 'option1DE',
+                    'en-GB' => 'option1EN',
                 ],
-                [
-                    'label' => [
-                            'de-DE' => 'option2DE',
-                            'en-GB' => 'option2EN',
-                        ],
-                    'value' => 'option2',
-                ],
+                'value' => 'option1',
             ],
+            [
+                'label' => [
+                    'de-DE' => 'option2DE',
+                    'en-GB' => 'option2EN',
+                ],
+                'value' => 'option2',
+            ],
+        ],
     ];
 
     public function let(
@@ -60,8 +61,8 @@ class CustomFieldsSpec extends ObjectBehavior
         EntityRepository $languageRepository,
         ExportSettings $exportSettings,
         CustomFieldsService $customFieldsService,
-        Product $product
-    ) {
+        Product $product,
+    ): void {
         $languageRepository->search(Argument::type(Criteria::class), Argument::cetera())->will($this->mockLanguageRepository());
         $channelContext->getSalesChannel()->willReturn($this->getSalesChannel('2'));
         $salesChannelService->getSalesChannelContext()->willReturn($channelContext);
@@ -83,7 +84,7 @@ class CustomFieldsSpec extends ObjectBehavior
         );
     }
 
-    public function it_is_a_field()
+    public function it_is_a_field(): void
     {
         $this->shouldBeAnInstanceOf(FieldInterface::class);
     }
@@ -92,8 +93,8 @@ class CustomFieldsSpec extends ObjectBehavior
         Product $product,
         EntityRepository $customFieldRepository,
         EntityRepository $languageRepository,
-        ExportSettings $exportSettings
-    ) {
+        ExportSettings $exportSettings,
+    ): void {
         $customFieldRepository
             ->search(Argument::cetera())
             ->willReturn(
@@ -113,8 +114,8 @@ class CustomFieldsSpec extends ObjectBehavior
 
     public function it_will_use_default_language_if_none_is_stored_in_context(
         Product $product,
-        EntityRepository $customFieldRepository
-    ) {
+        EntityRepository $customFieldRepository,
+    ): void {
         $config = $this->selectFieldConfig;
         unset($config['label']['de-DE']);
         unset($config['options'][0]['label']['de-DE']);
@@ -138,8 +139,8 @@ class CustomFieldsSpec extends ObjectBehavior
 
     public function it_will_return_label_technical_value_if_no_translation_is_provided(
         Product $product,
-        EntityRepository $customFieldRepository
-    ) {
+        EntityRepository $customFieldRepository,
+    ): void {
         $customFieldRepository
             ->search(Argument::cetera())
             ->willReturn(
@@ -163,7 +164,7 @@ class CustomFieldsSpec extends ObjectBehavior
 
     public function it_will_skip_disabled_custom_fields(
         Product $product,
-        EntityRepository $customFieldRepository, ExportSettings $exportSettings, CustomFieldsService $customFieldsService)
+        EntityRepository $customFieldRepository, ExportSettings $exportSettings, CustomFieldsService $customFieldsService): void
     {
         $customFieldRepository
             ->search(Argument::cetera())
@@ -178,9 +179,9 @@ class CustomFieldsSpec extends ObjectBehavior
                                     'en-GB' => 'Enabled attribute',
                                 ],
                                 'options' => [[
-                                                  'label' => ['en-GB' => 'exported value'],
-                                                  'value' => 'i should be exported',
-                                              ]],
+                                    'label' => ['en-GB' => 'exported value'],
+                                    'value' => 'i should be exported',
+                                ]],
                             ]
                         ),
                         $this->getCustomField(
@@ -189,9 +190,9 @@ class CustomFieldsSpec extends ObjectBehavior
                             [
                                 'label'   => ['en-GB' => 'Disabled attribute'],
                                 'options' => [[
-                                                  'label' => ['en-GB' => 'not exported value'],
-                                                  'value' => 'i should not be exported',
-                                              ]],
+                                    'label' => ['en-GB' => 'not exported value'],
+                                    'value' => 'i should not be exported',
+                                ]],
                             ]
                         ),
                     ]
@@ -212,8 +213,8 @@ class CustomFieldsSpec extends ObjectBehavior
 
     public function it_should_join_multiselect_entity_value(
         Product $product,
-        EntityRepository $customFieldRepository
-    ) {
+        EntityRepository $customFieldRepository,
+    ): void {
         $config = $this->selectFieldConfig;
         unset($config['options']);
         $product->getTranslation('customFields')->willReturn(
@@ -254,7 +255,8 @@ class CustomFieldsSpec extends ObjectBehavior
     {
         $size     = is_array($entities) ? count($entities) : 1;
         $elements = is_array($entities) ? $entities : [$entities];
-        return new EntitySearchResult('', 1, new EntityCollection($elements), null, new Criteria(), new Context(new SystemSource()));
+
+        return new EntitySearchResult('custom_field', $size, new CustomFieldCollection($elements), null, new Criteria(), new Context(new SystemSource()));
     }
 
     private function getCustomField(string $key, string $type, array $config): CustomFieldEntity
@@ -275,7 +277,8 @@ class CustomFieldsSpec extends ObjectBehavior
                 $locale = new LocaleEntity();
                 $locale->setCode($languageId === Defaults::LANGUAGE_SYSTEM ? 'en-GB' : 'de-DE');
                 $language->setLocale($locale);
-                return new EntitySearchResult('', 1, new EntityCollection([$language]), null, new Criteria(), new Context(new SystemSource()));
+
+                return new EntitySearchResult('language', 1, new LanguageCollection([$language]), null, new Criteria(), new Context(new SystemSource()));
             };
             return $getLanguage($args[0]->getIds()[0]);
         };
