@@ -3,7 +3,7 @@
     "blocks": {
       "commerce": {
         "factfinderWebComponentsListing": {
-          "label": "Typical collection of Web Components that implements search result page "
+          "label": "Typical collection of Web Components that implements search result page or category page. It contains ff-asn, ff-record-list, ff-paging and ff-sortbox elements."
         },
         "factfinderWebComponentsCampaigns": {
           "label": "FACT-Finder® Web Components Campaigns"
