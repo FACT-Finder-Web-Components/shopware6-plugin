@@ -33,7 +33,7 @@ class ParentCategory implements FieldInterface
         $breadcrumbs  = $this->breadcrumbBuilder->build($entity, $salesChannel, $salesChannel->getNavigationCategoryId()) ?? [];
         array_pop($breadcrumbs);
 
-        return implode('/', $breadcrumbs) ?? '';
+        return implode('/', array_map('urlencode', $breadcrumbs)) ?? '';
     }
 
     public function getCompatibleEntityTypes(): array

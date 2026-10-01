@@ -5,6 +5,7 @@
 
 ### Fix
 - Fix ASN popup issue
+- Encode special characters in parentCategory
 
 ## [v7.4.0] - 2026.08.03
 ### Add
