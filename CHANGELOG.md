@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.6.1] - 2026.10.08
 ### Change
 - Upgrade Web Components version to v5.3.1
 
@@ -559,6 +559,7 @@
 ## [v1.0.0] - 2021.06.29
 Initial module release. Includes Web Components v4.0.3
 
+[v6.6.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.6.1
 [v6.6.0]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.6.0
 [v6.5.2]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.5.2
 [v6.5.1]: https://github.com/FACT-Finder-Web-Components/shopware6-plugin/releases/tag/v6.5.1
